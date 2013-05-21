@@ -1,0 +1,40 @@
+{
+	"jsonOutput":
+	{
+		"category1":[
+			{
+				"code":"01",
+				"value":"國科會",
+				"count":"4",
+				"category2":[
+					{"code":"01","value":"朱敬一  主任委員","count":"0"},
+					{"code":"02","value":"孫以瀚  主任委員","count":"0"},
+					{"code":"03","value":"牟中原  副主任委員","count":"0"},
+					{"code":"04","value":"賀陳宏  副主任委員","count":"4"}
+				]
+			},
+			{
+				"code":"02",
+				"value":"科學園區",
+				"count":"1",
+				"category2":[
+					{"code":"05","value":"竹科 - 顏宗明  局長","count":"0"},
+					{"code":"06","value":"中科 - 楊文科  局長","count":"1"},
+					{"code":"07","value":"南科 - 陳俊偉  局長","count":"0"}
+				]
+			},
+			{
+				"code":"03",
+				"value":"國研院",
+				"count":"3",
+				"category2":[
+					{"code":"08","value":"國家奈米元件實驗室","count":"0"},
+					{"code":"09","value":"中國家實驗動物中心","count":"3"},
+					{"code":"10","value":"國家地震工程研究中心","count":"0"}
+				]
+			}
+		]
+	},
+	"status":"success",
+	"messange":"查詢正常"
+}

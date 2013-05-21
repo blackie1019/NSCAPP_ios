@@ -1,0 +1,4563 @@
+<!DOCTYPE html>
+<html><!-- manifest="cache.appcache" 開啟Cache 功能-->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <!--ios-->
+        <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+        <!--android-->
+        <!--
+         <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
+        -->
+        <!--jQuery-->
+        <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<!--json2-->
+		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
+		<!--Google Map API v3-->
+		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>
+		<!--mobiScroll-->
+		<link href="css/mobiscroll.custom-2.5.0.min.css" rel="stylesheet" type="text/css"></link>
+		<script src="js/mobiscroll.core-2.5.0.js" type="text/javascript"></script>
+		<script src="js/mobiscroll.ios-2.5.0.js" type="text/javascript"></script>
+		<script src="js/mobiscroll.datetime-2.5.0.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
+		<script>
+		$(function () 
+		{
+		  	 var nowDate = new Date();
+		  	 nowDate=new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+			//高鐵
+			$('#index_01 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll().datetime({
+				minDate: nowDate,
+				dateFormat:'yy/mm/dd',
+				dateOrder:'yyMDdd',
+				timeWheels: 'hhii a',
+				timeFormat: 'HH:ii',
+				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+				monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+				dayNames: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				dayNamesShort: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				stepMinute: 30,
+				monthText: '月',
+				dayText: '日',
+				yearText: '年',
+				hourText: '時',
+				minuteText: '分',
+				theme: 'ios',
+				display: 'bottom',
+				mode: 'scroller',
+				setText: '確定',
+				cancelText: '取消'
+			}); 
+			$('#index_01 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('setValue',nowDate,true);
+			//台鐵
+			$('#index_02 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll().datetime({
+				minDate: new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate()),
+				dateFormat:'yy/mm/dd',
+				dateOrder:'yyMDdd',
+				timeWheels: 'hhii a',
+				timeFormat: 'HH:ii',
+				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+				monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+				dayNames: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				dayNamesShort: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				stepMinute: 30,
+				monthText: '月',
+				dayText: '日',
+				yearText: '年',
+				hourText: '時',
+				minuteText: '分',
+				theme: 'ios',
+				display: 'bottom',
+				mode: 'scroller',
+				setText: '確定',
+				cancelText: '取消'
+			});   
+			$('#index_02 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('setValue',nowDate,true);
+			//客運
+			$('#index_03 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll().datetime({
+				minDate: new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate()),
+				dateFormat:'yy/mm/dd',
+				dateOrder:'yyMDdd',
+				timeWheels: 'hhii a',
+				timeFormat: 'HH:ii',
+				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+				monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+				dayNames: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				dayNamesShort: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				stepMinute: 30,
+				monthText: '月',
+				dayText: '日',
+				yearText: '年',
+				hourText: '時',
+				minuteText: '分',
+				theme: 'ios',
+				display: 'bottom',
+				mode: 'scroller',
+				setText: '確定',
+				cancelText: '取消'
+			});   
+			$('#index_03 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('setValue',nowDate,true);
+			//市區公車
+			$('#index_04 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll().datetime({
+				minDate: new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate()),
+				dateFormat:'yy/mm/dd',
+				dateOrder:'yyMDdd',
+				timeWheels: 'hhii a',
+				timeFormat: 'HH:ii',
+				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+				monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+				dayNames: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				dayNamesShort: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				stepMinute: 30,
+				monthText: '月',
+				dayText: '日',
+				yearText: '年',
+				hourText: '時',
+				minuteText: '分',
+				theme: 'ios',
+				display: 'bottom',
+				mode: 'scroller',
+				setText: '確定',
+				cancelText: '取消'
+			});   
+			$('#index_04 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('setValue',nowDate,true);
+		});
+		</script>
+		<!--<script src="http://debug.phonegap.com/target/target-script-min.js#blackie1019"></script>-->
+		<!--jQuery mobile-->
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-NSC-1.3.0.css"></link>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.0.min.js"></script>
+        <!--Plug in-->
+        <script src="js/jquery.hammer.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/smoke.min.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/smoke.theme.100s.css"> -->
+        <script src="js/smoke.js"></script>
+		<!--Hyweb CSS-->
+		<link rel="stylesheet" type="text/css" href="css/index.css"></link>
+		<!--HYAPP-->
+		<!--NSCAPP Javascript-->	
+		<script src="js/setting.js"></script>
+		<script src="js/loading.js"></script> 
+		<script src="js/pnpolygon.js"></script>
+		<script src="js/photo.js"></script>	
+		<script src="js/location.js"></script>	
+		<script src="js/data.js"></script>
+		<script src="js/map.js"></script>
+		<script  type="text/javascript">
+		var PageObject=getTranspotInfoLoadPage();
+			clearTranspotInfoLoadPage();
+			if(PageObject!=null){
+	 			$.mobile.navigate('#'+PageObject.PageName);
+	 		}else{
+	 			// history.back();
+	 		}
+		/*global variables*/
+		var AppType=getAppType(),Park=getIdentifyParkBase().Park,Base=getIdentifyParkBase().Base,LP_05_1_mapObject,divRouteMap_map,BusMap_map,setPosition_map;
+		//function
+		function getAroundStop(targetPark,targetBase,lat,lng,hh,mm,sortBy){
+			LoadingObject.show();
+			var jsonObject={"parkArea":targetPark,"parkLocation":targetBase,"currentLat":""+lat+"","currentLng":""+lng+"","beginHour":hh,"beginMin":mm,"sortBy":sortBy};
+			// var jsonObject={"parkArea":"01","parkLocation":"01","currentLat":"24.7816461","currentLng":"121.00591540000005","beginHour":"14","beginMin":"00","sortBy":"time"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="",titleHtmlResult="",isNextShow=false;
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_aroundStop,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	titleHtmlResult+="<h2 style='text-align:left!important;'><div class='title'><span>你現在鄰近:</span>"+data.spotInfo.chtName+"<button id='btnsetPosition' data-mini='true' data-inline='true' id='btnGetLocationInMap' data-latitude='"+data.spotInfo.latitude+"' data-role='"+data.spotInfo.longitude+"' data-address='' data-title='"+data.spotInfo.chtName+"' data-spotno='"+data.spotInfo.spotNo+"'>定位</button></div></h2>";
+		                		for(var i=0;i<data.transportList.length;i++){
+		                			htmlResult+="<tr data-park='"+targetPark+"' data-traffictype='"+data.transportList[i].trafficType+"' data-lineno='"+data.transportList[i].lineNO+"' data-base='"+targetBase	+"' data-no='"+(i+1)+"' data-spotcode='"+data.transportList[i].stopCode+"' ";
+		                			if(i>4){
+		                				isNextShow=true;
+		                				htmlResult+=" style='display:none;' ";
+		                			}
+			                		htmlResult+=">"+
+											    "<td>"+data.transportList[i].chtTitle+"</td>"+
+											    "<td class='time'>"+data.transportList[i].arriveHour+":";
+									if(data.transportList[i].arriveMin.length>1){
+										htmlResult+=data.transportList[i].arriveMin;
+									}else{
+										htmlResult+="0"+data.transportList[i].arriveMin;
+									}		    
+									;
+			                		htmlResult+="</td></tr>";
+		                		}
+		                		if(htmlResult!=""){
+		                			htmlResult="<tbody><tr><th scope='col'>交通工具</th><th scope='col'>發車時刻</th></tr>"+htmlResult+"</tbody>";
+		                			$('#page_aroundStop').find('#footerFunction').show();
+		               				$('#page_aroundStop').find('#btnPrev').hide();
+		               				if(!isNextShow){
+		               					$('#page_aroundStop').find('#btnNext').hide();
+		               				}
+		                		}else{
+		                			htmlResult="<tbody><tr><td>查無相關交通資料</td></tr></tbody>";
+		                			$('#page_aroundStop').find('#footerFunction').hide();
+		                		}
+	            				$('#page_aroundStop').find('#title').html(titleHtmlResult).trigger('create');
+	            				$('#page_aroundStop').find('#dataList').html(htmlResult);
+	            			
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToLP_01(fromStation,destStation,beginHour,beginMin){
+			LoadingObject.show();
+			var jsonObject={"fromStation":fromStation,"destStation":destStation,"beginHour":beginHour,"beginMin":beginMin};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_LP_01,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	if(data.jsonOutput.length>0){
+			                	for(var i=0;i<data.jsonOutput.length;i++){
+			                		htmlResult+="<tr>"+
+											    "<td class='number'>"+data.jsonOutput[i].train+"("+data.jsonOutput[i].toDir+")"+"</td>"+
+											    "<td class='time'>"+data.jsonOutput[i].DEPTime+"-"+data.jsonOutput[i].ARRTime+"</td>"+
+											    "<td>約"+data.jsonOutput[i].diffTime+"分</td>"+
+											    "<td>";
+									if(data.transfer=="true"){
+										htmlResult+="<button data-train='"+data.jsonOutput[i].train+"' data-depttime='"+data.jsonOutput[i].ARRTime+"' id='btnToCP_01' data-role='none' class='btn07'>進入園區</button></td>";
+									}
+			                		htmlResult+="</tr>";
+		            			}
+		            		}
+	            			if(htmlResult!=""){
+	            				$('#LP_01').find('#title').html(data.chtTitle+data.quertTime);
+	            				$('#LP_01').find('#dataList').html("<tbody><tr><th scope='col'>車次</th><th scope='col'>開車-抵達時間</th><th scope='col'>行駛時間</th><th scope='col'>轉乘資訊</th></tr>"+htmlResult+"</tbody>");
+	            				$.mobile.changePage('#LP_01');
+	            			}
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToLP_02(park,fromStation,destStation,beginHour,beginMin,carClass){
+			LoadingObject.show();
+			var jsonObject={"parkArea":park,"fromStation":fromStation,"destStation":destStation,"beginHour":beginHour,"beginMin":beginMin,"carClass":carClass};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_LP_02,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	if(data.jsonOutput.length>0){
+			                	for(var i=0;i<data.jsonOutput.length;i++){
+			                		htmlResult+="<tr>"+
+											    "<td class='type'>"+data.jsonOutput[i].calssChtName+"</td>"+
+											    "<td class='number'>"+data.jsonOutput[i].train+"("+data.jsonOutput[i].toDir+")"+"</td>"+
+											    "<td class='time'>"+data.jsonOutput[i].DEPTime+"-"+data.jsonOutput[i].ARRTime+"</td>"+
+											    "<td>約"+data.jsonOutput[i].diffTime+"分</td>"+
+												"<td rowspan='2'>";
+									if(data.transfer=="true"){
+										htmlResult+="<button data-from='"+destStation+"' data-dest='' data-depttime='"+data.jsonOutput[i].ARRTime+"' id='btnToCP_02' data-role='none' class='btn07'>進入園區</button>";
+									}
+									htmlResult+="</td>"+
+			                					"</tr>"+
+			                					"<tr>"+
+			                					"<td class='memo' colspan='4'>備註：*"+data.jsonOutput[i].note+"</td>"+
+			                					"</tr>";
+		            			}
+		            		}
+	            			if(htmlResult!=""){
+	            				$('#LP_02').find('#title').html(data.chtTitle+data.quertTime);
+	            				$('#LP_02').find('#dataList').html("<tbody><tr><th scope='col'>車種</th><th scope='col'>車次</th><th scope='col'>開車-抵達時間</th><th scope='col'>行駛時間</th><th scope='col'>轉乘資訊</th></tr>"+htmlResult+"</tbody>");
+	            				$.mobile.changePage('#LP_02');
+	            			}
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToLP_05_1(park,lineNo,isFocusRouteMap){
+			LoadingObject.show();
+			var jsonObject={"parkArea":park,"lineNo":lineNo};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var divTimeTable_htmlResult="",divStopList_htmlResult="",divRouteMap_htmlResult="",title="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_LP_05_1,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	//title
+		                	title='<div class="title3" id="title"><img style="width:30px" src="'+(typeof(data.vehiclePic)!="undefined"?Setting_lineImgSrc+data.vehiclePic:notfindPic)+'"></img>'+data.chtLineTitle+" "+data.chtLineDesc+'</div>';
+		                	//時刻表
+		                	divTimeTable_htmlResult+=title;
+		                	if(data.timeList.length>0){
+		                		divTimeTable_htmlResult+='<table width="100%" summary="時刻表" class="lpTb3"><tbody>'+
+		                		'<tr><th scope="col" width="50%">班次</th><th scope="col" width="50%">'+data.chtBeginStopName+'出發</th></tr>';
+		                		for(var i=0;i<data.timeList.length;i++){
+			                		divTimeTable_htmlResult+='<tr>'+
+								    '<td>'+data.timeList[i].scheduleCode+'</td>'+
+								    '<td>'+data.timeList[i].beginHour+':'+data.timeList[i].beginMin+'</td>'+
+								    '</tr>';
+		                		}
+			                	divTimeTable_htmlResult+='</tbody></table>';
+			                }
+			                if(data.chtMemo!=""){
+	    						divTimeTable_htmlResult+='<div class="note2"><p><span>註：</span>'+data.chtMemo+'</p></div>';
+	    					}
+	    					if(data.lineNO=="orange-go"){
+	    						divTimeTable_htmlResult+='<a data-role="button" data-theme="f" id="btnToCP_05" data-hh="'+data.timeList[0].beginHour+'" data-mm="'+data.timeList[0].beginMin+'" >高鐵轉乘資訊</a>';
+	    					}
+		                	//站點班次
+		                	divStopList_htmlResult+=title;
+		                	if(data.scheduleStopTimeList.length>0){
+			                	for(var i=0;i<data.scheduleStopTimeList.length;i++){
+			                		divStopList_htmlResult+='<div id="div_schedule" ';
+			                		if(i!=0){
+			                			divStopList_htmlResult+='style="display:none;" ';
+			                		}
+			                		divStopList_htmlResult+='><table width="100%" summary="時刻表" class="lpTb4"><tbody><tr><th scope="col" width="32%">站點名稱</th><th scope="col" width="32%">時間</th><th scope="col" width="32%">站點距離</th></tr>';
+			                		for(var transportList_index=0;transportList_index<data.scheduleStopTimeList[i].transportList.length;transportList_index++){
+			                			divStopList_htmlResult+='<tr>'+
+										    '<td><a href="#">'+data.scheduleStopTimeList[i].transportList[transportList_index].stopName+'</a></td>'+
+										    '<td class="time">'+data.scheduleStopTimeList[i].transportList[transportList_index].arriveHour+':'+data.scheduleStopTimeList[i].transportList[transportList_index].arriveMin+'</td>'+
+										    '<td>'+data.scheduleStopTimeList[i].transportList[transportList_index].xdistance+'公里</td>'+
+										    '</tr>';
+									}
+								    divStopList_htmlResult+='</tbody></table></div>';
+			                	}
+							}
+		                	//路線圖
+		                	divRouteMap_htmlResult+=title;
+		                	divRouteMap_htmlResult+='<div id="googleMap_container" style="height: 300px;width: auto;"> <div id="divRouteMap_map_canvas" style="width: 100%;height:100% "></div></div>';
+		                	if(data.lineMap!=""){
+			                	divRouteMap_htmlResult+='<button data-theme="f" onclick="openBrowser(&#39;'+Setting_lineImgSrc+data.lineMap+'&#39;)">路線圖下載</button>';
+			                }
+		              		$('#LP_05_1 #divTimeTable').html(divTimeTable_htmlResult);
+	              		  	$('#LP_05_1 #divStopList').html(divStopList_htmlResult);
+	              		  	$('#LP_05_1 #divRouteMap').html(divRouteMap_htmlResult);
+	              		  	$('#LP_05_1').trigger('create');
+	              		  	//顯示設定
+	              		  	if(isFocusRouteMap){
+	  		  	 				$('#LP_05_1').find('#btnTimeTable').removeClass('hover');
+				 				$('#LP_05_1').find('#btnStopList').removeClass('hover');
+				 				$('#LP_05_1').find('#btnRouteMap').addClass('hover');
+
+	  		  	 				$('#LP_05_1').find('#divTimeTable').hide();
+				 				$('#LP_05_1').find('#divStopList').hide();
+				 				$('#LP_05_1').find('#divRouteMap').show();
+	              		  	}else{
+	  		  	 				$('#LP_05_1').find('#btnTimeTable').addClass('hover');
+				 				$('#LP_05_1').find('#btnStopList').removeClass('hover');
+				 				$('#LP_05_1').find('#btnRouteMap').removeClass('hover');
+	  		  	 				$('#LP_05_1').find('#divTimeTable').show();
+				 				$('#LP_05_1').find('#divStopList').hide();
+				 				$('#LP_05_1').find('#divRouteMap').hide();
+				 			}
+			 				//googleMap顯示路線圖設定
+			 				getBusStopMap(lineNo);
+            				$.mobile.changePage('#LP_05_1');
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function getBusStopMap(lineNo){
+			var jsonObject={"lineNo":lineNo};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="",lineSpotJsonData=[];
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_BusStopMap,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	for(var i=0;i<data.pointList.length;i++){
+		                		if(data.pointList[i].latitude!=""&&data.pointList[i].longitude!=""){
+			                		if(data.pointList[i].stopCode!=""){
+			                			lineSpotJsonData.push({type:"lbs",lat:data.pointList[i].latitude,lng:data.pointList[i].longitude});
+			                			console.log('{type:"lbs",lat:'+data.pointList[i].latitude+',lng:'+data.pointList[i].longitude+'}');
+			                		}else{
+				                		lineSpotJsonData.push({type:"spot",lat:data.pointList[i].latitude,lng:data.pointList[i].longitude});
+				                		console.log('{type:"spot",lat:'+data.pointList[i].latitude+',lng:'+data.pointList[i].longitude+'}');
+				                	}
+				                }
+		                	}
+				 			divRouteMap_map=new HyMap();
+				 			divRouteMap_map.ini(document.getElementById('divRouteMap_map_canvas'),new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),12);
+				 			//產生路線
+				 			divRouteMap_map.genTrafficBusLine(lineSpotJsonData);
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        }
+		    });
+		}
+		function changeToLP_05_2(park,base,lineNo,lineText,from,dest,hh,mm){
+			LoadingObject.show();
+			var end_hh;
+			switch(hh){
+				case "00":
+					end_hh="24";
+					break;
+				case "06":
+					end_hh="10";
+					break;
+				case "10":
+					end_hh="14";
+					break;
+				case "14":
+					end_hh="18";
+					break;
+				case "18":
+					end_hh="22";
+					break;
+			}
+			var jsonObject={"parkArea":park,"lineNo":lineNo,"fromStopCode":from,"destStopCode":dest,"beginHour":hh,"beginMin":mm,"endHour":end_hh,"endMin":"00"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_LP_05_2,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	if(data.trafficList.length>0){
+			                	for(var i=0;i<data.trafficList.length;i++){
+			                		htmlResult+="<tr data-park='"+park+"' data-base='"+base+"' data-lineno='"+lineNo+"' >"+
+											    "<td class='type'>"+data.trafficList[i].scheduleChtTitle+"</td>"+
+											    "<td class='time'>"+data.trafficList[i].arriveHour+":"+data.trafficList[i].arriveMin+"</td>";
+
+		            			}
+		            		}else{
+		            			htmlResult+="<tr><td colspan='4'>查無資料</td></tr>";
+		            		}
+	            			if(htmlResult!=""){
+	            				$('#LP_05_2').find('#title').html(data.quertTime+" "+lineText+" "+data.chtTitle);
+	            				$('#LP_05_2').find('#dataList').html("<tbody><tr><th scope='col'>班次</th><th scope='col'>發車時間</th></tr>"+htmlResult+"</tbody>");
+	            				$.mobile.changePage('#LP_05_2');
+	            			}
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToBusMap(park,base,lineNo){
+			LoadingObject.show();
+			var jsonObject={"parkArea":park,"parkLocation":base,"lineNo":lineNo};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_BusMap,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+				 			//初始化
+				 			BusMap_map=new HyMap();
+				 			BusMap_map.ini(document.getElementById('BusMap_map_canvas'),new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),12);
+				 			//產生路線
+				 			//建立巴士marker
+				 			for(var i=0;i<data.busList.length;i++){
+				 				var posLatLng=new google.maps.LatLng(data.busList[i].latitude,data.busList[i].longitude);
+				 				BusMap_map.addMarker(posLatLng,(typeof(data.vehiclePic)!="undefined"?Setting_lineImgSrc+data.vehiclePic:BusMap_map.map_icons.position.icon));
+				 			}
+				 			if(data.busList.length>0){
+					 			//設定以第一台巴士為中心點
+					 			BusMap_map.map.setCenter(new google.maps.LatLng(data.busList[0].latitude,data.busList[0].longitude));
+					 		}
+				 			$.mobile.changePage('#CP_BusMap');
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function gentransPlanningOptions(park,base){
+			LoadingObject.show();
+			var jsonObject={"command":"select chtTitle,latitude,longitude,chtAddress from RouteLocation where parkArea='"+park+"' and parkLocation='"+base+"'"};
+			// jsonObject={"command":"select chtTitle,latitude,longitude,chtAddress from RouteLocationwhere parkArea='"+park+"'}";
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:commonURL_DB,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(data.jsonOutput.length>0){
+		                		for(var i=0;i<data.jsonOutput.length;i++){
+			                		htmlResult+='<option value="'+data.jsonOutput[i].chtAddress+'" '+
+			                					'data-latitude="'+data.jsonOutput[i].latitude+'" '+
+			                					'data-longitude="'+data.jsonOutput[i].longitude+'" '+
+						                		'>'+data.jsonOutput[i].chtTitle;'</option>'
+			                	}
+		            		}
+	            			$('#page_transPlanning').find('#selectStartPosition').html('<option data-usemyposition="true" value="我的位置">我的位置</option>'+htmlResult).selectmenu('refresh');  
+	            			$('#page_transPlanning').find('#selectEndPosition').html(htmlResult).selectmenu('refresh');  
+	            		
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToIndex_03(lineNo){
+			LoadingObject.show();
+			var jsonObject={"parkArea":Park,"lineNo":lineNo};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="",FromDest_htmlResult="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_index_03,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	if(lineNo==""){
+		                		htmlResult+='<option value="00">請選擇</option>';
+				                for(var i=0;i<data.lineList.length;i++){		                
+					                	htmlResult+='<option value="'+data.lineList[i].lineNo+'">'+data.lineList[i].chtTitle+'</option>'
+					                	$('#index_03').find('#selectLines').html(htmlResult).selectmenu('refresh');
+		            			}	
+		            		}else{
+		            			for(var i=0;i<data.stopList.length;i++){		   
+			                		FromDest_htmlResult+="<optgroup data-value='"+data.stopList[i].stopCode+"' label='"+data.stopList[i].chtName+"'>";
+			                		for(var j=0;j<data.stopList.length;j++){
+			                			if(data.stopList[i].stopCode!=data.stopList[j].stopCode){
+			                				FromDest_htmlResult+="<option value='"+data.stopList[i].stopCode+"_"+data.stopList[j].stopCode+"'>"+data.stopList[j].chtName+"</option>"
+			                			}
+			                		}
+				                	FromDest_htmlResult+="</optgroup>";
+				                }
+			                }
+		            			if(FromDest_htmlResult!=""){
+		            				$('#index_03').find('#mobiScroll_FromDestStop').html(FromDest_htmlResult);
+	    							$('#index_03 #mobiScroll_FromDestStop').mobiscroll().select({		
+										theme: 'ios',
+										label:'Name',
+										inputClass:'i-txt',
+										display: 'bottom',
+										mode: 'scroller',
+										setText: '確定',
+										cancelText: '取消',
+								        group: true,
+								        label: '迄站',
+								        groupLabel: '起站'
+									});
+									$('#index_03').trigger('create');
+		            			}
+
+		            			$('#index_03').find('#lineDesc').html("test");
+    					 }else{
+		                    smoke.alert(data.messange,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToIndex_04(lineNo){
+			LoadingObject.show();
+			var jsonObject={"parkArea":Park,"lineNo":lineNo};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="",FromDest_htmlResult="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_index_04,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	if(lineNo==""){
+		                		htmlResult+='<option value="00">請選擇</option>';
+				                for(var i=0;i<data.lineList.length;i++){		                
+					                	htmlResult+='<option value="'+data.lineList[i].lineNo+'">'+data.lineList[i].chtTitle+'</option>'
+					                	$('#index_04').find('#selectLines').html(htmlResult).selectmenu('refresh');
+		            			}	
+		            		}else{
+		            			for(var i=0;i<data.stopList.length;i++){		   
+			                		FromDest_htmlResult+="<optgroup data-value='"+data.stopList[i].stopCode+"' label='"+data.stopList[i].chtName+"'>";
+			                		for(var j=0;j<data.stopList.length;j++){
+			                			if(data.stopList[i].stopCode!=data.stopList[j].stopCode){
+			                				FromDest_htmlResult+="<option value='"+data.stopList[i].stopCode+"_"+data.stopList[j].stopCode+"'>"+data.stopList[j].chtName+"</option>"
+			                			}
+			                		}
+				                	FromDest_htmlResult+="</optgroup>";
+				                }
+			                }
+		            			if(FromDest_htmlResult!=""){
+		            				$('#index_04').find('#mobiScroll_FromDestStop').html(FromDest_htmlResult);
+	    							$('#index_04 #mobiScroll_FromDestStop').mobiscroll().select({		
+										theme: 'ios',
+										label:'Name',
+										inputClass:'i-txt',
+										display: 'bottom',
+										mode: 'scroller',
+										setText: '確定',
+										cancelText: '取消',
+								        group: true,
+								        label: '迄站',
+								        groupLabel: '起站'
+									});
+									$('#index_04').trigger('create');
+		            			}
+
+		            			$('#index_04').find('#lineDesc').html($('#index_04').find('#selectLines option:selected').data('desc'));
+		            			$('#index_04').find('#formBtn').html('<input data-role="none" type="submit" name="reset"  id="btn_search" value="查詢" class="btn09"><input data-role="none" type="submit" name="button" id="btnAroundStop" value="附近站點" class="btn03"></input>');
+
+    					 }else{
+		                    smoke.alert(data.messange,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToLP_03(lineNo,fromStop,destStop,hh,mm,isFocusRouteMap){
+			LoadingObject.show();
+			var jsonObject={"parkArea":Park,"lineNo":lineNo,"fromStopCode":fromStop,"destStopCode":destStop,"beginHour":hh,"beginMin":mm};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_LP_03,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+								$('#LP_03').find('#title').html(data.chtTitle+" "+data.quertTime);
+								$('#LP_03').find('#note').html('<p><span>註：</span>'+data.chtMemo+'</p>');
+								if(data.transportList.length>0){
+									htmlResult+='<tbody><tr><th scope="col" width="50%">'+data.transportList[0].fromStopName+'發車</th><th scope="col" width="50%">'+data.transportList[0].destStopName+'</th></tr>';
+		            				for(var i=0;i<data.transportList.length;i++){
+			            				htmlResult+='<tr><td>'+data.transportList[i].arriveHour+':'+(data.transportList[i].arriveMin.length>1?data.transportList[i].arriveMin:"0"+data.transportList[i].arriveMin)+'</td><td>'+data.transportList[i].destArriveHour+':'+data.transportList[i].destArriveMin+'<div class="red"></div></td></tr>'
+			            			}
+			            			htmlResult+='</tbody></table>';
+			            		}
+			            		$('#LP_03').find('#pathImg').html('<img src="'+Setting_imgSrc+"line/"+data.lineMap+'" />').hide();
+								$('#LP_03').find('#dataList').html(htmlResult);
+								if(isFocusRouteMap){
+									$('#LP_03').find('#btnPathImg').addClass('ui-btn-active');
+									$('#LP_03').find('#btnTimeTable').data('backindex','true').removeClass('ui-btn-active');
+									$('#LP_03').find('#pathImg').show();
+									$('#LP_03').find('#dataList').hide();
+								}else{
+									$('#LP_03').find('#btnPathImg').removeClass('ui-btn-active');
+									$('#LP_03').find('#btnTimeTable').data('backindex','false').addClass('ui-btn-active');
+									$('#LP_03').find('#pathImg').hide();
+									$('#LP_03').find('#dataList').show();
+								}
+								$('#LP_03').trigger('create');
+	            				$.mobile.changePage('#LP_03');
+		                }else{
+		                    smoke.alert(data.messange,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToLP_04(lineNo,fromStop,destStop,hh,mm,isFocusRouteMap){
+			LoadingObject.show();
+			var jsonObject={"parkArea":Park,"lineNo":lineNo,"fromStopCode":fromStop,"destStopCode":destStop,"beginHour":hh,"beginMin":mm};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_LP_04_1,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+								$('#LP_04').find('#title').html(data.chtTitle+" "+data.quertTime);
+								$('#LP_04').find('#note').html('<p><span>註：</span>'+data.chtMemo+'</p>');
+								if(data.transportList.length>0){
+									htmlResult+='<tbody><tr><th scope="col" width="50%">'+data.transportList[0].fromStopName+'發車</th><th scope="col" width="50%">'+data.transportList[0].destStopName+'</th></tr>';
+		            				for(var i=0;i<data.transportList.length;i++){
+			            				htmlResult+='<tr><td>'+data.transportList[i].arriveHour+':'+(data.transportList[i].arriveMin.length>1?data.transportList[i].arriveMin:"0"+data.transportList[i].arriveMin)+'</td><td>'+data.transportList[i].destArriveHour+':'+data.transportList[i].destArriveMin+'<div class="red"></div></td></tr>'
+			            			}
+			            			htmlResult+='</tbody></table>';
+			            		}
+			            		$('#LP_04').find('#pathImg').html('<img src="'+Setting_imgSrc+"line/"+data.lineMap+'" />').hide();
+								$('#LP_04').find('#dataList').html(htmlResult);
+								if(isFocusRouteMap){
+									$('#LP_04').find('#pathImg').show();
+									$('#LP_04').find('#dataList').hide();
+								}else{
+									$('#LP_04').find('#pathImg').hide();
+									$('#LP_04').find('#dataList').show();
+								}
+	            				$.mobile.changePage('#LP_04');
+		                }else{
+		                    smoke.alert(data.messange,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToIndex_05(park,base,lat,lng){
+			LoadingObject.show();
+			var jsonObject={"parkArea":park,"parkLocation":base,"currentLat":lat,"currentLng":lng};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var transportList_htmlResult="",nearestSpotInfo_htmlResult="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_index_05,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	//index
+                			for(var i=0;i<data.trafficList.length;i++){
+                				transportList_htmlResult+='<li data-role="none">'+
+                										  '<h2 style="color:'+''+'!important;">'+data.trafficList[i].chtTitle+'</h2>'+
+                										  '<p class="ptext">'+data.trafficList[i].chtDesc+'</p>'+
+                										  '<div class="btnbox">'+
+                										  '<input data-role="none" type="submit" data-lineno="'+data.trafficList[i].lineNo+'" value="時刻及路線" id="btnToLP_05_1" class="btn10"></input>'+
+                										  '<input data-role="none" type="submit" data-lineno="'+data.trafficList[i].lineNo+'" value="巴士在哪" id="btnToBusMap" class="btn11"></input>'+
+                										  '</div></li>';
+                			}
+                			if(typeof(data.stationInfo.chtStationName)!="undefined"){
+								nearestSpotInfo_htmlResult+='我的位置距離最近巡巴站牌 <span class="red"><strong>'+data.stationInfo.chtStationName+'</strong></span> 約 <span class="green"><strong>'+data.stationInfo.distance+'公尺</strong></span><br><input data-role="none" type="submit" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnRoute" value="規劃路線" class="btn11"></input><input data-role="none" type="submit" name="button" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnAroundStop" value="附近站點" class="btn10"></input>';
+							}
+	            			if(transportList_htmlResult!=""){
+	            				transportList_htmlResult='<ul data-role="none">'+transportList_htmlResult+'</ul>';
+	            			}else{
+	            				transportList_htmlResult="尚未提供相關資料";
+	            			}
+	            			$('#index_05').find('#transportList').html(transportList_htmlResult);
+            				$('#index_05').find('#nearestSpotInfo').html(nearestSpotInfo_htmlResult);
+            				if(data.statusCode!=200){
+								$('#index_05').find('#divIndex').show();
+								$('#index_05').find('#divQP').hide();
+            					$('#index_05').find('#nav_QP').hide();
+            				}else{
+            					$('#index_05').find('#nav_QP').show();
+	            				//QP
+	            				changeToIndex_QP_05(park,base,data.trafficList[0].lineNo,true);
+	            			}
+            				// $.mobile.changePage('#LP_05');
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToIndex_QP_05(park,base,lineNo,isIni){
+			LoadingObject.show();
+			var jsonObject={"parkArea":park,"parkLocation":base,"lineNo":lineNo};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var transportList_htmlResult="",nearestSpotInfo_htmlResult="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_QP_05,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+            				//QP
+	            			$('#index_05').find('#mobiScroll_index_05_LineList').html(genLineListSelect(data.lineList));
+	            			$('#index_05').find('#mobiScroll_index_05_StopList').html(genStopListSelect(data.stopList));
+	            			if(isIni){
+								//mobiscroll
+								$('#mobiScroll_index_05_LineList').mobiscroll().select({		
+									theme: 'ios',
+									label:'Name',
+									inputClass:'i-txt',
+									display: 'bottom',
+									mode: 'scroller',
+									setText: '確定',
+									cancelText: '取消',
+							        group: false,
+							        label: '路線',
+								});  
+								$('#mobiScroll_index_05_StopList').mobiscroll().select({		
+									theme: 'ios',
+									label:'Name',
+									inputClass:'i-txt',
+									display: 'bottom',
+									mode: 'scroller',
+									setText: '確定',
+									cancelText: '取消',
+							        group: true,
+							        label: '迄站',
+							        groupLabel: '起站',
+								}); 
+								$('#mobiScroll_index_05_TimeRange').mobiscroll().select({		
+									theme: 'ios',
+									label:'Name',
+									inputClass:'i-txt',
+									display: 'bottom',
+									mode: 'scroller',
+									setText: '確定',
+									cancelText: '取消',
+							        group: false,
+							        label: '時間區段',
+								});   
+							}else{
+								$('#mobiScroll_index_05_StopList').mobiscroll().select({		
+									theme: 'ios',
+									label:'Name',
+									inputClass:'i-txt',
+									display: 'bottom',
+									mode: 'scroller',
+									setText: '確定',
+									cancelText: '取消',
+							        group: true,
+							        label: '迄站',
+							        groupLabel: '起站',
+								}); 
+							}
+							$('#index_05').find('#divQP').trigger('create');
+							//使呈現正常
+							var temp=$('#index_05 #divQP div.ui-input-text');
+							for(var i=0;i<temp.length;i++){
+								if($(temp[i]).html()==""){
+									$(temp[i]).hide();
+								}
+							}
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function getParkAndTowingData(park,base,type){
+			LoadingObject.show();
+			var jsonObject={"command":"select parkingAndTowingInfo.SN,parkingAndTowingInfo.parkArea,parkingAndTowingInfo.parkLocation, parkingAndTowingInfo.xLBSSpot ,parkingAndTowingInfo. chtMemo,xLBSSpot .chtName, xLBSSpot.chtAddress ,xLBSSpot. telTitle,xLBSSpot .telNumber, xLBSSpot.latitude ,xLBSSpot.longitude,xLBSSpot .urlTitle, xLBSSpot.urlAddress ,(case xLBSSpotPic.ximage when '' then '' else ('"+Setting_imgSrc+"'+xLBSSpotPic .ximage)   end) as ximage ,(parkingAndTowingInfo. beginHour+':' +(case beginMin when '0' then '00' else beginMin end)+'-' +endHour+ ':'+ (case endMin when '0' then '00' else endMin end )) as openingTime,codemain1. mvalue as 'infoModeText', codemain2. mvalue as 'OwnerText' from parkingAndTowingInfo left join codemain as codemain1 on codemain1.mcode =parkingAndTowingInfo. infoMode left join codemain as codemain2 on codemain2.mcode =parkingAndTowingInfo. owner left join xLBSSpot on parkingAndTowingInfo .xLBSSpot= xLBSSpot.spotNo join xLBSSpotPic on xLBSSpot.spotNo =xLBSSpotPic. spotNo where codemain1.codeMetaId ='parkingMode' and codemain2.codeMetaId ='ownerOfParkingLot'and codemain1.mcode ='"+type+"' and parkingAndTowingInfo.parkArea='"+park+"' and parkingAndTowingInfo.parkLocation='"+base+"' and xLBSSpotPic.isMain ='1' and xLBSSpotPic.entranceCode is null and parkingAndTowingInfo .isPublic= 'Y' and xLBSSpot.isPublic ='Y' and xLBSSpotPic.isPublic ='Y'"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:commonURL_DB,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(data.jsonOutput.length>0){
+		                		for(var i=0;i<data.jsonOutput.length;i++){
+		                		htmlResult+="<li data-sn='"+data.jsonOutput[i].SN+"' data-title='"+data.jsonOutput[i].chtName+"' data-address='"+data.jsonOutput[i].chtAddress+"' data-spotno='"+data.jsonOutput[i].xLBSSpot+"' data-latitude='"+data.jsonOutput[i].latitude+"' data-longitude='"+data.jsonOutput[i].longitude+"' data-lbs='"+data.jsonOutput[i].xLBSSpot+"'>"+
+		                					"<div class='image'><img src='"+data.jsonOutput[i].ximage+"' alt='停車場'></div>"+
+		                					"<h2>"+data.jsonOutput[i].chtName+"</h2>"+
+		                					"<p>"+data.jsonOutput[i].chtAddress+"</p>"+
+										    "<div class='btnbox'>"+
+											'<input data-role="none" type="submit" data-title="'+data.jsonOutput[i].chtName+'" data-address="'+data.jsonOutput[i].chtAddress+'" data-latitude="'+data.jsonOutput[i].latitude+'" data-longitude="'+data.jsonOutput[i].longitude+'" data-spotno="'+data.jsonOutput[i].xLBSSpot+'" data-ximage="'+data.jsonOutput[i].ximage+'" id="btnRoute" value="規劃路線" class="btn06"></input></div>'+
+		                					"</li>";
+			                	}
+		            		}
+            				if(type=="01"){
+	            				$('#index_09').find('#dataList').html("<ul data-role='none'>"+htmlResult+'</ul>'); 
+            				}else{
+            					$('#index_10').find('#dataList').html("<ul data-role='none'>"+htmlResult+'</ul>'); 
+            				} 
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function getAreaIntroData(park,base,type){
+			LoadingObject.show();
+			var jsonObject={"command":"select info.SN,info.chtDesc as HTML,chtTitle as value,travelMode as code from headToParkInfo as info where info.parkArea='"+park+"' and info.parkLocation='"+base+"' and travelMode='"+type+"' order by travelMode"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:commonURL_DB,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(data.jsonOutput.length>0){
+		                		htmlResult+=data.jsonOutput[0].HTML;
+		            		}
+	            			if(htmlResult!=""){
+	            				$('#index_07').find('#htmlResult').html(htmlResult).trigger('create');  
+	            			}
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function checkTimeIsAfter(t1,t2){
+			var result=true;
+			var t1_hh=t1.split(":")[0];
+			var t1_mm=t1.split(":")[1];
+			var t2_hh=t2.split(":")[0];
+			var t2_mm=t2.split(":")[1];
+			if(t1_hh!="-"&&t2_hh!="-"){
+				if(t1_hh>t2_hh||(t1_hh==t2_hh&&t1_mm>t2_mm)){
+					result=false;
+				}
+			}
+			return result;
+		}
+		function changeToCP_01(park,lat,lng,hh,mm){
+			LoadingObject.show();
+			var jsonObject={"parkArea":park,"currentLat":lat,"currentLng":lng,"beginHour":"00","beginMin":"00"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="",trainHtmlResult="",trafficHtmlResult="",selectedTimeRange=getTimeRangeValue(hh+":"+mm),trTimeRangeValue="0",showTRCount=0;
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_CP_01,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	htmlResult+='<li>抵達 <span class="red"><strong>'+data.chtStationName+'</strong></span>'+
+			                			'<label style="display:inline" for="select_timeRange">時段：</label>'+
+			               				'<select data-role="none" name="select_timeRange" id="select_timeRange">';
+               				htmlResult+='<option selected value="-1">'+hh+':'+mm+'~</option>';
+               				htmlResult+='<option value="0">不限時段</option>';
+               				htmlResult+='<option value="1">6:00 ~ 10:00</option>';
+               				htmlResult+='<option value="2">10:00 ~ 14:00</option>';
+               				htmlResult+='<option value="3">14:00 ~ 18:00</option>';
+               				htmlResult+='<option value="4">18:00 ~ 22:00</option>';
+               				htmlResult+='</select>'+
+			       						'</li>';
+		                	htmlResult+='<li>搭乘  <span class="org"><strong>'+data.chtDescription+'</strong></span></li>'+
+			            				'<li>建議轉乘時間：</li>';
+			            	if(data.trafficList.length>0){
+								trafficHtmlResult+='<table id="trafficTable" width="100%" summary="建議轉乘時間表" class="lpTb2"><tbody>'+
+												   '<tr><th scope="col">交通工具</th><th scope="col">行車方向</th><th scope="col">起站發車時間</th></tr>';
+								showTRCount=0;
+								for(var i=0;i<data.trafficList.length;i++){
+									trTimeRangeValue=getTimeRangeValue(data.trafficList[i].arriveHour+":"+(data.trafficList[i].arriveMin!="0"?data.trafficList[i].arriveMin:"00"));
+									trafficHtmlResult+='<tr data-no="'+(i+1)+'"" data-timerange="'+trTimeRangeValue+'"  ';
+									if(checkTimeIsAfter(hh+":"+mm,data.trafficList[i].arriveHour+":"+data.trafficList[i].arriveMin)){
+										if(selectedTimeRange!="0"&&trTimeRangeValue!=selectedTimeRange){
+											trafficHtmlResult+='style="display:none;" data-targetrange="1"';	
+										}else{
+											if(showTRCount>1){
+												trafficHtmlResult+='style="display:none;" data-targetrange="1"';
+											}else{
+												trafficHtmlResult+=' data-targetrange="1" ';
+												showTRCount++;
+											}
+										}
+									}else{
+										trafficHtmlResult+='style="display:none;"';	
+									}
+									trafficHtmlResult+='>';
+									trafficHtmlResult+='<td>'+data.trafficList[i].chtLineTitle+'</td>'+
+													'<td>'+data.trafficList[i].toDir+'</td>'+
+													'<td>'+data.trafficList[i].arriveHour+":"+(data.trafficList[i].arriveMin!="0"?data.trafficList[i].arriveMin:"00")+'</td>'+
+													'</tr>';
+								}
+								trafficHtmlResult+='</tbody></table>'
+							}
+							if(data.trainList.length>0){
+								trainHtmlResult+='<table id="trainTable" width="100%" summary="建議轉乘時間表" class="lpTb2"><tbody>'+
+												 '<tr><th scope="col">交通工具</th><th scope="col">行車方向</th><th scope="col">發車時間</th><th scope="col">抵達時間</th></tr>';
+								showTRCount=0;
+								for(var i=0;i<data.trainList.length;i++){
+									trTimeRangeValue=getTimeRangeValue(data.trainList[i].DEPTime);
+									trainHtmlResult+='<tr data-no="'+(i+1)+'"" data-timerange="'+trTimeRangeValue+'"  ';
+									if(checkTimeIsAfter(hh+":"+mm,data.trainList[i].DEPTime)){
+										if(selectedTimeRange!="0"&&trTimeRangeValue!=selectedTimeRange){
+											trainHtmlResult+='style="display:none;" data-targetrange="1"';	
+										}else{
+											if(showTRCount>1){
+												trainHtmlResult+='style="display:none;" data-targetrange="1"';	
+											}else{
+												trainHtmlResult+=' data-targetrange="1" ';	
+												showTRCount++;
+											}
+										}
+									}else{
+										trainHtmlResult+='style="display:none;"';
+									}
+									trainHtmlResult+='>';
+									trainHtmlResult+='<td>'+data.trainList[i].calssChtName+"("+data.trainList[i].train+")"+'</td>'+
+													'<td>'+data.trainList[i].toDir+'</td>'+
+													'<td>'+data.trainList[i].DEPTime+'</td>'+
+													'<td>'+data.trainList[i].ARRTime+'</td>'+
+													'</tr>';
+								}
+								trainHtmlResult+='</tbody></table>'
+							}
+							if((trafficHtmlResult+trainHtmlResult)==""){
+								htmlResult+="<br/>尚未提供相關資料";
+							}else{
+								htmlResult+='<div id="adv_function"><a id="btnPrev"><div class="prev">更早時刻</div></a><a id="btnNext"><div class="next">更晚時刻</div></a></div>';
+								htmlResult+=trafficHtmlResult+trainHtmlResult;
+							}
+							adv_function
+							$('#CP_01').find('select_timeRange').selectmenu('refresh');
+							$('#CP_01').find('#intlist').html(htmlResult);
+			        		$('#CP_01').find('#note').html("<span>註：</span>"+data.chtAlertMessage);
+			        		 $('#CP_01').find('#location').html('我的位置距離 <span class="red"><strong>'+data.stationInfo.chtStationName+'</strong></span> 約 <span class="green"><strong>'+data.stationInfo.distance+'公尺</strong></span><input data-role="none" type="submit" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnRoute" value="規劃路線" class="btn11"></input>');
+	            			$.mobile.changePage('#CP_01');	            			
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToCP_02(park,lat,lng,hh,mm,from,dest){
+			LoadingObject.show();
+			var jsonObject={"parkArea":park,"currentLat":lat,"currentLng":lng,"beginHour":"00","beginMin":"00","fromStation":from,"destStation":dest};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="",trainHtmlResult="",selectedTimeRange=getTimeRangeValue(hh+":"+mm),trTimeRangeValue="0",showTRCount=0;
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_CP_02,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	htmlResult+='<li>抵達 <span class="red"><strong>'+data.stationInfo.chtStationName+'</strong></span>'+
+			                			'<label style="display:inline" for="select_timeRange">時段：</label>'+
+			               				'<select data-role="none" name="select_timeRange" id="select_timeRange">';
+							htmlResult+='<option selected value="-1">'+hh+':'+mm+'~</option>';
+               				htmlResult+='<option value="0">不限時段</option>';
+               				htmlResult+='<option value="1">6:00 ~ 10:00</option>';
+               				htmlResult+='<option value="2">10:00 ~ 14:00</option>';
+               				htmlResult+='<option value="3">14:00 ~ 18:00</option>';
+               				htmlResult+='<option value="4">18:00 ~ 22:00</option>';
+		               		htmlResult+='</select>'+
+			       						'</li>';
+		                	htmlResult+='<li>搭乘  <span class="org"><strong>'+data.chtDescription+'</strong></span></li>';
+	            			htmlResult+='<li>建議轉乘時間：</li>';
+							if(data.trainList.length>0){
+								trainHtmlResult+='<table id="trainTable" width="100%" summary="建議轉乘時間表" class="lpTb2"><tbody>'+
+												 '<tr><th scope="col">交通工具</th><th scope="col">行車方向</th><th scope="col">發車時間</th><th scope="col">抵達時間</th></tr>';
+								showTRCount=0;
+								for(var i=0;i<data.trainList.length;i++){
+									trTimeRangeValue=getTimeRangeValue(data.trainList[i].DEPTime);
+									trainHtmlResult+='<tr data-no="'+(i+1)+'"" data-timerange="'+trTimeRangeValue+'"  ';
+									if(checkTimeIsAfter(hh+":"+mm,data.trainList[i].DEPTime)){
+										if(selectedTimeRange!="0"&&trTimeRangeValue!=selectedTimeRange){
+											trainHtmlResult+='style="display:none;" data-targetrange="1"';	
+										}else{
+											if(showTRCount>4){
+												trainHtmlResult+='style="display:none;" data-targetrange="1"';	
+											}else{
+												trainHtmlResult+=' data-targetrange="1" ';
+												showTRCount++;
+											}
+										}
+									}else{
+										trainHtmlResult+='style="display:none;" ';
+									}
+									trainHtmlResult+='>';
+									trainHtmlResult+='<td>'+data.trainList[i].calssChtName+"("+data.trainList[i].train+")"+'</td>'+
+													'<td>'+data.trainList[i].toDir+'</td>'+
+													'<td>'+data.trainList[i].DEPTime+'</td>'+
+													'<td>'+data.trainList[i].ARRTime+'</td>'+
+													'</tr>';
+								}
+								trainHtmlResult+='</tbody></table>'
+							}
+							if((trainHtmlResult)==""){
+								htmlResult+="<br/>尚未提供相關資料";
+							}else{
+								htmlResult+='<div id="adv_function"><a id="btnPrev"><div class="prev">更早時刻</div></a><a id="btnNext"><div class="next">更晚時刻</div></a></div>';
+								htmlResult+=trainHtmlResult;
+							}
+							adv_function
+							$('#CP_02').find('select_timeRange').selectmenu('refresh');
+							$('#CP_02').find('#intlist').html(htmlResult);
+			        		$('#CP_02').find('#note').html("<span>註：</span>"+data.chtAlertMessage);
+			        		$('#CP_02').find('#location').html('我的位置距離 <span class="red"><strong>'+data.stationInfo.chtStationName+'</strong></span> 約 <span class="green"><strong>'+data.stationInfo.distance+'公尺</strong></span><input data-role="none" type="submit" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnRoute" value="規劃路線" class="btn11"></input>');
+	            			$.mobile.changePage('#CP_02');	            			
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToCP_05(park,lat,lng,hh,mm){
+			LoadingObject.show();
+			var jsonObject={"parkArea":park,"currentLat":lat,"currentLng":lng,"beginHour":hh,"beginMin":mm};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="",trainUpHtmlResult="",trainDownHtmlResult="",trafficHtmlResult="",selectedTimeRange=getTimeRangeValue(hh+":"+mm),trTimeRangeValue="0",showTRCount=0;
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_CP_05,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.statusCode!="500"){
+		                	htmlResult+='<li>抵達 <span class="red"><strong>'+data.chtStationName+'</strong></span>'+
+			                			'<label style="display:inline" for="select_timeRange">時段：</label>'+
+			               				'<select data-role="none" name="select_timeRange" id="select_timeRange">';
+							htmlResult+='<option selected value="-1">'+hh+':'+mm+'~</option>';
+               				htmlResult+='<option value="0">不限時段</option>';
+               				htmlResult+='<option value="1">6:00 ~ 10:00</option>';
+               				htmlResult+='<option value="2">10:00 ~ 14:00</option>';
+               				htmlResult+='<option value="3">14:00 ~ 18:00</option>';
+               				htmlResult+='<option value="4">18:00 ~ 22:00</option>';
+               				htmlResult+='</select>'+
+			       						'</li>';
+		                	htmlResult+='<li>搭乘  <span class="org"><strong>'+data.chtDescription+'</strong></span></li>'+
+			            				'<li>建議轉乘時間：</li>';
+			            	if(data.trafficList.length>0){
+								trafficHtmlResult+='<table id="trafficTable" width="100%" summary="建議轉乘時間表" class="lpTb2"><tbody>'+
+												   '<tr><th scope="col">交通工具</th><th scope="col">行車方向</th><th scope="col">發車時間</th></tr>';
+								showTRCount=0;
+								for(var i=0;i<data.trafficList.length;i++){
+									trTimeRangeValue=getTimeRangeValue(data.trafficList[i].arriveHour+":"+(data.trafficList[i].arriveMin!="0"?data.trafficList[i].arriveMin:"00"));
+									trafficHtmlResult+='<tr data-no="'+(i+1)+'"" data-timerange="'+trTimeRangeValue+'"  ';
+									if(checkTimeIsAfter(hh+":"+mm,data.trafficList[i].arriveHour+":"+data.trafficList[i].arriveMin)){
+										if(selectedTimeRange!="0"&&trTimeRangeValue!=selectedTimeRange){
+											trafficHtmlResult+='style="display:none;" data-targetrange="1"';	
+										}else{
+											if(showTRCount>1){
+												trafficHtmlResult+='style="display:none;" data-targetrange="1"';	
+											}else{
+												trafficHtmlResult+=' data-targetrange="1" ';
+												showTRCount++;
+											}
+										}
+									}else{
+										trafficHtmlResult+='style="display:none;"';	
+									}
+									trafficHtmlResult+='>';
+									trafficHtmlResult+='<td>'+data.trafficList[i].chtLineTitle+'</td>'+
+													'<td>'+data.trafficList[i].toDir+'</td>'+
+													'<td>'+data.trafficList[i].arriveHour+":"+(data.trafficList[i].arriveMin!="0"?data.trafficList[i].arriveMin:"00")+'</td>'+
+													'</tr>';
+								}
+								trafficHtmlResult+='</tbody></table>'
+							}
+							if(data.thsrcUpList.length>0){
+								trainUpHtmlResult+='<table id="trainUpTable" width="100%" summary="建議轉乘時間表" class="lpTb2"><tbody>'+
+												 '<tr><th scope="col">交通工具</th><th scope="col">行車方向</th><th scope="col">發車時間</th></tr>';
+								showTRCount=0;
+								for(var i=0;i<data.thsrcUpList.length;i++){
+									trTimeRangeValue=getTimeRangeValue(data.thsrcUpList[i].DEPTime);
+									trainUpHtmlResult+='<tr data-no="'+(i+1)+'"" data-timerange="'+trTimeRangeValue+'"  ';
+									if(checkTimeIsAfter(hh+":"+mm,data.thsrcUpList[i].DEPTime)){
+										if(selectedTimeRange!="0"&&trTimeRangeValue!=selectedTimeRange){
+											trainUpHtmlResult+='style="display:none;" data-targetrange="1"';	
+										}else{
+											if(showTRCount>1){
+												trainUpHtmlResult+='style="display:none;" data-targetrange="1"';	
+											}else{
+												trainUpHtmlResult+=' data-targetrange="1" ';
+												showTRCount++;
+											}
+										}
+									}else{
+										trafficUpHtmlResult+='style="display:none;"';	
+									}
+									trainUpHtmlResult+='>';
+									trainUpHtmlResult+='<td>'+"高鐵("+data.thsrcUpList[i].train+")"+'</td>'+
+													'<td>'+data.thsrcUpList[i].toDir+'</td>'+
+													'<td>'+data.thsrcUpList[i].DEPTime+'</td>'+
+													'</tr>';
+								}
+								trainUpHtmlResult+='</tbody></table>'
+							}
+							if(data.thsrcDownList.length>0){
+								trainDownHtmlResult+='<table id="trainDownTable" width="100%" summary="建議轉乘時間表" class="lpTb2"><tbody>'+
+												 '<tr><th scope="col">交通工具</th><th scope="col">行車方向</th><th scope="col">發車時間</th></tr>';
+								showTRCount=0;
+								for(var i=0;i<data.thsrcDownList.length;i++){
+									trTimeRangeValue=getTimeRangeValue(data.thsrcDownList[i].DEPTime);
+									trainDownHtmlResult+='<tr data-no="'+(i+1)+'"" data-timerange="'+trTimeRangeValue+'"  ';
+									if(checkTimeIsAfter(hh+":"+mm,data.thsrcDownList[i].DEPTime)){
+										if(selectedTimeRange!="0"&&trTimeRangeValue!=selectedTimeRange){
+											trainDownHtmlResult+='style="display:none;" data-targetrange="1"';	
+										}else{
+											if(showTRCount>1){
+												trainDownHtmlResult+='style="display:none;" data-targetrange="1"';	
+											}else{
+												trainDownHtmlResult+=' data-targetrange="1" ';
+												showTRCount++;
+											}
+										}
+									}else{
+										trafficDownHtmlResult+='style="display:none;"';	
+									}
+									trainDownHtmlResult+='>';
+									trainDownHtmlResult+='<td>'+"高鐵("+data.thsrcDownList[i].train+")"+'</td>'+
+													'<td>'+data.thsrcDownList[i].toDir+'</td>'+
+													'<td>'+data.thsrcDownList[i].DEPTime+'</td>'+
+													'</tr>';
+								}
+								trainDownHtmlResult+='</tbody></table>'
+							}
+							if((trafficHtmlResult+trainUpHtmlResult+trainDownHtmlResult)==""){
+								htmlResult+="<br/>尚未提供相關資料";
+							}else{
+								htmlResult+='<div id="adv_function"><a id="btnPrev"><div class="prev">更早時刻</div></a><a id="btnNext"><div class="next">更晚時刻</div></a></div>';
+								htmlResult+=trafficHtmlResult+trainUpHtmlResult+trainDownHtmlResult;
+							} 
+							$('#CP_05').find('select_timeRange').selectmenu('refresh');
+							$('#CP_05').find('#intlist').html(htmlResult);
+							if(typeof(data.chtAlertMessage)!=="undefined"){
+				        		$('#CP_05').find('#note').html("<span>註：</span>"+data.chtAlertMessage);
+				        	}
+			        		 $('#CP_05').find('#location').html('我的位置距離 <span class="red"><strong>'+data.stationInfo.chtStationName+'</strong></span> 約 <span class="green"><strong>'+data.stationInfo.distance+'公尺</strong></span><input data-role="none" type="submit" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnRoute" value="規劃路線" class="btn11"></input>');
+	            			$.mobile.changePage('#CP_05');	            			
+		                }else{
+		                    smoke.alert(data.message,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToCP_ParkAndTowingData(sn,type){
+			LoadingObject.show();
+			var jsonObject={"command":"select parkingAndTowingInfo.SN,codemain1.mcode,parkingAndTowingInfo.parkArea,parkingAndTowingInfo.parkLocation, xLBSSpot.spotNo ,parkingAndTowingInfo. chtMemo,xLBSSpot .chtName, xLBSSpot.chtAddress ,xLBSSpot. telTitle,xLBSSpot .telNumber, xLBSSpot.latitude ,xLBSSpot. longitude,xLBSSpot .urlTitle, xLBSSpot.urlAddress ,(case xLBSSpotPic.ximage when '' then '' else ('"+Setting_imgSrc+"'+xLBSSpotPic .ximage)   end) as ximage ,(parkingAndTowingInfo. beginHour+':' +(case beginMin when '0' then '00' else beginMin end)+'-' +endHour+ ':'+ (case endMin when '0' then '00' else endMin end )) as openingTime,codemain1. mvalue as 'infoModeText', codemain2. mvalue as 'OwnerText' from parkingAndTowingInfo left join codemain as codemain1 on codemain1.mcode =parkingAndTowingInfo. infoMode left join codemain as codemain2 on codemain2.mcode =parkingAndTowingInfo. owner left join xLBSSpot on parkingAndTowingInfo .xLBSSpot= xLBSSpot.spotNo join xLBSSpotPic on xLBSSpot.spotNo =xLBSSpotPic. spotNo where codemain1.codeMetaId ='parkingMode' and codemain2.codeMetaId ='ownerOfParkingLot'and parkingAndTowingInfo.SN='"+sn+"' and xLBSSpotPic.isMain ='1' and xLBSSpotPic.entranceCode is null and parkingAndTowingInfo .isPublic= 'Y' and xLBSSpot.isPublic ='Y' and xLBSSpotPic.isPublic ='Y' order by xLBSSpotPic.isMain DESC"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_CP_09,
+		        data:  {"jsonInput":jsonObjectStr,"spotNo":2399},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(data.jsonOutput.length>0){
+								//生活服務內容
+		                		htmlResult+="<div class='ServiceCt'><div class='title'>"+data.jsonOutput[0].chtName+"</div><ul class='photo'>";
+		                		for(var i=0;i<data.jsonOutput.length;i++){
+		                			htmlResult+="<li><img src='"+data.jsonOutput[i].ximage+"'></li>"
+		                		}
+            					htmlResult+="</ul><ul class='info'>"+
+		                					"<li>地址："+(typeof(data.jsonOutput[0].chtAddress)=="undefined"?"":data.jsonOutput[0].chtAddress)+"</li>"+	
+		                					"<li>"+(typeof(data.jsonOutput[0].telTitle)=="undefined"?"電話：":data.jsonOutput[0].telTitle+"：")+(typeof(data.jsonOutput[0].telNumber)=="undefined"?"":data.jsonOutput[0].telNumber)+"</li>"+
+		                					"<li>營業時間："+(typeof(data.jsonOutput[0].openingTime)=="undefined"?"":data.jsonOutput[0].openingTime)+"</li>"+
+		                					"<li>"+((typeof(data.jsonOutput[0].urlTitle)=="undefined"||data.jsonOutput[0].urlTitle=="")?"網址：":data.jsonOutput[0].urlTitle+"：")+"<a href='javascript:openBrowser(&#39;"+data.jsonOutput[0].urlAddress+"&#39;);' >"+((typeof(data.jsonOutput[0].urlAddress)=="undefined"||data.jsonOutput[0].urlAddress=="http://")?"":data.jsonOutput[0].urlAddress)+"</a></li>"+
+		                					(typeof(data.jsonOutput[0].parkingSpace)=="undefined"?"":"<li>剩餘車位："+data.jsonOutput[0].parkingSpace+"</li>")+
+		                					"</ul></div>";
+								//功能列
+								htmlResult+="<div class='springboard2'><ul><li>"+
+											"<button data-role='none' id='btnMap' data-title='"+data.jsonOutput[0].chtName+"' data-latitude='"+data.jsonOutput[0].latitude+"' data-longitude='"+data.jsonOutput[0].longitude+"' data-spotno='"+data.jsonOutput[0].spotNo+"' data-ximage='"+data.jsonOutput[0].ximage+"' data-xicon='"+(type=="01"?getXiconImg("024"):getXiconImg("025"))+"' data-address='"+data.jsonOutput[0].chtAddress+"' class='map'>地圖</button>"+
+											"<button data-role='none' id='btnRoute' data-title='"+data.jsonOutput[0].chtName+"' data-latitude='"+data.jsonOutput[0].latitude+"' data-longitude='"+data.jsonOutput[0].longitude+"' data-spotno='"+data.jsonOutput[0].spotNo+"' data-ximage='"+data.jsonOutput[0].ximage+"' data-xicon='"+(type=="01"?getXiconImg("024"):getXiconImg("025"))+"' data-address='"+data.jsonOutput[0].chtAddress+"'  class='route'>規劃路線</button>"+
+											"<button data-role='none' id='btnTel' data-tel='"+data.jsonOutput[0].telNumber+"'  class='tel'>撥打電話</button>"+
+											"</li></ul></div>";
+		            		}
+            				if(type=="01"){
+	            				$('#CP_09').find('#content').html(htmlResult); 
+	            				$.mobile.changePage('#CP_09');
+            				}else{
+            					$('#CP_10').find('#content').html(htmlResult); 
+            					$.mobile.changePage('#CP_10');
+            				} 
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeTosetPosition(){
+			//重新取得坐標
+			iniGPRS();
+			//導向地圖頁面
+			$.mobile.changePage('#page_setPosition');
+			//地圖初始化
+ 			setPosition_map=new HyMap(true);
+ 			setPosition_map.ini(document.getElementById('setPosition_map_canvas'),new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),15);
+		}
+		function genStopSelect(){
+			LoadingObject.show();
+			var jsonObject={"command":"select * from Station"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:commonURL_DB,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(data.jsonOutput.length>0){
+			                	for(var i=0;i<data.jsonOutput.length;i++){
+			                		htmlResult+="<optgroup data-value='"+data.jsonOutput[i].StationId+"' label='"+data.jsonOutput[i].StationName+"'>";
+			                		for(var j=0;j<data.jsonOutput.length;j++){
+			                			if(data.jsonOutput[i].StationId!=data.jsonOutput[j].StationId){
+			                				htmlResult+="<option value='"+data.jsonOutput[i].StationId+"_"+data.jsonOutput[j].StationId+"'>"+data.jsonOutput[j].StationName+"</option>"
+			                			}
+			                		}
+				                	htmlResult+="</optgroup>";
+		            			}
+		            		}
+	            			if(htmlResult!=""){
+	            				$('#index_01').find('#mobiScroll_stop').html(htmlResult);
+    							$('#index_01 #mobiScroll_stop').mobiscroll().select({		
+									theme: 'ios',
+									label:'Name',
+									inputClass:'i-txt',
+									display: 'bottom',
+									mode: 'scroller',
+									setText: '確定',
+									cancelText: '取消',
+							        group: true,
+							        label: '起訖車站',
+								});
+								$('#index_01').trigger('create');  
+	            			}
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function genRailStopSelect(){
+			LoadingObject.show();
+			var jsonObject={"command":"select rsm.id,rsm.StationId,rsm.areaCode,cm.mvalue,rs.StationName,rs.StationeName from RailwayStationMapping as rsm left join RailwayStation as rs on rsm.StationId=rs.StationId left join codemain as cm on rsm.areaCode=cm.mcode where rsm.areaCode!='' and cm.codeMetaId='train' order by areaCode asc"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="",targetArea="",hasNewArea=false;
+		    $.ajax({
+		        url:commonURL_DB,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(data.jsonOutput.length>0){
+			                	for(var i=0;i<data.jsonOutput.length;i++){
+			                		if(targetArea!=data.jsonOutput[i].areaCode){
+			                			if(targetArea!=""){
+					                		htmlResult+="</optgroup>";
+			                			}
+				                		htmlResult+="<optgroup data-value='"+data.jsonOutput[i].areaCode+"' label='"+data.jsonOutput[i].mvalue+"'>";
+				                		targetArea=data.jsonOutput[i].areaCode;
+				                		hasNewArea=true;
+				                	}else{
+				                		hasNewArea=false;
+				                	}
+	                				htmlResult+="<option value='"+data.jsonOutput[i].StationId+"'>"+data.jsonOutput[i].StationName+"</option>";
+		            			}
+		            		}
+	            			if(htmlResult!=""){
+	            				$('#index_02').find('#mobiScroll_begin_stop').html(htmlResult);
+	            				$('#index_02').find('#mobiScroll_end_stop').html(htmlResult);
+    							$('#index_02 #mobiScroll_begin_stop').mobiscroll().select({		
+									theme: 'ios',
+									label:'Name',
+									inputClass:'i-txt',
+									display: 'bottom',
+									mode: 'scroller',
+									setText: '確定',
+									cancelText: '取消',
+							        group: true,
+							        label: '起站',
+								}); 
+								$('#index_02 #mobiScroll_end_stop').mobiscroll().select({		
+									theme: 'ios',
+									label:'Name',
+									inputClass:'i-txt',
+									display: 'bottom',
+									mode: 'scroller',
+									setText: '確定',
+									cancelText: '取消',
+							        group: true,
+							        label: '訖站',
+								});  
+								$('#index_02').trigger('create'); 
+	            			}
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function showClassifyWithTarget(targetPostObject,TargetClassify1,TargetClassify2){
+			var posObjectArray=[];
+			var setSelfToCenter=true;
+			//加入指定點
+			if(targetPostObject!=null){
+				posObjectArray.push(targetPostObject);
+				setSelfToCenter=false;
+			}
+			LoadingObject.show();
+			var jsonObject={"command":"select xLBSSpot.spotNo,xLBSSpot.chtName,xLBSSpot.chtAddress,xLBSSpot.engName,xLBSSpot.engAddress,xLBSSpot.latitude,xLBSSpot.longitude,xLBSSpot.parkArea,xLBSSpot.parkLocation,(case xLBSSpotPic.ximage when '' then '' else ('"+Setting_imgSrc+"'+xLBSSpotPic .ximage)   end) as ximage,xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSClassify2.chtName as xLBSClassify2_name, xLBSClassify2.engName as xLBSClassify2_ename from xLBSSpot inner join xLBSSpotClassify on xLBSSpot.spotNo=xLBSSpotClassify.spotNo inner join xLBSClassify2 on xLBSSpotClassify.xLBSClassify2=xLBSClassify2.code left join xLBSSpotPic on xLBSSpot.spotNo=xLBSSpotPic.spotNo where xLBSSpotPic.entranceCode is NULL and xLBSSpotPic.isMain='1' and xLBSSpot.parkArea='"+Park+"' and xLBSSpotClassify.xLBSClassify1='"+TargetClassify1+"' and xLBSSpotClassify.xLBSClassify2='"+TargetClassify2+"' order by xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSSpot.spotNo"};
+			
+			var jsonObjectStr = JSON.stringify(jsonObject);
+		    $.ajax({
+		        url:commonURL_DB,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	LP_jsonObjectArray=[];
+		                	if(data.jsonOutput.length>0){
+		                		for(var i=0;i<data.jsonOutput.length;i++){
+		                			posObjectArray.push(new posObject(data.jsonOutput[i].chtName,data.jsonOutput[i].chtAddress,data.jsonOutput[i].latitude,data.jsonOutput[i].longitude,data.jsonOutput[i].spotNo,data.jsonOutput[i].ximage,getXiconImg(data.jsonOutput[i].xLBSClassify2)));
+			                	}
+		            		}
+	    					//開啓地圖模組-顯示指定點附近的指定類別資料
+							openMapWithTargetPosObjects(posObjectArray,setSelfToCenter);
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function genIndex(Park,Base){
+		    LoadingObject.show();
+			var jsonObject={"Park":Park};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var park_index=0,BaseIndex=0;
+		    $.ajax({
+		        url:DataURL_TranspoltInfo_index,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(Base!="00"){
+		                		
+		                		for(var i=0;i<data.jsonOutput.info.length;i++){
+		                			if(data.jsonOutput.info[i].Park==Park){
+		                				park_index=i;
+		                				break;
+		                			}
+		                		}
+			                	for(var i=0;i<data.jsonOutput.info[park_index].Bases.length;i++){
+			                		if(data.jsonOutput.info[park_index].Bases[i].Base==Base){
+			                			BaseIndex=i;
+			                			break;
+			                		}		
+		            			}
+		                	}
+		                	//產生畫面資料
+		                	var selectHTML=genBaseSelect(BaseIndex,data.jsonOutput.info[park_index].Bases);
+	            			$('#index').find('#htmlResult').html(selectHTML+genTransOptions(data.jsonOutput.info[park_index].Park,data.jsonOutput.info[park_index].Bases[BaseIndex].Base,data.jsonOutput.info[park_index].Bases[BaseIndex].options)).trigger('create');
+	            			$('#index').find('#selectBase').selectmenu();
+	            			$('#index').find('.helpline').html(data.jsonOutput.info[park_index].infoLink).trigger('create');
+	            			//其他下拉設定
+	            			$('#index_05').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
+	            			$('#index_07').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
+	            			$('#index_08').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
+	            			$('#index_09').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
+	            			$('#index_10').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
+	            			$('#page_transPlanning').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
+	            			//selectBase下拉事件觸發設定
+	            			 $('#index').find('#selectBase').on('change',function(){
+				 				Base=$(this).val();
+				 				genIndex(Park,Base);
+				 			 });
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function genBaseSelect(focusBaseIndex,Bases){
+		    var htmlResult="";
+		    for(var base_index=0;base_index<Bases.length;base_index++){
+		        htmlResult+='<option value="'+Bases[base_index].Base+'"';
+		        if(focusBaseIndex==base_index){
+		            htmlResult+=" selected "
+		        }
+		        htmlResult+=' >'+Bases[base_index].BaseName+'</option>';
+		    }
+		    return htmlResult!=""?"<select id='selectBase'>"+htmlResult+"</select>":"";
+		}
+		function genLineListSelect(lineList){
+		    var htmlResult="";
+
+		    for(var i=0;i<lineList.length;i++){
+		        htmlResult+='<option value="'+lineList[i].lineNo+'"';
+		        htmlResult+=' >'+lineList[i].chtTitle+'</option>';
+		    }
+		    return htmlResult;
+		}
+		function genStopListSelect(stopList){
+		    var htmlResult="";
+	    	for(var i=0;i<stopList.length;i++){
+        		htmlResult+="<optgroup data-value='"+stopList[i].stopCode+"' label='"+stopList[i].chtName+"'>";
+	    		for(var j=0;j<stopList.length;j++){
+	    			if(j!=i){
+					htmlResult+="<option value='"+stopList[i].stopCode+"_"+stopList[j].stopCode+"'>"+stopList[j].chtName+"</option>";
+					}
+	    		}
+	    		htmlResult+="</optgroup>";
+			}
+		    return htmlResult;
+		}
+		function genTransOptions(Park,Base,options){
+			var htmlResult="";
+			for(var option_index=0;option_index<options.length;option_index++){
+				htmlResult+='<input data-role="none" onclick="javascirpt:changeToTrafficContent(&apos;'+Park+'&apos;,&apos;'+Base+'&apos;,&apos;'+options[option_index].code+'&apos;);" data-role="none" type="submit" name="button" id="button" data-code="'+options[option_index].code+'" value="'+options[option_index].value+'" class="traffic'+options[option_index].code+'"></input>';	
+			}
+			return htmlResult!=""?"<ul><li>"+htmlResult+"</li></ul>":"";
+		}
+		function changeToTrafficContent(Park,Base,code){
+			$.mobile.navigate('#index_'+code);
+		}
+		function getTimeRangeValue(hhmm){
+			var hh=hhmm.split(":")[0];
+			var mm=hhmm.split(":")[1];
+			var result="0";
+			switch(hh){
+				case "06":
+				case "07":
+				case "08":
+				case "09":
+					result="1";
+					break;
+				case "10":
+				case "11":
+				case "12":
+				case "13":
+					if(hh=="10"&&mm=="00"){
+						result="1";
+					}else{
+						result="2";
+					}
+					break;
+				case "14":
+				case "15":
+				case "16":
+				case "17":
+					if(hh=="14"&&mm=="00"){
+						result="2";
+					}else{
+						result="3";
+					}
+					break;
+				case "18":
+				case "19":
+				case "20":
+				case "21":
+					if(hh=="18"&&mm=="00"){
+						result="3";
+					}else{
+						result="4";
+					}
+					break;
+				case "00":
+				case "01":
+				case "02":
+				case "03":
+				case "04":
+				case "05":
+				case "22":
+				case "23":
+					if(hh=="22"&&mm=="00"){
+						result="4";
+					}else{
+						result="0";
+					}
+				 	break;
+			}
+			return result;
+			hh=null;mm=null;
+			delete hh;delete mm;
+		}
+		// special
+		$(document).on('change','#selectBase',function(){
+			var selectValue=$(this).val();
+			Base=selectValue;
+			//設定所有下拉一致
+			var elements=$('select#selectBase');
+			for(var i=0;i<elements.length;i++){
+				$(elements[i]).selectmenu();
+				$(elements[i]).val(selectValue);
+				$(elements[i]).selectmenu('refresh',true);
+			}
+		});
+		// pageinit
+		$(document).on('pageinit','#index',function(){	
+			var rootElement=this;
+			//產生跑馬燈
+			var jsonObject=getAppInstantMessage();
+			if(jsonObject!=null){
+				var title=jsonObject.chtTitle;
+				genAppInstantMessage($(rootElement).find('#content'),title);
+			}
+			//產生menu
+			genMenu(rootElement);
+			//menu登入確認
+			menuDisplayMemberSection(checkLogin(),rootElement);	
+ 		});
+		$(document).on('pageinit','#page_aroundStop',function(){
+			var nowDate = new Date();
+ 			var targetPark=Park,targetBase=Base;
+	 		//切換至路線圖(巡巴或客運)
+ 			$(this).find('#dataList').on('click','tr',function(){
+ 				var park=$(this).data("park");
+				var lineNo=$(this).data("lineno");
+				var trafficType=$(this).data("traffictype");
+				switch(trafficType){
+					//公車
+					case "00":
+						changeToLP_04(lineNo,"","",datetime.getHours(),datetime.getMinutes(),true);
+						break;
+					//國道客運
+					case "06":
+						changeToLP_03(lineNo,"","",datetime.getHours(),datetime.getMinutes(),true);
+						break;
+					//巡巴
+					case "09":
+						changeToLP_05_1(getIdentifyParkBase().Park,lineNo,true);
+						break;
+
+				}
+ 				park=null;base=null;lineNo=null;delete park;delete base;delete lineNo;
+ 			});
+ 			$(this).on('click','#btnsetPosition',function(){
+ 				changeTosetPosition();
+ 			});
+			$(this).on('click','#btnOrderByTime',function(){
+	 			//取得鄰近站點資料
+				getAroundStop(targetPark,targetBase,getGPRSData().lat,getGPRSData().lng,nowDate.getHours(),nowDate.getMinutes(),"time");
+			});
+			$(this).on('click','#btnOrderByCar',function(){
+	 			//取得鄰近站點資料
+				getAroundStop(targetPark,targetBase,getGPRSData().lat,getGPRSData().lng,nowDate.getHours(),nowDate.getMinutes(),"car");
+			});
+			$(this).on('click','#btnNext',function(){
+				var allTr=$('#page_aroundStop tr:gt(0)');
+				var no=$('#page_aroundStop tr:visible:last').data('no');
+				$('#page_aroundStop #btnPrev').show();
+				if(allTr.length>=no+5){
+					$('#page_aroundStop tr:gt(0)').hide();
+					var count=0;
+					for(var i=no;i<allTr.length;i++){
+						if(count>4){
+							break;
+						}else{
+							$(allTr[i]).show();
+							count++;
+						}
+					}
+					if(count<5){
+						$('#page_aroundStop #btnNext').hide();
+					}
+				}
+				if($('#page_aroundStop tr:gt(0)').length<$('#page_aroundStop tr:visible:last').data('no')+5)
+				{
+					$('#page_aroundStop #btnPrev').show();
+					$('#page_aroundStop #btnNext').hide();
+				}
+			});
+			$(this).on('click','#btnPrev',function(){
+				var first_no=$('#page_aroundStop tr:gt(0):visible:first').data('no');
+				var last_no=$('#page_aroundStop tr:gt(0):visible:last').data('no');
+				if(first_no>5){
+					var allTr=$('#page_aroundStop tr:gt(0):lt('+first_no+')');
+					$('#page_aroundStop tr:gt('+(first_no-1)+'):lt('+(last_no+1)+')').hide();
+					var count=0;
+					for(var i=first_no-1;i>0;i--){
+						if(count>4){
+							break;
+						}else{
+							$(allTr[i-1]).show();
+							count++;
+						}
+					}
+					if(count<5){
+						$('#page_aroundStop #btnPrev').hide();
+					}
+				}
+				if($('#page_aroundStop tr:gt(0):visible:first').data('no')<=5)
+				{
+					$('#page_aroundStop #btnPrev').hide();
+					$('#page_aroundStop #btnNext').show();
+				}
+			});
+		});
+ 		$(document).on('pageinit','#page_transPlanning',function(){	
+ 			var rootElement=this;
+ 			gentransPlanningOptions(getIdentifyParkBase().Park,getIdentifyParkBase().Base);
+ 			$(this).on('change','#selectBase',function(){
+ 				var selectValue=$(this).val();
+ 				gentransPlanningOptions(Park,selectValue);
+	 		});
+	 		$(this).on('click','#btnRounte',function(){
+	 			var startObj,
+		 			endObj,
+		 			startAddress=$(rootElement).find('#txt_StartAddress').val(),
+		 			startTitle=startAddress,
+		 			startLatitude="",
+		 			startLongtitude="",
+		 			endAddress=$(rootElement).find('#txt_EndAddress').val(),
+		 			endTitle=endAddress,
+		 			endLatitude="",
+		 			endLongtitude="";
+	 			//起點
+	 			if(startAddress==""){
+	 				var target=$('#selectStartPosition option:selected');
+	 				startAddress=$(target).val();
+	 				startTitle=$(target).text();
+	 				if(typeof($(target).data('usemyposition'))!=="undefined"){
+		 				startLatitude=getGPRSData().lat;
+		 				startLongtitude=getGPRSData().lng;
+		 			}else{
+		 				startLatitude=$(target).data('latitude');
+		 				startLongtitude=$(target).data('longitude');
+		 			}
+	 			}
+	 			startObj=new posObject(startTitle,startAddress,startLatitude,startLongtitude,"","","");
+	 			//迄點
+	 			if(endAddress==""){
+	 				var target=$('#selectEndPosition option:selected');
+	 				endAddress=$(target).val();
+	 				endTitle=$(target).text();
+	 				endLatitude=$(target).data('latitude');
+	 				endLongtitude=$(target).data('longitude');
+	 			}
+ 				endObj=new posObject(endTitle,endAddress,endLatitude,endLongtitude,"","","");
+ 				//開啓地圖模組-路徑規劃功能
+ 				openMapWithRoute(endObj,startObj);
+	 		});
+ 		});
+		$(document).on('pageinit','#index_01',function(){	
+			var rootElement=this;
+			//產生車站下拉
+			genStopSelect();
+			$(this).on('click','#btn_search',function(){
+				var fromdest=$(rootElement).find('#mobiScroll_stop').mobiscroll('getValue').split("_");
+				var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('getDate');
+				changeToLP_01(fromdest[0],fromdest[1],datetime.getHours(),datetime.getMinutes());
+			});
+ 		});
+ 		$(document).on('pageinit','#index_02',function(){	
+ 			var rootElement=this;
+			//產生車站下拉
+			genRailStopSelect();
+			$(this).on('click','#btn_search',function(){
+				var from=$(rootElement).find('#mobiScroll_begin_stop').mobiscroll('getValue');
+				var dest=$(rootElement).find('#mobiScroll_end_stop').mobiscroll('getValue');
+				if(from!=dest){
+					var carClass=$(rootElement).find('#select_type').val();
+					var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('getDate');
+					changeToLP_02(getIdentifyParkBase().Park,from,dest,datetime.getHours(),datetime.getMinutes(),carClass);
+				}else{
+					smoke.alert("起訖站不可相同",{},function(){});
+				}
+			});
+ 		});
+ 		$(document).on('pageinit','#index_03',function(){
+ 			var rootElement=this;	
+ 			changeToIndex_03("");
+ 			$(this).on('change','#selectLines',function(){
+ 				changeToIndex_03($(this).val());
+	 		});
+	 		$(this).on('click','#btn_search',function(){
+	 			if(typeof($(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue'))!="undefined"){
+ 				var selectValue=$(rootElement).find('#selectLines').val();
+ 				var FromDestStop=$(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue').split('_');
+ 				var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('getDate');
+ 				changeToLP_03(selectValue,FromDestStop[0],FromDestStop[1],datetime.getHours(),datetime.getMinutes(),false);
+	 			}else{
+	 				smoke.alert("請先選擇路線後挑選起訖站",{},function(){});
+	 			}
+	 		});	
+ 		});
+		$(document).on('pageinit','#index_04',function(){
+			var rootElement=this;	
+ 			changeToIndex_04("");
+ 			$(this).on('change','#selectLines',function(){
+ 				changeToIndex_04($(this).val());
+	 		});
+	 		$(this).on('click','#btn_search',function(){
+	 			if(typeof($(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue'))!="undefined"){
+ 				var selectValue=$(rootElement).find('#selectLines').val();
+ 				var FromDestStop=$(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue').split('_');
+ 				var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('getDate');
+ 				changeToLP_04(selectValue,FromDestStop[0],FromDestStop[1],datetime.getHours(),datetime.getMinutes(),false);
+	 			}else{
+	 				smoke.alert("請先選擇路線後挑選起訖站",{},function(){});
+	 			}
+	 		});
+	 		$(this).on('click','#btnAroundStop',function(){
+				var TargetClassify1="I",TargetClassify2="023";
+				showClassifyWithTarget(null,TargetClassify1,TargetClassify2);
+			});
+ 		});
+ 		$(document).on('pageinit','#index_05',function(){
+ 			var rootElement=this;
+ 			var targetPark=getIdentifyParkBase().Park;
+ 			var targetBase=getIdentifyParkBase().Base;
+ 			var lineNo;
+			changeToIndex_05(targetPark,targetBase,getGPRSData().lat,getGPRSData().lng);
+	        $(this).on('change','#mobiScroll_index_05_LineList',function(){
+	        	var selectValue=$(rootElement).find('#mobiScroll_index_05_LineList').mobiscroll('getValue');
+	        	changeToIndex_QP_05(getIdentifyParkBase().Park,$(rootElement).find(' #selectBase').val(),selectValue,false);
+	        	lineNo=selectValue;
+	        });
+ 			$(this).on('change','#selectBase',function(){
+ 				var selectValue=$(this).val();
+				changeToIndex_05(targetPark,selectValue,getGPRSData().lat,getGPRSData().lng);
+	 		});
+	 		$(this).on('click','#btn_search',function(){
+	        	if(typeof(lineNo)=="undefined"){
+	 			 	lineNo=$(rootElement).find('#mobiScroll_index_05_LineList').mobiscroll('getValue');
+	 			}
+	 			var lineText=$(rootElement).find('#mobiScroll_index_05_LineList option[value="'+lineNo+'"]').text();
+	 			var FromDestStop=$(rootElement).find('#mobiScroll_index_05_StopList').mobiscroll('getValue').split('_');
+ 				var timeRange=$(rootElement).find('#mobiScroll_index_05_TimeRange').mobiscroll('getValue').split(':');
+ 				changeToLP_05_2(getIdentifyParkBase().Park,$(rootElement).find('#selectBase').val(),lineNo,lineText,FromDestStop[0],FromDestStop[1],timeRange[0],timeRange[1]);
+	 		});
+	 		$(this).on('click','#btnToLP_05_1',function(){
+	 			changeToLP_05_1(getIdentifyParkBase().Park,$(this).data('lineno'),false);
+ 			});
+	 		$(this).on('click','#btnToBusMap',function(){
+	 			changeToBusMap(getIdentifyParkBase().Park,$(rootElement).find('#selectBase').val(),$(this).data('lineno'));
+ 			});
+			$(this).on('click','#btnRoute',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+				//20130518 請ken擴充後我在調整
+				// var ximage=$(this).data('ximage');
+				// var xicon=getXiconImg($(this).data('xLBSClassify2'));
+				var ximage="";
+				var xicon="img/Map/position_icon11.png";
+				 //開啓地圖模組-路徑規劃功能
+ 				openMapWithRoute(new posObject(title,address,latitude,longitude,spotNo,ximage,xicon));
+			});
+			$(this).on('click','#btnAroundStop',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+				//20130518 請ken擴充後我在調整
+				// var ximage=$(this).data('ximage');
+				// var xicon=getXiconImg($(this).data('xLBSClassify2'));
+				var ximage="";
+				var xicon="img/Map/position_icon11.png";
+				var TargetClassify1="I",TargetClassify2="023";
+				showClassifyWithTarget(new posObject(title,address,latitude,longitude,spotNo,ximage,xicon),TargetClassify1,TargetClassify2);
+			});
+ 		});
+ 		$(document).on('pageinit','#index_06',function(){	
+ 		});
+ 		$(document).on('pageinit','#index_07',function(){	
+ 			$(this).on('change','#selectBase',function(){
+ 				var selectValue=$(this).val();
+ 				getAreaIntroData(Park,selectValue,"07");
+	 		});
+ 		});
+ 		$(document).on('pageinit','#index_08',function(){	
+ 			$(this).on('change','#selectBase',function(){
+ 				var selectValue=$(this).val();
+ 				getAreaIntroData(Park,selectValue,"08");
+	 		});
+ 		});
+ 		$(document).on('pageinit','#index_09',function(){	
+ 			//抓取資料
+ 			$(this).on('change','#selectBase',function(){
+	 			var selectValue=$(this).val();
+	 			getParkAndTowingData(Park,selectValue,"01");
+	 		});
+	 		//切換至CP頁
+ 			$(this).find('#dataList').on('click','li',function(evt){
+ 				if ($(evt.target).is("li")) {
+ 				var sn=$(this).data("sn");
+ 				changeToCP_ParkAndTowingData(sn,"01");
+ 				sn=null;delete sn;
+	 			}
+ 			});
+ 			//導航
+ 			$(this).on('click','#btnRoute',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+				var ximage=$(this).data('ximage');
+				var xicon=getXiconImg('024');
+				//開啓地圖模組-路徑規劃功能
+				openMapWithRoute(new posObject(title,address,latitude,longitude,spotNo,ximage,xicon));
+			});
+ 		});
+ 		$(document).on('pageinit','#index_10',function(){	
+ 			//抓取資料
+ 			$(this).on('change','#selectBase',function(){
+	 			var selectValue=$(this).val();
+	 			getParkAndTowingData(Park,selectValue,"02");
+	 		});
+	 		//切換至CP頁
+ 			$(this).find('#dataList').on('click','li',function(){
+ 				var sn=$(this).data("sn");
+ 				changeToCP_ParkAndTowingData(sn,"02");
+ 				sn=null;delete sn;
+ 			});
+ 			//導航
+ 			$(this).on('click','#btnRoute',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+				var ximage=$(this).data('ximage');
+				var xicon=getXiconImg('025');
+				//開啓地圖模組-路徑規劃功能
+				openMapWithRoute(new posObject(title,address,latitude,longitude,spotNo,ximage,xicon));
+			});
+ 		});
+ 		$(document).on('pageinit','#LP_01',function(){
+ 			$(this).on('click','#btnToCP_01',function(){
+ 				var targetPark=getIdentifyParkBase().Park;
+ 				var targetDepttime=$(this).data('depttime').split(":");
+				changeToCP_01(targetPark,getGPRSData().lat,getGPRSData().lng,targetDepttime[0],targetDepttime[1]);
+ 			});
+ 		});
+ 		$(document).on('pageinit','#LP_02',function(){
+ 			$(this).on('click','#btnToCP_02',function(){
+ 				var targetPark=getIdentifyParkBase().Park;
+ 				var targetFromStation=$(this).data('from');
+ 				var targetDestStation=$(this).data('dest');
+ 				var targetDepttime=$(this).data('depttime').split(":");
+		    	changeToCP_02(targetPark,getGPRSData().lat,getGPRSData().lng,targetDepttime[0],targetDepttime[1],targetFromStation,targetDestStation);
+ 			});
+ 		});
+ 		$(document).on('pageinit','#LP_03',function(){
+ 			var rootElement=this;
+ 			$(this).on('click','#btnTimeTable',function(){
+ 				if($(this).data('backindex')=='true'){
+ 					$.mobile.changePage('#index_03');
+ 				}else{
+	 				$(rootElement).find('#dataList').show();
+	 				$(rootElement).find('#pathImg').hide();
+	 			}
+	 		});
+ 			$(this).on('click','#btnPathImg',function(){
+ 				$(rootElement).find('#dataList').hide();
+ 				$(rootElement).find('#pathImg').show();
+	 		});
+ 		});
+ 		$(document).on('pageinit','#LP_04',function(){
+ 			var rootElement=this;
+ 			$(this).on('click','#btnTimeTable',function(){
+ 				$(rootElement).find('#dataList').show();
+ 				$(rootElement).find('#pathImg').hide();
+	 		});
+ 			$(this).on('click','#btnPathImg',function(){
+ 				$(rootElement).find('#dataList').hide();
+ 				$(rootElement).find('#pathImg').show();
+	 		});
+ 		});
+ 		$(document).on('pageinit','#LP_05_1',function(){
+ 			var rootElement=this;
+ 			$(this).on('click','#btnTimeTable',function(){
+ 				$(this).addClass('ui-link hover');
+ 				$(rootElement).find('#btnStopList').removeClass('ui-link hover');
+ 				$(rootElement).find('#btnRouteMap').removeClass('ui-link hover');
+ 				$(rootElement).find('#divTimeTable').show();
+ 				$(rootElement).find('#divStopList').hide();
+ 				$(rootElement).find('#divRouteMap').hide();
+	 		});
+ 			$(this).on('click','#btnStopList',function(){
+ 				$(this).addClass('ui-link hover');
+ 				$(rootElement).find('#btnTimeTable').removeClass('ui-link hover');
+ 				$(rootElement).find('#btnRouteMap').removeClass('ui-link hover');
+ 				$(rootElement).find('#divTimeTable').hide();
+ 				$(rootElement).find('#divStopList').show();
+ 				$(rootElement).find('#divRouteMap').hide();
+	 		});
+ 			$(this).on('click','#btnRouteMap',function(){
+ 				$(this).addClass('ui-link hover');
+ 				$(rootElement).find('#btnStopList').removeClass('ui-link hover');
+ 				$(rootElement).find('#btnTimeTable').removeClass('ui-link hover');
+ 				$(rootElement).find('#divTimeTable').hide();
+ 				$(rootElement).find('#divStopList').hide();
+ 				$(rootElement).find('#divRouteMap').show();
+ 				//重整地圖尺寸跟地圖調整中心	
+				divRouteMap_map.refresh();
+	 		});
+	 		//巡巴-高鐵轉乘
+	 		$(this).on('click','#btnToCP_05',function(){
+	 			var hh=$(this).data('hh');
+	 			var mm=$(this).data('mm');
+	 			changeToCP_05(Park,getGPRSData().lat,getGPRSData().lng,hh,mm);
+	 		});
+ 		});
+ 		$(document).on('pageinit','#CP_01',function(){
+ 			$(this).on('click','#btnRoute',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+				//20130518 請ken擴充後我在調整
+				// var ximage=$(this).data('ximage');
+				// var xicon=getXiconImg($(this).data('xLBSClassify2'));
+				var ximage="";
+				var xicon="img/Map/position_icon11.png";
+				//開啓地圖模組-路徑規劃功能
+				openMapWithRoute(new posObject(title,address,latitude,longitude,spotNo,ximage,xicon));
+			});
+ 			$(this).on('change','#select_timeRange',function(){
+ 				var selectValue=$(this).val();
+ 				var allTr=$('#CP_01 #trafficTable tr:gt(0)');
+ 				var showTRCount=0;
+ 				$('#CP_01 #trafficTable tr:gt(0)').hide();
+ 				for(var i=0;i<allTr.length;i++){
+ 					if(selectValue!=-1){
+	 					if(selectValue!=0){
+							if($(allTr[i]).data('timerange')==selectValue){
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if(showTRCount<2){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}else{
+						if($(allTr[i]).data('targetrange')==1){
+							if(showTRCount<2){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}
+ 				}
+ 				var allTr=$('#CP_01 #trainTable tr:gt(0)');
+ 				var showTRCount=0;
+ 				$('#CP_01 #trainTable tr:gt(0)').hide();
+ 				for(var i=0;i<allTr.length;i++){
+ 					if(selectValue!=-1){
+	 					if(selectValue!=0){
+							if($(allTr[i]).data('timerange')==selectValue){
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if(showTRCount<2){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}else{
+						if($(allTr[i]).data('targetrange')==1){
+							if(showTRCount<2){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}
+ 				}
+	 		});
+ 			$(this).on('click','#btnNext',function(){
+ 				var selectValue=$('#CP_01 #select_timeRange').val();
+				var allTr=$('#CP_01 #trafficTable tr:gt(0)');
+				var no=$('#CP_01 #trafficTable tr:visible:last').data('no');
+				var showTRCount=0;
+				var selectValueBeforeTr;
+				if(selectValue!=-1){
+					if(selectValue!=0){
+						selectValueBeforeTr=$('#CP_01 #trafficTable tr:gt('+no+')[data-timerange="'+selectValue+'"]')
+					}else{
+						selectValueBeforeTr=$('#CP_01 #trafficTable tr:gt('+no+')');
+					}
+				}else{
+					selectValueBeforeTr=$('#CP_01 #trafficTable tr:gt('+no+')[data-targetrange="1"]');
+				}
+				if(selectValueBeforeTr.length>0){
+					$('#CP_01 #trafficTable tr:gt(0)').hide();
+					showTRCount=0;
+					for(var i=no;i<allTr.length;i++){
+						if(selectValue!=-1){
+							if(selectValue!=0){
+								if($(allTr[i]).data('timerange')==selectValue){
+									if(showTRCount<2){
+										$(allTr[i]).show();
+										showTRCount++;
+									}else{
+										break;
+									}
+								}
+							}else{
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if($(allTr[i]).data('targetrange')==1){
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}
+					}
+				}
+				var allTr=$('#CP_01 #trainTable tr:gt(0)');
+				var no=$('#CP_01 #trainTable tr:visible:last').data('no');
+				if(selectValue!=-1){
+					if(selectValue!=0){
+						selectValueBeforeTr=$('#CP_01 #trainTable tr:gt('+no+')[data-timerange="'+selectValue+'"]')
+					}else{
+						selectValueBeforeTr=$('#CP_01 #trainTable tr:gt('+no+')');
+					}
+				}else{
+					selectValueBeforeTr=$('#CP_01 #trainTable tr:gt('+no+')[data-targetrange="1"]');
+				}
+				if(selectValueBeforeTr.length>0){
+					$('#CP_01 #trainTable tr:gt(0)').hide();
+					showTRCount=0;
+					for(var i=no;i<allTr.length;i++){
+						if(selectValue!=-1){
+							if(selectValue!=0){
+								if($(allTr[i]).data('timerange')==selectValue){
+									if(showTRCount<2){
+										$(allTr[i]).show();
+										showTRCount++;
+									}else{
+										break;
+									}
+								}
+							}else{
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if($(allTr[i]).data('targetrange')==1){
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}
+					}
+				}
+			});
+			$(this).on('click','#btnPrev',function(){
+				var selectValue=$('#CP_01 #select_timeRange').val();
+				var first_no=$('#CP_01 #trafficTable tr:gt(0):visible:first').data('no');
+				var last_no=$('#CP_01 #trafficTable tr:gt(0):visible:last').data('no');
+				var selectValueBeforeTr;
+				if(selectValue!=-1&&selectValue!=0){
+					selectValueBeforeTr=$('#CP_01 #trafficTable tr:gt(0):lt('+first_no+')[data-timerange="'+selectValue+'"]')
+				}else{
+					selectValueBeforeTr=$('#CP_01 #trafficTable tr:gt(0):lt('+first_no+')');
+				}
+				var showTRCount=0;
+				if(selectValueBeforeTr.length>=2){
+					var hasTarget=false,targetCount=0;
+					if(selectValue==-1){
+						for(var i=0;i<selectValueBeforeTr.length;i++){
+							if($(selectValueBeforeTr[i]).data('targetrange')==1){
+								targetCount++;
+							}
+							if(targetCount>=2){
+								hasTarget=true;
+								break;
+							}
+						}
+					}else{
+						hasTarget=true;
+					}
+					if(hasTarget){
+						$('#CP_01 #trafficTable tr:gt(0)').hide();
+						var allTr=$('#CP_01 #trafficTable tr:gt(0):lt('+first_no+')');
+						showTRCount=0;
+						for(var i=allTr.length-2;i>=0;i--){
+							if(showTRCount>1){
+									break;
+							}else{
+								if(selectValue!=-1){
+									if(selectValue!=0){
+										if($(allTr[i]).data('timerange')==selectValue){
+												$(allTr[i]).show();
+												showTRCount++;
+										}
+									}else{
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}else{
+									if($(allTr[i]).data('targetrange')==1){
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}
+							}
+						}
+					}
+				}
+				var first_no=$('#CP_01 #trainTable tr:gt(0):visible:first').data('no');
+				var last_no=$('#CP_01 #trainTable tr:gt(0):visible:last').data('no');
+				if(selectValue!=-1&&selectValue!=0){
+					selectValueBeforeTr=$('#CP_01 #trainTable  tr:gt(0):lt('+(first_no)+')[data-timerange="'+selectValue+'"]')
+				}else{
+					selectValueBeforeTr=$('#CP_01 #trainTable  tr:gt(0):lt('+(first_no)+')');
+				}
+				if(selectValueBeforeTr.length>=2){
+					var hasTarget=false,targetCount=0;
+					if(selectValue==-1){
+						for(var i=0;i<selectValueBeforeTr.length;i++){
+							if($(selectValueBeforeTr[i]).data('targetrange')==1){
+								targetCount++;
+							}
+							if(targetCount>=2){
+								hasTarget=true;
+								break;
+							}
+						}
+					}else{
+						hasTarget=true;
+					}
+					if(hasTarget){
+						$('#CP_01 #trainTable tr:gt(0)').hide();
+						var allTr=$('#CP_01 #trainTable tr:gt(0):lt('+first_no+')');
+						showTRCount=0;
+						for(var i=allTr.length-2;i>=0;i--){
+							if(showTRCount>1){
+									break;
+							}else{
+								if(selectValue!=-1){
+									if(selectValue!=0){
+										if($(allTr[i]).data('timerange')==selectValue){
+												$(allTr[i]).show();
+												showTRCount++;
+										}
+									}else{
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}else{
+									if($(allTr[i]).data('targetrange')==1){
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+ 		});
+		$(document).on('pageinit','#CP_02',function(){
+			$(this).on('click','#btnRoute',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+				//20130518 請ken擴充後我在調整
+				// var ximage=$(this).data('ximage');
+				// var xicon=getXiconImg($(this).data('xLBSClassify2'));
+				var ximage="";
+				var xicon="img/Map/position_icon11.png";
+				//開啓地圖模組-路徑規劃功能
+				openMapWithRoute(new posObject(title,address,latitude,longitude,spotNo,ximage,xicon));
+			});
+ 			$(this).on('change','#select_timeRange',function(){
+ 				var selectValue=$(this).val();
+ 				var allTr=$('#CP_02 #trainTable tr:gt(0)');
+ 				var showTRCount=0;
+ 				$('#CP_02 #trainTable tr:gt(0)').hide();
+ 				for(var i=0;i<allTr.length;i++){
+ 					if(selectValue!=-1){
+	 					if(selectValue!=0){
+							if($(allTr[i]).data('timerange')==selectValue){
+								if(showTRCount<5){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if(showTRCount<5){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}else{
+						if($(allTr[i]).data('targetrange')==1){
+							if(showTRCount<5){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}
+ 				}
+	 		});
+ 			$(this).on('click','#btnNext',function(){
+ 				var selectValue=$('#CP_02 #select_timeRange').val();
+				var showTRCount=0;
+				var selectValueBeforeTr;
+ 				var allTr=$('#CP_02 #trainTable tr:gt(0)');
+				var no=$('#CP_02 #trainTable tr:visible:last').data('no');
+				$('#CP_02 #trainTable #btnPrev').show();
+				if(selectValue!=-1){
+					if(selectValue!=0){
+						selectValueBeforeTr=$('#CP_02 #trainTable tr:gt('+no+')[data-timerange="'+selectValue+'"]')
+					}else{
+						selectValueBeforeTr=$('#CP_02 #trainTable tr:gt('+no+')');
+					}
+				}else{
+					selectValueBeforeTr=$('#CP_02 #trainTable tr:gt('+no+')[data-targetrange="1"]');
+				}
+				if(selectValueBeforeTr.length>0){
+					$('#CP_02 #trainTable tr:gt(0)').hide();
+					showTRCount=0;
+					for(var i=no;i<allTr.length;i++){
+						if(selectValue!=-1){
+							if(selectValue!=0){
+								if($(allTr[i]).data('timerange')==selectValue){
+									if(showTRCount<5){
+										$(allTr[i]).show();
+										showTRCount++;
+									}else{
+										break;
+									}
+								}
+							}else{
+								if(showTRCount<5){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if($(allTr[i]).data('targetrange')==1){
+								if(showTRCount<5){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}		
+					}
+				}
+				if(showTRCount<5){
+						$('#CP_0 #trainTable #btnNext').hide();
+				}
+				if(selectValueBeforeTr.length<$('#CP_02 #trainTable tr:visible:last').data('no')+5)
+				{
+					$('#CP_02 #trainTable #btnPrev').show();
+					$('#CP_02 #trainTable #btnNext').hide();
+				}
+			});
+			$(this).on('click','#btnPrev',function(){
+				var selectValue=$('#CP_02 #select_timeRange').val();
+				var selectValueBeforeTr;
+				var first_no=$('#CP_02 #trainTable tr:gt(0):visible:first').data('no');
+				var last_no=$('#CP_02 #trainTable tr:gt(0):visible:last').data('no');
+				if(selectValue!=-1&&selectValue!=0){
+					selectValueBeforeTr=$('#CP_02 #trainTable tr:gt(0):lt('+first_no+')[data-timerange="'+selectValue+'"]')
+				}else{
+					selectValueBeforeTr=$('#CP_02 #trainTable tr:gt(0):lt('+first_no+')');
+				}
+				if(selectValueBeforeTr.length>=5){
+					var hasTarget=false,targetCount=0;
+					if(selectValue==-1){
+						for(var i=0;i<selectValueBeforeTr.length;i++){
+							if($(selectValueBeforeTr[i]).data('targetrange')==1){
+								targetCount++;
+							}
+							if(targetCount>=5){
+								hasTarget=true;
+								break;
+							}
+						}
+					}else{
+						hasTarget=true;
+					}
+					if(hasTarget){
+						$('#CP_02 #trainTable tr:gt(0)').hide();
+						var allTr=$('#CP_02 #trainTable tr:gt(0):lt('+first_no+')');
+						showTRCount=0;
+						for(var i=allTr.length-2;i>=0;i--){
+							if(showTRCount>4){
+									break;
+							}else{
+								if(selectValue!=-1){
+									if(selectValue!=0){
+										if($(allTr[i]).data('timerange')==selectValue){
+												$(allTr[i]).show();
+												showTRCount++;
+										}
+									}else{
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}else{
+									if($(allTr[i]).data('targetrange')==1){
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}
+							}
+						}
+					}
+				}
+				if(selectValueBeforeTr.length<=5)
+				{
+					$('#CP_02 #trainTabl #btnPrev').hide();
+					$('#CP_02 #trainTabl #btnNext').show();
+				}
+			});
+ 		});
+		$(document).on('pageinit','#CP_05',function(){
+ 			$(this).on('change','#select_timeRange',function(){
+ 				var selectValue=$(this).val();
+ 				var allTr=$('#CP_05 #trafficTable tr:gt(0)');
+ 				var showTRCount=0;
+ 				$('#CP_05 #trafficTable tr:gt(0)').hide();
+ 				for(var i=0;i<allTr.length;i++){
+ 					if(selectValue!=-1){
+	 					if(selectValue!=0){
+							if($(allTr[i]).data('timerange')==selectValue){
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if(showTRCount<2){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}else{
+						if($(allTr[i]).data('targetrange')==1){
+							if(showTRCount<2){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}
+ 				}
+ 				var allTr=$('#CP_05 #trainUpTable tr:gt(0)');
+ 				var showTRCount=0;
+ 				$('#CP_05 #trainUpTable tr:gt(0)').hide();
+ 				for(var i=0;i<allTr.length;i++){
+ 					if(selectValue!=-1){
+	 					if(selectValue!=0){
+							if($(allTr[i]).data('timerange')==selectValue){
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if(showTRCount<2){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}else{
+						if($(allTr[i]).data('targetrange')==1){
+							if(showTRCount<2){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}
+ 				}
+ 				allTr=$('#CP_05 #trainDownTable tr:gt(0)');
+ 				showTRCount=0;
+ 				$('#CP_05 #trainDownTable tr:gt(0)').hide();
+ 				for(var i=0;i<allTr.length;i++){
+ 					if(selectValue!=-1){
+	 					if(selectValue!=0){
+							if($(allTr[i]).data('timerange')==selectValue){
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if(showTRCount<2){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}else{
+						if($(allTr[i]).data('targetrange')==1){
+							if(showTRCount<2){
+								$(allTr[i]).show();
+								showTRCount++;
+							}else{
+								break;
+							}
+						}
+					}
+ 				}
+	 		});
+ 			$(this).on('click','#btnNext',function(){
+ 				var selectValue=$('#CP_05 #select_timeRange').val();
+				var allTr=$('#CP_05 #trafficTable tr:gt(0)');
+				var no=$('#CP_05 #trafficTable tr:visible:last').data('no');
+				var showTRCount=0;
+				var selectValueBeforeTr;
+				if(selectValue!=-1){
+					if(selectValue!=0){
+						selectValueBeforeTr=$('#CP_05 #trafficTable tr:gt('+no+')[data-timerange="'+selectValue+'"]')
+					}else{
+						selectValueBeforeTr=$('#CP_05 #trafficTable tr:gt('+no+')');
+					}
+				}else{
+					selectValueBeforeTr=$('#CP_05 #trafficTable tr:gt('+no+')[data-targetrange="1"]');
+				}
+				if(selectValueBeforeTr.length>0){
+					$('#CP_05 #trafficTable tr:gt(0)').hide();
+					showTRCount=0;
+					for(var i=no;i<allTr.length;i++){
+						if(selectValue!=-1){
+							if(selectValue!=0){
+								if($(allTr[i]).data('timerange')==selectValue){
+									if(showTRCount<2){
+										$(allTr[i]).show();
+										showTRCount++;
+									}else{
+										break;
+									}
+								}
+							}else{
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if($(allTr[i]).data('targetrange')==1){
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}
+					}
+				}
+				var allTr=$('#CP_05 #trainUpTable tr:gt(0)');
+				var no=$('#CP_05 #trainUpTable tr:visible:last').data('no');
+				if(selectValue!=-1){
+					if(selectValue!=0){
+						selectValueBeforeTr=$('#CP_05 #trainUpTable tr:gt('+no+')[data-timerange="'+selectValue+'"]')
+					}else{
+						selectValueBeforeTr=$('#CP_05 #trainUpTable tr:gt('+no+')');
+					}
+				}else{
+					selectValueBeforeTr=$('#CP_05 #trainUpTable tr:gt('+no+')[data-targetrange="1"]');
+				}
+				if(selectValueBeforeTr.length>0){
+					$('#CP_05 #trainUpTable tr:gt(0)').hide();
+					showTRCount=0;
+					for(var i=no;i<allTr.length;i++){
+						if(selectValue!=-1){
+							if(selectValue!=0){
+								if($(allTr[i]).data('timerange')==selectValue){
+									if(showTRCount<2){
+										$(allTr[i]).show();
+										showTRCount++;
+									}else{
+										break;
+									}
+								}
+							}else{
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if($(allTr[i]).data('targetrange')==1){
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}
+					}
+				}
+				allTr=$('#CP_05 #trainDownTable tr:gt(0)');
+				no=$('#CP_05 #trainDownTable tr:visible:last').data('no');
+				if(selectValue!=-1){
+					if(selectValue!=0){
+						selectValueBeforeTr=$('#CP_05 #trainDownTable tr:gt('+no+')[data-timerange="'+selectValue+'"]')
+					}else{
+						selectValueBeforeTr=$('#CP_05 #trainDownTable tr:gt('+no+')');
+					}
+				}else{
+					selectValueBeforeTr=$('#CP_05 #trainDownTable tr:gt('+no+')[data-targetrange="1"]');
+				}
+				if(selectValueBeforeTr.length>0){
+					$('#CP_05 #trainDownTable tr:gt(0)').hide();
+					showTRCount=0;
+					for(var i=no;i<allTr.length;i++){
+						if(selectValue!=-1){
+							if(selectValue!=0){
+								if($(allTr[i]).data('timerange')==selectValue){
+									if(showTRCount<2){
+										$(allTr[i]).show();
+										showTRCount++;
+									}else{
+										break;
+									}
+								}
+							}else{
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}else{
+							if($(allTr[i]).data('targetrange')==1){
+								if(showTRCount<2){
+									$(allTr[i]).show();
+									showTRCount++;
+								}else{
+									break;
+								}
+							}
+						}
+					}
+				}
+			});
+			$(this).on('click','#btnPrev',function(){
+				var selectValue=$('#CP_05 #select_timeRange').val();
+				var first_no=$('#CP_05 #trafficTable tr:gt(0):visible:first').data('no');
+				var last_no=$('#CP_05 #trafficTable tr:gt(0):visible:last').data('no');
+				var selectValueBeforeTr;
+				if(selectValue!=-1&&selectValue!=0){
+					selectValueBeforeTr=$('#CP_05 #trafficTable tr:gt(0):lt('+first_no+')[data-timerange="'+selectValue+'"]')
+				}else{
+					selectValueBeforeTr=$('#CP_05 #trafficTable tr:gt(0):lt('+first_no+')');
+				}
+				var showTRCount=0;
+				if(selectValueBeforeTr.length>=2){
+					var hasTarget=false,targetCount=0;
+					if(selectValue==-1){
+						for(var i=0;i<selectValueBeforeTr.length;i++){
+							if($(selectValueBeforeTr[i]).data('targetrange')==1){
+								targetCount++;
+							}
+							if(targetCount>=2){
+								hasTarget=true;
+								break;
+							}
+						}
+					}else{
+						hasTarget=true;
+					}
+					if(hasTarget){
+						$('#CP_05 #trafficTable tr:gt(0)').hide();
+						var allTr=$('#CP_05 #trafficTable tr:gt(0):lt('+first_no+')');
+						showTRCount=0;
+						for(var i=allTr.length-2;i>=0;i--){
+							if(showTRCount>1){
+									break;
+							}else{
+								if(selectValue!=-1){
+									if(selectValue!=0){
+										if($(allTr[i]).data('timerange')==selectValue){
+												$(allTr[i]).show();
+												showTRCount++;
+										}
+									}else{
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}else{
+									if($(allTr[i]).data('targetrange')==1){
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}
+							}
+						}
+					}
+				}
+				var first_no=$('#CP_05 #trainUpTable tr:gt(0):visible:first').data('no');
+				var last_no=$('#CP_05 #trainUpTable tr:gt(0):visible:last').data('no');
+				if(selectValue!=-1&&selectValue!=0){
+					selectValueBeforeTr=$('#CP_05 #trainUpTable tr:gt(0):lt('+first_no+')[data-timerange="'+selectValue+'"]')
+				}else{
+					selectValueBeforeTr=$('#CP_05 #trainUpTable tr:gt(0):lt('+first_no+')');
+				}
+				if(selectValueBeforeTr.length>=2){
+					var hasTarget=false,targetCount=0;
+					if(selectValue==-1){
+						for(var i=0;i<selectValueBeforeTr.length;i++){
+							if($(selectValueBeforeTr[i]).data('targetrange')==1){
+								targetCount++;
+							}
+							if(targetCount>=2){
+								hasTarget=true;
+								break;
+							}
+						}
+					}else{
+						hasTarget=true;
+					}
+					if(hasTarget){
+						$('#CP_05 #trainUpTable tr:gt(0)').hide();
+						var allTr=$('#CP_05 #trainUpTable tr:gt(0):lt('+first_no+')');
+						showTRCount=0;
+						for(var i=allTr.length-2;i>=0;i--){
+							if(showTRCount>1){
+									break;
+							}else{
+								if(selectValue!=-1){
+									if(selectValue!=0){
+										if($(allTr[i]).data('timerange')==selectValue){
+												$(allTr[i]).show();
+												showTRCount++;
+										}
+									}else{
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}else{
+									if($(allTr[i]).data('targetrange')==1){
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}
+							}
+						}
+					}
+				}
+				first_no=$('#CP_05 #trainDownTable tr:gt(0):visible:first').data('no');
+				last_no=$('#CP_05 #trainDownTable tr:gt(0):visible:last').data('no');
+				if(selectValue!=-1&&selectValue!=0){
+					selectValueBeforeTr=$('#CP_05 #trainDownTable tr:gt(0):lt('+first_no+')[data-timerange="'+selectValue+'"]')
+				}else{
+					selectValueBeforeTr=$('#CP_05 #trainDownTable tr:gt(0):lt('+first_no+')');
+				}
+				if(selectValueBeforeTr.length>=2){
+					var hasTarget=false,targetCount=0;
+					if(selectValue==-1){
+						for(var i=0;i<selectValueBeforeTr.length;i++){
+							if($(selectValueBeforeTr[i]).data('targetrange')==1){
+								targetCount++;
+							}
+							if(targetCount>=2){
+								hasTarget=true;
+								break;
+							}
+						}
+					}else{
+						hasTarget=true;
+					}
+					if(hasTarget){
+						$('#CP_05 #trainDownTable tr:gt(0)').hide();
+						var allTr=$('#CP_05 #trainDownTable tr:gt(0):lt('+first_no+')');
+						showTRCount=0;
+						for(var i=allTr.length-2;i>=0;i--){
+							if(showTRCount>1){
+									break;
+							}else{
+								if(selectValue!=-1){
+									if(selectValue!=0){
+										if($(allTr[i]).data('timerange')==selectValue){
+												$(allTr[i]).show();
+												showTRCount++;
+										}
+									}else{
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}else{
+									if($(allTr[i]).data('targetrange')==1){
+											$(allTr[i]).show();
+											showTRCount++;
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+ 		});
+ 		$(document).on('pageinit','#CP_09',function(){
+ 			//地圖按鈕
+ 			$(this).on('click','#btnMap',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+				var ximage=$(this).data('ximage');
+				var xicon=$(this).data('xicon');
+				//開啓地圖模組-至地圖模組開啓指定點
+				openMap(new posObject(title,address,latitude,longitude,spotNo,ximage,xicon));
+ 				title=null;latitude=null;longitude=null;spotNo=null;address=null;ximage=null;xicon=null;
+ 				delete title;delete latitude;delete longitude;delete spotNo;delete address;delete ximage;delete xicon;
+ 			});
+ 			//導航按鈕
+ 			$(this).on('click','#btnRoute',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+				var ximage=$(this).data('ximage');
+				var xicon=$(this).data('xicon');
+				//開啓地圖模組-路徑規劃功能
+				openMapWithRoute(new posObject(title,address,latitude,longitude,spotNo,ximage,xicon));
+ 				title=null;latitude=null;longitude=null;spotNo=null;address=null;ximage=null;xicon=null;
+ 				delete title;delete latitude;delete longitude;delete spotNo;delete address;delete ximage;delete xicon;
+ 			});
+ 			//電話按扭
+ 			$(this).on('click','#btnTel',function(){
+ 				var tel=$(this).data('tel');
+ 				window.location.href="tel:"+tel;
+ 			});
+ 		});
+ 		$(document).on('pageinit','#CP_10',function(){
+ 			//地圖按鈕
+ 			$(this).on('click','#btnMap',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+				var ximage=$(this).data('ximage');
+				var xicon=$(this).data('xicon');
+				//開啓地圖模組-至地圖模組開啓指定點
+				openMap(new posObject(title,address,latitude,longitude,spotNo,ximage,xicon));
+ 				title=null;latitude=null;longitude=null;spotNo=null;address=null;ximage=null;xicon=null;
+ 				delete title;delete latitude;delete longitude;delete spotNo;delete address;delete ximage;delete xicon;
+ 			});
+ 			//導航按鈕
+ 			$(this).on('click','#btnRoute',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+				var ximage=$(this).data('ximage');
+				var xicon=$(this).data('xicon');
+				//開啓地圖模組-路徑規劃功能
+				openMapWithRoute(new posObject(title,address,latitude,longitude,spotNo,ximage,xicon));
+ 				title=null;latitude=null;longitude=null;spotNo=null;address=null;ximage=null;xicon=null;
+ 				delete title;delete latitude;delete longitude;delete spotNo;delete address;delete ximage;delete xicon;
+ 			});
+ 			//電話按扭
+ 			$(this).on('click','#btnTel',function(){
+ 				var tel=$(this).data('tel');
+ 				window.location.href="tel:"+tel;
+ 			});
+ 		});
+		$(document).on('pageinit','#page_setPosition',function(){
+			var rootElement=this;
+			$(this).on('click','#btnSetPosition',function(){
+				//取得地圖上坐標
+				var latlng=setPosition_map.map_markers[0].getPosition();
+				//儲存目前GPRS位置
+				setGPRSData({"lat":latlng.lat(),"lng":latlng.lng()});
+				$.mobile.changePage('#page_aroundStop');
+			});
+			$(this).on('click','#btnSearchLocation',function(){
+				setPosition_map.changeCenterWithAddress($('#txtSearchInput').val());
+				//重整地圖尺寸跟地圖調整中心	
+				setPosition_map.refresh();
+			});
+		});
+ 		$(document).on('pageshow','#index',function(){	
+ 			//首頁呈現
+ 			genIndex(Park,Base);
+ 		});
+ 		$(document).on('pageshow','#page_transPlanning',function(){	
+ 			//首頁呈現
+ 			genIndex(Park,Base);
+ 		});
+ 		$(document).on('pageshow','#index_01',function(){	
+ 			genIndex(Park,Base);
+ 			//預設選取車站,N:1030_1000,C:1040_1000,S:1060_1000:
+ 			var defaultStopValue="1030_1000",defaultStopValueStr="新竹/台北";
+ 			switch(AppType){
+ 				case "N":
+ 					defaultStopValue="1030_1000";
+ 					defaultStopValueStr="新竹/台北";
+ 					break;
+ 				case "C":
+	 				defaultStopValue="1040_1000";
+	 				defaultStopValueStr="台中/台北";
+ 					break;
+ 				case "S":
+	 				defaultStopValue="1060_1000";
+	 				defaultStopValueStr="台南/台北";
+ 					break;
+ 			}
+		   var mobiScroll_stop=$('#index_01 #mobiScroll_stop');
+	       $(mobiScroll_stop).val(defaultStopValue).mobiscroll('setValue',[defaultStopValue]);          
+	       $(this).find('#mobiScroll_stop_dummy').val(defaultStopValueStr);
+ 		});
+ 		$(document).on('pageshow','#index_02',function(){	
+ 			genIndex(Park,Base);
+ 			//預設選取車站,N:003_1025,C:005_1319,S:010_1228:
+			var defaultStopValue="1025",defaultStopValueStr="新竹地區/新竹";
+ 			switch(AppType){
+ 				case "N":
+ 					defaultStopValue="1025";
+ 					defaultStopValueStr="新竹地區/新竹";
+ 					break;
+ 				case "C":
+	 				defaultStopValue="1319";
+	 				defaultStopValueStr="台中地區/台中";
+ 					break;
+ 				case "S":
+	 				defaultStopValue="1228";
+	 				defaultStopValueStr="台南地區/台南";
+ 					break;
+ 			}
+		   var mobiScroll_begin_stop=$('#index_02 #mobiScroll_begin_stop');
+	       $(mobiScroll_begin_stop).val(defaultStopValue).mobiscroll('setValue',[defaultStopValue]);          
+	       $(this).find('#mobiScroll_begin_stop_dummy').val(defaultStopValueStr);
+	        
+ 		});
+ 		$(document).on('pagebeforeshow','#index_03',function(){	
+			genIndex(Park,Base);
+		});
+		$(document).on('pagebeforeshow','#index_04',function(){	
+			genIndex(Park,Base);
+		});
+		$(document).on('pagebeforeshow','#index_05',function(){	
+			genIndex(Park,Base);
+			//預設頁面
+			$(this).on('click','#btnChangeToIndex',function(){
+				$('#index_05').find('#divIndex').show();
+				$('#index_05').find('#divQP').hide();
+ 			});
+ 			//查詢頁面
+			$(this).on('click','#btnChangeToQP',function(){
+				$('#index_05').find('#divIndex').hide();
+				$('#index_05').find('#divQP').show();
+ 			});
+		});
+		$(document).on('pagebeforeshow','#index_06',function(){	
+			genIndex(Park,Base);
+		});
+ 		$(document).on('pagebeforeshow','#index_07',function(){	
+ 			genIndex(Park,Base);
+ 			//取得資料
+ 			var selectValue=$('#selectBase').val();
+ 			getAreaIntroData(Park,selectValue,"07");
+ 		});
+ 		$(document).on('pagebeforeshow','#index_08',function(){	
+ 			genIndex(Park,Base);
+ 			//取得資料
+ 			var selectValue=$('#selectBase').val();
+ 			getAreaIntroData(Park,selectValue,"08");
+ 		});
+ 		 $(document).on('pagebeforeshow','#index_09',function(){	
+ 			genIndex(Park,Base);
+ 			//取得資料
+ 			var selectValue=$('#selectBase').val();
+ 			getParkAndTowingData(Park,selectValue,"01");
+ 		});
+ 		$(document).on('pagebeforeshow','#index_10',function(){	
+ 			genIndex(Park,Base);
+ 			//取得資料
+ 			var selectValue=$('#selectBase').val();
+ 			getParkAndTowingData(Park,selectValue,"02");
+ 		});
+ 		$(document).on('pagebeforeshow','#page_aroundStop',function(){	
+ 			var nowDate = new Date();
+ 			var targetPark="01",targetBase="01";
+
+ 			switch(AppType){
+ 				case "N":
+					targetPark="01";
+					targetBase="01";
+	 				break;
+ 				case "C":
+					targetPark="03";
+					targetBase="21";
+	 				break;
+ 				case "S":
+					targetPark="02";
+					targetBase="11";
+	 				break;
+ 			}
+ 			//取得鄰近站點資料
+			getAroundStop(targetPark,targetBase,getGPRSData().lat,getGPRSData().lng,nowDate.getHours(),nowDate.getMinutes(),"time");
+ 		});
+ 		//pageshow
+		$(document).on('pageshow','#LP_05_1',function(){	
+			//重整地圖尺寸跟地圖調整中心	
+			// divRouteMap_map.refresh();
+ 		});
+		$(document).on('pageshow','#CP_BusMap',function(){	
+			//重整地圖尺寸跟地圖調整中心	
+			BusMap_map.refresh();
+ 		});
+ 		$(document).on('pageshow','#page_setPosition',function(){
+			//重整地圖尺寸跟地圖調整中心	
+			setPosition_map.refresh();
+ 		});
+ 		$(document).on('pageinit','#test',function(){	
+ 			//假資料
+ 			var map=new HyMap();
+ 			map.ini(document.getElementById('map_canvas'),new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),15);
+ 			//基本路標
+ 			// map.addAdvMarker("test1","台北市重慶南路二段1",25.0500, 121.1484,"1","",map.map_icons.position.icon);
+ 			// map.addAdvMarker("test2","台北市重慶南路二段2",25.0500, 121.2484,"","",map.map_icons.position.icon);
+ 			// map.addAdvMarker("test3","台北市重慶南路二段3",25.0500, 121.5484,"","",map.map_icons.position.icon);
+ 			//單點查詢
+ 			// map.doSearchByAddress("101,taipei");
+ 			//坐標反查地址
+ 			// map.getAddressByLatLng(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),$(this).find('#txtAddress'));
+ 			//兩點路線規劃
+ 			map.doRoutePath(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),new google.maps.LatLng(25.0500, 121.1484),$(this).find('#directions'));
+ 			//初始化
+ 			// map=iniMap(document.getElementById('map_canvas'),new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng));
+ 			// //建立線路
+ 			// var jsonData=null;
+ 			// genTrafficBusLine(jsonData,map);
+ 			// clearMapMarker(map_markers);
+ 			// clearPolyLine(map_polyLines);
+ 		});
+
+						/*地圖模組*/
+		/*Map function*/
+		function doClassify1Filter(Collapsible_Classify1_ID,classify1){
+			var classifyArray=[],classifyArrayStr="";
+			if(Collapsible_Classify1_ID!=""){
+				var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				//取得SQL string
+				for(var i=0;i<checkedList.length;i++){
+					if(classifyArrayStr!=""){
+						classifyArrayStr+=" or ";
+					}
+					classifyArrayStr+="(xLBSSpotClassify.xLBSClassify1='"+$(checkedList[i]).data('classify1')+"' and xLBSSpotClassify.xLBSClassify2='"+$(checkedList[i]).data('classify2')+"')";
+				}	
+				if(classifyArrayStr!=""){
+				classifyArrayStr=" and ("+classifyArrayStr+") ";
+			}
+			}else{
+				//給他一個空白代表分類全選
+				classifyArrayStr=" ";
+			}
+			if(classifyArrayStr==""){
+				$('#popupDialog_classify1Filter').popup('close');
+				smoke.alert(classify2RequirementString,{},function(){
+					$('#popupDialog_classify1Filter').popup('open');
+				});
+			}else{
+				switchFooterFunction('default');
+				LoadingObject.show();
+				//var jsonObject={"classifyArray":classifyArray};
+				var jsonObject={"command":"select xLBSSpot.spotNo,xLBSSpot.chtName,xLBSSpot.chtAddress,xLBSSpot.engName,xLBSSpot.engAddress,xLBSSpot.latitude,xLBSSpot.longitude,xLBSSpot.parkArea,xLBSSpot.parkLocation,(case xLBSSpotPic.ximage when '' then '' else ('"+Setting_imgSrc+"'+xLBSSpotPic .ximage)   end) as ximage,xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSClassify2.chtName as xLBSClassify2_name, xLBSClassify2.engName as xLBSClassify2_ename from xLBSSpot inner join xLBSSpotClassify on xLBSSpot.spotNo=xLBSSpotClassify.spotNo inner join xLBSClassify2 on xLBSSpotClassify.xLBSClassify2=xLBSClassify2.code left join xLBSSpotPic on xLBSSpot.spotNo=xLBSSpotPic.spotNo where xLBSSpotPic.entranceCode is NULL and xLBSSpotPic.isMain='1' and xLBSSpot.parkArea='"+park+"' "+classifyArrayStr+" order by xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSSpot.spotNo","count":300};
+				
+				var jsonObjectStr = JSON.stringify(jsonObject);
+			    $.ajax({
+			        url:commonURL_DB,
+			        data:  {"jsonInput":jsonObjectStr},
+			        type:"POST",
+			        dataType :"json",
+			        async:false,
+			        success:function(data){
+			            if(data==null){
+			                 smoke.alert(ServiceCodeErrorString,{},function(){});
+			            }else{
+			                if(data.status=="success"){
+			                	LP_jsonObjectArray=[];
+			                	if(data.jsonOutput.length>0){
+			                		for(var i=0;i<data.jsonOutput.length;i++){
+			                			LP_jsonObjectArray.push({"spotNo":data.jsonOutput[i].spotNo,"chtName":data.jsonOutput[i].chtName,"chtAddress":data.jsonOutput[i].chtAddress,"xicon":getXiconImg(data.jsonOutput[i].xLBSClassify2),"ximage":data.jsonOutput[i].ximage,"latitude":data.jsonOutput[i].latitude,"longitude":data.jsonOutput[i].longitude,"classify1":data.jsonOutput[i].xLBSClassify1,"classify2":data.jsonOutput[i].xLBSClassify2,"classify2_name":data.jsonOutput[i].xLBSClassify2_name,"classify2_ename":data.jsonOutput[i].xLBSClassify2_ename});
+			                			
+				                	}
+			            		}
+	            				convertToGMAPMarkers();
+	        					$('#popupDialog_classify1Filter').popup('close');
+			                }else{
+			                    smoke.alert(ServiceCodeErrorString,{},function(){});
+			                }
+			            }
+			        },
+			        error: function(data){
+			            LoadingObject.hide(); 
+			            smoke.alert(ServiceErrorString,{},function(){});
+			        },
+			        complete: function() {
+			            LoadingObject.hide();
+			        }
+			    });
+			}
+		}
+		function genClassify1List(){
+			 LoadingObject.show();
+			var jsonObject={"command":"select c1 .code as code1 ,c2. code as code2, c1.chtName as name1,c2 .chtName as name2 ,c1. engName as ename1,c2 .engName as ename2 ,c1. ximage as image1, c2.ximage as image2 from xLBSClassify2 as c2 left join xLBSClassify1 as c1 on c2.upperClass =c1. code where c1.isValid ='Y' and c1.isPublic ='Y' and c2.isValid ='Y' and c2.isValid ='Y' order by code1, code2"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var nowCode1="";
+			//var classify1ListResult='<a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a>';
+			var classify1ListResult='<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
+		    $.ajax({
+		        url:commonURL_DB,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+							for(var i=0;i<data.jsonOutput.length;i++){
+								if(nowCode1!=data.jsonOutput[i].code1){
+									if(nowCode1!=""){
+										classify1ListResult+='</ul><button data-theme="e" onclick="doClassify1Filter(&#39;Collapsible_Classify1_'+nowCode1+'&#39;,&#39;'+nowCode1+'&#39;);"'+'>查詢</button>';
+										classify1ListResult+='</div>';
+									}
+									classify1ListResult+='<div data-role="collapsible" id="Collapsible_Classify1_'+data.jsonOutput[i].code1+'" class="Collapsible_Classify1" data-inset="false">';
+									classify1ListResult+='<h2>'+data.jsonOutput[i].name1+'</h2>';
+									// classify1ListResult+='<ul data-role="listview">';
+									nowCode1=data.jsonOutput[i].code1;
+								}
+								// classify1ListResult+='<li data-classify1="'+data.jsonOutput[i].code2+'" data-classify2="'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</li>';
+								classify1ListResult+='<input data-theme="f" data-classify1="'+data.jsonOutput[i].code1+'" data-classify2="'+data.jsonOutput[i].code2+'" type="checkbox" name="checkbox_classifyList" id="checkbox_classifyList_'+data.jsonOutput[i].code2+'"><label for="checkbox_classifyList_'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</label>';
+							}
+							$('#Map_LP').find('#classify1List').html(classify1ListResult).trigger('create');
+						}
+						else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function getClassifyArrayStr(checkedList){
+			var classifyArrayStr="";
+			for(var i=0;i<checkedList.length;i++){
+				// classifyArray.push({"classify1":checkedList[i].code1,"classify2":checkedList[i].code2});
+				//測試用
+				if(classifyArrayStr!=""){
+					classifyArrayStr+=" or ";
+				}
+				classifyArrayStr+="(xLBSSpotClassify.xLBSClassify1='"+checkedList[i].code1+"' and xLBSSpotClassify.xLBSClassify2='"+checkedList[i].code2+"')";
+			}
+			if(typeof(TargetClassify1)!="undefined"&&TargetClassify1!=""&&classifyArrayStr==""){
+				classifyArrayStr+="xLBSSpotClassify.xLBSClassify1='"+TargetClassify1+"'";
+			}
+			return classifyArrayStr;
+		}
+		function changeToMap_CP(sn){
+		    LoadingObject.show();
+			var jsonObject={"command":"select xLBSSpot.spotNo,xLBSSpot.chtName,xLBSSpot.chtAddress,xLBSSpot.engName,xLBSSpot.engAddress,xLBSSpot.latitude,xLBSSpot.longitude,xLBSSpot.parkArea,xLBSSpot.parkLocation,(case xLBSSpotPic.ximage when '' then '' else ('"+Setting_imgSrc+"'+xLBSSpotPic .ximage)   end) as ximage,xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSClassify2.chtName as xLBSClassify2_name, xLBSClassify2.engName as xLBSClassify2_ename,xLBSSpot.telTitle,xLBSSpot.telNumber,xLBSSpot.telEngTitle,xLBSSpot.urlTitle,xLBSSpot.urlAddress,xLBSSpot.urlEngTitle,xLBSSpot.chtDesc,xLBSSpot.engDesc from xLBSSpot inner join xLBSSpotClassify on xLBSSpot.spotNo=xLBSSpotClassify.spotNo inner join xLBSClassify2 on xLBSSpotClassify.xLBSClassify2=xLBSClassify2.code left join xLBSSpotPic on xLBSSpot.spotNo=xLBSSpotPic.spotNo where xLBSSpotPic.entranceCode is NULL and xLBSSpot.spotNo="+sn+" order by xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSSpot.spotNo"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:commonURL_DB,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(data.jsonOutput.length>0){
+								//生活服務內容
+		                		htmlResult+="<div class='ServiceCt'><div class='title'>"+data.jsonOutput[0].chtName+"</div><ul class='photo'>";
+		                		for(var i=0;i<data.jsonOutput.length;i++){
+
+		                			htmlResult+="<li";
+		                			if(i==0){
+		                				htmlResult+=" class='here' ";
+		                			}
+		                			htmlResult+="><img src='"+data.jsonOutput[i].ximage+"'></li>";
+		                		}
+		                		htmlResult+="</ul><ul class='info'>"+
+		                					"<li>地址："+(typeof(data.jsonOutput[0].chtAddress)=="undefined"?"":data.jsonOutput[0].chtAddress)+"</li>"+	
+		                					"<li>"+(typeof(data.jsonOutput[0].telTitle)=="undefined"?"電話：":data.jsonOutput[0].telTitle+"：")+(typeof(data.jsonOutput[0].telNumber)=="undefined"?"":data.jsonOutput[0].telNumber)+"</li>"+
+		                					"<li>"+((typeof(data.jsonOutput[0].urlTitle)=="undefined"||data.jsonOutput[0].urlTitle=="")?"網址：":data.jsonOutput[0].urlTitle+"：")+"<a href='javascript:openBrowser(&#39;"+data.jsonOutput[0].urlAddress+"&#39;);' >"+((typeof(data.jsonOutput[0].urlAddress)=="undefined"||data.jsonOutput[0].urlAddress=="http://")?"":data.jsonOutput[0].urlAddress)+"</a></li>"+
+		                					"<li>"+(typeof(data.jsonOutput[0].chtDesc)=="undefined"?"":data.jsonOutput[0].chtDesc)+"</li>"+
+		                					"</ul></div>";
+								//功能列
+								htmlResult+="<div class='springboard2'><ul><li>"+
+											"<button data-role='none' id='btnMap' data-xicon='"+getXiconImg(data.jsonOutput[0].xLBSClassify2)+"' data-ximage='"+data.jsonOutput[0].ximage+"' data-title='"+data.jsonOutput[0].chtName+"' data-latitude='"+data.jsonOutput[0].latitude+"' data-longitude='"+data.jsonOutput[0].longitude+"' data-lbs='"+data.jsonOutput[0].xLBSSpot+"' data-address='"+data.jsonOutput[0].chtAddress+"' class='map'>地圖</button>"+
+											"<button data-role='none' id='btnRoute' data-xicon='"+getXiconImg(data.jsonOutput[0].xLBSClassify2)+"' data-ximage='"+data.jsonOutput[0].ximage+"' data-title='"+data.jsonOutput[0].chtName+"' data-latitude='"+data.jsonOutput[0].latitude+"' data-longitude='"+data.jsonOutput[0].longitude+"' data-lbs='"+data.jsonOutput[0].spotNo+"' data-address='"+data.jsonOutput[0].chtAddress+"'  class='route'>規劃路線</button>"+
+											"<button data-role='none' id='btnTel' data-tel='"+data.jsonOutput[0].telNumber+"'  class='tel'>撥打電話</button>"+
+											"</li></ul></div>";
+		   					}
+	        				$('#Map_CP').find('#content').html(htmlResult); 
+	        				$.mobile.changePage('#Map_CP');
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function switchRouteShowType(type){
+			if(type=='path'){
+				$('#routeList').show();
+				$('#map_canvas').hide();
+				$('#Map_LP').find('#btnRoute_MAPShow').removeClass('listbtn03').addClass('listbtn01');
+				$('#Map_LP').find('#btnRoute_PathShow').removeClass('listbtn04').addClass('listbtn02');
+			}else{
+				$('#routeList').hide();
+				$('#map_canvas').show();
+				$('#Map_LP').find('#btnRoute_MAPShow').removeClass('listbtn01').addClass('listbtn03');
+				$('#Map_LP').find('#btnRoute_PathShow').removeClass('listbtn02').addClass('listbtn04');
+				//重整地圖尺寸跟地圖調整中心	
+				map.refresh();
+			}
+		}
+		function switchLPShowType(type){
+			$('#routeList').hide();
+			var htmlResult="";
+			var nowClassify2="";
+			if(type=='list'){
+				for(var i=0;i<LP_jsonObjectArray.length;i++){
+				if(nowClassify2==""||(nowClassify2!=""&&nowClassify2!=LP_jsonObjectArray[i].classify2)){
+					nowClassify2=LP_jsonObjectArray[i].classify2;
+					htmlResult+='<li data-role="list-divider"><span>'+LP_jsonObjectArray[i].classify2_name+'</span></li>';
+				}
+				htmlResult+="<li data-latitude='"+LP_jsonObjectArray[i].latitude+"' data-longitude='"+LP_jsonObjectArray[i].longitude+"' data-spotno='"+LP_jsonObjectArray[i].spotNo+"'>"+
+				"<div class='image'><img src='"+LP_jsonObjectArray[i].ximage+"'></div>"+
+				"<h2>"+LP_jsonObjectArray[i].chtName+"</h2>"+
+				"<p>"+LP_jsonObjectArray[i].chtAddress+"</p>"+
+			    "<div class='btnbox'><input type='submit' data-role='none' data-xicon='"+LP_jsonObjectArray[i].xicon+"' data-ximage='"+LP_jsonObjectArray[i].ximage+"' data-title='"+LP_jsonObjectArray[i].chtName+"' data-address='"+LP_jsonObjectArray[i].chtAddress+"'  data-latitude='"+LP_jsonObjectArray[i].latitude+"' data-longitude='"+LP_jsonObjectArray[i].longitude+"' data-spotno='"+LP_jsonObjectArray[i].spotNo+"' value='規劃路線'' class='btnDoRoute_dataList btn06'></div>"+
+				"</li>";
+				}
+				$('#Map_LP').find('#dataList').html("<ul data-role='none'>"+htmlResult+"</ul><div style='height:100px;width:100%'></div>");
+				$('#Map_LP').find('#dataMap').hide();
+				$('#Map_LP').find('#dataList').show();
+				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn03').addClass('listbtn01');
+				$('#Map_LP').find('#btnListShow').removeClass('listbtn04').addClass('listbtn02');
+			}else
+			{
+				$('#Map_LP').find('#dataList').hide();
+				$('#Map_LP #dataMap .subDiv').hide();
+				// $('#routeList').hide();
+				$('#Map_LP').find('#dataMap').show();
+				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');
+				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
+				//重整地圖尺寸跟地圖調整中心	
+				map.refresh();
+			}
+		    return htmlResult;
+		}
+		function genMapShowContent(){
+			map=new HyMap();
+ 			map.ini(document.getElementById('map_canvas'),new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),14);
+ 			map.setDivDirectionDetail($('#Map_LP #directions'));
+		}
+		function convertToGMAPMarkers(){
+			//地圖初始化
+			genMapShowContent();
+			switchLPShowType("map"); 
+			var nearAlertSpotListHtmlResult="";
+			for(var i=0;i<LP_jsonObjectArray.length;i++){
+				//gmap marker
+				var title=LP_jsonObjectArray[i].chtName;
+				var address=LP_jsonObjectArray[i].chtAddress;
+				var latitude=LP_jsonObjectArray[i].latitude;
+				var longitude=LP_jsonObjectArray[i].longitude;
+				var spotNo=LP_jsonObjectArray[i].spotNo;
+				var ximage=LP_jsonObjectArray[i].ximage;//待續
+				var xicon=LP_jsonObjectArray[i].xicon;//待續
+				map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
+				//nearAlertSpotList
+			    nearAlertSpotListHtmlResult+='<input type="radio" id="radio_nearAlertSpot_'+i+'" name="radio_nearAlertSpotList" data-spotno="'+spotNo+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-title="'+title+'" data-address="'+address+'" data-theme="c">'+'<label for="radio_nearAlertSpot_'+i+'">'+title+'</label>';
+			}
+			if(nearAlertSpotListHtmlResult!=""){
+				nearAlertSpotListHtmlResult+='<div data-role="controlgroup" data-type="horizontal"><a data-theme="c" data-role="button" data-rel="back">取消</a><a data-theme="f" href="javascript:setNearAlertByList();" data-role="button">確定</a></div>';
+			}
+			$('#nearAlertSpotList').html(nearAlertSpotListHtmlResult).trigger('create');
+		}
+		function switchFooterFunction(type){
+			if(type=='route'){
+				$('.defaultFootFunction').hide();
+				$('.RouteFootFunction').show();
+				switchRouteShowType('map');
+			}else{
+				$('.defaultFootFunction').show();
+				$('.RouteFootFunction').hide();
+				switchLPShowType('map');
+			}
+		}
+		function showMapSubDiv(subDiv){
+			var isShow=$(subDiv).is(":visible");
+			switchLPShowType('map');
+			isShow==true?$(subDiv).hide():$(subDiv).show();
+		}
+		function setNearAlertByList(){
+			var obj=$("#nearAlertSpotList input[type=radio]:checked");
+			$('#popupDialog_setAlert').popup('close');
+			if(typeof(obj)!="undefined"){
+				doSetNearAlertSpot($(obj).data('spotNo'),$(obj).data('title'),$(obj).data('address'),$(obj).data('latitude'),$(obj).data('longitude'));
+			}else{
+				smoke.alert(nearAlertString_notCheckedBeforeSendFromList,{},function(){});
+			}
+		}
+		function doSetNearAlertSpot(spotNo,title,address,latitude,longitude){
+			var content="";
+			if(map.nearAlertSpot!=null){
+				if(latitude==map.nearAlertSpot.latitude$$longitude==map.nearAlertSpot.longitude){
+					smoke.alert(nearAlertString_already,{},function(){});
+				}else{
+					content+="已經有設定接近提醒:"+map.nearAlertSpot.title+"<br/>"+
+						 	 "地址:"+(typeof(map.nearAlertSpot.address)!=='undefined'?map.nearAlertSpot.address+"("+map.nearAlertSpot.latitude+","+map.nearAlertSpot.longitude+")":map.nearAlertSpot.latitude+","+map.nearAlertSpot.longitude)+",是否替換設定?";
+					smoke.confirm(content,function(e){
+						if (e){
+							//設定接近提醒點
+							map.setNearAlertSpot({"spotNo":spotNo,"title":title,"address":address,"latitude":latitude,"longitude":longitude});
+							smoke.alert(SettingOKString);
+						}
+					},{ok:"確定", cancel:"取消"});
+				}
+			}else{
+				//設定接近提醒點
+				map.setNearAlertSpot({"spotNo":spotNo,"title":title,"address":address,"latitude":latitude,"longitude":longitude});
+				smoke.alert(SettingOKString);
+			}	
+		}
+		//pageinit
+		$(document).on('pageinit','#Map_LP',function(){	
+			//產生gmap
+			genMapShowContent();
+			//Filter
+			genClassify1List();
+			//各分類
+			// $(this).find('#btnClassify1Filter').on('click',function(){
+			// 	$('#Map_LP .Collapsible_Classify1').show();
+			// });
+			//各項目
+			$(this).find('#dataList').on('click','li[data-role!="list-divider"]',function(evt){
+				if ($(evt.target).is("li")) {
+	 				var spotNo=$(this).data("spotno");
+	 				changeToMap_CP(spotNo);
+	 			}
+ 			});
+ 			//切換地圖顯示
+			$(this).on('click','#btnMAPShow',function(){	
+				convertToGMAPMarkers();
+				$(this).removeClass('listbtn01').addClass('listbtn03');
+				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
+				//重設地圖中心
+		      	map.map.setCenter(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng));
+			});
+ 			//切換條列顯示
+			$(this).on('click','#btnListShow',function(){	
+				switchLPShowType("list");
+				$(this).removeClass('listbtn04').addClass('listbtn02');
+				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn03').addClass('listbtn01');
+			});
+			//切換地圖導引
+			$(this).on('click','#btnRoute_MAPShow',function(){	
+				switchRouteShowType('map');
+			});
+			//切換條列導引
+			$(this).on('click','#btnRoute_PathShow',function(){	
+				switchRouteShowType('path');
+			});
+ 			//查詢關鍵字查地圖
+			$(this).on('click','#btnSearch',function(){
+				showMapSubDiv($('#Map_LP #divKeyWordSearch'));
+			});
+			//路線規劃地圖
+			$(this).on('click','#btnRoute',function(){
+				//地址反查
+				map.getAddressByLatLng(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),$('#Map_LP').find('#txtRoutePointStart'));
+				//切換FooterFunction
+				showMapSubDiv($('#Map_LP #divRoutePath'));
+			});
+			$(this).on('click','#btnKeyWordSearch',function(){
+				switchFooterFunction('default');
+				map.doSearchByAddress($('#txtSearchKeyWord').val());
+			});
+			$(this).on('click','#btnDoRoute',function(){
+				//關閉幕前顯示div
+				$('#Map_LP #dataMap .subDiv').hide();
+				switchFooterFunction('route');
+				map.doRoutePath($('#txtRoutePointStart').val(), $('#txtRoutePointEnd').val());
+			});
+			$(this).on('click','#btnDoRoute_InfoWindow',function(){
+				var rootElement=$(this);
+				//關閉幕前顯示div
+				$('#Map_LP #dataMap .subDiv').hide();
+				switchFooterFunction('route');
+				var title=$(this).data('title');
+ 				var latitude=$(this).data('latitude');
+ 				var longitude=$(this).data('longitude');
+ 				var spotNo=$(this).data('spotno');
+ 				var address=$(this).data('address');
+ 				var ximage=$(this).data('ximage');
+ 				var xicon=$(this).data('xicon');
+ 				var jsonObject={"title":title,"address":address,"latitude":latitude,"longitude":longitude,"spotNo":spotNo,"ximage":ximage,"xicon":xicon};
+				map.doRoutePath(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),new google.maps.LatLng($(rootElement).data('latitude'),$(rootElement).data('longitude')),null,jsonObject);
+ 				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;jsonObject=null;
+ 				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;delete jsonObject;
+			});
+			$(this).on('click','input.btnDoRoute_dataList',function(){
+				var rootElement=$(this);
+				switchLPShowType("map");
+				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');
+				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
+				//關閉幕前顯示div
+				$('#Map_LP #dataMap .subDiv').hide();
+				switchFooterFunction('route');
+				var title=$(this).data('title');
+ 				var latitude=$(this).data('latitude');
+ 				var longitude=$(this).data('longitude');
+ 				var spotNo=$(this).data('spotno');
+ 				var address=$(this).data('address');
+ 				var ximage=$(this).data('ximage');
+ 				var xicon=$(this).data('xicon');
+ 				var jsonObject={"title":title,"address":address,"latitude":latitude,"longitude":longitude,"spotNo":spotNo,"ximage":ximage,"xicon":xicon};
+				map.doRoutePath(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),new google.maps.LatLng($(rootElement).data('latitude'),$(rootElement).data('longitude')),null,jsonObject);
+ 				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;jsonObject=null;
+ 				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;delete jsonObject;
+			});
+			$(this).on('click','#btnLBSCP',function(){
+				var spotNo=$(this).data('spotno');
+				if(spotNo!=""){
+					changeToMap_CP(spotNo);
+				}
+			});
+			$(this).on('click','#btnSetNearAlert',function(){
+				var spotNo=$(this).data('spotNo');
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				doSetNearAlertSpot(spotNo,title,address,latitude,longitude);
+			});
+		});
+		$(document).on('pageinit','#Map_CP',function(){	
+ 			//地圖按鈕
+ 			$(this).on('click','#btnMap',function(){
+ 				var title=$(this).data('title');
+ 				var latitude=$(this).data('latitude');
+ 				var longitude=$(this).data('longitude');
+ 				var spotNo=$(this).data('spotno');
+ 				var address=$(this).data('address');
+ 				var ximage=$(this).data('ximage');
+ 				var xicon=$(this).data('xicon');
+ 				//呈現當前坐標內容
+ 				map.showTargetMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
+ 				$.mobile.changePage('#Map_LP');
+ 				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;
+ 				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;
+ 			});
+ 			//導航按鈕
+			$(this).on('click','#btnRoute',function(){
+				var rootElement=$(this);
+				switchLPShowType("map");
+				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');
+				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
+				//關閉幕前顯示div
+				$('#Map_LP #dataMap .subDiv').hide();
+				switchFooterFunction('route');
+				map.doRoutePath(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),new google.maps.LatLng($(rootElement).data('latitude'),$(rootElement).data('longitude')));			
+				$.mobile.changePage('#Map_LP');
+			});
+ 			//電話按扭
+ 			$(this).on('click','#btnTel',function(){
+ 				var tel=$(this).data('tel');
+ 				if(typeof(tel)!="undefined"&&tel!=""){
+	 				window.location.href="tel:"+tel;
+	 			}
+	 			tel=null;
+	 			delete tel;
+ 			});
+		});
+		//pageshow
+		$(document).on('pageshow','#Map_LP',function(){
+			switchFooterFunction('default');
+			var mapData=getMapData();
+			if(typeof(mapData)!=="undefined"&&mapData!=null){
+				//關閉幕前顯示div
+				$('#Map_LP #dataMap .subDiv').hide();
+				switch(mapData.method){
+					case "route":
+						switchFooterFunction('route');
+					break;
+				}
+				//HyMap載入mapData資料
+				map.loadMapData();
+			}
+			//重整地圖尺寸跟地圖調整中心	
+			map.refresh();
+			//取消事件
+			$("#Map_LP .Collapsible_Classify1").off( "expand", function(){});
+			$("#Map_LP .Collapsible_Classify1").off( "collapse", function(){});
+			//註冊事件
+			$("#Map_LP .Collapsible_Classify1").on( "expand", function() {
+				Target_Collapsible_Classify1_ID=$(this).attr('id');
+				$('#Map_LP .Collapsible_Classify1').hide();
+				$(this).show();
+			});
+			$("#Map_LP .Collapsible_Classify1").on( "collapse", function() {
+				if($(this).attr('id')==Target_Collapsible_Classify1_ID){
+					$('#Map_LP .Collapsible_Classify1').show();
+					$('#classify1List input[type=checkbox]:checked').attr('checked','checked');
+					$('#classify1List').trigger('create');
+				}
+			});
+		});
+		</script>
+	</head>
+	<body>	
+		<div data-role="page" id="index">
+			<div data-role="header" data-theme="f">
+		     	<a href="#menu" data-role="none" class="btnMenu"></a>
+                <h1>交通資訊</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<!--int Start-->
+			    <div style="margin:5px;padding:5px;">
+					<!--springboard Start-->
+					<div class="springboard2">
+						<div id="htmlResult">
+					    </div>
+					</div>
+					<!--springboard End-->
+			    	<div class="helpline"></div>
+			    </div>
+			</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">		
+			  <div data-role="navbar">
+			    <ul>
+			      <li class="navli"><a href="#page_aroundStop">鄰近交通站點</a></li>
+			      <li class="navli"><a href="#page_transPlanning">園區路線規劃</a></li>
+			    </ul>
+			  </div>
+			</div>
+		</div>
+		<!--高鐵-->
+		<div data-role="page" id="index_01">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>高鐵</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="int">
+			        <!--formbox star -->
+					<div class="formbox2">
+						<div>
+						  <label for="select3">起迄站：</label>
+							 <select data-role="none" name="mobiScroll_stop" id="mobiScroll_stop">
+							</select>
+						  <label for="select4">去程時間：</label>
+						  <input id="mobiScroll_TranspotInfo_TravelDateTime" class="i-txt" />
+						</div>
+
+						<div class="formBtn">
+						  <input data-role="none" type="submit" id="btn_search"  value="查詢" class="btn09">
+						</div>       
+					</div>
+			        <!--formbox end -->
+		        
+		               <ul data-role="none"  class="intlist">
+		                    <li>資料來源為台灣高鐵，時刻表僅供參考，實際列車時刻仍以台灣高鐵為準。</li>
+		                    <li>提供查詢30天內之列車時刻表及園區轉乘資訊。</li> 
+		                    <li>電話語音訂位：<a href="tel:40660000">4066-0000</a>，苗栗地區請撥<a href="tel:42660000">4266-0000</a>，台東、金門地區請撥<a href="tel:46660000">4666-0000</a>，馬祖地區及 行動電話請撥<a href="tel:024066000">02-4066-0000</a>。(以上皆為付費電話。) </li>
+		                    <li>電話語音訂位開放時間為乘車日(含)前15日凌晨6點開始。當日車次之預訂僅受理至列車發車時間前1小時為止。</li>
+		                    
+		               </ul>
+		        
+			    </div>
+			</div>
+		</div>
+		<div data-role="page" id="LP_01">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>高鐵-時刻表</h1>
+            </div>
+            <div data-role="content" style="padding:0" id="content">
+            	<div class="title3" id="title"></div>
+            	<table width="100%" summary="時刻表" class="lpTb2" id="dataList">
+				</table>
+            </div>
+        </div>
+        <div data-role="page" id="CP_01">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>高鐵-轉乘資訊</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<!--int Start-->
+			    <div class="int">
+			    	<ul class="intlist" id="intlist">
+					</ul>
+			      	<div class="note" id="note"></div>
+			      	<div class="location" id="location"></div>
+			    </div>
+				<!--int End-->
+				</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">		
+			  <div data-role="navbar">
+			    <ul class="underlist">
+			      <li class="navli"><a href="#index_05"><img src="img/NSC/footer_icon06.png" alt="巡巴時刻表">巡巴時刻表</a></li>
+			      <li class="navli"><a href="#index_02"><img src="img/NSC/footer_icon10.png" alt="台鐵時刻表">台鐵時刻表</a></li>
+			      <li class="navli"><a href="#index_01"><img src="img/NSC/footer_icon07.png" alt="高鐵時刻表">高鐵時刻表</a></li>
+			    </ul>
+			  </div>
+			</div>
+		</div>
+		<!--台鐵-->
+		<div data-role="page" id="index_02">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>台鐵</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="int">
+			        <!--formbox star -->
+					<div class="formbox2">
+						<div>
+							<label for="select4">起站：</label>
+							<select data-role="none" name="mobiScroll_begin_stop" id="mobiScroll_begin_stop">
+							</select>
+							<label for="select4">迄站：</label>
+							<select data-role="none" name="mobiScroll_end_stop" id="mobiScroll_end_stop">
+							</select>
+							<label for="select4">去程時間：</label>
+							<input id="mobiScroll_TranspotInfo_TravelDateTime" class="i-txt" />
+							  <label for="select4">車種：</label>
+							<select  name="select4" id="select_type">
+							<option value="00">所有車種</option>
+							<option value="01">對號列車</option>
+							<option value="02">非對號列車</option>
+							</select>
+						</div>
+						<div class="formBtn">
+						  <input data-role="none" type="submit" id="btn_search" value="查詢" class="btn09">
+						</div>       
+					</div>
+			        <!--formbox end -->
+		        
+		               <ul data-role="none"  class="intlist">
+		                    <li>資料來源為台灣鐵路管理局，時刻表僅供參考，實際列車時刻仍以台灣鐵路管理局為準。</li>
+		                    <li>提供查詢30天內之列車時刻表，若欲查詢完整資訊請至<a href="javascript:openBrowser('http://twtraffic.tra.gov.tw/twrail/');">台灣鐵路管理局火車時刻查詢系統</a></li> 
+		                    <li>若欲查詢票價，請至<a href="javascript:openBrowser('http://www.railway.gov.tw/tw/ticketprice.aspx');">台灣鐵路管理局票價試算系統。</a></li>
+		                    <li>電話語音訂票各地區電話號碼請撥打<a href="tel:4121111">412-1111</a>，撥通後請再輸入用戶碼333#。</li>
+		                    
+		               </ul>
+		        
+			    </div>
+			</div>
+		</div>
+		<div data-role="page" id="LP_02">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>台鐵-時刻表</h1>
+            </div>
+            <div data-role="content" style="padding:0" id="content">
+            	<div class="title3" id="title"></div>
+            	<table width="100%" summary="時刻表" class="lpTb2" id="dataList">
+				</table>
+            </div>
+        </div>
+        <div data-role="page" id="CP_02">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>台鐵-轉乘資訊</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<!--int Start-->
+			    <div class="int">
+			    	<ul class="intlist" id="intlist">
+					</ul>
+			      	<div class="note" id="note"></div>
+			      	<div class="location" id="location"></div>
+			    </div>
+				<!--int End-->
+				</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">		
+			  <div data-role="navbar">
+			    <ul class="underlist">
+			      <li class="navli"><a href="#index_05"><img src="img/NSC/footer_icon06.png" alt="巡巴時刻表">巡巴時刻表</a></li>
+			      <li class="navli"><a href="#index_02"><img src="img/NSC/footer_icon10.png" alt="台鐵時刻表">台鐵時刻表</a></li>
+			      <li class="navli"><a href="#index_01"><img src="img/NSC/footer_icon07.png" alt="高鐵時刻表">高鐵時刻表</a></li>
+			    </ul>
+			  </div>
+			</div>
+		</div>
+		<!--國道客運-->
+		<div data-role="page" id="index_03">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>國道客運</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="int">
+			        <!--formbox star -->
+					<div class="formbox2">
+						<div>
+						  <label for="selectLines">選擇客運路線：</label>
+						  <select name="selectLines" id="selectLines"></select>
+  							<label for="mobiScroll_FromDestStop">起訖站：</label>
+							<select data-role="none" id="mobiScroll_FromDestStop" class="i-txt"></select>
+							<label for="mobiScroll_TranspotInfo_TravelDateTime">去程時間：</label>
+							<input id="mobiScroll_TranspotInfo_TravelDateTime" class="i-txt" />
+						</div>
+
+						<div class="formBtn">
+						  <input data-role="none" type="submit" name="reset"  id="btn_search" value="查詢" class="btn09">
+						</div>       
+					</div>
+			        <!--formbox end -->
+		        
+	                  <ul data-role="none"  class="intlist" id="lineDesc">
+<!-- 		                    <li>出發時間為新竹火車站的發車時間</li>
+		                    <li> 時刻表僅供參考，如有異動以各客運公司公告時間為準。</li> 		 -->                    
+		               </ul>
+		        
+			    </div>
+			</div>
+		</div>
+		<div data-role="page" id="LP_03">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>國道客運-時刻表</h1>
+            </div>
+            <div data-role="content" style="padding:0" id="content">
+            	<div data-role="navbar">
+				    <ul>
+				      <li class="navli"><a class="ui-btn-active" id="btnTimeTable">時刻表</a></li>
+	  			      <li class="navli"><a id="btnPathImg">路線圖</a></li>
+				    </ul>
+				 </div>
+				<div id="timeTable">
+            	<div class="title3" id="title"></div>
+            	<table width="100%" summary="時刻表" class="lpTb3" id="dataList">
+				</table>
+				<div class="note2" id="note2"></div>
+    			</div>
+    			<div class="acenter" id="pathImg"></div>
+            </div>
+        </div>
+		<!--公車-->
+		<div data-role="page" id="index_04">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>公車</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="int">
+			        <!--formbox star -->
+					<div class="formbox2">
+						<div>
+						  <label for="selectLines">選擇公車路線：</label>
+						  <select name="selectLines" id="selectLines"></select>
+  							<label for="mobiScroll_FromDestStop">起訖站：</label>
+							<select data-role="none" id="mobiScroll_FromDestStop" class="i-txt"></select>
+							<label for="mobiScroll_TranspotInfo_TravelDateTime">去程時間：</label>
+							<input id="mobiScroll_TranspotInfo_TravelDateTime" class="i-txt" />
+						</div>
+
+						<div class="formBtn" id="formBtn">
+						</div>       
+					</div>
+			        <!--formbox end -->
+		        
+	               <ul data-role="none"  class="intlist" id="lineDesc">
+<!-- 	                    <li>出發時間為新竹火車站的發車時間</li>
+	                    <li> 時刻表僅供參考，如有異動以各客運公司公告時間為準。</li> 	 -->	                    
+	               </ul>
+		        
+			    </div>
+			</div>
+		</div>		
+		<div data-role="page" id="LP_04">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>公車-時刻表</h1>
+            </div>
+            <div data-role="content" style="padding:0" id="content">
+            	<div data-role="navbar">
+				    <ul>
+				      <li class="navli"><a class="ui-btn-active" id="btnTimeTable">時刻表</a></li>
+	  			      <li class="navli"><a id="btnPathImg">路線圖</a></li>
+				    </ul>
+				 </div>
+				<div id="timeTable">
+            	<div class="title3" id="title"></div>
+            	<table width="100%" summary="時刻表" class="lpTb3" id="dataList">
+				</table>
+				<div class="note2" id="note2"></div>
+    			</div>
+    			<div class="acenter" id="pathImg"></div>
+            </div>
+        </div>
+		<!--巡迴巴士-->
+		<div data-role="page" id="index_05">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>巡迴巴士</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="int">
+					<select id="selectBase"></select>
+					<div id="divIndex">
+					    <div class="list5" id="transportList"></div>
+						<div class="location" id="nearestSpotInfo"></div>
+					</div>
+					<div style="display:none" id="divQP"class="divForm">
+					<p>查詢路線</p>
+				 	<table>
+				 		<tr>
+						  <th scope="row">路線名稱</th>
+						  <td><select data-role="none" name="mobiScroll_index_05_LineList" id="mobiScroll_index_05_LineList"></select></td>
+						</tr>
+						<tr>
+						<tr>
+						  <th scope="row">起訖站點</th>
+						  <td><select data-role="none" name="mobiScroll_index_05_StopList" id="mobiScroll_index_05_StopList"></select></td>
+						</tr>
+						<tr>
+						<tr>
+						  <th scope="row">搭乘時間</th>
+						  <td><select data-role="none" name="mobiScroll_index_05_TimeRange" id="mobiScroll_index_05_TimeRange">
+						  	<option selected value="00:00">不限時段</option>
+               				<option value="06:00">6:00 ~ 10:00</option>
+               				<option value="10:00">10:00 ~ 14:00</option>
+               				<option value="14:00">14:00 ~ 18:00</option>
+               				<option value="18:00">18:00 ~ 22:00</option>
+						  </select></td>
+						</tr>
+						<tr>
+					</table>
+					<div style="text-align:center;">
+					<a data-inline="true" id="btn_search"  data-theme="e" id="btnSearch" data-role="button">查詢</a>
+					</div>
+					</div>
+			    </div>
+			</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">		
+			  <div data-role="navbar">
+			    <ul>
+			      <li class="navli" id="nav_index"><a class="ui-btn-active" id="btnChangeToIndex">巡巴總覽</a></li>
+			      <li class="navli" id="nav_QP"><a id="btnChangeToQP">查詢路線</a></li>
+			    </ul>
+			  </div>
+			</div>
+		</div>
+		<div data-role="page" id="LP_05_1">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>巡迴巴士-時刻表</h1>
+            </div>
+            <div data-role="content" style="padding:0" id="content">
+            	<ul class="toplist" data-role="none">
+            		<li><a class="ui-link hover" id="btnTimeTable">時刻表</a></li>
+            		<li><a id="btnStopList">停靠站</a></li>
+            		<li><a id="btnRouteMap">路線圖</a></li>
+            	</ul>
+            	<div id="divTimeTable">
+            	</div>
+            	<div id="divStopList">
+            	</div>
+            	<div id="divRouteMap">
+            	</div>
+            </div>
+        </div>
+		<div data-role="page" id="LP_05_2">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>巡迴巴士-時刻表</h1>
+            </div>
+            <div data-role="content" style="padding:0" id="content">
+            	<div class="title3" id="title"></div>
+            	<table width="100%" summary="時刻表" class="lpTb2" id="dataList">
+				</table>
+            </div>
+        </div>
+		<div data-role="page" id="CP_BusMap">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>巡迴巴士-巴士在哪</h1>
+            </div>
+            <div data-role="content" style="padding:0" id="content">
+				<div id="googleMap_container" style="height: 500px;width: auto;"> 
+					<div id="BusMap_map_canvas" style="width: 100%;height:100% "></div>
+				</div>
+            </div>
+        </div>
+		<div data-role="page" id="CP_05">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>巡迴巴士-高鐵轉程</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<!--int Start-->
+			    <div class="int">
+			    	<ul class="intlist" id="intlist">
+					</ul>
+			      	<div class="note" id="note"></div>
+			      	<div class="location" id="location"></div>
+			    </div>
+				<!--int End-->
+				</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">		
+			  <div data-role="navbar">
+			    <ul class="underlist">
+			      <li class="navli"><a href="#index_05"><img src="img/NSC/footer_icon06.png" alt="巡巴時刻表">巡巴時刻表</a></li>
+			      <li class="navli"><a href="#index_02"><img src="img/NSC/footer_icon10.png" alt="台鐵時刻表">台鐵時刻表</a></li>
+			      <li class="navli"><a href="#index_01"><img src="img/NSC/footer_icon07.png" alt="高鐵時刻表">高鐵時刻表</a></li>
+			    </ul>
+			  </div>
+			</div>
+        </div>
+		<!--飛機-->
+		<div data-role="page" id="index_06">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>飛機</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+			</div>
+		</div>
+		<!--自行開車-->
+		<div data-role="page" id="index_07">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>自行開車</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="int">
+			        <select id="selectBase">
+			        </select>
+					<div class="aleft2">
+					<h2>開車路線</h2>
+						<div class="springboard" id="htmlResult"></div>
+					</div>
+				</div>
+			</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">		
+			  <div data-role="navbar">
+			    <ul>
+			      <li class="navli"><a href="#page_transPlanning">園區路線規劃</a></li>
+  			      <li class="navli"><a href="#index_09">停車場</a></li>
+  			      <li class="navli"><a href="#index_10">拖吊場</a></li>
+			    </ul>
+			  </div>
+			</div>
+		</div>
+		<!--計程車-->
+		<div data-role="page" id="index_08">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>計程車</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="int">
+				   <select id="selectBase">
+			        </select>
+					<div class="aleft2">
+					<p>若欲使用計程車服務，車費依照公定跳票費率計算，訂車可電洽：<br>(1) 紅帥汽車行：03-5713333<br>(2) 金立計程車行：03-5221111</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--停車場-->
+		<div data-role="page" id="index_09">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>停車場</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="formbox4">
+		        <select id="selectBase">
+		        </select>
+			     </div>
+				<div class="list" id="dataList">
+				</div>
+			</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">		
+<!-- 			  <div class="footbtn">
+		    	<ul data-role="none">
+		        	<li><a href="#" class="listbtn01">地圖呈現</a></li>
+		        	<li><a href="#" class="listbtn02">圖文並列</a></li>
+		        </ul>
+		    </div> -->
+			  <div data-role="navbar">
+			    <ul>
+  			      <li class="navli"><a href="#index_07">自行開車</a></li>
+  			      <li class="navli"><a href="#index_10">拖吊場</a></li>
+			    </ul>
+			  </div>
+			</div>
+		</div>
+		<div data-role="page" id="CP_09">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>停車場</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+			 
+			</div>
+		</div>
+		<!--拖吊場-->
+		<div data-role="page" id="index_10">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>拖吊場</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="formbox4">
+		        <select id="selectBase">
+		        </select>
+			     </div>
+				<div class="list" id="dataList"></div>
+			</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">	
+<!-- 			  <div class="footbtn">
+		    	<ul data-role="none">
+		        	<li><a href="#" class="listbtn01">地圖呈現</a></li>
+		        	<li><a href="#" class="listbtn02">圖文並列</a></li>
+		        </ul>
+		    </div>	 -->
+			  <div data-role="navbar">
+			    <ul>
+  			      <li class="navli"><a href="#index_09">拖吊場</a></li>
+  			      <li class="navli"><a href="#index_07">自行開車</a></li>
+			    </ul>
+			  </div>
+			</div>
+		</div>
+		<div data-role="page" id="CP_10">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>拖吊場</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+			 
+			</div>
+		</div>
+		<!--各子頁面-->
+		<!--鄰近交通站點-->
+		<div data-role="page" id="page_aroundStop">
+			<div data-role="header" data-theme="f">
+				<a href="#index" data-icon="arrow-l">返回</a>
+                <h1>鄰近交通站點</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="int">
+	            	<div id="title"></div>
+					<div id="adv_function">
+						<a id="btnPrev"><div class="prev">更早時刻</div></a>
+						<a id="btnNext"><div class="next">更晚時刻</div></a>
+					</div>
+	            	<table width="100%" summary="時刻表" class="lpTb2" id="dataList">
+					</table>
+				</div>
+			</div>
+			<div data-theme="f" data-role="footer" data-position="fixed" class="acenter">	
+				  <div data-role="navbar" id="footerFunction" style="display:none;">
+				    <ul>
+				      <li class="navli"><a class="ui-btn-active" id="btnOrderByTime">依時間排序</a></li>
+	  			      <li class="navli"><a id="btnOrderByCar">依交通工具排序</a></li>
+				    </ul>
+				  </div>
+				</div>
+		</div>
+		<div data-role="page" id="page_setPosition">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>鄰近交通站點-定位</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content" class="acenter">
+				<input id="txtSearchInput" type="search" placeholder="請輸入查詢地址"></input>
+				<button data-inline="true"  id="btnSearchLocation" data-theme="f" type="button">地址查詢</button> 
+				<button type="button" id="btnSetPosition" data-inline="true" data-theme="e">座標確認</button>
+				<div id="googleMap_container" style="height: 300px;width: auto;"> 
+				<!-- <div id="directions"></div> -->
+				<div id="setPosition_map_canvas" style="width: 100%;height:100% "></div>
+				</div>
+			</div>
+		</div>
+		<!--園區路線規劃-->
+		<div data-role="page" id="page_transPlanning">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back">返回</a>
+                <h1>園區路線規劃</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+			<div class="int" style="padding:5px;margin:5px">
+			        <select id="selectBase"></select>
+			        <!--formbox star -->
+					<div class="formbox2">
+						<div class="divForm">
+						<table style="font-size:0.8em;" class="fixed">
+						<tr>
+							<td>
+							<select id="selectStartPosition">
+							</select>
+							</td>
+							<td style='font-size:15px;width:15px;'>或</td>
+							<td style='width:140px;'>
+						  <input  type="text" id="txt_StartAddress" placeholder="地址/地名/廠商名稱" />
+						</td>
+						</tr>
+						<tr>
+							<td style='font-size:15px;' colspan="3">
+							  <h2>到</h2>
+							</td>
+						</tr>
+						<tr>
+						<td>
+						<select id="selectEndPosition">
+						</select>
+						</td>
+						<td style='font-size:15px;width:15px;'>或</td>
+						<td style='width:140px;'>
+						  <input type="text" id="txt_EndAddress" placeholder="地址/地名/廠商名稱" />
+						</td>
+						</table>
+						</div>
+
+						<div class="formBtn">
+						  <input data-role="none" type="submit" id="btnRounte" name="reset" value="規劃路線" class="btn12">
+						</div>       
+					</div>
+			    </div>
+			</div>
+		</div>
+		<!--地圖模組-->
+		<div data-role="page" id="Map_LP">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
+                <h1>生活服務</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div id='dataMap' class='acenter'>
+					<!-- keyWordSearch -->
+					<div id='divKeyWordSearch' class='subDiv'>
+						<input data-role='none' type='text' class='search' id='txtSearchKeyWord' placeholder='地址/地名/廠商名稱'>
+						<a id='btnKeyWordSearch'   data-mini="true" data-inline="true" data-role="button" data-theme="e">查詢</a>
+					</div>
+					<!-- RountePath -->
+					<div id='divRoutePath' class='subDiv aleft2'>
+						<div data-role="fieldcotain">
+							<label for='txtRoutePointStart'>起點：</label>
+							<input type='text'  id='txtRoutePointStart' placeholder='地址/地名/廠商名稱'>
+						</div>
+						<div data-role="fieldcotain">
+							<label for='txtRoutePointEnd'>終點：</label>
+							<input type='text' id='txtRoutePointEnd' placeholder='地址/地名/廠商名稱'>
+						</div>
+						<div class="acenter"><button data-icon="search"  data-mini="true" data-inline="true" data-theme="e" id='btnDoRoute'>路徑規劃</button></div>
+					</div>
+					<!-- map -->
+					<div id='map_canvas' style='width:100%;height:290px;'></div>
+					<div id="routeList" class="ui-listview ui-listview-inset ui-corner-all ui-shadow" style="display:none;">
+						<div class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-top ui-btn-up-undefined">規劃路徑</div>
+						<div id="directions" class='acenter gmapDirections'></div>
+						<div class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-bottom ui-btn-up-undefined"></div>
+						<!-- 撐高用的 -->	
+						<div style="height:80px;"></div>
+					</div>
+				</div>
+				<div class='list' id='dataList'></div>
+			</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">	
+				<div id="footer">
+					<div class="footbtn">
+						<ul data-role="none">
+							<li><a data-role="none" id="btnMAPShow" class="defaultFootFunction listbtn03">地圖呈現</a></li>
+							<li><a data-role="none" id="btnListShow" class="defaultFootFunction listbtn04">圖文並列</a></li>
+							<li><a data-role="none" style="display:none;" id="btnRoute_MAPShow" class="RouteFootFunction listbtn03">地圖導引</a></li>
+							<li><a data-role="none" style="display:none;" id="btnRoute_PathShow" class="RouteFootFunction listbtn04">文字導引</a></li>
+						</ul>
+					</div>
+					<div class="function">
+						<ul data-role="none">
+							<li><a data-role="none" id="btnSearch" class="f1">搜尋地圖</a></li>
+							<li><a data-role="none" id="btnRoute" class="f2">規劃路線</a></li>
+							<li><a data-role="none" data-rel="popup" data-position-to="window" href="#popupDialog_classify1Filter" data-transition="pop" id="btnClassify1Filter" class="f3">週邊生活服務</a></li>
+							<li><a data-rel="popup" data-position-to="window" href="#popupDialog_setAlert" data-transition="pop" data-role="none" id="btnSetAlert" class="f4">接近提醒</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--popup-->
+			<div data-role="popup" id="popupDialog_classify1Filter" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+    			<div style="text-align:center;padding:25px" id="classify1List" class="ui-content">	
+		    	</div>
+			</div>
+			<div data-role="popup" id="popupDialog_setAlert" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+    			<div style="text-align:center;" id="nearAlertSpotList">	
+		    	</div>
+			</div>
+		</div>
+		<div data-role="page" id="Map_CP">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>生活服務</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+			</div>
+		</div>
+
+		<!--Test-->
+		<div data-role="page" id="test">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back">返回</a>
+                <h1>測試</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div id="googleMap_container" style="height: 300px;width: auto;"> 
+				<div id="directions"></div>
+				<input type="text" id="txtAddress"></input>
+				<div id="map_canvas" style="width: 100%;height:100% "></div>
+				</div>
+			<div>
+		</div>
+
+	</body>
+</html>

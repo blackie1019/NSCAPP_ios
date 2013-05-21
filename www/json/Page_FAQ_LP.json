@@ -1,0 +1,14 @@
+{
+	"jsonOutput":
+	{
+		"typeCode":"01",
+		"items":[
+			{"sn":"1","question":"遺失物如何認領?","answer":"請電洽...."},
+			{"sn":"2","question":"園區巡迴巴士接駁服務時間為何?","answer":"請電洽...."},
+			{"sn":"3","question":"可否使用無障礙車位?","answer":"請電洽...."},
+			{"sn":"4","question":"園區停車場相關資訊?","answer":"請電洽...."}
+		]
+	},
+	"status":"success",
+	"messange":"查詢正常"
+}

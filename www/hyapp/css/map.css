@@ -1,0 +1,74 @@
+#map_content {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+    padding-right: 0px;
+}
+
+.row .mobile-three.search-field {
+	padding: 15px 3px 3px 3px;	
+}
+
+.row .mobile-one.search-btn {
+	padding: 3px;
+}
+
+.row .mobile-two.start-field, .row .mobile-two.end-field {
+	padding: 3px 2px 3px 2px;
+	width: 70% !important;	
+}
+
+.row .mobile-one.start-icon, .row .mobile-one.end-icon, .row .mobile-one.swap-icon, .row .mobile-one.direction-icon {
+	padding-left: 2px;
+	pading-right: 2px;
+	pading-top: 3px;
+	pading-bottom: 3px;
+}
+
+.row .mobile-one.start-icon, .row .mobile-one.end-icon {
+	width: 15% !important;
+}
+
+.row .mobile-one.swap-icon, .row .mobile-one.direction-icon { 
+	width: 15% !important;
+}
+
+.path-type-tab .ui-btn-inner .ui-btn-text {
+	color: #000000;
+	text-shadow: none;
+}
+
+/* footer */
+#map .ui-footer.ui-bar-b {
+	background: black;
+	background-image: url("../images/icons/footer/bottom_bg.png");
+	background-repeat: repeat-x;
+	background-size: contain;
+	border: 0px;
+}
+
+/* header */
+#map .ui-header {
+	background-image: url("../images/icons/footer/bottom_bg.png");
+	background-repeat: repeat-x;
+	background-size: contain;
+	border: 0px;
+}
+
+/**** footer *****/
+#map .ui-block-a, .ui-block-b, .ui-block-c, .ui-block-d, .ui-block-e {
+	padding: 5px;
+}
+
+/* for map */
+.map-info-window {
+	padding: 5px;
+}
+
+.map-info-link {
+	margin-right: 10px;
+}
+
+.info-name {
+	color: #0000bf;
+}

@@ -1,0 +1,28 @@
+{
+	"jsonOutput":
+	{
+		"begin_stop":"01",
+		"end_stop":"03",
+		"datetime":"2012/04/08 15:02",
+		"title":"2012/12/25 (星期二)  台北-新竹   16:00出發",
+		"dataList":[
+			{"no":"704","start_time":"16:03-17:36","timespan":"30"},
+			{"no":"705","start_time":"17:03-18:36","timespan":"30"},
+			{"no":"706","start_time":"18:03-19:36","timespan":"30"},
+			{"no":"707","start_time":"19:03-20:36","timespan":"30"},
+			{"no":"708","start_time":"20:03-21:36","timespan":"30"}
+		],
+		"pass_stop":[
+			{"code":"01","value":"台北","enable":true},
+			{"code":"02","value":"板橋","enable":true},
+			{"code":"03","value":"桃園","enable":true},
+			{"code":"04","value":"新竹","enable":true},
+			{"code":"05","value":"台中","enable":false},
+			{"code":"06","value":"嘉義","enable":false},
+			{"code":"07","value":"台南","enable":false},
+			{"code":"08","value":"高雄","enable":false}
+		]
+	},
+	"status":"success",
+	"messange":"查詢正常"
+}

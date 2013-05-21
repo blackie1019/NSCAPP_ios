@@ -1,0 +1,38 @@
+{
+	"jsonOutput":
+	{
+		"AppType":"N",
+		"Park":"01",
+		"Base":"01",
+		"currentLat": "24.7816461",
+        "currentLng": "121.00591540000005",        
+        "transportList":[
+        	{
+				"css_titleColor":"#F60",
+	            "stopCode":"0002100010001",
+	            "chtTitle": "橘線-去",
+	            "destination":"科技生活轉-新竹生醫園區"
+            },
+            {
+            	"css_titleColor":"#090",
+                "stopCode":"0002100010002",
+                "chtTitle": "綠線(往園區三期)",
+                "destination":"光復路-園區三期"
+            }
+        ],        
+        "nearSpotInfo":{
+            "parkArea": "01",
+            "parkLocation": "01",
+            "spotNo": "308",
+            "chtName": "科技生活館",
+            "engName": "SIPA",
+            "chtAddress":"中文地址",
+            "engAddress":"english address",
+            "latitude": "24.781",
+            "longitude": "121.005",
+            "disance": "120公尺"
+        }
+	},
+	"status":"success",
+	"messange":"查詢正常"
+}

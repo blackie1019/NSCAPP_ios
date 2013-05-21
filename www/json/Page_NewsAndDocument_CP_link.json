@@ -1,0 +1,20 @@
+{
+	"jsonOutput":
+	{
+		"sn":"2",
+		"dataType":"link",
+		"category1":{"code":"01","value":"國科會"},
+		"category2":{"code":"01","value":"朱敬一  主任委員"},
+		"title":"科學園區通關系統停機維護公告",
+		"source":"工商日報B12版",
+		"date":"2012/12/09",
+		"info":{
+			"html":"",
+			"link":"http://epost.ctsp.gov.tw/EBulletin/EB_ODetail.jsp?BID=23598",
+			"img":""
+		}
+
+	},
+	"status":"success",
+	"messange":"查詢正常"
+}

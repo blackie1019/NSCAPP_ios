@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh"><!-- manifest="cache.appcache" 開啟Cache 功能-->
+    <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <!--ios-->
+        <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+        <!--android-->
+        <!--
+         <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
+        -->
+        <!--jQuery-->
+        <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<!--json2-->
+		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
+		<!--Google Map API v3-->
+		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>
+		<!--mobiScroll-->
+		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
+		<link href="css/mobiscroll.custom-2.4.3.min.css" rel="stylesheet" type="text/css"></link>
+		<script src="js/mobiscroll.custom.js" type="text/javascript"></script>
+		<script>
+		$(document).bind('mobileinit', function(){
+			$.support.cors = true;
+			$.mobile.allowCrossDomainPages = true; 
+		});
+		</script>
+		<!--<script src="http://debug.phonegap.com/target/target-script-min.js#blackie1019"></script>-->
+		<!--jQuery mobile-->
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-NSC-1.3.0.css"></link>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.0.min.js"></script>
+        <!--Plug in-->
+        <script src="js/jquery.hammer.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/smoke.min.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/smoke.theme.100s.css"> -->
+        <script src="js/smoke.js"></script>
+		<!--Hyweb CSS-->
+		<link rel="stylesheet" type="text/css" href="css/index.css"></link>
+		<!--HYAPP-->
+		<!--NSCAPP Javascript-->	
+		<script src="js/setting.js"></script>
+		<script src="js/loading.js"></script> 
+		<script src="js/pnpolygon.js"></script>
+		<script src="js/photo.bfs.js"></script>
+		<script src="js/location.js"></script>	
+		<script src="js/data.js"></script>	
+		<script type="text/javascript">
+		
+		//取得頁面二次驗證token
+		/*  */
+		var dataObject=getLoginData();
+		setToken2VaildBackPage("Page_BizFileSharing.html");
+		if(dataObject==null||typeof(dataObject.token2)=="undefined"){
+			window.location="Page_Login.html#MemberValidation";
+		}else{
+			doVaildToken2(dataObject.token2,"Page_BizFileSharing.html");
+		}
+		/*  */
+			var photo=new Photo();		
+			
+		</script>
+	</head>
+	<body>	
+		<div data-role="page" id="LP">
+		
+		<script type="text/javascript">
+		/*
+		 * Global variables
+		*/
+		var loginUser = "";
+		var loginUserName = "";
+		var DataURL_BFS = "http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do";
+        var DataURL_BFS_Upload = "http://nscallinone.hyweb.com.tw:8080/BFS/Upload.do?src=mobile";
+		var DataURL_BFS_MAIN2 = "http://nscallinone.hyweb.com.tw:8080/BFS/Main2.do";
+		var DataURL_BFS_GETORGLIST = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgList.do?jsoncallback=?";
+		var DataURL_BFS_GETORGINFO = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgInfo.do?jsoncallback=?";
+		var ListType = 0;//0:已接收檔案列表(default)  1:已傳送檔案列表
+			var peopleToSend = "";//leee.ntspb,wclee.ntspb
+			var peopleNameToSend = "";//李日興,李婉倩		
+		var orderByField = $('input[name="orderByFieldRadio"]').val()||'m1.deditTime';
+		var orderByWay = $('input[name="orderByWayRadio"]').val()||'asc';
+		var delBRID = "";
+		var downloadFileNo = "";
+				
+		function iniControlSetting(){
+			var today=new Date().toISOString().slice(0,10);			
+			$("input[type=date]").val(today);
+		}
+		
+		// pageinit
+		$(document).on('pageinit','#LP',function(){
+			var member = getLoginData();
+			loginUser=member.account||"leee.ntspb";
+			loginUserName=member.accountName||"李日興";
+			//loginUser="leee.ntspb";
+			//loginUserName="李日興";
+			//產生menu
+			genMenu(this);
+			//menu登入確認
+			menuDisplayMemberSection(checkLogin(),this);
+			//控制項初始化設定
+			iniControlSetting();
+ 			//條列呈現
+			loadData(orderByField,orderByWay,ListType);
+			
+			// 下方功能1: 新增檔案
+			$('#newFileButton').click(function() {
+				$.mobile.changePage('#newFilePage');
+			});
+			
+			// 下方功能2: 查詢
+			$('#queryButton').click(function() {			
+				$('#popupDialog_advSearch').popup('close');
+				//checkdate
+				if ($('#dateBegin').val()!='' && $('#dateEnd').val()!=''
+				&& $('#dateBegin').val()<=$('#dateEnd').val()) {
+					loadData('','',ListType);	
+				} else {
+					smoke.alert("請輸入正確的日期區間",{},function(){});
+				}				
+			});
+			
+			// 下方功能3: 匯出清單
+			/*  *
+			$('#exportButton').click(function() {
+				//location.href=DataURL_BFS+'?op=getTransferredFileListTXT&loginUser=leee.ntspb';
+				var op = (ListType==0)?"getReceivedFileListTXT":"getTransferredFileListTXT";		
+				var url = DataURL_BFS+'?op='+op+'&loginUser='+loginUser;
+				openBrowser(url);
+			});/*  */
+			// 下方功能3: 重新整理
+			$('#refreshFileButton').click(function() {
+				window.location.reload();
+			});
+			
+			// 上方功能1: 排序
+			$('#orderButton').click(function() {			
+				//loadData('m1.deditTime','asc',ListType);
+				$('#orderBySenderFieldName').html(ListType==0?"寄件者":"收件者");
+				$('#orderByDateFieldName').html(ListType==0?"接收日期":"傳送日期");
+				$('#popupDialog_ordermenu').popup('open');				
+			});
+			
+			$('#orderSearchButton').click(function() {
+				orderByField = $('input[name="orderByFieldRadio"]:checked').val()||'m1.deditTime';
+				orderByWay = $('input[name="orderByWayRadio"]:checked').val()||'asc';
+				//alert(orderByField+" "+orderByWay + " " + ListType);
+				loadData(orderByField,orderByWay,ListType);				
+				$('#popupDialog_ordermenu').popup('close');
+			});
+			
+			$('#downloadButton').click(function() {
+				openBrowser($('#dl'+downloadFileNo).text());
+				$('#popupDialog_listmenu').popup('close');
+			});
+			
+			$('#deleteButton').click(function() {
+				if (delBRID=="") {
+					smoke.alert("尚未選擇欲刪除項目",{},function(){});
+					return;
+				}
+
+				if (confirm("確定要刪除?")) {			
+					var jsonObj = {'op':'removeFromTransferredList',
+						'loginUser':loginUser,
+						'loginUserName':encodeURI(loginUserName),
+						'mailBRId':delBRID};
+					var jsonObjStr = JSON.stringify(jsonObj);					
+					$.ajax({
+						cache: false,
+						type: 'post',
+						url: DataURL_BFS,
+						data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
+						dataType: 'json',
+						success: function(response) {
+							smoke.alert(response.message,{},function(){});													
+							$.mobile.changePage('#LP');
+							//$('#LP').trigger('pageinit');
+						},
+						error: function() {
+							smoke.alert(ServiceErrorString,{},function(){});
+						},
+						complete: function() {
+							LoadingObject.hide();
+						}
+					});
+				}
+			});	
+			
+			//--先不做
+			/* *
+			$('#fileList li').click(function() {
+				var fileNo = $(this).attr('fileNo');
+				alert(fileNo);
+				//$('#popupDialog_listmenu').popup('open');
+			});
+			/* */			
+ 		});
+		
+		// New file page init
+		$(document).on('pageinit','#newFilePage',function(){
+		
+            var rootElement=this;
+            photo.initValue=false;
+            photo.initialize("newFilePage",$(rootElement).find('#imageArray'));
+                       
+			$(this).on('click','#shootButton',function(){
+				photo.capturePhoto("camera",function(){
+                    $.mobile.changePage('#newFilePage');
+				});			
+				
+			});
+			$('#newFilePage').on('click','#libraryButton',function(){
+				photo.capturePhoto("album",function(){
+                    $.mobile.changePage('#newFilePage');
+				});
+            
+			});
+            
+			/* 新增上傳 */
+		   $(this).on('click','#uploadButton', function() {
+
+				var imageArray=getImageArray2($('#newFilePage').find('#imageArray img'));
+				var jsonObj = {'loginUser':loginUser,'imageArray':imageArray};
+				var jsonObjStr = JSON.stringify(jsonObj);
+				
+				$.ajax({
+					url:DataURL_BFS_Upload,
+					data: {"jsonInput":jsonObjStr},
+					type:"POST",
+					dataType :"json",
+					async:false,
+					success:function(data){
+						LoadingObject.hide();
+						// TO-DO after uploaded
+						if (data!=null && data.code==200) {
+							window.localStorage.setItem("SettingData_upload_result",JSON.stringify(data));
+							//JSON.parse(window.localStorage.getItem("SettingData_upload_result"));
+						}
+					},
+					error: function(data){
+						LoadingObject.hide();
+						smoke.alert(ServiceErrorString,{},function(){});
+					},
+					complete: function() {
+						LoadingObject.hide();
+						member=null;params=null;jsonObjectStr=null;
+						delete member;delete params;delete jsonObjectStr;
+					}
+				});
+			});/*   */
+			
+			// 選擇發送對象
+			$(this).on('click','#chooseUserButton', function() {				
+				// 選擇對象前先上傳
+				var imageArray=getImageArray2($('#newFilePage').find('#imageArray img'));
+				var jsonObj = {'loginUser':loginUser,'imageArray':imageArray};
+				var jsonObjStr = JSON.stringify(jsonObj);
+				/* *
+				$.ajax({
+					url:DataURL_BFS_Upload,
+					data: "jsonInput="+jsonObjStr,
+					type:"POST",
+					dataType :"json",
+					async:false,
+					success:function(data){
+						LoadingObject.hide();
+						// TO-DO after uploaded
+						if (data!=null && data.code==200) {
+							window.localStorage.setItem("SettingData_upload_result",JSON.stringify(data));
+							//JSON.parse(window.localStorage.getItem("SettingData_upload_result"));
+						} else {
+							smoke.alert("上傳發生問題，請稍後再試",{},function(){
+								$.mobile.changePage('#LP');
+								$('#LP').trigger('pageinit');
+							});
+						}
+					},
+					error: function(data){
+						LoadingObject.hide();
+						smoke.alert(ServiceErrorString,{},function(){});
+					},
+					complete: function() {
+						LoadingObject.hide();
+						member=null;params=null;jsonObjectStr=null;
+						delete member;delete params;delete jsonObjectStr;
+					}
+				});
+				/* */
+				var data = {
+					"code": 200,
+					"fileNo": "33",
+					"fileName": ["IMG_1.jpg","IMG_2.jpg","IMG_3.jpg"],
+					"message": "upload successfully"
+					};
+				//暫存要寄的file
+				window.localStorage.setItem("SettingData_upload_result", JSON.stringify(data));
+				/*  */
+				$.mobile.changePage('#chooseUserPage');
+				//$('#chooseUserPage').trigger('pageinit');
+			});
+			
+		});
+		
+		$(document).on('pageinit','#confirmPage',function(){
+			var uploadResult = JSON.parse(window.localStorage.getItem("SettingData_upload_result"));			
+			var fileNo = uploadResult.fileNo;
+			var fileName = uploadResult.fileName;
+			var peopleToSend = window.localStorage.getItem("SettingData_peopleToSend");
+			var peopleNameToSend = window.localStorage.getItem("SettingData_peopleNameToSend");
+			//$('#fileToSend').html(uploadResult.fileNo);
+			var fileNameList = "";
+			for (var i=0; i<uploadResult.fileName.length; i++) {
+				fileNameList += uploadResult.fileName[i] + "<br/>";
+			}
+			//$('#fileToSend').html(uploadResult.fileName);
+			$('#fileToSend').html(fileNameList);
+			
+			//列出要寄的人員清單
+			var htmlResult = "";
+			htmlResult = "<ul data-role=\"listview\">";					
+			var sendList = peopleNameToSend.split(",");
+			for (var i=0; i<sendList.length; i++) {
+				if (sendList[i]=='')
+					continue;
+				htmlResult += "<li><a href=\"#\">"+sendList[i]+"</a></li>";
+			}
+			htmlResult += "</ul>";
+			$('#sendList').html(htmlResult);
+			$('#sendList').trigger('create');
+			
+			//取消
+			$('#cancelButton').click(function() {
+				$.mobile.changePage('#LP');
+				$('#LP').trigger('pageinit');
+			});
+			//送出
+			$('#sendButton').click(function() {
+				if (peopleToSend=="") {
+					smoke.alert("尚未新增傳送對象",{},function(){});
+					return;
+				}
+				
+				var jsonObj = {'op':'sendFile',
+				'loginUser':loginUser,
+				'loginUserName':encodeURI(loginUserName), 
+				'fileNo':fileNo,
+				'receiver':peopleToSend,
+				'receiverName':encodeURI(peopleNameToSend)};
+				var jsonObjStr = JSON.stringify(jsonObj);
+                
+				$.ajax({
+					cache: false,
+					type: 'post',
+					url: DataURL_BFS,
+					data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",					
+					dataType: 'json',
+					success: function(response){
+						smoke.alert(response.message,{},function(){
+                                    window.location.href='Page_BizFileSharing.html';
+                                    });
+                        //smoke.alert(jsonObjStr,{},function(){});
+						//$.mobile.changePage('#LP');
+						//$('#LP').trigger('pageinit');
+                        
+					},
+					error: function() {
+						smoke.alert(ServiceErrorString,{},function(){});
+					},
+					complete: function() {
+						LoadingObject.hide();
+					}
+				});
+			});			
+			
+		});
+		function loadOrgInfo(_unit_parts) {		
+			LoadingObject.show();
+			//拿nscuCode去找人員
+			getUserList(_unit_parts[0], _unit_parts[1], function(data) {				
+				LoadingObject.hide();
+				var htmlResult = "";									
+				if(data==null){
+					 smoke.alert(ServiceCodeErrorString,{},function(){});
+				}else{
+					if(data.status=="success"){							
+						htmlResult += "<fieldset data-role=\"controlgroup\">";
+						
+						var userList = data.jsonOutput.userList;
+						for(var i=0;i<userList.length;i++){							
+							var userId=userList[i].userId;
+							var userName=userList[i].userName;													
+							htmlResult += "<input value=\""+userId+"\" userName=\""+userName+"\" type=\"checkbox\" name=\"checkbox-1a\" id=\"checkbox-"+i+"a\" class=\"custom\" />";
+							htmlResult += "<label for=\"checkbox-"+i+"a\">"+userName+"("+userId+")</label>";
+							//$('#peopleList').append(htmlResult);
+							//$('#checkbox-'+i+'a').attr('checked',true).checkboxradio('refresh');
+							//htmlResult+="<option value=\""+nscuCode+"\">"+space+nscuDesc+"("+nscuCode+")(level "+level+")</option>";
+							//htmlResult+="<li>";													
+							//htmlResult+="<p>"+userName+"</p>";
+							//htmlResult+="<div class=\"checkbox1\">";
+							//htmlResult+="<input type=\"checkbox\" name=\"checkbox\" value=\""+userId+"\" userName=\""+userName+"\"/>";
+							//htmlResult+="</div>";
+							//htmlResult+="</li>";
+							//htmlResult += "<a href=\"#\" data-role=\"button\" data-theme=\"e\">"+userName+"("+userId+")</a>";
+						}						
+						htmlResult += "</fieldset>";						
+						
+						if(htmlResult!=""){						
+							$('#peopleList').html(htmlResult);
+							//$("#peopleList input[type='checkbox']").checkboxradio("refresh");
+							$('#peopleList').trigger("create");
+							$('#chkAll').show();
+							$('#cancelAll').show();
+							//$("#peopleList input[name='checkbox-1a']").checkboxradio("refresh");
+							//$('#chkAllBlock').show();
+							/*  */
+							$('#peopleList input[type=checkbox]').click(function() {				
+								if ($(this).attr('checked')) {
+									peopleToSend += $(this).val() + ",";
+									peopleNameToSend += $(this).attr("userName") + ",";					
+								}
+								else {
+									peopleToSend = peopleToSend.replace($(this).val() + ",", "");
+									peopleNameToSend = peopleNameToSend.replace($(this).attr("userName") + ",", "");
+								}
+								//alert(peopleToSend+"\n"+peopleNameToSend);				
+							});/*  */
+							
+							//全選
+							$('#chkAll').click(function() {
+								//reset
+								peopleToSend = "";
+								peopleNameToSend = "";				
+								$("#peopleList input[type='checkbox']").each(function() {									 
+									 //$(this).checkboxradio('enable');
+									 $(this).attr('checked',true).checkboxradio("refresh");									 
+									 peopleToSend += $(this).val() + ",";
+									 peopleNameToSend += $(this).attr("userName") + ",";
+								 });
+							});
+							//取消全選
+							$('#cancelAll').click(function() {
+								//reset
+								peopleToSend = "";
+								peopleNameToSend = "";				
+								$("#peopleList input[type='checkbox']").each(function() {
+									 $(this).attr('checked',false).checkboxradio("refresh");									 
+								 });
+							});
+						}
+						
+					}else{
+						smoke.alert(ServiceCodeErrorString,{},function(){});
+					}
+				}
+			});
+			
+		}
+		
+		function loadOrgLevel5(_unit_parts) {		
+			/*  */
+			LoadingObject.show();
+			var htmlResult = "";
+			$('#dept5 option').remove();//先清空再load
+			var jsonObj = {"AppType":_unit_parts[0],"level":"3"};
+			var jsonObjStr = JSON.stringify(jsonObj);
+			
+			$.ajax({
+				url:DataURL_BFS_GETORGLIST,
+				data: {"jsonInput":jsonObjStr},				
+				type:"POST",
+				dataType :"jsonp",
+				async:false,
+				success:function(data){
+					LoadingObject.hide();
+					
+					if(data==null){
+						 smoke.alert(ServiceCodeErrorString,{},function(){});
+					}else{				
+						if(data.status=="success"){							
+							
+							for(var i=0;i<data.jsonOutput.unit.length;i++){							
+								var level=data.jsonOutput.unit[i].level;	// 樹狀階層								
+								var nscuCode=data.jsonOutput.unit[i].nscuCode;	// ORG代碼
+								var nscuId=data.jsonOutput.unit[i].nscuId;	// ORG代碼
+								var parentNscuId = getParentNscuId(data.jsonOutput.unit[i]);								
+								var nscuDesc=data.jsonOutput.unit[i].nscuDesc; 	// 單位顯示名稱
+								
+								if (level == "5" && parentNscuId == _unit_parts[2]) {
+									var value = _unit_parts[0]+","+nscuCode+","+nscuId;
+									htmlResult+="<option value=\""+value+"\">"+nscuDesc+"</option>";
+								}					
+							}
+							
+							if(htmlResult!=""){
+								$('#dept5').html(htmlResult);
+							}
+							
+							//bind event
+							$('#dept5').change(function() {
+								var unit_part = $(this).val();// govCode,nscuCode,nscuId								
+								if (unit_part != '') {
+									loadOrgInfo(unit_part.split(","));
+								}
+							});
+							
+						}else{
+							smoke.alert(ServiceCodeErrorString,{},function(){});
+						}
+					}
+					
+				},
+				error: function(data){
+					LoadingObject.hide();					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					LoadingObject.hide();
+					jsonObjStr=null;
+					delete jsonObjStr;
+				}
+			}); /*  */
+		}
+		function loadOrgLevel4(_unit_parts) {		
+			/*  */
+			LoadingObject.show();
+			var htmlResult = "";
+			$('#dept4 option').remove();//先清空再load
+			var jsonObj = {"AppType":_unit_parts[0],"level":"3"};
+			var jsonObjStr = JSON.stringify(jsonObj);
+			
+			$.ajax({
+				url:DataURL_BFS_GETORGLIST,
+				data: {"jsonInput":jsonObjStr},				
+				type:"POST",
+				dataType :"jsonp",
+				async:false,
+				success:function(data){
+					LoadingObject.hide();
+					
+					if(data==null){
+						 smoke.alert(ServiceCodeErrorString,{},function(){});
+					}else{				
+						if(data.status=="success"){							
+							for(var i=0;i<data.jsonOutput.unit.length;i++){							
+								var level=data.jsonOutput.unit[i].level;	// 樹狀階層								
+								var nscuCode=data.jsonOutput.unit[i].nscuCode;	// ORG代碼
+								var nscuId=data.jsonOutput.unit[i].nscuId;	// ORG代碼
+								var parentNscuId = getParentNscuId(data.jsonOutput.unit[i]);								
+								var nscuDesc=data.jsonOutput.unit[i].nscuDesc; 	// 單位顯示名稱
+								
+								if (level == "4" && parentNscuId == _unit_parts[2]) {
+									var value = _unit_parts[0]+","+nscuCode+","+nscuId;
+									htmlResult+="<option value=\""+value+"\">"+nscuDesc+"</option>";
+								}					
+							}
+							
+							if(htmlResult!=""){
+								$('#dept4').html(htmlResult);
+							}
+							
+							//bind event
+							$('#dept4').change(function() {
+								var unit_part = $(this).val();// govCode,nscuCode,nscuId
+								if (unit_part != '') {
+									loadOrgInfo(unit_part.split(","));
+									loadOrgLevel5(unit_part.split(","));									
+								}
+							});
+							
+						}else{
+							smoke.alert(ServiceCodeErrorString,{},function(){});
+						}
+					}
+					
+				},
+				error: function(data){
+					LoadingObject.hide();					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					LoadingObject.hide();
+					jsonObjStr=null;
+					delete jsonObjStr;
+				}
+			}); /*  */
+		}
+		
+		//找單位parent nscuID
+		function getParentNscuId(unit) {
+			var units = unit.parentPath.split(",");	
+			return units[units.length-1];
+		}		
+		// choose user page
+		$(document).on('pageinit','#chooseUserPage',function(){
+			$('#chkAll').hide();
+			$('#cancelAll').hide();
+			
+			//第一層變動事件，載入第二層
+			$('#dept3').change(function() {
+				var unit_part = $(this).val();// govCode,nscuCode,nscuId
+				if (unit_part != '')
+					loadOrgLevel4(unit_part.split(","));
+			});
+							
+			//確認人員
+			$('#confirmButton').click(function() {
+				if (peopleToSend == '' || peopleNameToSend == '') {
+					smoke.alert("尚未新增傳送對象",{},function(){});
+					return;
+				}
+				//alert(peopleToSend);
+				//alert(peopleNameToSend);
+				//暫存要寄的對象
+				window.localStorage.setItem("SettingData_peopleToSend", peopleToSend);				
+				window.localStorage.setItem("SettingData_peopleNameToSend", peopleNameToSend);
+				
+				$.mobile.changePage('#confirmPage');
+				$('#confirmPage').trigger('pageinit');
+				
+				//$.mobile.changePage('#confirmPage', {changeHash:true, reloadPage:true, dataUrl:'#confirmPage'});
+			});
+			//查詢人員
+			$('#searchButton').click(function() {
+				smoke.alert("尚未實作",{},function(){});
+			});
+			
+		});
+        
+		function getImageArray2(HTML_imgs){
+			var imageArray=[],toRemove ="data:image/jpeg;base64,",imgSrc,isMain,imgObject;
+			if(typeof(HTML_imgs) !== "undefined"&&HTML_imgs!=null&&HTML_imgs.length>0){
+				for (var imgIndex=0;imgIndex< HTML_imgs.length; imgIndex++) {
+					isMain=$(HTML_imgs[imgIndex]).data("ismain");
+					imgSrc=$(HTML_imgs[imgIndex]).attr("src");
+					if(typeof(imgSrc) !== "undefined"){
+						imgSrc=imgSrc.replace(toRemove,'');
+					}
+					imgObject={'ximage':imgSrc};
+					imageArray.push(imgObject);
+				};
+			}
+			toRemove=null;imgSrc=null;imgObject=null;
+			delete toRemove;delete imgSrc,delete imgObject;
+			return imageArray;
+		}
+		
+		//載入檔案清單列表
+		function loadData(sortField, order, _ListType) {
+			LoadingObject.show();
+			ListType = _ListType;//set global parameter
+			var op = (_ListType==0)?"getReceivedFileList":"getTransferredFileList";
+			var htmlResult="";			
+			
+			var jsonObj = {'op':'getReceivedFileList',
+				'loginUser':loginUser,
+				'keyword':$('#keyword').val(),
+				'dateBegin':$('#dateBegin').val(),
+				'dateEnd':$('#dateEnd').val(),
+				'sortField':sortField,
+				'order':order};
+			var jsonObjStr = JSON.stringify(jsonObj);
+			//http://localhost:8081/AppService/Main.do?name=DataURL_BFS&jsonInput=&jsoncallback=?
+			$.ajax({				
+				type: 'post',
+				url: DataURL_BFS,
+				data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
+				dataType :"json",
+		        //async:false,
+				success: function(response) {				
+					if (response.status == "success") {
+					
+						$('#fileList li').remove();
+						var dataList = response.jsonOutput.dataList;
+						// 載入清單
+						for (var i=0; i<dataList.length; i++) {
+							var isvalid = dataList[i].isvalid;
+							var mailBRId = dataList[i].mailBRId;
+							var mailId = dataList[i].mailId;				
+							var sender = dataList[i].sender;
+							var senderName = dataList[i].senderName;
+							var receiver = dataList[i].receiver;
+							var receiverName = dataList[i].receiverName;
+							var fileName = dataList[i].fileName;
+							var newfileName = dataList[i].newfileName;
+							var transferTime = dataList[i].transferTime;
+							var fileSize = dataList[i].fileSize;
+							var fileExt = dataList[i].fileExt;
+							var fileNo = dataList[i].fileNo;
+							var icon = dataList[i].icon;
+							var downloadParams = dataList[i].downloadParams;
+							
+							var downloadJsonParams = {'op':'download',
+								'loginUser':loginUser,
+								'ofileName':fileName,
+								'nfileName':newfileName};
+							var downloadJsonParamsStr = JSON.stringify(downloadJsonParams);
+							//var downloadUrl = DataURL_BFS+"?name=DataURL_BFS&jsonInput="+downloadJsonParamsStr+"&jsoncallback=?";
+							var downloadUrl = DataURL_BFS_MAIN2+"?jsonInput="+downloadJsonParamsStr+"&jsoncallback=?";
+							
+							$('#fileList').append(
+							"<li fileNo=\""+fileNo+"\" BRID=\""+mailBRId+"\">"
+							+ "<div class=\"image\"><a href=\"#\"><img src=\"img/NSC/file_"+fileExt+".png\" alt=\""+fileExt+"\"></a></div>"
+							+ "<h2>"+((_ListType==0)?senderName:receiverName)+"</h2>"
+							+ "<p>"+fileName+"</p>"
+							+ "<p class=\"filetime\"><font color=#06C>"+fileSize+"　"+transferTime+"</font></p>"//1秒鐘前</p>
+							//+ "<div class=\"arrow\"><a  onclick=\"openBrowser('"+DataURL_BFS+"?name=DataURL_BFS&jsonInput="+downloadJsonParamsStr+"&jsoncallback=?')\"><img src=\"img/NSC/arrow3.png\" alt=\"arrow\"></a></div>"
+							+ "<div class=\"arrow\"><img src=\"img/NSC/arrow3.png\" alt=\"arrow\"></div>"
+							+ "</li>"
+							//+ "<input type=\"value\" value=\""+downloadUrl+"\" size=100/>"
+							+ "<textarea id=\"dl"+fileNo+"\" style=\"display:none\">"+downloadUrl+"</textarea>"
+							);
+						}
+
+						//--先不做
+						/* */
+						$('#fileList li').click(function() {						
+							delBRID = $(this).attr('BRID');
+							downloadFileNo = $(this).attr('fileNo');
+							$('#popupDialog_listmenu').popup('open');
+						});
+						/* */
+					}
+				},
+				error: function(xhr,msg,err) {					
+					//alert('ajax request error');					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					//$('#loading').fadeOut();
+					LoadingObject.hide();
+				}
+			});
+		}
+		
+		// SOA related functions
+		function getOrgList(govCode,level) {//全部單位,展開層級			
+			var htmlResult = "";
+			var jsonObj = {"AppType":govCode, "level":level};
+			var jsonObjStr = JSON.stringify(jsonObj);
+			var orgList = [];
+			$.ajax({
+				url:DataURL_BFS_GETORGLIST,
+				data: {"jsonInput":jsonObjStr},				
+				type:"POST",
+				dataType :"jsonp",
+				async:false,
+				success:function(data){				
+					if(data==null){
+						 smoke.alert(ServiceCodeErrorString,{},function(){});
+					}else{
+						if(data.status=="success"){							
+							orgList = data.jsonOutput.unit;
+							//alert(JSON.stringify(orgList));
+						}else{
+							smoke.alert(ServiceCodeErrorString,{},function(){});
+						}
+					}					
+				},
+				error: function(data){
+					LoadingObject.hide();					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					LoadingObject.hide();
+					jsonObjStr=null;
+					delete jsonObjStr;
+				}
+			}); /*  */
+			
+			return orgList;
+		}
+		function getUserList(govCode, nscuCode, onSuccess) {
+			var htmlResult = "";
+			var jsonObj = {"AppType":govCode,"nscuCode":nscuCode,"userStatus":"Y"};
+			var jsonObjStr = JSON.stringify(jsonObj);
+			
+			$.ajax({
+				url:DataURL_BFS_GETORGINFO,
+				data: {"jsonInput":jsonObjStr},				
+				type:"POST",
+				dataType :"jsonp",
+				async:false,
+				success:onSuccess,
+				error: function(data){
+					LoadingObject.hide();					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					LoadingObject.hide();
+					jsonObjStr=null;
+					delete jsonObjStr;
+				}
+			}); /*  */
+		}
+
+		</script>
+			<div data-role="header" data-theme="f">
+		     	<a href="#menu" data-role="none" class="btnMenu"></a>
+                <h1>即時業務資訊</h1>
+		     	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right" data-mini="true">
+		     		<a href="#" id="orderButton"><img src="img/NSC/sequence01.png" alt="排序"></a>
+<!-- 		     		<a data-transition="pop" data-rel="popup" data-position-to="window"  href="#popupDialog_advSearch"><img src="img/NSC/search.png" alt="查詢"></a> -->
+		     	</div>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+			<div data-role="navbar" >
+			    <ul>
+			      <li><a class="ui-btn-active ui-state-persist" data-rel="popup" data-position-to="window" href="#" data-transition="pop" onclick="loadData('','',0);">已接收檔案</a></li>
+				  <li><a data-rel="popup" data-position-to="window" href="#" data-transition="pop" onclick="loadData('','',1);">已傳送檔案</a></li>
+			    </ul>
+			  </div>				
+				
+				<!--toplist end-->
+				<div class="list3" id="htmlResult">
+					<ul id="fileList">
+						<!--li>
+							<div class="image"><a href="#"><img src="img/NSC/file_pdf.png" alt="pdf"></a></div>
+							<h2>李婉倩</h2>
+							<p>南科簡訊第164期.pdf</p>
+							<p class="filetime">7.36 MB　1秒鐘前</p>
+							<div class="arrow"><a href="#"><img src="img/NSC/arrow3.png" alt="arrow"></a></div>
+						</li-->			
+					</ul>
+				</div>
+				
+			</div>
+			
+			<div data-theme="a" data-role="footer" data-position="fixed">		
+			  <div data-role="navbar">
+			    <ul>
+			      <li class="navli">
+					<a data-rel="dialog" data-role="none" id="newFileButton"><span><img src="img/NSC/footer_icon13.png" alt="傳送檔案"></span><br/>傳送檔案</a>				  
+				  </li>
+			      <li>
+					<a data-rel="popup" data-position-to="window" href="#popupDialog_advSearch" data-transition="pop">
+					<span><img src="img/NSC/footer_icon01.png" alt="查詢"></span><br/>查詢</a>
+				  </li>
+			      <!--li>
+					<a data-rel="popup" data-position-to="window" href="#" data-transition="pop" id="exportButton">
+					<span><img src="img/NSC/footer_icon14.png" alt="匯出清單"></span><br/>匯出清單</a>
+				  </li-->
+  			      <li>
+					<a data-rel="popup" data-position-to="window" id="refreshFileButton" data-transition="pop">
+					<span><img src="img/NSC/footer_icon15.png" alt="重新整理"></span><br/>重新整理</a>
+				  </li>
+			    </ul>
+			  </div>
+			</div>	
+			
+			<!-- 下方功能#1: 查詢 -->
+			<div data-role="popup" id="popupDialog_advSearch" data-overlay-theme="a" data-theme="a" data-dismissible="false" 
+			style="" class="ui-corner-all">
+				<input type="search" id="keyword" value="" placeholder="請輸入關鍵字">
+				<span>起日：<input type="date" id="dateBegin" data-inline="true"/></span>
+				<span>迄日：<input type="date" id="dateEnd" data-inline="true"/></span>
+				<span><p align="right">				
+				<a data-theme="c" href="javascript:history.back()" data-role="button" data-inline="true" data-mini="true">取消</a>
+				<a data-theme="b" href="" data-role="button" id="queryButton" data-inline="true" data-mini="true">查詢</a>
+				</p>
+				</span>
+			</div>
+
+			<!-- 條列功能#1: 轉寄或刪除 -->
+			<div data-role="popup" id="popupDialog_listmenu" data-overlay-theme="a" data-theme="a" data-dismissible="false" 
+			style="max-width:500px;" class="ui-corner-all">	
+				<a data-theme="b" href="" data-role="button" data-icon="down" id="downloadButton">下載</a>
+				<!--a data-theme="c" href="" data-role="button" id="forwardButton" data-inline="true">轉寄</a-->				
+				<a data-theme="b" href="" data-role="button" data-icon="delete" id="deleteButton">刪除</a>				
+				<a data-theme="c" href="javascript:history.back()" data-role="button" data-icon="home">取消</a>				
+			</div>
+			
+			<!-- 條列功能#2: 排序 -->
+			<div data-role="popup" id="popupDialog_ordermenu" data-overlay-theme="a" data-theme="a" data-dismissible="false" 
+			style="max-width:500px;" class="ui-corner-all">
+				<fieldset data-role="controlgroup">
+					<legend>請選擇排序欄位</legend>
+					<input type="radio" name="orderByFieldRadio" id="orderBySender" value="m1.mailReceiver" checked="checked" />
+					<label for="orderBySender"><span id="orderBySenderFieldName">依寄件者</span></label>
+
+					<input type="radio" name="orderByFieldRadio" id="orderByFile" value="b.ofileName"  />
+					<label for="orderByFile">依檔案名稱</label>
+
+					<input type="radio" name="orderByFieldRadio" id="orderByReceiveDate" value="m1.deditTime"  />
+					<label for="orderByReceiveDate"><span id="orderByDateFieldName">依傳送日期</span></label>
+				</fieldset>			
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<!--legend>請選擇排序方式：</legend-->
+					<input type="radio" name="orderByWayRadio" id="radio-choice-21" value="desc" checked="checked" />
+					<label for="radio-choice-21">遞減</label>
+
+					<input type="radio" name="orderByWayRadio" id="radio-choice-22" value="asc"  />
+					<label for="radio-choice-22">遞增</label>
+				</fieldset>	
+				<a data-theme="c" href="javascript:history.back()" data-role="button" data-inline="true">取消</a>
+				<a data-theme="b" href="" data-role="button" id="orderSearchButton" data-inline="true" data-theme="b">確定</a>				
+			</div>
+				
+		</div>
+		
+		<!-- 新增檔案頁面 -->
+		<div data-role="page" id="newFilePage">
+			<div data-role="header" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>傳送檔案</h1></div>
+			<div data-role="content">		
+
+				<div class="int">
+					<input type="button" id="shootButton" value="拍照" data-icon="plus"></input>
+					<input type="button" id="libraryButton" value="從相片取得" data-icon="search"></input>
+					<div id="imageArray"></div>
+                    <img src="" id="showImg" style="max-width:120px;"/>
+					<input type="button" id="chooseUserButton" value="選擇發送對象" data-icon="star"></input>
+					<!--input type="button" id="uploadButton" value="上傳" data-icon="star"></input-->
+				</div>
+			</div>
+		</div>
+		
+		<!-- 選擇人員頁面  -->
+		<div data-role="page" id="chooseUserPage">
+			<div data-role="header" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>選擇發送對象</h1></div>
+			<div data-role="content">
+				<!--int Start-->
+				<div class="int">
+					<!--formbox star -->
+					  <div class="formbox5">
+					  <div class="aleft2">						  
+						  <select name="dept3" id="dept3">
+							<option value="">請選擇單位</option>
+							<option value="N,U0,73">科學工業園區管理局</option>
+							<option value="C,61,94">中部科學工業園區管理局</option>
+							<option value="S,60,20">南部科學工業園區管理局</option>
+							</select>
+							  <select name="dept4" id="dept4">
+								<option value="">請選擇組室</option>						
+							  </select>
+								<select name="dept5" id="dept5">
+								<option value="">請選擇科別</option>
+							  </select>
+							  <!--input name="peopleSearch" type="text" id="peopleSearch" placeholder="請輸入關鍵字" size="25">
+							  <input type="button" name="reset" value="查詢" class="btn09" id="searchButton"/-->
+							</div>							
+				  </div>
+					<!--formbox end -->					
+					<a href="#" id="cancelAll" data-role="button" data-inline="true" data-mini="true">取消全選</a>
+					<a href="#" id="chkAll" data-role="button" data-inline="true" data-mini="true" data-theme="b">全選</a>
+				  <div id="peopleList">
+				  
+				  </div>
+				
+				<!--list end -->
+				<input type="button" name="reset" value="確認" class="btn09" id="confirmButton"/>
+				
+				</div>
+				<!--int End-->
+			</div>
+		</div>
+		
+		<!-- 寄送確認頁面  -->
+		<div data-role="page" id="confirmPage">
+			<div data-role="header" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
+			<div data-role="content">
+				<!--int Start-->				
+				<div class="int">					
+					<h3>選擇檔案：</h3>
+					<div id="fileToSend"></div>
+					
+					<!--formbox end -->				
+					<h3>請選擇發送對象：<a href="javascript:history.back()"><img src="img/NSC/addfiles.png"/></a></h3>
+					<!--list star -->
+					<div id="sendList">						
+					</div>
+					<!--list end -->
+					<br/>
+					<input type="button" name="reset" value="送出" class="btn09" id="sendButton"/>
+					<input type="button" name="reset" value="取消" class="btn09" id="cancelButton"/>				
+					
+				</div>
+				<!--int End-->
+			</div>
+		</div>
+	</body>
+</html>

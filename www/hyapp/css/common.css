@@ -1,0 +1,78 @@
+.row {
+    width: 100%;
+}
+
+.column, .columns {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.row .mobile-one.full-width-node, .row .mobile-two.full-width-node, .row .mobile-three.full-width-node, .row .mobile-four.full-width-node {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+/* button */
+.ui-btn-up-b {
+	border: 1px solid #FFFFFF /*{c-bup-border}*/;
+	background: #FFFFFF /*{c-bup-background-bolor}*/;
+	font-weight: bold;
+	color: #ffffff /*{c-bup-bolor}*/;
+	text-shadow: 0 /*{c-bup-shadow-x}*/ 1px /*{c-bup-shadow-y}*/ 0 /*{c-bup-shadow-radius}*/ #444444 /*{c-bup-shadow-bolor}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #FFFFFF /*{c-bup-background-start}*/), to( #bababa /*{c-bup-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #FFFFFF /*{c-bup-background-start}*/, #bababa /*{c-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #FFFFFF /*{c-bup-background-start}*/, #bababa /*{c-bup-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #FFFFFF /*{c-bup-background-start}*/, #bababa /*{c-bup-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #FFFFFF /*{c-bup-background-start}*/, #bababa /*{c-bup-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #FFFFFF /*{c-bup-background-start}*/, #bababa /*{c-bup-background-end}*/);
+}
+.ui-btn-up-b:visited,
+.ui-btn-up-b a.ui-link-inherit {
+	color: #ffffff /*{c-bup-bolor}*/;
+}
+.ui-btn-hover-b {
+	border: 1px solid #FFFFFF /*{c-bhover-border}*/;
+	background: #FFFFFF /*{c-bhover-background-bolor}*/;
+	font-weight: bold;
+	color: #ffffff /*{c-bhover-bolor}*/;
+	text-shadow: 0 /*{c-bhover-shadow-x}*/ 1px /*{c-bhover-shadow-y}*/ 0 /*{c-bhover-shadow-radius}*/ #444444 /*{c-bhover-shadow-bolor}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #FFFFFF /*{c-bhover-background-start}*/), to( #bababa /*{c-bhover-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #FFFFFF /*{c-bhover-background-start}*/, #bababa /*{c-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #FFFFFF /*{c-bhover-background-start}*/, #bababa /*{c-bhover-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #FFFFFF /*{c-bhover-background-start}*/, #bababa /*{c-bhover-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #FFFFFF /*{c-bhover-background-start}*/, #bababa /*{c-bhover-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #FFFFFF /*{c-bhover-background-start}*/, #bababa /*{c-bhover-background-end}*/);
+}
+.ui-btn-hover-b:visited,
+.ui-btn-hover-b:hover,
+.ui-btn-hover-b a.ui-link-inherit {
+	color: #ffffff /*{c-bhover-bolor}*/;
+}
+.ui-btn-down-b {
+	border: 1px solid #FFFFFF /*{c-bdown-border}*/;
+	background: #FFFFFF /*{c-bdown-background-bolor}*/;
+	font-weight: bold;
+	color: #ffffff /*{c-bdown-bolor}*/;
+	text-shadow: 0 /*{c-bdown-shadow-x}*/ 1px /*{c-bdown-shadow-y}*/ 0 /*{c-bdown-shadow-radius}*/ #444444 /*{c-bdown-shadow-bolor}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #FFFFFF /*{c-bdown-background-start}*/), to( #bababa /*{c-bdown-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #FFFFFF /*{c-bdown-background-start}*/, #bababa /*{c-bdown-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #FFFFFF /*{c-bdown-background-start}*/, #bababa /*{c-bdown-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #FFFFFF /*{c-bdown-background-start}*/, #bababa /*{c-bdown-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #FFFFFF /*{c-bdown-background-start}*/, #bababa /*{c-bdown-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #FFFFFF /*{c-bdown-background-start}*/, #bababa /*{c-bdown-background-end}*/);
+}
+.ui-btn-down-b:visited,
+.ui-btn-down-b:hover,
+.ui-btn-down-b a.ui-link-inherit {
+	color: #ffffff /*{c-bdown-bolor}*/;
+}
+.ui-btn-up-b,
+.ui-btn-hover-b,
+.ui-btn-down-b {
+	 font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
+	text-decoration: none;
+}
+
+.ui-btn-icon-notext .ui-btn-inner .ui-icon {
+	margin: 1px 1px 2px 2px;
+}

@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html><!-- manifest="cache.appcache" 開啟Cache 功能-->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <!--ios-->
+        <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+        <!--android-->
+        <!--
+         <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
+        -->
+        <!--jQuery-->
+        <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<!--json2-->
+		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
+		<!--Google Map API v3-->
+		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false&region=zh-TW"></script>
+		<!--mobiScroll-->
+		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
+		<link href="css/mobiscroll.custom-2.4.3.min.css" rel="stylesheet" type="text/css"></link>
+		<script src="js/mobiscroll.custom.js" type="text/javascript"></script>
+		<script>
+		$(document).bind('mobileinit', function(){
+
+		});
+		</script>
+		<!--<script src="http://debug.phonegap.com/target/target-script-min.js#blackie1019"></script>-->
+		<!--jQuery mobile-->
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-NSC-1.3.0.css"></link>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.0.min.js"></script>
+        <!--Plug in-->
+        <link rel="stylesheet" type="text/css" href="css/smoke.min.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/smoke.theme.100s.css"> -->
+        <script src="js/smoke.js"></script>
+		<!--Hyweb CSS-->
+		<link rel="stylesheet" type="text/css" href="css/index.css"></link>
+		<!-- <link rel="stylesheet" type="text/css" href="css/menu.css"></link> -->
+		<!--HYAPP-->
+		<!--NSCAPP Javascript-->	
+		<script src="js/setting.js"></script>
+		<script src="js/loading.js"></script> 
+		<script src="js/pnpolygon.js"></script>
+		<script src="js/photo.js"></script>	
+		<script src="js/location.js"></script>	
+		<script src="js/data.js"></script> 
+		<script type="text/javascript">
+			/*global variables*/
+			var photo=new Photo();		
+			var loc=new Loc();
+		</script>
+	</head>
+	<body>
+		<!--     <body> -->
+		<!--巡查資料回傳-->
+        <div data-role="page" id="LBS_PostBack">
+        	<script type="text/javascript">
+			/*pageini event*/
+			$(document).on('pageinit','#LBS_PostBack',function(){
+				var rootElement=this;
+				//產生menu
+				genMenu(this);
+				$(this).on('click','#btnLBS_PostBack_List',function(){
+			        $.mobile.changePage('#LBS_PostBack_List');
+				});
+
+				$(this).on('click','#btnLBS_NewLandInfo',function(){
+					//設定相機跟地圖
+					photo.initValue=false;
+					loc.marker=null;
+					photo.initialize("LBS_NewLandInfo",$(rootElement).find('#imageArray'));
+					loc.initialize("LBS_NewLandInfo",$(rootElement).find('#targetLatitude'),$(rootElement).find('#targetLongitude'));
+					//for Temp EntryPoints insert to tempDB
+					var LBS_NewLandInfoID=GenGUID();
+					var PageElement=$('#LBS_NewLandInfo');
+					ClearUpInput(PageElement);
+			    	//園區判別
+			    	getDefaultParkBase();
+					//判斷預設園區
+			 		var defaultParkBase=getDefaultBaseData();
+					if(defaultParkBase==null||defaultParkBase==""){
+						defaultParkBase="01_01";
+			    	}
+			    	var temp=defaultParkBase.split("_");
+			 		var mobiScroll_LBS_ParkBase=$('#LBS_NewLandInfo').find('#mobiScroll_LBS_ParkBase');
+			        $(mobiScroll_LBS_ParkBase).val(defaultParkBase).mobiscroll('setValue',[defaultParkBase]);
+			        var BaseStr=$(mobiScroll_LBS_ParkBase).find('option[value="'+defaultParkBase+'"]').text();
+			        var ParkStr=$(mobiScroll_LBS_ParkBase).find('optgroup[data-value="'+temp[0]+'"]').attr('label');
+			        $('#LBS_NewLandInfo').find('#mobiScroll_LBS_ParkBase'+'_dummy').val(ParkStr+"/"+BaseStr);
+			        //預設分類項目
+			        var mobiScroll_LBS_classify=$('#LBS_NewLandInfo').find('#mobiScroll_LBS_classify');
+			        $(mobiScroll_LBS_classify).val('A_001').mobiscroll('setValue',['A_001']);          
+			        $('#LBS_NewLandInfo').find('#mobiScroll_LBS_classify'+'_dummy').val($(mobiScroll_LBS_classify).find('optgroup:eq(0)').attr('label')+"/"+$(mobiScroll_LBS_classify).find('option[value="A_001"]').text());
+			        mobiScroll_LBS_ParkBase=null;mobiScroll_LBS_classify=null;
+			        delete mobiScroll_LBS_ParkBase;delete mobiScroll_LBS_classify;
+			        setTarget_LBS_LandInfoGUID(LBS_NewLandInfoID);
+			        setTarget_LBS_LandInfoActionType("add");
+			        //載入
+			        LoadLBS_LandInfo(PageElement);
+			        //換頁
+			        $.mobile.changePage('#LBS_NewLandInfo');
+				});
+			});
+			$(document).on('pageinit','#LBS_NewLandInfo',function(){
+				var rootElement=this;
+				$(this).on('click','#btnTo_LBS_PostBack',function(){
+					if(getTarget_LBS_LandInfoActionType()=="edit")
+					{
+						$.mobile.changePage('#LBS_PostBack_List');
+					}else{
+						$.mobile.changePage('#LBS_PostBack');
+					}
+				});		
+				$(this).on('click','#aAddImg',function(){
+					photo.initialize("LBS_NewLandInfo",$(rootElement).find('#imageArray'));
+					$.mobile.changePage('#LBS_TakePhoto');
+				});
+				$(this).find('#positionButton').live('click',function(){
+					loc.initialize("LBS_NewLandInfo",$(rootElement).find('#targetLatitude'),$(rootElement).find('#targetLongitude'));
+					loc.getSelf();
+					$.mobile.changePage('#LBS_MapMinPage');
+				});
+				$(this).on('click','#entryPointsButton',function(){				
+					$.mobile.changePage('#LBS_EntryPoint');
+				});
+				$(this).on('click','#deleteButton',function(){
+					var spotNo=getTarget_LBS_spotNo();
+			        if(spotNo!=null){
+						doDeleteLBSUnSubmitData(spotNo);
+			        }else{
+			            smoke.alert("刪除失敗，請重新載入頁面！",{},function(){});
+			        }
+			        //$(rootElement).find('#deletePopupDialog').popup("close")
+			        $.mobile.changePage('#LBS_PostBack_List');
+				});
+				$(this).on('click','#uploadButton',function(){
+			        var LandInfoGUID=getTarget_LBS_LandInfoGUID();
+			       	var spotNo=getTarget_LBS_spotNo();
+					//get parameter
+					var ParkBase=$(rootElement).find('#mobiScroll_LBS_ParkBase').val().split("_");
+					var Classify1Classsify2=$(rootElement).find('#mobiScroll_LBS_classify').val().split("_");
+					var Park=ParkBase[0];
+					var Base=ParkBase[1];
+					var classify1=Classify1Classsify2[0];
+					var classify2=Classify1Classsify2[1];
+					var cName=$(rootElement).find('#cName').val();
+					var eName=$(rootElement).find('#eName').val();
+					var targetLongitude=$(rootElement).find('#targetLongitude').val();
+					var targetLatitude=$(rootElement).find('#targetLatitude').val();
+					var targetAddress=$(rootElement).find('#targetAddress').val();
+					var tel=$(rootElement).find('#tel').val();
+					var comment=$(rootElement).find('#comment').val();
+					var dataTag=$(rootElement).find('#dataTag').val();
+					var imageArray=getImageArray($(rootElement).find('#imageArray img'));
+					if(cName==""||Park==""||Base==""){
+						smoke.alert(LBSDataVerifyError,{},function(){});
+					}else{
+				        if(getTarget_LBS_LandInfoActionType()=="add"){
+				            if(LandInfoGUID!=null&&LandInfoGUID!="")
+				         	{
+								//add LandInfo
+				                doInsertLBSUnSubmitData(LandInfoGUID,Park,Base,classify1,classify2,cName,eName,targetLongitude,targetLatitude,targetAddress,tel,comment,dataTag,imageArray);
+				            	
+				        	}
+					    }else if(getTarget_LBS_LandInfoActionType()=="edit"){
+							if(spotNo!=null&&spotNo!=""){
+				        		//edit LandInfo
+				        		doUpdateLBSUnSubmitData(spotNo,Park,Base,classify1,classify2,cName,eName,targetLongitude,targetLatitude,targetAddress,tel,comment,dataTag,imageArray)
+				        	}
+				        }
+				        //ClearUp
+				        ClearUpInput(rootElement);
+				        $.mobile.changePage('#LBS_PostBack_List');
+				    }
+				});
+				//地圖一定要透過.live綁定事件 不然地圖顯示的大小會有問題(灰邊)
+				$(this).find('#btnSearchLocation').live('click',function(){
+					loc.initialize("LBS_NewLandInfo",$(rootElement).find('#targetLatitude'),$(rootElement).find('#targetLongitude'));
+					var addr=$(rootElement).find('#targetAddress').val();
+					loc.setAddr(addr);	
+					$.mobile.changePage('#LBS_MapPage');
+				});
+			});
+			$(document).on('pageinit','#LBS_ViewLandInfo',function(){
+				$(this).on('click','#btnTo_LBS_PostBack',function(){				
+					$.mobile.changePage('#LBS_PostBack_List');
+				});
+				$(this).on('click','#entryPointsButton',function(){				
+					$.mobile.changePage('#LBS_EntryPoint');
+				});
+				$(this).on('click','#editButton',function(){
+			        setTarget_LBS_LandInfoActionType("edit");
+			        //載入
+			        var PageElement=$('#LBS_NewLandInfo');
+			        ClearUpInput(PageElement);
+			        LoadLBS_LandInfo(PageElement);
+			        //換頁
+			        $.mobile.changePage('#LBS_NewLandInfo');
+				});
+			});
+			$(document).on('pageinit','#LBS_NewEntryPoint',function(){
+				var rootElement=this;
+				$(this).find('#positionButton').live('click',function(){
+					loc.initialize("LBS_NewEntryPoint",$(rootElement).find('#targetLatitude'),$(rootElement).find('#targetLongitude'));			
+					loc.getSelf();
+					$.mobile.changePage('#LBS_MapMinPage');	
+				});
+				$(this).on('click','#aAddImg',function(){
+					photo.initialize("LBS_NewEntryPoint",$(rootElement).find('#imageArray'));
+					$.mobile.changePage('#LBS_TakePhoto');
+				});
+				$(this).on('click','#deleteButton',function(){
+					if(getTarget_LBS_LandInfoActionType()=="edit"){
+			            var code=getTarget_LBS_code();
+			            if(code!=null){
+			                doDeleteLBSUnSubmitEntryPointData(code);
+			            }else{
+			                smoke.alert("刪除失敗，請重新載入頁面！",{},function(){});
+			            }
+			        }else if(getTarget_LBS_LandInfoActionType()=="add"){
+			        	var EntryPoinID=getTarget_LBS_EntryPointID();
+			        	deleteLBS_EnrtyPointToTempDB(EntryPointID);
+			        }
+			        //$(rootElement).find('#deletePopupDialog').popup("close")
+			        $.mobile.changePage('#LBS_EntryPoint');
+				});
+				$(this).on('click','#uploadButton',function(){
+					var cName=$(rootElement).find('#cName').val();
+					var eName=$(rootElement).find('#eName').val();
+					var targetLongitude=$(rootElement).find('#targetLongitude').val();
+					var targetLatitude=$(rootElement).find('#targetLatitude').val();
+					var targetAddress=$(rootElement).find('#targetAddress').val();
+					var imageArray=getImageArray($(rootElement).find('#imageArray img'));
+					var comment=$(rootElement).find('#comment').val();
+					if(cName==""){
+						smoke.alert(LBSDataVerifyError,{},function(){});
+					}else{
+						if(getTarget_LBS_LandInfoActionType()=="edit"){
+							//新增至主機
+							var spotNo=getTarget_LBS_spotNo();
+				            if(spotNo!="")
+				         	{
+				         		if(getTarget_LBS_EntryPointActionType()=="add"){
+				         			//新增
+									doInsertLBSUnSubmitData_EntryPoint(spotNo,cName,eName,targetLongitude,targetLatitude,targetAddress,comment,imageArray);
+								}else if(getTarget_LBS_EntryPointActionType()=="edit"){
+									var code=getTarget_LBS_code();
+									doUpadteLBSUnSubmitData_EntryPoint(spotNo,code,cName,eName,targetLongitude,targetLatitude,targetAddress,comment,imageArray);
+								}
+				                //ClearUp
+				                ClearUpInput(rootElement);
+				        	}else{
+				        		smoke.alert("景點編號有誤！",{},function(){});
+				        	}
+						}else if(getTarget_LBS_LandInfoActionType()=="add"){
+							//新增至WebSQL暫存
+				            var LandInfoGUID=getTarget_LBS_LandInfoGUID();
+				            if(LandInfoGUID!="")
+				         	{
+									//get parameter
+									if(getTarget_LBS_EntryPointActionType()=="add"){
+										//add LandInfo
+						                addLBS_EnrtyPointToTempDB(LandInfoGUID,cName,eName,targetLongitude,targetLatitude,targetAddress,comment,imageArray);
+					            	}else if(getTarget_LBS_EntryPointActionType()=="edit"){
+					            		var EntryPointID=getTarget_LBS_EntryPointID();
+					            		updateLBS_EnrtyPointToTempDB(EntryPointID,LandInfoGUID,cName,eName,targetLongitude,targetLatitude,targetAddress,comment,imageArray);
+					            	}
+					                //ClearUp
+					                ClearUpInput(rootElement);
+				        	}else{
+				        		smoke.alert("error",{},function(){});
+				        	}
+				    	}
+				        $.mobile.changePage('#LBS_EntryPoint');
+			    	}
+				});
+				$(this).find('#btnSearchLocation').live('click',function(){
+					loc.initialize("LBS_NewEntryPoint",$(rootElement).find('#targetLatitude'),$(rootElement).find('#targetLongitude'));	
+					var addr=$(rootElement).find('#targetAddress').val();
+					loc.setAddr(addr);	
+					$.mobile.changePage('#LBS_MapPage');
+				});				
+				$(this).off('click','#btnBack');
+				$(this).on('click','#btnBack',function(){
+					$.mobile.changePage('#LBS_EntryPoint');
+				});
+			});	
+			$(document).on('pageinit','#LBS_TakePhoto',function(){
+				
+				$(this).on('click','#shootButton',function(){
+					photo.capturePhoto("camera",function(){
+						if(photo.currentPage=="LBS_NewLandInfo"){
+							$.mobile.changePage('#LBS_NewLandInfo');
+						}else if(photo.currentPage=="LBS_NewEntryPoint"){
+							$.mobile.changePage('#LBS_NewEntryPoint');
+						}
+					});			
+					
+				});
+				$('#LBS_TakePhoto').on('click','#libraryButton',function(){
+					photo.capturePhoto("album",function(){				
+						if(photo.currentPage=="LBS_NewLandInfo"){
+							$.mobile.changePage('#LBS_NewLandInfo');
+						}else if(photo.currentPage=="LBS_NewEntryPoint"){
+							$.mobile.changePage('#LBS_NewEntryPoint');
+						}
+					});				
+				});			
+			});
+			$(document).on('pageinit','#LBS_MapMinPage',function(){
+				var rootElement=this;
+				$(this).on('click','#setPosition',function(){
+					var page=$('#'+loc.currentPage);
+					if(loc.marker!=null){
+						$(page).find('#targetLatitude').val(loc.marker.getPosition().lat());
+						$(page).find('#targetLongitude').val(loc.marker.getPosition().lng());
+						if(loc.address!=""){
+							$(page).find('#targetAddress').val(loc.address);
+						}
+					}
+					$.mobile.changePage('#'+loc.currentPage);
+				});
+			});
+			$(document).on('pageinit','#LBS_MapPage',function(){
+				var rootElement=this;
+				// $(this).find('#btnDrag').live('click',function(){	
+				// 	var dragEnable=$(this).data('dragenable');
+				// 	$(this).buttonMarkup({theme:dragEnable?"c":"f"});
+				// 	$(this).parent().buttonMarkup({ theme:dragEnable?"c":"f"});
+				// 	$(this).html(dragEnable?"關閉":"拖曳").data('dragenable',!dragEnable).button('refresh');
+				// });
+				$(this).on('click','#btnSearchLocation',function(){
+					loc.searchPlace($(rootElement).find('#btnSearchInput').val());
+				});
+				$(this).on('click','#setPosition',function(){
+					var page=$('#'+loc.currentPage);
+					if(loc.marker!=null){
+						$(page).find('#targetLatitude').val(loc.marker.getPosition().lat());
+						$(page).find('#targetLongitude').val(loc.marker.getPosition().lng());
+						if(loc.address!=""){
+							$(page).find('#targetAddress').val(loc.address);
+						}
+					}
+					$.mobile.changePage('#'+loc.currentPage);
+				});
+			});
+			$(document).on('pageinit','#LBS_EntryPoint',function(){
+				var rootElement=this;
+				$(this).on('click','#btnAddEnrtyPoint',function(){
+					photo.initValue=false;
+					loc.marker=null;
+					var targetPage=$('#LBS_NewEntryPoint');
+					photo.initialize("LBS_NewEntryPoint",$(targetPage).find('#imageArray'));
+					loc.initialize("LBS_NewEntryPoint",$(targetPage).find('#targetLatitude'),$(targetPage).find('#targetLongitude'));
+					setTarget_LBS_EntryPointActionType('add');
+			        //ClearUp
+			        ClearUpInput($('#LBS_NewEntryPoint'));
+					$.mobile.changePage('#LBS_NewEntryPoint');
+				});
+				$(this).on('click','#btnEdit',function(){	
+					photo.initValue=false;
+					loc.marker=null;
+					var targetPage=$('#LBS_NewEntryPoint');
+					photo.initialize("LBS_NewEntryPoint",$(targetPage).find('#imageArray'));
+					loc.initialize("LBS_NewEntryPoint",$(targetPage).find('#targetLatitude'),$(targetPage).find('#targetLongitude'));
+					setTarget_LBS_EntryPointActionType('edit');
+					if(getTarget_LBS_LandInfoActionType()=="add"){
+						var EntryPointID=$(this).data("nsc-lbs-targetentrypointid");
+						setTarget_LBS_EntryPointID(EntryPointID);
+					}else{
+						var code=$(this).data("nsc-lbs-targetcode");
+						setTarget_LBS_code(code);
+					}
+					var page=$('#LBS_NewEntryPoint');
+					LoadLBS_EntryPonit(page);
+					$.mobile.changePage('#LBS_NewEntryPoint');
+				});
+				$(this).on('click','#btnBack',function(){			
+					if(getTarget_LBS_LandInfoActionType()=="edit"||getTarget_LBS_LandInfoActionType()=="add"){
+						//讓圖片抓得到
+						loc.marker=null;
+						var targetPage=$('#LBS_NewLandInfo');
+						photo.initializeWithHtml_imgs("LBS_NewLandInfo",$(targetPage).find('#imageArray img'),$(targetPage).find('#imageArray'));
+						loc.initialize("LBS_NewLandInfo",$(targetPage).find('#targetLatitude'),$(targetPage).find('#targetLongitude'));
+				        //載入
+				        var PageElement=$('#LBS_NewLandInfo');
+				        // LoadLBS_LandInfo(PageElement);
+				        //換頁
+						$.mobile.changePage('#LBS_NewLandInfo');
+					}else{
+				        //載入
+				        var PageElement=$('#LBS_ViewLandInfo');
+				        LoadLBS_LandInfo(PageElement);
+				        //換頁
+						$.mobile.changePage('#LBS_ViewLandInfo');
+					}
+				});
+			});
+			$(document).on('pageinit','#LBS_PostBack_List',function(){
+				$(this).on('click','#btnTo_LBS_PostBack',function(){
+			        $.mobile.changePage('#LBS_PostBack');
+				});
+			});
+			/*pagebeforeshow event*/
+			$(document).on('pagebeforeshow','#index',function(){
+				//menu登入確認
+				 menuDisplayMemberSection(checkLogin(),this);
+			    $(this).trigger('create');
+			});
+			$(document).on('pagebeforeshow','#LBS_PostBack',function(){
+				//menu登入確認
+				 menuDisplayMemberSection(checkLogin(),this);
+			    $(this).trigger('create');
+			});
+			$(document).on('pagebeforeshow','#LBS_PostBack_List',function(){		
+				if(checkLogin()){
+					//from WebService讀出	
+					doQueryLBSUnSubmitData(this,$(this).find('#dataTable'));
+				}else{
+					smoke.alert("請先登入",{},function(){});
+					$.mobile.changePage('#LBS_PostBack');
+				}
+				//避免重復事件出現
+				$(this).off('click','#btnEdit');
+				$(this).off('click','#btnView');
+				$(this).on('click','#btnEdit',function(){
+			        //載入
+			        var PageElement=$('#LBS_NewLandInfo');
+					ClearUpInput(PageElement);
+					var spotNo=$(this).data("nsc-lbs-targetspotno");
+			        setTarget_LBS_LandInfoActionType("edit");
+			        setTarget_LBS_spotNo(spotNo);
+			        LoadLBS_LandInfo(PageElement);
+			        //換頁
+			        $.mobile.changePage('#LBS_NewLandInfo');
+				});
+				$(this).on('click','#btnView',function(){
+			        var PageElement=$('#LBS_ViewLandInfo');
+					ClearUpInput(PageElement);
+					var spotNo=$(this).data("nsc-lbs-targetspotno");
+			        setTarget_LBS_LandInfoActionType("view");
+			        setTarget_LBS_spotNo(spotNo);
+			        $.mobile.changePage('#LBS_ViewLandInfo');
+				});
+
+			});
+			$(document).on('pagebeforeshow','#LBS_ViewLandInfo',function(){	
+				var spotNo=getTarget_LBS_spotNo();
+				if(spotNo!=null){
+					//讀入資料
+					doLoadLBSLandInfoToPage(spotNo,this);
+				}
+			});
+			$(document).on('pagebeforeshow','#LBS_NewLandInfo',function(){	
+				var rootElement=this;
+				if(getTarget_LBS_LandInfoActionType()=="edit")
+				{
+					$(this).find('.sub-title h2').html('修改景點資料');
+					$(this).find('#uploadButton').html('修改').button('refresh');
+					$(this).find('a#btnDeletePopupDialog').show();
+				}else{		
+					$(this).find('.sub-title h2').html('新增景點資料');
+					$(this).find('#uploadButton').html('新增').button('refresh');
+					$(this).find('a#btnDeletePopupDialog').hide();
+				}
+			});
+			$(document).on('pagebeforeshow','#LBS_NewEntryPoint',function(){	
+				var rootElement=this;
+				if(getTarget_LBS_EntryPointActionType()=="edit")
+				{
+					$(this).find('.sub-title h2').html('修改標的物出入口');	
+					$(this).find('#uploadButton').html('修改').button('refresh');
+					$(this).find('a#btnDeletePopupDialog').show();	
+				}else{
+					$(this).find('.sub-title h2').html('新增標的物出入口');	
+					$(this).find('#uploadButton').html('新增').button('refresh');
+					$(this).find('a#btnDeletePopupDialog').hide();
+				}
+			});
+			$(document).on('pagebeforeshow','#LBS_EntryPoint',function(){
+				var ActionType=getTarget_LBS_LandInfoActionType();
+			   	if(ActionType=="add"){
+					var LandInfoGUID=getTarget_LBS_LandInfoGUID();	
+					readLBS_EntryPointFromDBToList(this,LandInfoGUID,$(this).find('#dataTable'),ActionType); 
+				}else{
+					var spotNo=getTarget_LBS_spotNo();
+					if(checkLogin()&&spotNo!=null){
+						//from WebService讀出	
+						doQueryLBSUnSubmitEntryPointData(spotNo,this,$(this).find('#dataTable'));
+					}
+				}
+			});	
+			$(document).on('pageshow','#LBS_MapPage',function(){
+				$('#map_canvas').css({"height":(screen.availHeight)+"px"});
+				if(loc.address!=null&&loc.address!=""){
+					$(this).find('#btnSearchInput').val(loc.address);	
+				}
+				loc.initializeMap(document.getElementById("map_canvas"),$(loc.latElement).val(),$(loc.lngElement).val());
+			});
+			$(document).on('pageshow','#LBS_MapMinPage',function(){
+				$('#map_canvas2').css({"height":(screen.availHeight)+"px"});
+				loc.initializeMap(document.getElementById("map_canvas2"),$(loc.latElement).val(),$(loc.lngElement).val());
+			});		
+			$(document).on('pagebeforeshow','#LBS_EditLandInfo',function(){
+				var LandInfoGUID=getTarget_LBS_LandInfoGUID();		
+				readLBS_EntryPointFromDBToList(this,LandInfoGUID,$(this).find('#dataTable')); 
+			});	
+			/*pagehide event*/
+			$(document).on('pagehide','#LBS_PostBack_List',function(){			
+				$(this).find('#dataTable').html('');
+			});
+			$(document).on('pagehide','#LBS_EntryPoint',function(){			
+				$(this).find('#dataTable').html('');
+			});
+			$(document).on('pagehide','#LBS_MapPage',function(){	
+				$(this).find('#btnSearchInput').val('');
+			});
+			/*function*/
+			function LoadLBS_LandInfo(page){
+				photo.refreshPicture($(page).find('#imageArray'));
+				if(getTarget_LBS_LandInfoActionType()=="edit")
+				{
+					var spotNo=getTarget_LBS_spotNo();
+					if(spotNo!=null){
+						//讀入資料
+						doLoadLBSLandInfoToPage(spotNo,page);
+					}
+				}
+			}
+			function LoadLBS_EntryPonit(page){
+				photo.refreshPicture($(page).find('#imageArray'));
+				if(getTarget_LBS_EntryPointActionType()=="edit")
+				{
+					if(getTarget_LBS_LandInfoActionType()=="add"){
+						var LandInfoGUID=getTarget_LBS_LandInfoGUID();
+						var EntryPointID=getTarget_LBS_EntryPointID();
+						if(LandInfoGUID!=null){
+							//讀入資料
+							var targetEntrypointInfo=new LBS_EntryPointInfo();
+							targetEntrypointInfo.loadDataFromDB(LandInfoGUID,EntryPointID,page);
+						}
+					}else{
+						var spotNo=getTarget_LBS_spotNo();
+						var code=getTarget_LBS_code();
+						doLoadLBSEntryPointToPage(spotNo,code,page);		
+					}
+				}
+			}
+        	</script>
+            <!-- header -->
+            <div data-role="header" data-theme="f">
+			    <a href="#menu" data-role="none" class="btnMenu"></a>
+                <h1>巡查資料即時回傳</h1>
+            </div>
+            <!-- content -->
+            <div data-role="content">
+			  <div id="content">
+				<!--springboard Start-->
+				  <div class="springboard">
+					<ul>
+						<li>
+ 							 <button data-role="none" id="btnLBS_PostBack_List" class="nav01">未轉入清單</button>
+ 							 <button data-role="none" id="btnLBS_NewLandInfo" class="nav02">新增標的物</button>
+						</li>
+					</ul>
+				  </div>
+				<!--springboard End-->  
+			  </div>
+			</div>
+        </div>
+		<!--巡查資料回傳_未轉入清單-->
+		<div data-role="page" id="LBS_PostBack_List">
+            <!-- header -->
+            <div data-role="header" data-theme="f"><button id="btnTo_LBS_PostBack" data-icon="arrow-l">返回</button><h1>巡查資料即時回傳</h1></div>
+			<!-- content -->
+            <div data-role="content">
+				<div class="sub-title">
+					<h2>巡查資料未確認清單</h2>
+				</div>
+			    <!--lpTb Start-->
+			      <div class="lpTb">
+					<table id="dataTable" summary="資料表格">
+					</table>
+				  </div>
+				<!--lpTb End-->  
+			</div>
+		</div>
+		<!--巡查資料回傳_新增景點-->
+		<div data-role="page" id="LBS_NewLandInfo">	
+		<!-- header -->
+		<div data-role="header" data-theme="f"><button id="btnTo_LBS_PostBack"  data-icon="arrow-l">返回</button><h1>巡查資料即時回傳</h1></div>
+		<!-- content -->
+		<div data-role="content">
+				<div class="sub-title">
+					<h2>新增景點資料</h2>
+				</div>			
+			    <div class="divForm">
+		            <table summary="新增標的物">
+						<tr>
+						  <th scope="row"><span class="must">*</span>園區/基地別</th>
+						  <td colspan="4">
+							  	<select data-role="none" name="mobiScroll_LBS_ParkBase" id="mobiScroll_LBS_ParkBase">
+								<optgroup data-value="01" label="新竹科學園區">
+									<option value="01_01">新竹園區</option>
+									<option value="01_02">竹南園區</option>
+									<option value="01_03">銅鑼園區</option>
+									<option value="01_04">生醫園區</option>
+									<option value="01_05">龍潭園區</option>
+									<option value="01_06">宜蘭園區</option>
+								</optgroup>
+								<optgroup data-value="03" label="中部科學園區">
+									<option value="03_21">台中園區</option>
+									<option value="03_22">雲林園區</option>
+									<option value="03_23">后里園區</option>
+									<option value="03_24">二林園區</option>
+									<option value="03_25">高等研究園區</option>
+								</optgroup>
+								<optgroup data-value="02" label="南部科學園區">
+									<option value="02_11">台南園區</option>
+									<option value="02_12">高雄園區</option>
+								</optgroup>
+						  		<optgroup data-value="00" label="凌網測試">
+									<option value="00_91">重慶南路</option>
+									<option value="00_92">凌網台北分公司</option>
+								</optgroup>
+							</select>
+						</td>
+						</tr>
+	                    <tr>
+	                      <th scope="row"><span class="must">*</span>分類項目</th>
+	                      <td colspan="4">
+	                      	<select data-role="none" name="mobiScroll_LBS_classify" id="mobiScroll_LBS_classify">
+									<optgroup data-value="A" label="機關">
+										<option value="A_001">管理局</option>
+										<option value="A_002">公會</option>
+										<option value="A_003">服務大樓</option>
+									</optgroup>
+									<optgroup data-value="B" label="文教古跡">
+										<option value="B_004">學校</option>
+										<option value="B_005">博物館</option>
+										<option value="B_006">廟宇</option>
+										<option value="B_007">公共藝術</option>
+									</optgroup>
+									<optgroup data-value="C" label="運動休閒">
+										<option value="C_008">公園廣場</option>
+										<option value="C_009">生態保育區</option>
+										<option value="C_010">球場</option>
+										<option value="C_011">游泳池</option>
+									</optgroup>
+									<optgroup data-value="D" label="民生">
+										<option value="D_012">餐廳</option>
+										<option value="D_013">公共廁所</option>
+										<option value="D_014">便利商店</option>
+										<option value="D_015">加油站</option>
+									</optgroup>
+									<optgroup data-value="E" label="住宿">
+										<option value="E_016">宿舍</option>
+									</optgroup>
+									<optgroup data-value="F" label="醫療">
+										<option value="F_017">園區聯合診所</option>
+									</optgroup>
+									<optgroup data-value="G" label="金融">
+										<option value="G_018">郵局</option>
+										<option value="G_019">銀行</option>
+										<option value="G_020">ATM</option>
+									</optgroup>
+									<optgroup data-value="H" label="警消">
+										<option value="H_021">保警隊</option>
+										<option value="H_022">消防隊</option>
+									</optgroup>
+									<optgroup data-value="I" label="交通">
+										<option value="I_023">車站(站牌)</option>
+										<option value="I_024">停車場</option>
+										<option value="I_025">拖吊場</option>
+										<option value="I_026">園區重要入口(國道交流道入口)</option>
+									</optgroup>								
+									<optgroup data-value="J" label="廠商">
+										<option value="J_027">公司工廠</option>
+										<option value="J_028">報關行</option>
+										<option value="J_029">運輸</option>
+										<option value="J_030">律師&會計師</option>
+									</optgroup>
+									<optgroup data-value="K" label="iTaiwan熱點">
+										<option value="K_031">iTaiwan熱點</option>
+									</optgroup>
+								</select>
+							</td>
+	                    </tr>	
+	                    <tr>
+	                      <th scope="row"><span class="must">*</span>中文名稱</th>
+	                      <td colspan="4"><input type="text" id="cName" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">英文名稱</th>
+	                      <td colspan="4"><input type="text" id="eName" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">
+	                        地址</th>
+	                      <td colspan="3"><input type="text" id="targetAddress" class="InputControl"></input></td>
+	                      <td>
+	                      	<a href="#" id="btnSearchLocation" data-role="none" class="aMap"></a> 
+	                      </td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">緯度</th>
+	                      <td><input data-inline="true" type="text" id="targetLatitude" readonly class="InputControl"></input></td>
+						  <td class="tdLatitude">經度</td>
+						  <td><input data-inline="true" type="text" id="targetLongitude" readonly class="InputControl"></input></td>
+						   <td><button style="color:white" data-inline="true" data-mini="true" id="positionButton" data-theme="f">定位</button>
+						   </td>
+						</tr>
+	                    <tr>
+	                      <th scope="row">
+	                        電話</th>
+	                      <td colspan="4"><input type="text" id="tel" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">
+	                        備註</th>
+	                      <td colspan="4"><input type="text" id="comment" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr>
+                        <th scope="row">
+	                        資料標籤</th>
+	                      <td colspan="4"><input type="text" id="dataTag" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">
+	                        照片</th>
+	                      <td colspan="4">
+						      <div id="imageArray"></div>
+		                      <div class="add02"><a  id="aAddImg" data-theme="f" data-role="none" data-rel="dialog" class="aAddImg"></a></div>
+	                      </td>
+	                    </tr>
+	                  </table>	
+			</div>
+			<div style="text-align:center;">
+    	    <button data-inline="true" type="button" data-theme="f" id="entryPointsButton">其他出入口</button>
+		    <button data-inline="true" type="button" data-theme="e" style="width: 127px;" id="uploadButton" >新增</button>
+			<a href="#deleteLandInfoPopupDialog" id="btnDeletePopupDialog" data-role="button" data-inline="true" data-rel="popup" data-position-to="window"  data-theme="e" >刪除</a>		
+			</div>
+			<div data-role="popup" id="deleteLandInfoPopupDialog" data-overlay-theme="a" data-theme="c" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+		    <div data-role="header" data-theme="a" class="ui-corner-top">
+		        <h1>入口刪除確認</h1>
+		    </div>
+		    <div data-role="content" data-theme="f" class="ui-corner-bottom ui-content">
+		        <h3 class="ui-title">你確定要將該入口刪除嗎？</h3>
+		        <p>該刪除動作經使用者確認後將直接刪除相關資料與圖片且不可恢復</p>
+    			<div style="text-align:center;">	
+		        <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">取消</a>
+		        <a href="#" data-role="button" data-inline="true" data-rel="back"  id="deleteButton" data-transition="flow" data-theme="">確認</a>
+		    	</div>
+		    </div>
+			</div>
+		</div>	
+		</div>
+				<!--巡查資料回傳_檢視景點-->
+		<div data-role="page" id="LBS_ViewLandInfo">	
+		<!-- header -->
+		<div data-role="header" data-theme="f"><button id="btnTo_LBS_PostBack"  data-icon="arrow-l">返回</button><h1>巡查資料即時回傳</h1></div>
+		<!-- content -->
+		<div data-role="content">
+				<div class="sub-title">
+					<h2>檢視景點</h2>
+				</div>				
+			    <div class="divViewForm">
+		            <table summary="檢視景點">
+						<tr>
+						  <th scope="row">園區/基地別</th>
+						  <td colspan="3">
+  							  <label  id="ParkBase" class="InputControl"></label>
+						</td>
+						</tr>
+	                    <tr>
+	                      <th scope="row">分類項目</th>
+	                      <td colspan="3">
+  							  <label  id="classify" class="InputControl"></label>
+							</td>
+	                    </tr>	
+	                    <tr>
+	                      <th scope="row">中文名稱</th>
+	                      <td colspan="3"><label id="cName" class="InputControl"></label>
+	                      </td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">英文名稱</th>
+	                      <td colspan="3"><label id="eName" class="InputControl"></label>
+	                     </td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">
+	                        地址</th>
+	                      <td colspan="3"><label id="targetAddress" class="InputControl"></label>
+	                      </td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">緯度<br/>經度</th>
+	                      <td colspan="3"><label id="targetLatitude" class="InputControl"></label><label id="targetLongitude" class="InputControl"></label>
+	                      </td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">
+	                        電話</th>
+	                      <td colspan="3"><label id="tel" class="InputControl"></label>
+	                      </td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">
+	                        備註</th>
+	                      <td colspan="3"><label id="comment" class="InputControl"></label>
+	                      </td>
+	                    </tr>
+                      	<th scope="row">
+	                        資料標籤</th>
+	                      <td colspan="3"><label id="dataTag" class="InputControl"></label>
+	                      </td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">
+	                        照片</th>
+	                      <td colspan="3">
+						      <div id="imageArray"></div>
+	                      </td>
+	                    </tr>
+	                  </table>	
+			</div>
+			<div style="text-align:center;">
+    	    <button data-inline="true" type="button" data-theme="f" id="entryPointsButton">其他出入口</button>
+		    <button data-inline="true" type="button" data-theme="e" id="editButton">修改</button>
+			</div>
+		</div>	
+		</div>
+		<!--巡查資料回傳_入口清單-->
+		<div data-role="page" id="LBS_EntryPoint">	
+			<div data-role="header" data-theme="f"><button  id="btnBack"  data-icon="arrow-l">返回</button><h1>巡查資料即時回傳</h1></div>
+			<div data-role="content">
+			<div class="sub-title">
+				<h2>入口清單</h2>
+			</div>	
+			<div>
+				<h1 class="headline">其他出入口</h1>
+			</div>
+			<div class="btnAddEntryPoints">
+				<input data-theme="f" data-mini="true" type="button" data-inline="true" value="新增" id="btnAddEnrtyPoint"></input>
+			</div>
+			  <div class="lpTb">
+				<table id="dataTable" summary="資料表格">
+				</table>
+			  </div>
+			<!--lpTb End-->  
+			</div>	
+		</div>
+		<!--巡查資料回傳_新增入口清單-->
+		<div data-role="page" id="LBS_NewEntryPoint">	
+		<div data-role="header" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>巡查資料即時回傳</h1></div>
+		<div data-role="content">
+			<div class="sub-title">
+				<h2>新增標的物出入口</h2>
+			</div>				
+ 			<div class="divForm">
+		            <table summary="新增標的物出入口">
+	                    <tr>
+	                      <th scope="row"><span class="must">*</span>中文名稱</th>
+	                      <td colspan="4"><input type="text" id="cName" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">英文名稱</th>
+	                      <td colspan="4"><input type="text" id="eName" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">
+	                        地址</th>
+	                      <td colspan="3"><input type="text" id="targetAddress" class="InputControl"></input></td>
+	                      <td>
+	                      	<a href="#" id="btnSearchLocation" data-role="none" class="aMap"></a> 
+	                      </td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">緯度</th>
+	                      <td><input data-inline="true" type="text" id="targetLatitude" readonly class="InputControl"></input></td>
+						  <td class="tdLongitude">經度</td>
+						  <td><input data-inline="true" type="text" id="targetLongitude" readonly class="InputControl"></input></td>
+						   <td><button style="color:white" data-inline="true" data-mini="true" id="positionButton" data-theme="f">定位</button></td>
+						</tr>
+	                    <tr>
+	                      <th scope="row">
+	                        備註</th>
+	                      <td colspan="4"><input type="text" id="comment" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr>
+	                      <th scope="row">
+	                        照片</th>
+	                      <td colspan="4">
+						      <div id="imageArray"></div>
+		                      <div class="add02"><a id="aAddImg" data-theme="f" data-role="none" data-rel="dialog" class="aAddImg"></a></div>
+	                      </td>
+	                    </tr>
+	                  </table>	
+			</div>
+			<div style="text-align:center;">			
+				<button data-inline="true"  data-theme="e" id="uploadButton" style="width: 1272px;">新增</button>
+				<a href="#deleteEntryPointPopupDialog" id="btnDeletePopupDialog" data-role="button" data-inline="true" data-rel="popup" data-position-to="window"  data-theme="e" >刪除</a>			
+			</div>
+			<div data-role="popup" id="deleteEntryPointPopupDialog" data-overlay-theme="a" data-theme="c" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+		    <div data-role="header" data-theme="a" class="ui-corner-top">
+		        <h1>出入口刪除確認</h1>
+		    </div>
+		    <div data-role="content" data-theme="f" class="ui-corner-bottom ui-content">
+		        <h3 class="ui-title">你確定要將該出入口刪除嗎？</h3>
+		        <p>該刪除動作經使用者確認後將直接刪除相關資料與圖片且不可恢復</p>
+    			<div style="text-align:center;">	
+		        <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">取消</a>
+		        <a href="#" data-role="button" data-inline="true" data-rel="back"  id="deleteButton" data-transition="flow" data-theme="">確認</a>
+		    	</div>
+		    </div>
+		</div>
+		</div>	
+		</div>
+		<!--巡查資料回傳_景點地圖定位-->
+		<div data-role="page" data-fullscreen="true" id="LBS_MapPage">
+		<div data-role="header"  data-theme="f">
+			<button class="btnBack" data-icon="arrow-l">返回</button>
+			<h1>景點地圖定位</h1>
+		</div>
+		<div data-role="content">
+			<div class="divMap">
+			<input id="btnSearchInput" name="btnSearchInput" type="search" placeholder="請輸入查詢地址"></input>
+			<button data-inline="true"  id="btnSearchLocation" data-theme="f" type="button">地址查詢</button> 
+			<button type="button" id="setPosition" data-inline="true" data-theme="e">座標確認</button>
+			<div id="map_canvas"></div>		
+			</div>	
+		</div>
+		</div>
+		<!--巡查資料回傳_地圖定位-->
+		<div data-role="page" data-fullscreen="true" id="LBS_MapMinPage">
+		<div data-role="header"  data-theme="f">
+			<button class="btnBack" data-icon="arrow-l">返回</button>
+			<h1>景點地圖定位</h1>
+		</div>
+		<div data-role="content">
+			<div class="divMap">
+			<button type="button" id="setPosition" data-inline="true" data-theme="e">座標確認</button>
+			<div id="map_canvas2"></div>		
+			</div>	
+		</div>
+		</div>
+		<!--巡查資料回傳_新增景點圖片-->
+		<div data-role="page"  data-rel="dialog" id="LBS_TakePhoto">
+			<div data-role="header" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>選擇取得照片方式</h1></div>
+			<div data-role="content">
+			<input type="button" id="shootButton" value="拍照"></input>
+			<input type="button" id="libraryButton" value="從相片取得"></input>
+			</div>
+		</div>
+	</body>
+</html>

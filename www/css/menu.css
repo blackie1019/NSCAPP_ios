@@ -1,0 +1,77 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	margin: 0px;
+	padding: 0px;
+}
+.menu {
+	width: 220px;
+}
+.menu ul {
+	margin: 0px;
+	padding: 0px;
+}
+.menu ul li {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	background: #32394a;
+	border-top: 1px solid #414859;
+	border-bottom: 1px solid #232936;
+	font-size: 1em;
+	line-height: normal;
+	font-weight: bold;
+	color: #c4ccda;
+}
+.menu ul li a {
+	display: block;
+	color: #c4ccda;
+	text-decoration: none;
+}
+.menu ul li a:hover {
+	color: #FFFF99;
+	text-decoration: none;
+}
+.menu ul li img {
+	vertical-align: middle;
+	padding: 5px;
+	border-style: none;
+}
+.menu .login {
+	float: right;
+	vertical-align: middle;
+	margin-top: 5px;
+	margin-right: 5px;
+}
+.menu .login .btn {
+	background: url(../images/login.png) no-repeat left center;
+	vertical-align: middle;
+	height: 31px;
+	width: 66px;
+	padding-left: 25px;
+	font-weight: bold;
+	color: #FFF;
+	border-style: none;
+	font-size: 0.85em;
+}
+.menu .logout {
+	float: right;
+	vertical-align: middle;
+	margin-top: 5px;
+	margin-right: 5px;
+}
+.menu .logout .btn {
+	background: url(../images/logout.png) no-repeat left center;
+	vertical-align: middle;
+	height: 31px;
+	width: 66px;
+	padding-left: 25px;
+	font-weight: bold;
+	color: #FFF;
+	border-style: none;
+	font-size: 0.85em;
+}
+
+.menu .here {
+	background: #4e5973;
+}

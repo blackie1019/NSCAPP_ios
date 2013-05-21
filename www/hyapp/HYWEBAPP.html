@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="css/jquery.mobile.min.css">
+<link rel="stylesheet" href="css/jqm-icon-pack-2.0-original.css">
+<link rel="stylesheet" href="css/jquery.mobile.iscrollview.css">
+<link rel="stylesheet" href="css/jquery.mobile.iscrollview-pull.css">
+<link rel="stylesheet" href="css/foundation.css">
+<script src="http://maps.google.com/maps/api/js?sensor=true&amp;language=zh-TW" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8" src="js/cordova-2.2.0.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.mobile.router.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.mobile.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/iscrollview/iscroll.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/iscrollview/jquery.mobile.iscrollview.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.ui.map.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/jquery.ui.map.services.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/foundation/modernizr.foundation.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/jqXMLUtils.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/appgen.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/appgen.ui.js"></script>
+<link rel='stylesheet' href='css/common.css'></link><link rel='stylesheet' href='css/list.css'></link><link rel='stylesheet' href='css/map.css'></link><script type='text/javascript' charset='utf-8' src='js/hylist.js'></script><script type='text/javascript' charset='utf-8' src='js/hymap.js'></script><script type='text/javascript' charset='utf-8' src='js/hymenu.js'></script><script type='text/javascript' charset='utf-8' src='list.js'></script><script type='text/javascript' charset='utf-8' src='map.js'></script><script type='text/javascript' charset='utf-8' src='nearAlert.js'></script><script type='text/javascript' charset='utf-8' src='pullDownList.js'></script><script type='text/javascript' charset='utf-8' src='pullUpList.js'></script></head>
+<body onload="HYWEBAPP.startUp()">
+	<div id="HYWEBAPP" data-role="page">
+		<!-- <img class="hyapp-splash" width="100%" height="100%"/> -->
+	</div>
+<div data-role="page" id="list">
+<div class="ui-header ui-bar-b" data-tap-toggle="false" data-role="header" data-position="fixed">
+<h1>條列頁模組</h1>
+	        
+	        	<a href="index.html#index" data-ajax="false" data-icon="arrow-l" data-iconpos="notext"></a>
+	        
+	    </div>
+<div data-role="content" id="list_content" data-iscroll="">
+<div class="row ">
+<div class="
+	        						twelve
+	        					 mobile-four columns ">
+<ul data-role="listview" id="list_itemList" data-filter="true"></ul>
+</div>
+</div>
+</div>
+</div>
+<div data-role="page" id="map">
+<div class="ui-header ui-bar-b" data-tap-toggle="false" data-role="header" data-position="fixed">
+<h1>地圖模組</h1>
+	        
+	        	<a href="index.html#index" data-ajax="false" data-icon="arrow-l" data-iconpos="notext"></a>
+	        
+	    </div>
+<div data-role="content" id="map_content">
+<div class="row search-row">
+<div class="
+	        						twelve
+	        					 mobile-three columns search-field">
+<input id="map_searchField" type="text" placeholder="請輸入地點名稱 或 廠商名稱 或 地址">
+</div>
+<div class="
+	        						twelve
+	        					 mobile-one columns search-btn">
+<a data-role="button" id="map_searchBtn" href="#">查詢</a>
+</div>
+</div>
+<div class="row path-start-row">
+<div class="
+	        						twelve
+	        					 mobile-one columns start-icon">
+<img id="map_startIcon" src="images/icons/start.png"></div>
+<div class="
+	        						twelve
+	        					 mobile-two columns start-field">
+<input id="map_startField" type="text" placeholder="請輸入地點名稱 或 廠商名稱 或 地址">
+</div>
+<div class="
+	        						twelve
+	        					 mobile-one columns swap-icon">
+<img id="map_swapIcon" src="images/icons/swap.png"></div>
+</div>
+<div class="row path-end-row">
+<div class="
+	        						twelve
+	        					 mobile-one columns end-icon">
+<img id="map_endIcon" src="images/icons/end.png"></div>
+<div class="
+	        						twelve
+	        					 mobile-two columns end-field">
+<input id="map_endField" type="text" placeholder="請輸入地點名稱 或 廠商名稱 或 地址">
+</div>
+<div class="
+	        						twelve
+	        					 mobile-one columns direction-icon">
+<img id="map_directionIcon" src="images/icons/direction.png"></div>
+</div>
+<div class="row ">
+<div class="
+	        						twelve
+	        					 mobile-four columns full-width-node">
+	                
+	                	<div id="mainMap" style="width: 100%; height: 300px;"></div>
+	                	<div id="mainList"></div>
+	                
+	            </div>
+</div>
+</div>
+<div class="ui-footer ui-bar-b" data-tap-toggle="false" data-role="footer" data-position="fixed">
+	        
+	        	<div data-role="navbar" class="path-type-tabs">
+					<ul>
+						<li><a href="javascript: void(0);" id="showMapTab" class="path-type-tab">地圖呈現</a></li>
+						<li><a href="javascript: void(0);" id="showListTab" class="path-type-tab">圖文並列</a></li>
+					</ul>
+				</div>
+	        	<div class="ui-grid-c">
+					<div class="ui-block-a">
+						<img name="searchIcon" src="images/icons/footer/search.png" class="footerIcon"/>
+					</div>
+					<div class="ui-block-b">
+						<img name="pathIcon" src="images/icons/footer/path.png" class="footerIcon"/>
+					</div>
+					<div class="ui-block-c">
+						<img name="spotIcon" src="images/icons/footer/spot.png" class="footerIcon"/>
+					</div>
+					<div class="ui-block-d">
+						<img name="nearIcon" src="images/icons/footer/near.png" class="footerIcon"/>
+					</div>
+				</div>
+	        
+	    </div>
+</div>
+<div data-role="page" id="nearAlert">
+<div class="ui-header ui-bar-b" data-tap-toggle="false" data-role="header" data-position="fixed">
+<h1>接近提醒設定</h1>
+</div>
+<div data-role="content" id="nearAlert_content">
+<div class="row ">
+<div class="
+	        						twelve
+	        					 mobile-four columns ">
+	               
+	               <div id="target"></div>
+            	    
+	            </div>
+</div>
+<div class="row ">
+<div class="
+	        						twelve
+	        					 mobile-four columns ">
+<fieldset data-role="controlgroup" id="nearAlert_resultList" data-type="vertical"></fieldset>
+</div>
+</div>
+<div class="row ">
+<div class="
+	        						twelve
+	        					 mobile-four columns ">
+<a data-role="button" id="nearAlert_setBtn" data-rel="back" data-icon="check" href="#">確定</a>
+</div>
+</div>
+</div>
+</div>
+<div data-role="page" id="pullDownList">
+<div class="ui-header ui-bar-b" data-tap-toggle="false" data-role="header" data-position="fixed">
+<h1>條列頁模組</h1>
+	        
+	        	<a href="index.html#index" data-ajax="false" data-icon="arrow-l" data-iconpos="notext"></a>
+	        
+	    </div>
+<div data-role="content" id="pullDownList_content" data-iscroll="">
+<div class="iscroll-pulldown">
+<span class="iscroll-pull-icon"></span><span class="iscroll-pull-label"></span>
+</div>
+<div class="row ">
+<div class="
+	        						twelve
+	        					 mobile-four columns ">
+<ul data-role="listview" id="pullDownList_itemList" data-filter="true"></ul>
+</div>
+</div>
+</div>
+</div>
+<div data-role="page" id="pullUpList">
+<div class="ui-header ui-bar-b" data-tap-toggle="false" data-role="header" data-position="fixed">
+<h1>條列頁模組</h1>
+	        
+	        	<a href="index.html#index" data-ajax="false" data-icon="arrow-l" data-iconpos="notext"></a>
+	        
+	    </div>
+<div data-role="content" id="pullUpList_content" data-iscroll="">
+<div class="row ">
+<div class="
+	        						twelve
+	        					 mobile-four columns ">
+<ul data-role="listview" id="pullUpList_itemList" data-filter="true"></ul>
+</div>
+</div>
+<div class="iscroll-pullup">
+<span class="iscroll-pull-icon"></span><span class="iscroll-pull-label"></span>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html><!-- manifest="cache.appcache" 開啟Cache 功能-->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <!--ios-->
+        <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+        <!--android-->
+        <!--
+         <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
+        -->
+        <!--jQuery-->
+        <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<!--json2-->
+		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
+		<!--Google Map API v3-->
+		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>
+		<!--mobiScroll-->
+		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
+		<link href="css/mobiscroll.custom-2.4.3.min.css" rel="stylesheet" type="text/css"></link>
+		<script src="js/mobiscroll.custom.js" type="text/javascript"></script>
+		<script>
+		$(document).bind('mobileinit', function(){
+
+		});
+		</script>
+		<!--<script src="http://debug.phonegap.com/target/target-script-min.js#blackie1019"></script>-->
+		<!--jQuery mobile-->
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-NSC-1.3.0.css"></link>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.0.min.js"></script>
+        <!--Plug in-->
+        <script src="js/jquery.hammer.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/smoke.min.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/smoke.theme.100s.css"> -->
+        <script src="js/smoke.js"></script>
+		<!--Hyweb CSS-->
+		<link rel="stylesheet" type="text/css" href="css/index.css"></link>
+		<!--HYAPP-->
+		<!--NSCAPP Javascript-->	
+		<script src="js/setting.js"></script>
+		<script src="js/loading.js"></script> 
+		<script src="js/pnpolygon.js"></script>
+		<script src="js/photo.js"></script>	
+		<script src="js/location.js"></script>	
+		<script src="js/data.js"></script>
+		<script src="js/map.js"></script>
+		<script  type="text/javascript">
+		/*global variables*/
+		var langType=getAppSetting_Data().language,keywordType="01",keywordValue="",vendorType="00",Park="00",Base="00",SN="6";
+		var nowPark=getIdentifyParkBase().Park,nowBase=getIdentifyParkBase().Base;
+		//function
+		function genSearchControl(){
+		    LoadingObject.show();
+			var jsonObject={"langType":langType};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:DataURL_VendorInfo_QP,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	//園區基地別
+		                	$('#QP').find('#mobiScroll_VendorInfo_ParkBase').html(genBaseSelect(data.jsonOutput.Park));
+		                	//關鍵字類別
+		                	$('#QP').find('#mobiScroll_VendorInfo_keywordType').html(genKeywordType(data.jsonOutput.keywordType));
+		                	$('#LP').find('#select_keywordType').html(genKeywordType(data.jsonOutput.keywordType));
+		                	//工作類別
+		                	$('#QP').find('#mobiScroll_VendorInfo_VendorType').html(genVendorType(data.jsonOutput.vendorType));
+							//mobiscroll
+							$('#mobiScroll_VendorInfo_keywordType').mobiscroll().select({		
+								theme: 'ios',
+								label:'Name',
+								inputClass:'i-txt',
+								display: 'bottom',
+								mode: 'scroller',
+								setText: '確定',
+								cancelText: '取消',
+						        group: false,
+						        label: '查詢類別',
+							});  
+							// $('#LP').find('#mobiScroll_VendorInfo_keywordType').mobiscroll().select({		
+							// 	theme: 'ios',
+							// 	label:'Name',
+							// 	inputClass:'i-txt',
+							// 	display: 'bottom',
+							// 	mode: 'scroller',
+							// 	setText: '確定',
+							// 	cancelText: '取消',
+						 //        group: false,
+						 //        label: '查詢類別',
+							// });  
+							$('#mobiScroll_VendorInfo_ParkBase').mobiscroll().select({		
+								theme: 'ios',
+								label:'Name',
+								inputClass:'i-txt',
+								display: 'bottom',
+								mode: 'scroller',
+								setText: '確定',
+								cancelText: '取消',
+						        group: true,
+						        label: '基地',
+						        groupLabel: '園區'
+							});  
+							$('#mobiScroll_VendorInfo_VendorType').mobiscroll().select({		
+								theme: 'ios',
+								label:'Name',
+								inputClass:'i-txt',
+								display: 'bottom',
+								mode: 'scroller',
+								setText: '確定',
+								cancelText: '取消',
+						        group: true,
+						        label: '產業類別',
+						        groupLabel: '廠商類別'
+							}); 
+				 			//園區基地別下拉判別
+							var selectData=getDefaultParkBaseSelectData(false,langType);
+					 		var mobiScroll_Jobs_ParkBase=$('#QP').find('#mobiScroll_VendorInfo_ParkBase');
+					        $(mobiScroll_Jobs_ParkBase).val(selectData.defaultParkBase).mobiscroll('setValue',[selectData.defaultParkBase]);
+					        $('#QP').find('#mobiScroll_VendorInfo_ParkBase_dummy').val(selectData.defaultParkBaseStr);
+					        temp=null;selectData=null;
+					        delete temp;delete selectData;
+							$('#QP').trigger('create');
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function doRefresh(keywordType,keywordValue){
+		    LoadingObject.show();
+		     var tmpParkBase=$('#mobiScroll_VendorInfo_ParkBase').mobiscroll('getValue').split("_");
+		    Park=tmpParkBase[0];
+		    Base=tmpParkBase[1];
+		    vendorType=$('#mobiScroll_VendorInfo_VendorType').mobiscroll('getValue').split('_')[1];
+		    if(vendorType=="00"){
+		    	vendorType="";
+		    }
+			var jsonObject={"langType":langType,"keywordType":keywordType,"keywordValue":keywordValue,"vendorType":vendorType,"Park":Park,"Base":Base};
+			// var jsonObject={"langType":langType,"keywordType":keywordType,"keywordValue":keywordValue,"Park":Park,"Base":Base,"count":100,"index":1};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:DataURL_VendorInfo_LP,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	for(var i=0;i<data.jsonOutput.items.length;i++){
+		                		htmlResult+="<li data-sn='"+data.jsonOutput.items[i].SN+"''><h2>"+data.jsonOutput.items[i].company+"</h2><p class='address'>"+data.jsonOutput.items[i].address+"</p><p class='tel02'>"+data.jsonOutput.items[i].tel+"</p><button data-role='none' data-title='"+data.jsonOutput.items[i].company+"' data-address='"+data.jsonOutput.items[i].address+"' class='btn06 btnRoute'>規劃路線</button></li>";
+	            			}
+	            			if(htmlResult!=""){
+	            				htmlResult="<ul data-role='none'>"+htmlResult+"</ul>";
+	            			}else{
+	            				htmlResult="查無資料";
+	            			}
+	            			$('#LP').find('#htmlResult').html(htmlResult).trigger('create');
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeToCP(sn){
+		    LoadingObject.show();
+			var jsonObject={"langType":langType,"SN":sn};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var infoHtmlResult="",factoryHtmlResult="",tmpPark="",tmpParkIndex=0;
+		    $.ajax({
+		        url:DataURL_VendorInfo_CP,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(data.jsonOutput!=null){
+		                		for(var i=0;i<data.jsonOutput.info.length;i++){
+		                			infoHtmlResult+="<tr>"+
+						                			"<th scope='row'>"+data.jsonOutput.info[i].row+"</th>"+
+						                			"<td>"+data.jsonOutput.info[i].value+"<td>"+
+						                			"</tr>";
+		                		}
+		                		for(var i=0;i<data.jsonOutput.factory.length;i++){
+		                			if(factoryHtmlResult==""){
+		                				factoryHtmlResult+="<ul>";
+		                				tmpPark=data.jsonOutput.factory[i].Park;
+		                			}
+		                			if(tmpPark!=data.jsonOutput.factory[i].Park){
+			                				tmpParkIndex++;
+			                				factoryHtmlResult+="</ul><br/><ul class='ulParkOther"+tmpParkIndex+"''>";
+			                			
+		                			}
+		                			factoryHtmlResult+="<li>"+
+		                							"<div class='title'>"+data.jsonOutput.factory[i].AreaName+"<span>"+data.jsonOutput.factory[i].name+"</span>"+"</div>"+
+						                			"<p>"+data.jsonOutput.factory[i].address+"</p>"+
+						                			"<p>"+data.jsonOutput.factory[i].tel+"</p>";
+						            if(data.jsonOutput.factory[i].Park==nowPark&&data.jsonOutput.factory[i].Base==nowBase){
+						            	factoryHtmlResult+="<div class='arrow'><img src='img/NSC/hook.png' alt='hook'></div>";
+						            }
+						            factoryHtmlResult+="</li>";
+		                		}
+		                		factoryHtmlResult+="</ul>";
+	            				$('#CP').find('#title').html(data.jsonOutput.title);
+	            				$('#CP').find('#infoHtmlResult').html(infoHtmlResult);
+	            				$('#CP').find('#factoryHtmlResult').html(factoryHtmlResult).trigger('refresh');
+	            				$.mobile.changePage('#CP');
+	            			}else{
+	            				smoke.alert(ServiceCodeErrorString,{},function(){});
+	            			}
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function genBaseSelect(Park){
+		    var htmlResult="";
+		  	for(var park_index=0;park_index<Park.length;park_index++){
+		  		htmlResult+='<optgroup data-value="'+Park[park_index].code+'" label="'+Park[park_index].value+'">';
+		  		for(var base_index=0;base_index<Park[park_index].Base.length;base_index++){
+		  			htmlResult+='<option value="'+Park[park_index].code+'_'+Park[park_index].Base[base_index].code+'">'+Park[park_index].Base[base_index].value+'</option>';
+		  		}
+		  		htmlResult+='</optgroup>';
+		  	}
+		    return htmlResult;
+		}
+		function genVendorType(VendorType){
+		    var htmlResult="";
+		  	for(var VendorType_index=0;VendorType_index<VendorType.length;VendorType_index++){
+		  		htmlResult+='<optgroup data-value="'+VendorType[VendorType_index].code+'" label="'+VendorType[VendorType_index].value+'">';
+		  		for(var base_index=0;base_index<VendorType[VendorType_index].Base.length;base_index++){
+		  			htmlResult+='<option value="'+VendorType[VendorType_index].code+'_'+VendorType[VendorType_index].Base[base_index].code+'">'+VendorType[VendorType_index].Base[base_index].value+'</option>';
+		  		}
+		  		htmlResult+='</optgroup>';
+		  	}
+		    return htmlResult;
+		}
+		function genKeywordType(keywordType){
+		    var htmlResult="";
+		  	for(var keywordType_index=0;keywordType_index<keywordType.length;keywordType_index++){
+	  			htmlResult+='<option value="'+keywordType[keywordType_index].code+'">'+keywordType[keywordType_index].value+'</option>';
+		  	}
+		    return htmlResult;
+		}
+		// pageshow
+		// pageinit
+		$(document).on('pageinit','#QP',function(){	
+			// //產生跑馬燈
+			var jsonObject=getAppInstantMessage();
+			if(jsonObject!=null){
+				var title=jsonObject.chtTitle;
+				genAppInstantMessage($('#content').find('#marquee'),title);
+			}
+			//產生menu
+			genMenu(this);
+			//menu登入確認
+			menuDisplayMemberSection(checkLogin(),this);	
+			//查詢呈現
+			genSearchControl(langType);
+	        //關鍵字查詢
+ 			$(this).find('#btnSearch').on('click',function(){
+			    var keywordValue=$('#QP #txtKeyword').val();
+			    var keywordType=$('#mobiScroll_VendorInfo_keywordType').mobiscroll('getValue');
+			    doRefresh(keywordType,keywordValue);
+			    keywordType=null;keywordValue=null;
+			    delete keywordType;delete keywordValue;
+ 			});
+ 		});
+ 		$(document).on('pageinit','#LP',function(){	
+			$('#LP #select_keywordType').selectmenu('refresh', true);
+			// $( "#popupDialog_keyword" ).bind({
+			//    popupafterclose: function(event, ui) {
+			   	
+			//    }
+			// });
+			// 條列個別點擊事件
+ 			$(this).find('#htmlResult').on('click','li',function(evt){
+ 				if ($(evt.target).is("li")) {
+	 				var sn=$(this).data("sn");
+	 				changeToCP(sn);
+	 				sn=null;delete sn;
+	 			}
+ 			});
+ 			//規劃路線
+			$(this).find('#htmlResult').on('click','.btnRoute',function(evt){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				alert(title+address);
+ 				//開啓地圖模組-路徑規劃功能
+ 				openMapWithRoute(new posObject(title,address,"","","","",""));
+ 			});
+ 			//關鍵字查詢
+ 			$(this).find('#btnSearch').on('click',function(){
+			    var keywordValue=$('#LP #txtKeyword').val();
+			    var keywordType=$('#select_keywordType').val();
+			    $('#select_keywordType').selectmenu("close");
+			    $('#popupDialog_keyword').popup('close');
+			    doRefresh(keywordType,keywordValue);
+			    keywordType=null;keywordValue=null;
+			    delete keywordType;delete keywordValue;
+ 			});
+ 		});
+ 		$(document).on('pageshow','#LP',function(){	
+	 		$('#select_keywordType').selectmenu("close");
+	 	});
+
+
+		/*地圖模組*/
+		/*Map function*/
+		function doClassify1Filter(Collapsible_Classify1_ID,classify1){
+			var classifyArray=[],classifyArrayStr="";
+			if(Collapsible_Classify1_ID!=""){
+				var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				//取得SQL string
+				for(var i=0;i<checkedList.length;i++){
+					if(classifyArrayStr!=""){
+						classifyArrayStr+=" or ";
+					}
+					classifyArrayStr+="(xLBSSpotClassify.xLBSClassify1='"+$(checkedList[i]).data('classify1')+"' and xLBSSpotClassify.xLBSClassify2='"+$(checkedList[i]).data('classify2')+"')";
+				}	
+				if(classifyArrayStr!=""){
+				classifyArrayStr=" and ("+classifyArrayStr+") ";
+			}
+			}else{
+				//給他一個空白代表分類全選
+				classifyArrayStr=" ";
+			}
+			if(classifyArrayStr==""){
+				$('#popupDialog_classify1Filter').popup('close');
+				smoke.alert(classify2RequirementString,{},function(){
+					$('#popupDialog_classify1Filter').popup('open');
+				});
+			}else{
+				switchFooterFunction('default');
+				LoadingObject.show();
+				//var jsonObject={"classifyArray":classifyArray};
+				var jsonObject={"command":"select xLBSSpot.spotNo,xLBSSpot.chtName,xLBSSpot.chtAddress,xLBSSpot.engName,xLBSSpot.engAddress,xLBSSpot.latitude,xLBSSpot.longitude,xLBSSpot.parkArea,xLBSSpot.parkLocation,(case xLBSSpotPic.ximage when '' then '' else ('"+Setting_imgSrc+"'+xLBSSpotPic .ximage)   end) as ximage,xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSClassify2.chtName as xLBSClassify2_name, xLBSClassify2.engName as xLBSClassify2_ename from xLBSSpot inner join xLBSSpotClassify on xLBSSpot.spotNo=xLBSSpotClassify.spotNo inner join xLBSClassify2 on xLBSSpotClassify.xLBSClassify2=xLBSClassify2.code left join xLBSSpotPic on xLBSSpot.spotNo=xLBSSpotPic.spotNo where xLBSSpotPic.entranceCode is NULL and xLBSSpotPic.isMain='1' and xLBSSpot.parkArea='"+park+"' "+classifyArrayStr+" order by xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSSpot.spotNo","count":300};
+				
+				var jsonObjectStr = JSON.stringify(jsonObject);
+			    $.ajax({
+			        url:commonURL_DB,
+			        data:  {"jsonInput":jsonObjectStr},
+			        type:"POST",
+			        dataType :"json",
+			        async:false,
+			        success:function(data){
+			            if(data==null){
+			                 smoke.alert(ServiceCodeErrorString,{},function(){});
+			            }else{
+			                if(data.status=="success"){
+			                	LP_jsonObjectArray=[];
+			                	if(data.jsonOutput.length>0){
+			                		for(var i=0;i<data.jsonOutput.length;i++){
+			                			LP_jsonObjectArray.push({"spotNo":data.jsonOutput[i].spotNo,"chtName":data.jsonOutput[i].chtName,"chtAddress":data.jsonOutput[i].chtAddress,"xicon":getXiconImg(data.jsonOutput[i].xLBSClassify2),"ximage":data.jsonOutput[i].ximage,"latitude":data.jsonOutput[i].latitude,"longitude":data.jsonOutput[i].longitude,"classify1":data.jsonOutput[i].xLBSClassify1,"classify2":data.jsonOutput[i].xLBSClassify2,"classify2_name":data.jsonOutput[i].xLBSClassify2_name,"classify2_ename":data.jsonOutput[i].xLBSClassify2_ename});
+			                			
+				                	}
+			            		}
+	            				convertToGMAPMarkers();
+	        					$('#popupDialog_classify1Filter').popup('close');
+			                }else{
+			                    smoke.alert(ServiceCodeErrorString,{},function(){});
+			                }
+			            }
+			        },
+			        error: function(data){
+			            LoadingObject.hide(); 
+			            smoke.alert(ServiceErrorString,{},function(){});
+			        },
+			        complete: function() {
+			            LoadingObject.hide();
+			        }
+			    });
+			}
+		}
+		function genClassify1List(){
+			 LoadingObject.show();
+			var jsonObject={"command":"select c1 .code as code1 ,c2. code as code2, c1.chtName as name1,c2 .chtName as name2 ,c1. engName as ename1,c2 .engName as ename2 ,c1. ximage as image1, c2.ximage as image2 from xLBSClassify2 as c2 left join xLBSClassify1 as c1 on c2.upperClass =c1. code where c1.isValid ='Y' and c1.isPublic ='Y' and c2.isValid ='Y' and c2.isValid ='Y' order by code1, code2"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var nowCode1="";
+			//var classify1ListResult='<a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a>';
+			var classify1ListResult='<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
+		    $.ajax({
+		        url:commonURL_DB,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"jsonp",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+							for(var i=0;i<data.jsonOutput.length;i++){
+								if(nowCode1!=data.jsonOutput[i].code1){
+									if(nowCode1!=""){
+										classify1ListResult+='</ul><button data-theme="e" onclick="doClassify1Filter(&#39;Collapsible_Classify1_'+nowCode1+'&#39;,&#39;'+nowCode1+'&#39;);"'+'>查詢</button>';
+										classify1ListResult+='</div>';
+									}
+									classify1ListResult+='<div data-role="collapsible" id="Collapsible_Classify1_'+data.jsonOutput[i].code1+'" class="Collapsible_Classify1" data-inset="false">';
+									classify1ListResult+='<h2>'+data.jsonOutput[i].name1+'</h2>';
+									// classify1ListResult+='<ul data-role="listview">';
+									nowCode1=data.jsonOutput[i].code1;
+								}
+								// classify1ListResult+='<li data-classify1="'+data.jsonOutput[i].code2+'" data-classify2="'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</li>';
+								classify1ListResult+='<input data-theme="f" data-classify1="'+data.jsonOutput[i].code1+'" data-classify2="'+data.jsonOutput[i].code2+'" type="checkbox" name="checkbox_classifyList" id="checkbox_classifyList_'+data.jsonOutput[i].code2+'"><label for="checkbox_classifyList_'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</label>';
+							}
+							$('#Map_LP').find('#classify1List').html(classify1ListResult).trigger('create');
+						}
+						else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function getClassifyArrayStr(checkedList){
+			var classifyArrayStr="";
+			for(var i=0;i<checkedList.length;i++){
+				// classifyArray.push({"classify1":checkedList[i].code1,"classify2":checkedList[i].code2});
+				//測試用
+				if(classifyArrayStr!=""){
+					classifyArrayStr+=" or ";
+				}
+				classifyArrayStr+="(xLBSSpotClassify.xLBSClassify1='"+checkedList[i].code1+"' and xLBSSpotClassify.xLBSClassify2='"+checkedList[i].code2+"')";
+			}
+			if(typeof(TargetClassify1)!="undefined"&&TargetClassify1!=""&&classifyArrayStr==""){
+				classifyArrayStr+="xLBSSpotClassify.xLBSClassify1='"+TargetClassify1+"'";
+			}
+			return classifyArrayStr;
+		}
+		function changeToMap_CP(sn){
+		    LoadingObject.show();
+			var jsonObject={"command":"select xLBSSpot.spotNo,xLBSSpot.chtName,xLBSSpot.chtAddress,xLBSSpot.engName,xLBSSpot.engAddress,xLBSSpot.latitude,xLBSSpot.longitude,xLBSSpot.parkArea,xLBSSpot.parkLocation,(case xLBSSpotPic.ximage when '' then '' else ('"+Setting_imgSrc+"'+xLBSSpotPic .ximage)   end) as ximage,xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSClassify2.chtName as xLBSClassify2_name, xLBSClassify2.engName as xLBSClassify2_ename,xLBSSpot.telTitle,xLBSSpot.telNumber,xLBSSpot.telEngTitle,xLBSSpot.urlTitle,xLBSSpot.urlAddress,xLBSSpot.urlEngTitle,xLBSSpot.chtDesc,xLBSSpot.engDesc from xLBSSpot inner join xLBSSpotClassify on xLBSSpot.spotNo=xLBSSpotClassify.spotNo inner join xLBSClassify2 on xLBSSpotClassify.xLBSClassify2=xLBSClassify2.code left join xLBSSpotPic on xLBSSpot.spotNo=xLBSSpotPic.spotNo where xLBSSpotPic.entranceCode is NULL and xLBSSpot.spotNo="+sn+" order by xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSSpot.spotNo"};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var htmlResult="";
+		    $.ajax({
+		        url:commonURL_DB,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(data.jsonOutput.length>0){
+								//生活服務內容
+		                		htmlResult+="<div class='ServiceCt'><div class='title'>"+data.jsonOutput[0].chtName+"</div><ul class='photo'>";
+		                		for(var i=0;i<data.jsonOutput.length;i++){
+
+		                			htmlResult+="<li";
+		                			if(i==0){
+		                				htmlResult+=" class='here' ";
+		                			}
+		                			htmlResult+="><img src='"+data.jsonOutput[i].ximage+"'></li>";
+		                		}
+		                		htmlResult+="</ul><ul class='info'>"+
+		                					"<li>地址："+(typeof(data.jsonOutput[0].chtAddress)=="undefined"?"":data.jsonOutput[0].chtAddress)+"</li>"+	
+		                					"<li>"+(typeof(data.jsonOutput[0].telTitle)=="undefined"?"電話：":data.jsonOutput[0].telTitle+"：")+(typeof(data.jsonOutput[0].telNumber)=="undefined"?"":data.jsonOutput[0].telNumber)+"</li>"+
+		                					"<li>"+((typeof(data.jsonOutput[0].urlTitle)=="undefined"||data.jsonOutput[0].urlTitle=="")?"網址：":data.jsonOutput[0].urlTitle+"：")+"<a href='javascript:openBrowser(&#39;"+data.jsonOutput[0].urlAddress+"&#39;);' >"+((typeof(data.jsonOutput[0].urlAddress)=="undefined"||data.jsonOutput[0].urlAddress=="http://")?"":data.jsonOutput[0].urlAddress)+"</a></li>"+
+		                					"<li>"+(typeof(data.jsonOutput[0].chtDesc)=="undefined"?"":data.jsonOutput[0].chtDesc)+"</li>"+
+		                					"</ul></div>";
+								//功能列
+								htmlResult+="<div class='springboard2'><ul><li>"+
+											"<button data-role='none' id='btnMap' data-xicon='"+getXiconImg(data.jsonOutput[0].xLBSClassify2)+"' data-ximage='"+data.jsonOutput[0].ximage+"' data-title='"+data.jsonOutput[0].chtName+"' data-latitude='"+data.jsonOutput[0].latitude+"' data-longitude='"+data.jsonOutput[0].longitude+"' data-lbs='"+data.jsonOutput[0].xLBSSpot+"' data-address='"+data.jsonOutput[0].chtAddress+"' class='map'>地圖</button>"+
+											"<button data-role='none' id='btnRoute' data-xicon='"+getXiconImg(data.jsonOutput[0].xLBSClassify2)+"' data-ximage='"+data.jsonOutput[0].ximage+"' data-title='"+data.jsonOutput[0].chtName+"' data-latitude='"+data.jsonOutput[0].latitude+"' data-longitude='"+data.jsonOutput[0].longitude+"' data-lbs='"+data.jsonOutput[0].spotNo+"' data-address='"+data.jsonOutput[0].chtAddress+"'  class='route'>規劃路線</button>"+
+											"<button data-role='none' id='btnTel' data-tel='"+data.jsonOutput[0].telNumber+"'  class='tel'>撥打電話</button>"+
+											"</li></ul></div>";
+		   					}
+	        				$('#Map_CP').find('#content').html(htmlResult); 
+	        				$.mobile.changePage('#Map_CP');
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function switchRouteShowType(type){
+			if(type=='path'){
+				$('#routeList').show();
+				$('#map_canvas').hide();
+				$('#Map_LP').find('#btnRoute_MAPShow').removeClass('listbtn03').addClass('listbtn01');
+				$('#Map_LP').find('#btnRoute_PathShow').removeClass('listbtn04').addClass('listbtn02');
+			}else{
+				$('#routeList').hide();
+				$('#map_canvas').show();
+				$('#Map_LP').find('#btnRoute_MAPShow').removeClass('listbtn01').addClass('listbtn03');
+				$('#Map_LP').find('#btnRoute_PathShow').removeClass('listbtn02').addClass('listbtn04');
+				//重整地圖尺寸跟地圖調整中心	
+				map.refresh();
+			}
+		}
+		function switchLPShowType(type){
+			$('#routeList').hide();
+			var htmlResult="";
+			var nowClassify2="";
+			if(type=='list'){
+				for(var i=0;i<LP_jsonObjectArray.length;i++){
+				if(nowClassify2==""||(nowClassify2!=""&&nowClassify2!=LP_jsonObjectArray[i].classify2)){
+					nowClassify2=LP_jsonObjectArray[i].classify2;
+					htmlResult+='<li data-role="list-divider"><span>'+LP_jsonObjectArray[i].classify2_name+'</span></li>';
+				}
+				htmlResult+="<li data-latitude='"+LP_jsonObjectArray[i].latitude+"' data-longitude='"+LP_jsonObjectArray[i].longitude+"' data-spotno='"+LP_jsonObjectArray[i].spotNo+"'>"+
+				"<div class='image'><img src='"+LP_jsonObjectArray[i].ximage+"'></div>"+
+				"<h2>"+LP_jsonObjectArray[i].chtName+"</h2>"+
+				"<p>"+LP_jsonObjectArray[i].chtAddress+"</p>"+
+			    "<div class='btnbox'><input type='submit' data-role='none' data-xicon='"+LP_jsonObjectArray[i].xicon+"' data-ximage='"+LP_jsonObjectArray[i].ximage+"' data-title='"+LP_jsonObjectArray[i].chtName+"' data-address='"+LP_jsonObjectArray[i].chtAddress+"'  data-latitude='"+LP_jsonObjectArray[i].latitude+"' data-longitude='"+LP_jsonObjectArray[i].longitude+"' data-spotno='"+LP_jsonObjectArray[i].spotNo+"' value='規劃路線'' class='btnDoRoute_dataList btn06'></div>"+
+				"</li>";
+				}
+				$('#Map_LP').find('#dataList').html("<ul data-role='none'>"+htmlResult+"</ul><div style='height:100px;width:100%'></div>");
+				$('#Map_LP').find('#dataMap').hide();
+				$('#Map_LP').find('#dataList').show();
+				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn03').addClass('listbtn01');
+				$('#Map_LP').find('#btnListShow').removeClass('listbtn04').addClass('listbtn02');
+			}else
+			{
+				$('#Map_LP').find('#dataList').hide();
+				$('#Map_LP #dataMap .subDiv').hide();
+				// $('#routeList').hide();
+				$('#Map_LP').find('#dataMap').show();
+				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');
+				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
+				//重整地圖尺寸跟地圖調整中心	
+				map.refresh();
+			}
+		    return htmlResult;
+		}
+		function genMapShowContent(){
+			map=new HyMap();
+ 			map.ini(document.getElementById('map_canvas'),new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),14);
+ 			map.setDivDirectionDetail($('#Map_LP #directions'));
+		}
+		function convertToGMAPMarkers(){
+			//地圖初始化
+			genMapShowContent();
+			switchLPShowType("map"); 
+			var nearAlertSpotListHtmlResult="";
+			for(var i=0;i<LP_jsonObjectArray.length;i++){
+				//gmap marker
+				var title=LP_jsonObjectArray[i].chtName;
+				var address=LP_jsonObjectArray[i].chtAddress;
+				var latitude=LP_jsonObjectArray[i].latitude;
+				var longitude=LP_jsonObjectArray[i].longitude;
+				var spotNo=LP_jsonObjectArray[i].spotNo;
+				var ximage=LP_jsonObjectArray[i].ximage;//待續
+				var xicon=LP_jsonObjectArray[i].xicon;//待續
+				map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
+				//nearAlertSpotList
+			    nearAlertSpotListHtmlResult+='<input type="radio" id="radio_nearAlertSpot_'+i+'" name="radio_nearAlertSpotList" data-spotno="'+spotNo+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-title="'+title+'" data-address="'+address+'" data-theme="c">'+'<label for="radio_nearAlertSpot_'+i+'">'+title+'</label>';
+			}
+			if(nearAlertSpotListHtmlResult!=""){
+				nearAlertSpotListHtmlResult+='<div data-role="controlgroup" data-type="horizontal"><a data-theme="c" data-role="button" data-rel="back">取消</a><a data-theme="f" href="javascript:setNearAlertByList();" data-role="button">確定</a></div>';
+			}
+			$('#nearAlertSpotList').html(nearAlertSpotListHtmlResult).trigger('create');
+		}
+		function switchFooterFunction(type){
+			if(type=='route'){
+				$('.defaultFootFunction').hide();
+				$('.RouteFootFunction').show();
+				switchRouteShowType('map');
+			}else{
+				$('.defaultFootFunction').show();
+				$('.RouteFootFunction').hide();
+				switchLPShowType('map');
+			}
+		}
+		function showMapSubDiv(subDiv){
+			var isShow=$(subDiv).is(":visible");
+			switchLPShowType('map');
+			isShow==true?$(subDiv).hide():$(subDiv).show();
+		}
+		function setNearAlertByList(){
+			var obj=$("#nearAlertSpotList input[type=radio]:checked");
+			$('#popupDialog_setAlert').popup('close');
+			if(typeof(obj)!="undefined"){
+				doSetNearAlertSpot($(obj).data('spotNo'),$(obj).data('title'),$(obj).data('address'),$(obj).data('latitude'),$(obj).data('longitude'));
+			}else{
+				smoke.alert(nearAlertString_notCheckedBeforeSendFromList,{},function(){});
+			}
+		}
+		function doSetNearAlertSpot(spotNo,title,address,latitude,longitude){
+			var content="";
+			if(map.nearAlertSpot!=null){
+				if(latitude==map.nearAlertSpot.latitude$$longitude==map.nearAlertSpot.longitude){
+					smoke.alert(nearAlertString_already,{},function(){});
+				}else{
+					content+="已經有設定接近提醒:"+map.nearAlertSpot.title+"<br/>"+
+						 	 "地址:"+(typeof(map.nearAlertSpot.address)!=='undefined'?map.nearAlertSpot.address+"("+map.nearAlertSpot.latitude+","+map.nearAlertSpot.longitude+")":map.nearAlertSpot.latitude+","+map.nearAlertSpot.longitude)+",是否替換設定?";
+					smoke.confirm(content,function(e){
+						if (e){
+							//設定接近提醒點
+							map.setNearAlertSpot({"spotNo":spotNo,"title":title,"address":address,"latitude":latitude,"longitude":longitude});
+							smoke.alert(SettingOKString);
+						}
+					},{ok:"確定", cancel:"取消"});
+				}
+			}else{
+				//設定接近提醒點
+				map.setNearAlertSpot({"spotNo":spotNo,"title":title,"address":address,"latitude":latitude,"longitude":longitude});
+				smoke.alert(SettingOKString);
+			}	
+		}
+		//pageinit
+		$(document).on('pageinit','#Map_LP',function(){	
+			//產生gmap
+			genMapShowContent();
+			//Filter
+			genClassify1List();
+			//各分類
+			// $(this).find('#btnClassify1Filter').on('click',function(){
+			// 	$('#Map_LP .Collapsible_Classify1').show();
+			// });
+			//各項目
+			$(this).find('#dataList').on('click','li[data-role!="list-divider"]',function(evt){
+				if ($(evt.target).is("li")) {
+	 				var spotNo=$(this).data("spotno");
+	 				changeToMap_CP(spotNo);
+	 			}
+ 			});
+ 			//切換地圖顯示
+			$(this).on('click','#btnMAPShow',function(){	
+				convertToGMAPMarkers();
+				$(this).removeClass('listbtn01').addClass('listbtn03');
+				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
+				//重設地圖中心
+		      	map.map.setCenter(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng));
+			});
+ 			//切換條列顯示
+			$(this).on('click','#btnListShow',function(){	
+				switchLPShowType("list");
+				$(this).removeClass('listbtn04').addClass('listbtn02');
+				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn03').addClass('listbtn01');
+			});
+			//切換地圖導引
+			$(this).on('click','#btnRoute_MAPShow',function(){	
+				switchRouteShowType('map');
+			});
+			//切換條列導引
+			$(this).on('click','#btnRoute_PathShow',function(){	
+				switchRouteShowType('path');
+			});
+ 			//查詢關鍵字查地圖
+			$(this).on('click','#btnSearch',function(){
+				showMapSubDiv($('#Map_LP #divKeyWordSearch'));
+			});
+			//路線規劃地圖
+			$(this).on('click','#btnRoute',function(){
+				//地址反查
+				map.getAddressByLatLng(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),$('#Map_LP').find('#txtRoutePointStart'));
+				//切換FooterFunction
+				showMapSubDiv($('#Map_LP #divRoutePath'));
+			});
+			$(this).on('click','#btnKeyWordSearch',function(){
+				switchFooterFunction('default');
+				map.doSearchByAddress($('#txtSearchKeyWord').val());
+			});
+			$(this).on('click','#btnDoRoute',function(){
+				//關閉幕前顯示div
+				$('#Map_LP #dataMap .subDiv').hide();
+				switchFooterFunction('route');
+				map.doRoutePath($('#txtRoutePointStart').val(), $('#txtRoutePointEnd').val());
+			});
+			$(this).on('click','#btnDoRoute_InfoWindow',function(){
+				var rootElement=$(this);
+				//關閉幕前顯示div
+				$('#Map_LP #dataMap .subDiv').hide();
+				switchFooterFunction('route');
+				var title=$(this).data('title');
+ 				var latitude=$(this).data('latitude');
+ 				var longitude=$(this).data('longitude');
+ 				var spotNo=$(this).data('spotno');
+ 				var address=$(this).data('address');
+ 				var ximage=$(this).data('ximage');
+ 				var xicon=$(this).data('xicon');
+ 				var jsonObject={"title":title,"address":address,"latitude":latitude,"longitude":longitude,"spotNo":spotNo,"ximage":ximage,"xicon":xicon};
+				map.doRoutePath(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),new google.maps.LatLng($(rootElement).data('latitude'),$(rootElement).data('longitude')),null,jsonObject);
+ 				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;jsonObject=null;
+ 				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;delete jsonObject;
+			});
+			$(this).on('click','input.btnDoRoute_dataList',function(){
+				var rootElement=$(this);
+				switchLPShowType("map");
+				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');
+				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
+				//關閉幕前顯示div
+				$('#Map_LP #dataMap .subDiv').hide();
+				switchFooterFunction('route');
+				var title=$(this).data('title');
+ 				var latitude=$(this).data('latitude');
+ 				var longitude=$(this).data('longitude');
+ 				var spotNo=$(this).data('spotno');
+ 				var address=$(this).data('address');
+ 				var ximage=$(this).data('ximage');
+ 				var xicon=$(this).data('xicon');
+ 				var jsonObject={"title":title,"address":address,"latitude":latitude,"longitude":longitude,"spotNo":spotNo,"ximage":ximage,"xicon":xicon};
+				map.doRoutePath(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),new google.maps.LatLng($(rootElement).data('latitude'),$(rootElement).data('longitude')),null,jsonObject);
+ 				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;jsonObject=null;
+ 				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;delete jsonObject;
+			});
+			$(this).on('click','#btnLBSCP',function(){
+				var spotNo=$(this).data('spotno');
+				if(spotNo!=""){
+					changeToMap_CP(spotNo);
+				}
+			});
+			$(this).on('click','#btnSetNearAlert',function(){
+				var spotNo=$(this).data('spotNo');
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				doSetNearAlertSpot(spotNo,title,address,latitude,longitude);
+			});
+		});
+		$(document).on('pageinit','#Map_CP',function(){	
+ 			//地圖按鈕
+ 			$(this).on('click','#btnMap',function(){
+ 				var title=$(this).data('title');
+ 				var latitude=$(this).data('latitude');
+ 				var longitude=$(this).data('longitude');
+ 				var spotNo=$(this).data('spotno');
+ 				var address=$(this).data('address');
+ 				var ximage=$(this).data('ximage');
+ 				var xicon=$(this).data('xicon');
+ 				//呈現當前坐標內容
+ 				map.showTargetMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
+ 				$.mobile.changePage('#Map_LP');
+ 				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;
+ 				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;
+ 			});
+ 			//導航按鈕
+			$(this).on('click','#btnRoute',function(){
+				var rootElement=$(this);
+				switchLPShowType("map");
+				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');
+				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
+				//關閉幕前顯示div
+				$('#Map_LP #dataMap .subDiv').hide();
+				switchFooterFunction('route');
+				map.doRoutePath(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),new google.maps.LatLng($(rootElement).data('latitude'),$(rootElement).data('longitude')));			
+				$.mobile.changePage('#Map_LP');
+			});
+ 			//電話按扭
+ 			$(this).on('click','#btnTel',function(){
+ 				var tel=$(this).data('tel');
+ 				if(typeof(tel)!="undefined"&&tel!=""){
+	 				window.location.href="tel:"+tel;
+	 			}
+	 			tel=null;
+	 			delete tel;
+ 			});
+		});
+		//pageshow
+		$(document).on('pageshow','#Map_LP',function(){
+			switchFooterFunction('default');
+			var mapData=getMapData();
+			if(typeof(mapData)!=="undefined"&&mapData!=null){
+				//關閉幕前顯示div
+				$('#Map_LP #dataMap .subDiv').hide();
+				switch(mapData.method){
+					case "route":
+						switchFooterFunction('route');
+					break;
+				}
+				//HyMap載入mapData資料
+				map.loadMapData();
+			}
+			//重整地圖尺寸跟地圖調整中心	
+			map.refresh();
+			//取消事件
+			$("#Map_LP .Collapsible_Classify1").off( "expand", function(){});
+			$("#Map_LP .Collapsible_Classify1").off( "collapse", function(){});
+			//註冊事件
+			$("#Map_LP .Collapsible_Classify1").on( "expand", function() {
+				Target_Collapsible_Classify1_ID=$(this).attr('id');
+				$('#Map_LP .Collapsible_Classify1').hide();
+				$(this).show();
+			});
+			$("#Map_LP .Collapsible_Classify1").on( "collapse", function() {
+				if($(this).attr('id')==Target_Collapsible_Classify1_ID){
+					$('#Map_LP .Collapsible_Classify1').show();
+					$('#classify1List input[type=checkbox]:checked').attr('checked','checked');
+					$('#classify1List').trigger('create');
+				}
+			});
+		});
+		</script>
+	</head>
+	<body>	
+		<div data-role="page" id="QP">	
+			<div data-role="header" data-theme="f">
+		     	<a href="#menu" data-role="none" class="btnMenu"></a>
+	            <h1>廠商資訊</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+			<div id="marquee"></div>
+			<div class='int'>
+				<div class="divForm">
+			 	<table>
+			 		<tr>
+					  <th scope="row">					  	
+					  	<select  data-role="none" name="mobiScroll_VendorInfo_keywordType" id="mobiScroll_VendorInfo_keywordType"> 
+					  	</select>
+					  </th>
+					  <td>
+					  	<input type="text" data-mini="true" id="txtKeyword" placeholder="請輸入關鍵字"></input>
+					  </td>
+					</tr>
+					<tr>
+					  <th scope="row">園區/基地別</th>
+					  <td>
+					  	<select data-role="none" name="mobiScroll_VendorInfo_ParkBase" id="mobiScroll_VendorInfo_ParkBase">
+						</select>
+					 </td>
+					</tr>
+					<tr>
+					  <th scope="row">廠商/產業別</th>
+					  <td>
+					  	<select data-role="none" name="mobiScroll_VendorInfo_VendorType" id="mobiScroll_VendorInfo_VendorType">
+						</select>
+					 </td>
+					</tr>
+				</table>
+				</div>	
+				<div style="text-align:center;">
+				<a data-inline="true"  data-theme="e" id="btnSearch" data-role="button" href="#LP">查詢</a>
+				</div>
+			</div>
+			</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">
+				 <div data-role="navbar">
+				    <ul>
+	            		<li><a class="ui-link hover">園區廠商資訊</a></li>
+	            		<li><a class="ui-link" href="Page_Jobs.html" rel="external">廠商徵才資訊</a></li>
+	            	</ul>
+		        </div>
+			</div>
+		</div>
+		<div data-role="page" id="LP">
+			<div data-role="header" data-theme="f">
+		     	<a href="#QP" data-icon="arrow-l">返回</a>
+                <h1>廠商資訊</h1>
+                <a data-rel="popup" data-position-to="window" data-inline="true" data-mini="true" class="ui-btn-default" data-role="button" href="#popupDialog_keyword" data-transition="pop" data-icon="search">關鍵字</a>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div class="list2" id="htmlResult">
+				</div>
+			</div>
+			<div data-role="popup" id="popupDialog_keyword" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+				<div style="text-align:center;padding:25px">
+					<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a>
+					</div>
+			 		<table>
+				 		<tr>
+						  <th scope="row">					  	
+						  	<select  name="select_keywordType" id="select_keywordType"> 
+						  	</select>
+						  </th>
+						  <td>
+						  	<input type="text" data-mini="true" id="txtKeyword" placeholder="請輸入關鍵字"></input>
+						  </td>
+						</tr>
+					</table>
+					<div style="text-align:center;">
+						<a data-inline="true"  data-theme="e" id="btnSearch" href="#LP_temp" data-role="button">查詢</a>
+					</div>	
+				</div>    	
+			</div>
+		</div>
+		<div data-role="page" id="LP_temp">
+			loading...
+        </div>
+		<div data-role="page" id="CP">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>廠商資訊</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+					<div class='int'>
+						<div class='title' id="title"></div>
+						<h2 class="title5">園區事業廠商資料</h2>
+						<table width="100%" summary="最新消息資料表格" class="cptable" id="infoHtmlResult">
+						</table>
+						<h2 class="title5">工廠資料</h2>
+						<div  class="list2" id="factoryHtmlResult">
+						</div>
+					</div>
+			</div>
+		</div>
+		<!--地圖模組-->
+		<div data-role="page" id="Map_LP">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
+                <h1>生活服務</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+				<div id='dataMap' class='acenter'>
+					<!-- keyWordSearch -->
+					<div id='divKeyWordSearch' class='subDiv'>
+						<input data-role='none' type='text' class='search' id='txtSearchKeyWord' placeholder='地址/地名/廠商名稱'>
+						<a id='btnKeyWordSearch'   data-mini="true" data-inline="true" data-role="button" data-theme="e">查詢</a>
+					</div>
+					<!-- RountePath -->
+					<div id='divRoutePath' class='subDiv aleft2'>
+						<div data-role="fieldcotain">
+							<label for='txtRoutePointStart'>起點：</label>
+							<input type='text'  id='txtRoutePointStart' placeholder='地址/地名/廠商名稱'>
+						</div>
+						<div data-role="fieldcotain">
+							<label for='txtRoutePointEnd'>終點：</label>
+							<input type='text' id='txtRoutePointEnd' placeholder='地址/地名/廠商名稱'>
+						</div>
+						<div class="acenter"><button data-icon="search"  data-mini="true" data-inline="true" data-theme="e" id='btnDoRoute'>路徑規劃</button></div>
+					</div>
+					<!-- map -->
+					<div id='map_canvas' style='width:100%;height:290px;'></div>
+					<div id="routeList" class="ui-listview ui-listview-inset ui-corner-all ui-shadow" style="display:none;">
+						<div class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-top ui-btn-up-undefined">規劃路徑</div>
+						<div id="directions" class='acenter gmapDirections'></div>
+						<div class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-bottom ui-btn-up-undefined"></div>
+						<!-- 撐高用的 -->	
+						<div style="height:80px;"></div>
+					</div>
+				</div>
+				<div class='list' id='dataList'></div>
+			</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">	
+				<div id="footer">
+					<div class="footbtn">
+						<ul data-role="none">
+							<li><a data-role="none" id="btnMAPShow" class="defaultFootFunction listbtn03">地圖呈現</a></li>
+							<li><a data-role="none" id="btnListShow" class="defaultFootFunction listbtn04">圖文並列</a></li>
+							<li><a data-role="none" style="display:none;" id="btnRoute_MAPShow" class="RouteFootFunction listbtn03">地圖導引</a></li>
+							<li><a data-role="none" style="display:none;" id="btnRoute_PathShow" class="RouteFootFunction listbtn04">文字導引</a></li>
+						</ul>
+					</div>
+					<div class="function">
+						<ul data-role="none">
+							<li><a data-role="none" id="btnSearch" class="f1">搜尋地圖</a></li>
+							<li><a data-role="none" id="btnRoute" class="f2">規劃路線</a></li>
+							<li><a data-role="none" data-rel="popup" data-position-to="window" href="#popupDialog_classify1Filter" data-transition="pop" id="btnClassify1Filter" class="f3">週邊生活服務</a></li>
+							<li><a data-rel="popup" data-position-to="window" href="#popupDialog_setAlert" data-transition="pop" data-role="none" id="btnSetAlert" class="f4">接近提醒</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--popup-->
+			<div data-role="popup" id="popupDialog_classify1Filter" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+    			<div style="text-align:center;padding:25px" id="classify1List" class="ui-content">	
+		    	</div>
+			</div>
+			<div data-role="popup" id="popupDialog_setAlert" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+    			<div style="text-align:center;" id="nearAlertSpotList">	
+		    	</div>
+			</div>
+		</div>
+		<div data-role="page" id="Map_CP">
+			<div data-role="header" data-theme="f">
+				<a data-rel="back" data-icon="arrow-l">返回</a>
+                <h1>生活服務</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+			</div>
+		</div>
+	</body>
+</html>

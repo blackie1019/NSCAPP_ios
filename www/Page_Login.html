@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html><!-- manifest="cache.appcache" 開啟Cache 功能-->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <!--ios-->
+        <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+        <!--android-->
+        <!--
+         <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
+        -->
+        <!--jQuery-->
+        <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<!--json2-->
+		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
+		<!--Google Map API v3-->
+		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>
+		<!--mobiScroll-->
+		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
+		<link href="css/mobiscroll.custom-2.4.3.min.css" rel="stylesheet" type="text/css"></link>
+		<script src="js/mobiscroll.custom.js" type="text/javascript"></script>
+		<!--<script src="http://debug.phonegap.com/target/target-script-min.js#blackie1019"></script>-->
+		<!--jQuery mobile-->
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-NSC-1.3.0.css"></link>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.0.min.js"></script>
+        <!--Plug in-->
+        <!-- <script src="js/jquery.hammer.min.js"></script>-->
+        <link rel="stylesheet" type="text/css" href="css/smoke.min.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/smoke.theme.100s.css"> -->
+        <script src="js/smoke.js"></script>
+		<!--Hyweb CSS-->
+		<link rel="stylesheet" type="text/css" href="css/index.css"></link>
+		<!-- <link rel="stylesheet" type="text/css" href="css/menu.css"></link> -->
+		<!--HYAPP-->
+		<!--NSCAPP Javascript-->	
+		<script src="js/setting.js"></script>
+		<script src="js/pnpolygon.js"></script>
+		<script src="js/loading.js"></script> 
+		<script src="js/data.js"></script> 
+		<script  type="text/javascript">
+		/*global variables*/
+		/*pageini event*/
+		$(document).on('pageinit','#MemberLogin',function(){
+			var rootElement=this;
+			//產生menu
+			genMenu(rootElement);
+			//menu登入確認
+			menuDisplayMemberSection(checkLogin(),rootElement);
+			$(this).on('click','#loginButton',function(){
+				var id=$(rootElement).find('#txtID').val();
+				var pw=$(rootElement).find('#txtPW').val();
+				var token=$(rootElement).find('#txtToken').val();
+				doLogIn(id,pw,token);
+			});
+		});
+		$(document).on('pageinit','#MemberValidation',function(){
+			var rootElement=this;
+			//產生menu
+			genMenu(rootElement);
+			//menu登入確認
+			menuDisplayMemberSection(checkLogin(),rootElement);
+			$(this).on('click','#validButton',function(){
+				var id=$(rootElement).find('#txtID').val();
+				var pw=$(rootElement).find('#txtPW').val();
+				var page=getToken2VaildBackPage();
+				doVaildLogin(id,pw,page)
+			});
+		});
+		$(document).on('pageshow','#MemberValidation',function(){
+			var rootElement=this;
+			$(rootElement).find('#txtID').val(getLoginData().account);
+		});
+		</script>
+		<!--Test script-->
+		<script>
+		</script>
+	</head>
+	<body>
+	<!--     <body> -->
+	<!--會員登入-->
+		<div data-role="page" id="MemberLogin">
+  			<div data-role="header" data-theme="f"><a data-rel="back" data-icon="arrow-l">返回</a><h1>員工裝置註冊認證</h1></div>
+			<div data-role="content">
+				<div class="divForm">
+					<div class="divLoginIcon">
+					</div>
+		            <table summary="員工裝置註冊認證">
+	                    <tr>
+	                      <th scope="row">帳號</th>
+	                      <td colspan="4"><input type="text" id="txtID" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr><th scope="row">密碼</th>
+	                      <td colspan="4"><input type="password" id="txtPW" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr><th scope="row">認證碼</th>
+	                      <td colspan="4"><input type="text" id="txtToken" class="InputControl"></input></td>
+	                    </tr>
+	                </table>
+					<div style="text-align:center;">			
+						<a data-role="button" data-inline="true"  data-theme="c" data-rel="back">取消</a>
+						<input type="button" data-inline="true"  data-theme="e" id="loginButton" value="登入"></input>				
+					</div>	
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="MemberValidation">
+  			<div data-role="header" data-theme="f">
+				<a href="javascript:history.back(-2);" data-icon="arrow-l">返回</a><h1>員工登入</h1></div>
+			<div data-role="content">
+				<div class="divForm">
+					<div class="divLoginIcon">
+					</div>
+		            <table summary="員工登入">
+	                    <tr>
+	                      <th scope="row">帳號</th>
+	                      <td colspan="4"><input type="text" id="txtID" class="InputControl"></input></td>
+	                    </tr>
+	                    <tr><th scope="row">密碼</th>
+	                      <td colspan="4"><input type="password" id="txtPW" class="InputControl"></input></td>
+	                    </tr>
+	                </table>
+					<div style="text-align:center;">			
+						<a data-role="button" data-inline="true"  data-theme="c" data-rel="back">取消</a>
+						<input type="button" data-inline="true"  data-theme="e" id="validButton" value="驗證"></input>				
+					</div>	
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

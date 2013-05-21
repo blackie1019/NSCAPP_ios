@@ -1,0 +1,14 @@
+{
+	"jsonOutput":
+	[
+		{
+			"id":"1",
+			"title":"公告測試",
+			"desc":"測試公告功能正常",
+			"updateTime":"2012/04/24",
+			"isNew":"1"
+		}
+	],
+	"status":"success",
+	"messange":"查詢正常"
+}

@@ -1,0 +1,12 @@
+/* header */
+#list .ui-header, #pullDownList .ui-header, #pullUpList .ui-header {
+	background-image: url("../images/icons/footer/bottom_bg.png");
+	background-repeat: repeat-x;
+	background-size: contain;
+	border: 0px;
+}
+
+#list_content, #pullDownList_content, #pullUpList_content {
+    padding-left: 0px;
+    padding-right: 0px;
+}
