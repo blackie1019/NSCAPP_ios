@@ -4,11 +4,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
         <!--ios-->
-        <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+        <!--<script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>-->
         <!--android-->
-        <!--
-         <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
-        -->
+         <script type="text/javascript" src="js/android/cordova-2.7.0.js"></script>
         <!--jQuery-->
         <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
 		<!--json2-->
@@ -67,18 +65,9 @@
 		*/
 		var loginUser = "";
 		var loginUserName = "";
-		/*  
-		//MoveTo setting.js
-		var DataURL_BFS = "http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do";
-        var DataURL_BFS_Upload = "http://nscallinone.hyweb.com.tw:8080/BFS/Upload.do?src=mobile";
-		
-		var DataURL_BFS = "http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do";
-        var DataURL_BFS_Upload = "http://nscallinone.hyweb.com.tw:8080/BFS/Upload.do?src=mobile";
-		var DataURL_BFS_MAIN2 = "http://nscallinone.hyweb.com.tw:8080/BFS/Main2.do";
-		
-		var DataURL_BFS = "http://localhost:8081/AppService/Main.do";
-        var DataURL_BFS_Upload = "http://localhost:8080/BFS/Upload.do?src=mobile";
-
+		/*MoveTo setting.js
+		var DataURL_BFS_android = "http://nscallinone.hyweb.com.tw:8080/BFS/Main2.do";
+        var DataURL_BFS_android_Upload = "http://nscallinone.hyweb.com.tw:8080/BFS/Upload.do";
 		var DataURL_BFS_GETORGLIST = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgList.do?jsoncallback=?";
 		var DataURL_BFS_GETORGINFO = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgInfo.do?jsoncallback=?";
 		*/
@@ -97,6 +86,7 @@
 			return str<10?('0'+str):str;
 		}
 		function iniControlSetting(){
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, onError);
 			//var today=new Date().toISOString().slice(0,10);
 			//$("input[type=date]").val(today);
 			/* */
@@ -107,6 +97,7 @@
 			$("input[type=date]").val(today_year+"-"+zero(today_month+1)+"-"+zero(today_date));			
 			/* */
 		}
+		
 		
 		// pageinit
 		$(document).on('pageinit','#LP',function(){
@@ -198,7 +189,7 @@
 					$.ajax({
 						cache: false,
 						type: 'post',
-						url: DataURL_BFS,
+						url: DataURL_BFS_android,
 						data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
 						dataType: 'json',
 						success: function(response) {
@@ -250,11 +241,11 @@
 			$(this).on('click','#chooseUserButton', function() {				
 				// 選擇對象前先上傳
 				var imageArray=getImageArray2($('#newFilePage').find('#imageArray img'));
-				var jsonObj = {'loginUser':loginUser,'imageArray':imageArray};
+				var jsonObj = {'loginUser':loginUser,'fileArray':imageArray};
 				var jsonObjStr = JSON.stringify(jsonObj);
 				/* */
 				$.ajax({
-					url:DataURL_BFS_Upload,
+					url:DataURL_BFS_android_Upload,
 					data: "jsonInput="+jsonObjStr,
 					type:"POST",
 					dataType :"json",
@@ -308,6 +299,19 @@
 			
 			if (forwardOrSend == "forward") {				
 				fileNo = window.localStorage.getItem("SettingData_forwardFileNo");
+			} else if (forwardOrSend == "sendFile") {						
+				var uploadResult = JSON.parse(window.localStorage.getItem("SettingData_upload_result"));
+				fileNo = uploadResult.fileNo;
+				fileName = uploadResult.fileName;				
+				//$('#fileToSend').html(uploadResult.fileNo);
+				var fileNameList = "";
+				fileNameList += fileName + "<br/>";
+				//for (var i=0; i<uploadResult.fileName.length; i++) {
+				//	fileNameList += uploadResult.fileName[i] + "<br/>";
+				//}
+				//$('#fileToSend').html(uploadResult.fileName);
+				$('#fileToSend').html(fileNameList);
+				
 			} else {
 				var uploadResult = JSON.parse(window.localStorage.getItem("SettingData_upload_result"));
 				fileNo = uploadResult.fileNo;
@@ -360,7 +364,7 @@
 			
 				$.ajax({					
 					type: 'post',
-					url: DataURL_BFS,
+					url: DataURL_BFS_android,
 					data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
 					dataType: 'json',
 					async: false,
@@ -679,7 +683,7 @@
 			//http://localhost:8081/AppService/Main.do?name=DataURL_BFS&jsonInput=&jsoncallback=?
 			$.ajax({				
 				type: 'post',
-				url: DataURL_BFS,
+				url: DataURL_BFS_android,
 				data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
 				dataType :"json",
 		        //async:false,
@@ -730,7 +734,8 @@
 							
 							$('#groupList').append(
 							"<div data-role=\"collapsible\" data-collapsed=\"true\" data-iconpos=\"right\" data-theme=\"c\">"
-							+"	<h3><font color=blue>" + mailBody + "("+mailId+")</font>"
+							//+"	<h3><font color=blue>" + mailBody + "("+mailId+")</font>"
+							+"	<h3><font color=blue>" + mailBody + "</font>"
 							+"		<p style=\"font-weight:normal;font-size:12px;\" align=\"right\">"+((_ListType==0)?senderName:receiverName)+" "+transferTime+"</p>"
 							+"	</h3>"							
 							+"	<ul data-role=\"listview\" data-split-icon=\"gear\">"
@@ -762,7 +767,7 @@
 							//alert(downloadFileNo);
 							window.localStorage.setItem("SettingData_forwardOrSend", 'forward');
 							window.localStorage.setItem("SettingData_forwardFileNo", fileNo);
-							$.mobile.changePage('#chooseUserPage');							
+							$.mobile.changePage('#chooseUserPage');
 							
 						});
 						
@@ -777,7 +782,7 @@
 							var jsonObjStr = JSON.stringify(jsonObj);
 							$.ajax({
 								type: 'post',
-								url: DataURL_BFS,
+								url: DataURL_BFS_android,
 								data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
 								dataType :"json",
 								//async:false,
@@ -871,6 +876,228 @@
 
 		</script>
 		
+<script type="text/javascript" charset="utf-8">
+var fileSystem;
+
+//generic getById
+function getById(id) {
+	return document.querySelector(id);
+}
+//generic content logger
+function logit(s) {
+	getById("#content").innerHTML += s;
+}
+
+//generic error handler
+function onError(e) {
+	//getById("#content").innerHTML = "<h2>Error</h2>"+e.toString();
+	alert(e.toString());
+}
+
+function doDeleteFile(e) {
+	fileSystem.root.getFile("test.txt", {create:true}, function(f) {
+		f.remove(function() {
+			logit("File removed<p/>"); 
+		});
+	}, onError);
+}
+
+function metadataFile(m) {
+	logit("File was last modified "+m.modificationTime+"<p/>");	
+}
+
+function doMetadataFile(e) {
+	fileSystem.root.getFile("test.txt", {create:true}, function(f) {
+		f.getMetadata(metadataFile,onError);
+	}, onError);
+}
+
+function readFile(f) {
+	reader = new FileReader();
+	reader.onloadend = function(e) {
+		console.log("go to end");
+		logit("<pre>" + e.target.result + "</pre><p/>");
+	}
+	reader.readAsText(f);
+}
+
+function doReadFile(e) {
+	fileSystem.root.getFile("test.txt", {create:true}, readFile, onError);
+}
+
+function appendFile(f) {
+
+	f.createWriter(function(writerOb) {
+		writerOb.onwrite=function() {
+			logit("Done writing to file.<p/>");
+		}
+		//go to the end of the file...
+		writerOb.seek(writerOb.length);
+		writerOb.write("Test at "+new Date().toString() + "\n");
+	})
+
+}
+
+function doAppendFile(e) {
+	fileSystem.root.getFile("test.txt", {create:true}, appendFile, onError);
+}
+
+function gotFiles(entries) {
+	var s = "";
+	for(var i=0,len=entries.length; i<len; i++) {
+		//entry objects include: isFile, isDirectory, name, fullPath
+		s+= entries[i].fullPath;
+		if (entries[i].isFile) {
+			s += " [F]";
+		}
+		else {
+			s += " [D]";
+		}
+		s += "<br/>";
+		
+	}
+	s+="<p/>";
+	logit(s);
+}
+
+function doDirectoryListing(e) {
+	//get a directory reader from our FS
+	var dirReader = fileSystem.root.createReader();
+
+	dirReader.readEntries(gotFiles,onError);		
+}
+
+function doSelectFile(e) {
+	//alert('請選擇檔案路徑');
+	
+	$.mobile.changePage('#selectFilePage');
+	var dirReader = fileSystem.root.createReader();
+	dirReader.readEntries(function(entries) {
+		var s = "<ul data-role=\"listview\">";
+		for(var i=0,len=entries.length; i<len; i++) {
+			if (entries[i].isFile)//顯示第一層檔案
+			s+= "<li uri=\""+entries[i].fullPath+"\"><a href=#>"+(entries[i].isFile?"<img src=\"img/NSC/file.png\"/>":"<img src=\"img/NSC/list_icon01b.png\"/>")+" "+entries[i].name+"</a></li>";
+		}
+		s+="</ul>";
+		
+		$('#listFiles').append(s);
+		$('#listFiles').trigger('create');
+		$("#listFiles li").click(function() {
+			//alert($(this).attr('uri'));
+			var fileURI = $(this).attr('uri');
+			var fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
+			var ext = fileName.substr(fileName.lastIndexOf('.')+1, fileName.length);
+			//alert(fileName+","+ext);
+			if (ext!='txt' && ext!='jpg' && ext!='doc'
+			 && ext!='TXT' && ext!='JPG' && ext!='DOC') {
+				smoke.alert("目前上傳支援格式：txt|jpg|doc",{},function(){});				
+			} else {
+				/*  */
+				var options = new FileUploadOptions();
+				options.fileKey="file";
+				options.fileName=fileURI.substr(fileURI.lastIndexOf('/')+1);
+				options.mimeType="text/plain";
+
+				var params = new Object();
+				params.value1 = "jsonInput";
+				params.value2 = "{'loginUser':'"+loginUser+"','fileArray':[{'fname':'"+fileName+"','ext':'"+ext+"','file':'"+options.fileKey+"'}]}";
+
+				options.params = params;
+
+				var ft = new FileTransfer();
+				ft.upload(fileURI, DataURL_BFS_android_Upload, win, fail, options);						
+				/*  */
+			}
+		});		
+	}, onError);	
+}
+
+function onFSSuccess(fs) {
+	fileSystem = fs;
+
+	getById("#selectFileButton").addEventListener("touchstart",doSelectFile);
+	
+	getById("#dirListingButton").addEventListener("touchstart",doDirectoryListing);			
+	getById("#addFileButton").addEventListener("touchstart",doAppendFile);			
+	getById("#readFileButton").addEventListener("touchstart",doReadFile);			
+	getById("#metadataFileButton").addEventListener("touchstart",doMetadataFile);			
+	getById("#deleteFileButton").addEventListener("touchstart",doDeleteFile);			
+	logit( "Got the file system: "+fileSystem.name +"<br/>" +
+									"root entry name is "+fileSystem.root.name + "<p/>")	
+
+	//doDirectoryListing();
+}   
+   
+function onDeviceReady() {
+
+	//request the persistent file system
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, onError);
+	
+	//uploadFile("file:///mnt/sdcard/test.txt");
+	
+}
+
+function init() {
+	document.addEventListener("deviceready", onDeviceReady, true);
+}  
+
+function uploadFile(fileURI) {
+	var options = new FileUploadOptions();
+	options.fileKey="file";
+	options.fileName=fileURI.substr(fileURI.lastIndexOf('/')+1);
+	options.mimeType="text/plain";
+
+    var params = new Object();
+    params.value1 = "jsonInput";
+    params.value2 = "{'loginUser':'leee.ntspb','fileArray':[{'fname':'xxx','ext':'txt','file':'12333'}]}";
+
+    options.params = params;
+
+    var ft = new FileTransfer();
+    ft.upload(fileURI, "http://192.168.1.6:8080/BFS/Upload.do", win, fail, options);
+}
+
+function win(r) {
+	//上傳成功
+	smoke.alert("上傳成功",{},function(){				
+		window.localStorage.setItem("SettingData_forwardOrSend", 'sendFile');
+		window.localStorage.setItem("SettingData_upload_result",r.response);
+		$.mobile.changePage('#chooseUserPage');
+	});
+
+	//alert(r.resposeCode);
+	//alert(r.response);	
+	/*
+	if (r.response.code==200) {
+		//上傳成功
+		smoke.alert(r.response.message,{},function(){			
+			window.localStorage.setItem("SettingData_forwardOrSend", 'sendFile');
+			window.localStorage.setItem("SettingData_upload_result",JSON.stringify(r.response));
+			$.mobile.changePage('#chooseUserPage');
+		});		
+	} else {
+		smoke.alert("上傳發生問題，請稍後再試",{},function(){
+			$.mobile.changePage('#LP');
+			$('#LP').trigger('pageinit');
+		});
+	}
+	/* */
+    //console.log("Code = " + r.responseCode);
+    //console.log("Response = " + r.response);
+    //console.log("Sent = " + r.bytesSent);
+}
+
+function fail(error) {
+    //alert("An error has occurred: Code = " = error.code);
+	
+	smoke.alert("上傳發生問題，請稍後再試",{},function(){
+		$.mobile.changePage('#LP');
+		$('#LP').trigger('pageinit');
+	});
+	
+}
+
+</script>  		
 	</head>
 	<body>	
 		<div data-role="page" id="LP">		
@@ -999,6 +1226,7 @@
 			<div data-role="content">		
 
 				<div class="int">
+					<input type="button" id="selectFileButton" value="選擇檔案" data-icon="plus"></input>					
 					<input type="button" id="shootButton" value="拍照" data-icon="plus"></input>
 					<input type="button" id="libraryButton" value="從相片取得" data-icon="star"></input>
 					<div id="imageArray"></div>
@@ -1071,6 +1299,23 @@
 					<input type="button" name="reset" value="取消" class="btn09" id="cancelButton" data-inline="true"/>
 					<input type="button" name="reset" value="送出" class="btn09" id="sendButton" data-inline="true" data-theme="a"/>					
 					
+				</div>
+				<!--int End-->
+			</div>
+		</div>
+	
+		<!-- 檔案選擇頁面  -->
+		<div data-role="page" id="selectFilePage">
+			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
+			<div data-role="content">
+				<!--int Start-->				
+				<div class="int">										
+					<h3>請選擇檔案：</h3>
+					
+					<div id="content" data-role="content">
+						<div class="content-primary" id="listFiles">
+						</div>
+					</div>					
 				</div>
 				<!--int End-->
 			</div>

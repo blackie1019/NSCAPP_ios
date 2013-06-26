@@ -144,6 +144,23 @@ HyMap.prototype.genTrafficBusLine=function(jsonData){
  	oThis.map.setCenter(oThis.center);
 }
 /*生活服務-地圖模組*/
+HyMap.prototype.addBusMarker=function(posLatLng,infowindowHTML,iconImg){
+	var oThis=this;
+	var marker = new google.maps.Marker({
+	    map:oThis.map,
+	    draggable:false,
+	    animation: google.maps.Animation.DROP,
+	    icon: iconImg,
+	    position:posLatLng,
+	    draggable: oThis.isDraggable
+	});
+	//增加InfoWindow
+	google.maps.event.addListener(marker, 'click', function() {
+	   var infowindow=new google.maps.InfoWindow({'content': infowindowHTML});
+   	   infowindow.open(oThis.map,this);
+	});
+	oThis.map_markers.push(marker);
+}
 //[showTargetMarker]只顯示目標Marker
 HyMap.prototype.showTargetMarker=function(title,address,latitude,longitude,spotNo,ximage,iconImg){
 	var oThis=this;
@@ -189,20 +206,8 @@ HyMap.prototype.showTargetAndOtherMarker=function(posObjectArray,setSelfToCenter
 		oThis.center=new google.maps.LatLng(posObjectArray[0].latitude,posObjectArray[0].longitude);
 	}
   	oThis.map.setCenter(oThis.center);
-  	for(var i=0;i<posObjectArray.length;i++){
-		var marker = new google.maps.Marker({
-		    map:oThis.map,
-		    draggable:false,
-		    animation: google.maps.Animation.DROP,
-		    icon:posObjectArray[i].xicon,
-		    position:new google.maps.LatLng(posObjectArray[i].latitude,posObjectArray[i].longitude)
-		});
-		//增加InfoWindow
-		google.maps.event.addListener(marker, 'click', function() {
-		   var infowindow=new google.maps.InfoWindow(genGMAPInfoWindowHTML(posObjectArray[i].title,posObjectArray[i].address,posObjectArray[i].latitude,posObjectArray[i].longitude,posObjectArray[i].spotNo,posObjectArray[i].ximage,posObjectArray[i].xicon));
-	   	   infowindow.open(oThis.map,this);
-		});
-		oThis.map_markers.push(marker);
+  	for(var i=0;i<posObjectArray.length;i++){	
+  		oThis.addAdvMarker(posObjectArray[i].title,posObjectArray[i].address,posObjectArray[i].latitude,posObjectArray[i].longitude,posObjectArray[i].spotNo,posObjectArray[i].ximage,posObjectArray[i].xicon);
 	}
 }
 //[addAdvMarker]新增進階Marker
@@ -401,7 +406,12 @@ HyMap.prototype.closeNearAlert=function(){
 }
 HyMap.prototype.nearSuccess=function(){
 	var oThis=this;
+	//訊息
 	smoke.alert("你已經接近"+oThis.nearAlertSpot.title+"("+oThis.nearAlertSpot.address+")",{},function(){});
+	//震動
+	navigator.notification.vibrate(2500);
+	//響聲
+	navigator.notification.beep(2);
 }
 //function
 function genGMAPInfoWindowHTML(title,address,latitude,longitude,spotNo,ximage,xicon){
@@ -509,11 +519,15 @@ function posObject(title,address,latitude,longitude,spotNo,ximage,xicon){
 }
 //function
 //[openMap]至地圖模組開啓指定點
-function openMap(var1){
+function openMap(var1,lat,lng){
 	//預設var1應為posObject
 	//如果postObject為string(地址或地名)
 	if(typeof(var1.title)==="undefined"){
-		posObject=new posObject(var1,var1,"","","","","position");
+		if(typeof(lat)!=="undefined"&&typeof(lng)!=="undefined"){
+			posObject=new posObject(var1,var1,lat,lng,"","","position");
+		}else{
+			posObject=new posObject(var1,var1,"","","","","position");
+		}
 	}else{
 		posObject=var1;
 	}

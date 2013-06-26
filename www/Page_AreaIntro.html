@@ -44,7 +44,37 @@
 			<script  type="text/javascript">
 			//global variables
 			var langType=getAppSetting_Data().language,Park=getIdentifyParkBase().Park;
+			var park=getIdentifyParkBase().Park,nearAlertSpot=null,Target_Collapsible_Classify1_ID="",map;//地圖模組
 			//function
+			//更換相關顯示語言
+			function loadDisplayLanguage(){
+				var title,a_ParkRoute_str,a_LifeService_str,a_VendorInfo_str,navbar_htmlResult="";
+				switch(langType){
+					case "ch":
+						title="科學園區簡介";
+						a_ParkRoute_str="園區路線規劃";
+						a_LifeService_str="周邊生活服務";
+						a_VendorInfo_str="園區廠商資訊";
+						$('#index #a_ParkRoute').show();
+						break;
+					case "eng":
+						title="About Science Park";
+						a_ParkRoute_str="Get Directions";
+						a_LifeService_str="Life in the park";
+						a_VendorInfo_str="Companies";
+						$('#index #a_ParkRoute').hide();
+						break;
+				}
+				navbar_htmlResult+='<div data-role="navbar"><ul>'+
+					(langType=="ch"?'<li class="navli"><a id="a_ParkRoute" rel="external" href="Page_TranspotInfo.html#page_transPlanning">'+a_ParkRoute_str+'</a></li>':"")+
+					'<li class="navli"><a id="a_LifeService" rel="external" href="Page_LifeService.html">'+a_LifeService_str+'</a></li>'+
+					'<li class="navli"><a id="a_VendorInfo" rel="external" href="Page_VendorInfo.html">'+a_VendorInfo_str+'</a></li>'+
+					'</ul></div>';
+				$('#index #page_title').text(title);
+				$('#index #footer').html(navbar_htmlResult).trigger('create');
+				$('#index #footer').find('.ui-btn-inner').css("font-size","1em").css("padding-left","0px").css("padding-right","0px");
+				$('#index #footer span').css('display','block');
+			}
 			//連到交通資訊
 			function goToTranspotInfo(Park,Base,code){
 				var PageName="";
@@ -138,7 +168,7 @@
 				for(var option_index=0;option_index<jsonObject.options.length;option_index++){
 					result+='<input onclick="javascirpt:changeToTrafficContent(&apos;'+Park+'&apos;,&apos;'+Base+'&apos;,&apos;'+jsonObject.options[option_index].code+'&apos;,false);" data-role="none" type="submit" name="button" id="button" data-code="'+jsonObject.options[option_index].code+'" value="'+jsonObject.options[option_index].value+'" class="traffic'+jsonObject.options[option_index].code+'"></input>';	
 				}
-				result='<div class="springboard2">'+result+'</div>'+
+				result='<div class="aleft2 springboard2">'+result+'</div>'+
 						'<div class="helpline">'+helpTel+'</div>';
 				return result;
 			}
@@ -163,15 +193,17 @@
 						menuStringArray.push("Art Infromation");
 						break;
 				}
-				htmlResult+='<ul class="toplist" data-role="none" >'+
-					        '<li><a class="sub_link" data-href="subDiv_introInfo">'+menuStringArray[0]+'</a></li>'+
-					        '<li><a class="sub_link" data-href="subDiv_traffic">'+menuStringArray[1]+'</a></li>'+
-					        '<li><a class="sub_link" data-href="subDiv_visitInfo">'+menuStringArray[2]+'</a></li>'+
-					        '<li><a class="sub_link" data-href="subDiv_investmentInfo">'+menuStringArray[3]+'</a></li>'+
-					        '<li><a class="sub_link" data-href="subDiv_contactInfo">'+menuStringArray[4]+'</a></li>';
-				if(getAppType()=="S"){
-	 		        htmlResult+='<li><a class="sub_link" data-href="subDiv_artInfo">'+menuStringArray[5]+'</a></li>';
-	 		    }
+				if(menuStringArray.length==6){
+					htmlResult+='<ul class="toplist" data-role="none" >'+
+						        '<li><a class="sub_link" data-href="subDiv_introInfo">'+menuStringArray[0]+'</a></li>'+
+						        '<li><a class="sub_link" data-href="subDiv_traffic">'+menuStringArray[1]+'</a></li>'+
+						        '<li><a class="sub_link" data-href="subDiv_visitInfo">'+menuStringArray[2]+'</a></li>'+
+						        '<li><a class="sub_link" data-href="subDiv_investmentInfo">'+menuStringArray[3]+'</a></li>'+
+						        '<li><a class="sub_link" data-href="subDiv_contactInfo">'+menuStringArray[4]+'</a></li>';
+					if(getAppType()=="S"){
+		 		        htmlResult+='<li><a class="sub_link" data-href="subDiv_artInfo">'+menuStringArray[5]+'</a></li>';
+		 		    }
+		 		}
 				htmlResult+='</ul>';
 				$('#index #sub-menu').html(htmlResult);
 			}
@@ -191,16 +223,21 @@
 			            }else{
 			            	//園區下拉
 			            	for(var i=0;i<data.jsonOutput.Page_ParkIntro_Index.length;i++){
-			            		selectBaseResult+='<option value="'+data.jsonOutput.Page_ParkIntro_Index[i].Base+'"';
-			            		if(data.jsonOutput.Page_ParkIntro_Index[i].Base=="00"){
-			            			selectBaseResult+=' class="isIntroOnly" ';
-			            		}
-			            		if(data.jsonOutput.Page_ParkIntro_Index[i].Base==selectValue){
-			            			selectBaseResult+=' selected ';
-			            		}
-			            		selectBaseResult+='">'+data.jsonOutput.Page_ParkIntro_Index[i].BaseName+'</option>';
+			            		if(sub!="subDiv_introInfo"&&i==0){
+
+			            		}else{
+				            		selectBaseResult+='<option value="'+data.jsonOutput.Page_ParkIntro_Index[i].Base+'"';
+				            		if(data.jsonOutput.Page_ParkIntro_Index[i].Base=="00"){
+				            			selectBaseResult+=' class="isIntroOnly" ';
+				            		}
+				            		if(data.jsonOutput.Page_ParkIntro_Index[i].Base==selectValue){
+				            			selectBaseResult+=' selected ';
+				            		}
+				            		selectBaseResult+='">'+data.jsonOutput.Page_ParkIntro_Index[i].BaseName+'</option>';
+				            	}
 			            	}
 			            	$("#index #selectBase").html(selectBaseResult).selectmenu().selectmenu('refresh',true);
+		            		$("#index #selectBase_temp").html(selectBaseResult);
 		            		if(selectValue=="00"){
 		            			//index
 		            			$("#subDiv_introInfo").html(data.jsonOutput.Page_ParkIntro_Index[0].HTML);
@@ -258,10 +295,18 @@
 			}
 			/*pageini event*/
 			$(document).on('pageinit','#index',function(){
+				//產生跑馬燈
+				var jsonObject=getAppInstantMessage();
+				if(jsonObject!=null){
+					var title=jsonObject.chtTitle;
+					genAppInstantMessage($('#newsDiv'),title);
+				}
 				//產生menu
 				genMenu(this);
 				//menu登入確認
 				menuDisplayMemberSection(checkLogin(),this);
+				//取得上方顯示
+				loadDisplayLanguage();
 				//產生上方topList
 				$("#index sub-menu").html(genTopList());
 				//讀取資料
@@ -272,12 +317,49 @@
 		          	$("#index .sub").hide();
 		          	$("#"+$(this).data('href')).show();
 		          	$(this).addClass('hover');
+		          	//預設
+		          	$('#index #footer').hide();
+		          	$('#selectBase').css('display', 'none').parent('div').parent('.ui-select').css('display', 'none');
+		          	var selectedValue=$('#selectBase').find(":selected").val();
+		          	$('#selectBase').html('');
+		          	var options=$('#selectBase_temp option');
+		          	switch($(this).data('href'))
+		          	{
+		          		case "subDiv_introInfo":
+			          		$('#selectBase').css('display', '').parent('div').parent('.ui-select').css('display', '');
+			          		// $('#selectBase option:eq(0)').show();
+		          			break;
+		          		case "subDiv_traffic":
+			          		$('#selectBase').css('display', '').parent('div').parent('.ui-select').css('display', '');
+			          		$('#index #footer').show();
+		          			break;
+		          		case "subDiv_contactInfo":
+							$('#selectBase').css('display', '').parent('div').parent('.ui-select').css('display', '');
+		          			break;
+		          		case "subDiv_artInfo":
+			          		$('#selectBase').css('display', '').parent('div').parent('.ui-select').css('display', '');
+		          			break;
+		          	}
+		          	for(var i=0;i<options.length;i++){
+		          		if(i==0&&$(this).data('href')!="subDiv_introInfo"){
+
+		          		}else{
+			          		$('#selectBase').append($(options[i]).clone());
+			          	}
+		          	}
+		          	$('#selectBase[value="'+selectedValue+'"]').attr('selectBase','selected');
+		          	$('#selectBase').selectmenu('refresh', true);
 				});
 				//下拉園區
 				$(this).on('change','#selectBase',function(){
 					var selectValue=$(this).val();
 					//讀取資料
-					getAreaIntroData(Park,selectValue,$("#index a.sub_link:visible").data("href"));
+					getAreaIntroData(Park,selectValue,$("#index a.sub_link.hover").data("href"));
+				});
+				//外開連結
+				$(this).on('click','.btnOpenBrowser',function(){
+					var url=$(this).data('linkurl');
+					openBrowser(url);
 				});
 			});
 			/*pageshow event*/
@@ -299,7 +381,8 @@
 			function doClassify1Filter(Collapsible_Classify1_ID,classify1){
 				var classifyArray=[],classifyArrayStr="";
 				if(Collapsible_Classify1_ID!=""){
-					var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				// var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				var checkedList=$('#classify1List input[type=checkbox]:checked');
 					//取得SQL string
 					for(var i=0;i<checkedList.length;i++){
 						if(classifyArrayStr!=""){
@@ -367,7 +450,7 @@
 				var jsonObjectStr = JSON.stringify(jsonObject);
 				var nowCode1="";
 				//var classify1ListResult='<a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a>';
-				var classify1ListResult='<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
+				var classify1ListResult='<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
 			    $.ajax({
 			        url:commonURL_DB,
 			        data:  {"jsonInput":jsonObjectStr},
@@ -791,19 +874,21 @@
 			});
 
 			</script>
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 		        <a href="#menu" data-role="none" class="btnMenu"></a>
-                <h1>科學園區簡介</h1>
+                <h1 id="page_title">科學園區簡介</h1>
+    			<div id="newsDiv"></div>
+			  	<!--toplist Start-->
+			  	<div id="sub-menu" style="overflow:auto;height: 51px;">
+				</div>
             </div>
 			<div data-role="content" style="padding:0" id="content"  >
-		  	<!--toplist Start-->
-		  	<div id="sub-menu" style="overflow:auto">
-			</div>
 		  	<!--toplist end-->
 
 			<!--int Start-->
 		    <div class="int">
 		        <select name="select" id="selectBase"></select>
+		    	<div style="display:none" id="selectBase_temp"></div>
 		        <div class="sub" id="subDiv_introInfo" ></div>
 		        <div class="sub" id="subDiv_traffic"></div>
 		        <div class="sub" id="subDiv_visitInfo" ></div>
@@ -813,10 +898,12 @@
 		    </div>
 			<!--int End-->
 			</div>
+			<div data-theme="f" data-role="footer" style="display:none" data-fullScreen="true" id="footer" data-position="fixed">
+			</div>
 		</div>
 		<!--如何到園區_內容頁-->
 		<div class="gridContainer clearfix" data-role="page" id="VisitInfo_content">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a href="#index" data-icon="arrow-l">返回</a>
                 <h1>如何到園區</h1>
             </div>
@@ -829,7 +916,7 @@
 		</div>
 		<!--地圖模組-->
 		<div data-role="page" id="Map_LP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
 		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
                 <h1>生活服務</h1>
@@ -896,7 +983,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="Map_CP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>生活服務</h1>
             </div>

@@ -42,6 +42,7 @@
 		/*global variables*/
 		var langType=getAppSetting_Data().language,Park="00",Base="00",vendorType="00",educationType="00",educationLimit="00",dateRange="00",SN="6";
 		var nowPark=getIdentifyParkBase().Park,nowBase=getIdentifyParkBase().Base,workType=new Array();
+		var park=getIdentifyParkBase().Park,nearAlertSpot=null,Target_Collapsible_Classify1_ID="",map;//地圖模組
 		//function
 		function genSearchControl(){
 		    LoadingObject.show();
@@ -380,7 +381,8 @@
 		function doClassify1Filter(Collapsible_Classify1_ID,classify1){
 			var classifyArray=[],classifyArrayStr="";
 			if(Collapsible_Classify1_ID!=""){
-				var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				// var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				var checkedList=$('#classify1List input[type=checkbox]:checked');
 				//取得SQL string
 				for(var i=0;i<checkedList.length;i++){
 					if(classifyArrayStr!=""){
@@ -448,7 +450,7 @@
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var nowCode1="";
 			//var classify1ListResult='<a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a>';
-			var classify1ListResult='<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
+			var classify1ListResult='<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
 		    $.ajax({
 		        url:commonURL_DB,
 		        data:  {"jsonInput":jsonObjectStr},
@@ -474,6 +476,11 @@
 								// classify1ListResult+='<li data-classify1="'+data.jsonOutput[i].code2+'" data-classify2="'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</li>';
 								classify1ListResult+='<input data-theme="f" data-classify1="'+data.jsonOutput[i].code1+'" data-classify2="'+data.jsonOutput[i].code2+'" type="checkbox" name="checkbox_classifyList" id="checkbox_classifyList_'+data.jsonOutput[i].code2+'"><label for="checkbox_classifyList_'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</label>';
 							}
+							if(data.jsonOutput.length>0){
+								classify1ListResult+='</ul><button data-theme="e" onclick="doClassify1Filter(&#39;Collapsible_Classify1_'+nowCode1+'&#39;,&#39;'+nowCode1+'&#39;);"'+'>查詢</button>';
+								classify1ListResult+='</div>';
+							}
+							
 							$('#Map_LP').find('#classify1List').html(classify1ListResult).trigger('create');
 						}
 						else{
@@ -874,7 +881,7 @@
 	</head>
 	<body>	
 		<div data-role="page" id="QP">	
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
 	            <h1>廠商徵才資訊</h1>
             </div>
@@ -935,7 +942,7 @@
 			</div>
 			<div data-role="popup" id="popupDialog_WorkType" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
 				<div style="text-align:center;padding:25px">
-					<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
+					<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
 	    			<div id="WorkTypeList">	</div>
 		    	</div>		    	
 			</div>
@@ -949,7 +956,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="LP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 		     	<a href="#QP" data-icon="arrow-l">返回</a>
                 <h1>廠商徵才資訊</h1>
 		     	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right" data-mini="true">
@@ -962,7 +969,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="CP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>廠商徵才資訊</h1>
             </div>
@@ -979,7 +986,7 @@
 		</div>
 		<!--地圖模組-->
 		<div data-role="page" id="Map_LP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
 		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
                 <h1>生活服務</h1>
@@ -1046,7 +1053,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="Map_CP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>生活服務</h1>
             </div>

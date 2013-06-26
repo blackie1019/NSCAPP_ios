@@ -49,7 +49,7 @@ function Photo(){
                     afterfunc();
                 }, 
                 function(error) {
-                    alert(error);
+                    // alert(error);//避免取消選圖時彈出視窗，暫時關閉
                     o.sourceCapture="off";
                 }, 
                 { 

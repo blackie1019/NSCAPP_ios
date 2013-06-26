@@ -43,6 +43,7 @@
 		<script src="js/photo.js"></script>	
 		<script src="js/location.js"></script>	
 		<script src="js/data.js"></script>
+		<script src="js/map.js"></script>
 	</head>
 	<body>	
 		<div data-role="page" id="LP">
@@ -70,6 +71,7 @@
 			var jsonObject={"AppType":getAppType(),"typeCode":typeCode,"catalog":catalog,"unit":unit,"keyWord":keyWord,"dateRange":{"beginDate":beginDate,"endDate":endDate},"level":"2","count":count,"index":index};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="";
+			var park=getIdentifyParkBase().Park,nearAlertSpot=null,Target_Collapsible_Classify1_ID="",map;//地圖模組
 			//假資料
 			var DataURL=DataURL_NewsAndEvents_LP;
 		    $.ajax({
@@ -93,7 +95,7 @@
 							 genAdvSearch(data.jsonOutput.catalog,data.jsonOutput.unit);
 							//產生條列內容
 							for(var i=0;i<data.jsonOutput.items.length;i++){
-		                		var Desc=data.jsonOutput.items[i].chtDesc;
+		                		var Desc=data.jsonOutput.items[i].chtDesc.replace('color=#ff0000','');
 		                		if(Desc.length>20){
 		                			Desc=Desc.substr(0,40)+"...";
 		                		}
@@ -321,7 +323,8 @@
 		function doClassify1Filter(Collapsible_Classify1_ID,classify1){
 			var classifyArray=[],classifyArrayStr="";
 			if(Collapsible_Classify1_ID!=""){
-				var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				// var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				var checkedList=$('#classify1List input[type=checkbox]:checked');
 				//取得SQL string
 				for(var i=0;i<checkedList.length;i++){
 					if(classifyArrayStr!=""){
@@ -389,7 +392,7 @@
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var nowCode1="";
 			//var classify1ListResult='<a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a>';
-			var classify1ListResult='<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
+			var classify1ListResult='<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
 		    $.ajax({
 		        url:commonURL_DB,
 		        data:  {"jsonInput":jsonObjectStr},
@@ -812,17 +815,18 @@
 			});
 		});
 		</script>
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed"  data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>訊息與活動</h1>
 		     	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right" data-mini="true">
 		     		<a href="javascript:doRefresh(langType,tmpTypeCode,tmpCatalog,tmpUnit,tmpKeyWord,tmpBeginDate,tmpEndDate,tmpOrderBys,tmpCount,tmpIndex);"><img src="img/NSC/refresh.png" alt="重新整理"></a>
 <!-- 		     		<a data-transition="pop" data-rel="popup" data-position-to="window"  href="#popupDialog_advSearch"><img src="img/NSC/search.png" alt="查詢"></a> -->
 		     	</div>
+		     	 <div id="sub-menu" style="overflow:auto"></div>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 			  	<!--toplist Start-->
-			  	<div id="sub-menu" style="overflow:auto"></div>
+			  	<!-- <div id="sub-menu" style="overflow:auto"></div> -->
 			  	<!--toplist end-->
 				<div class="list2" id="htmlResult">
 				</div>
@@ -864,21 +868,21 @@
 			</div>
 			<div data-role="popup" id="popupDialog_catalog" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
 				<div style="text-align:center;padding:25px">
-					<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
+					<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
 	    			<div style="text-align:center;" id="catalogList">	
 			    	</div>
 			    </div>
 			</div>
 			<div data-role="popup" id="popupDialog_unit" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
 				<div style="text-align:center;padding:25px">
-					<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
+					<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
 	    			<div style="text-align:center;" id="unitList">	
 			    	</div>
 			    </div>
 			</div>
 			<div data-role="popup" id="popupDialog_titleSearch" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
 				<div style="text-align:center;padding:25px">
-					<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
+					<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
 	    			<div style="text-align:center;" id="titleSearch">	
 	    				<input type="search" id="search" value="" placeholder="請輸入關鍵字...">
 	    				<a data-theme="c" onclick="javascript:setKeyword();" data-role="button">查詢</a>
@@ -887,7 +891,7 @@
 			</div>
 			<div data-role="popup" id="popupDialog_dateRange" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
 				<div style="text-align:center;padding:25px">
-					<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
+					<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
 	    			<div id="dateRange">	
 	    				<label for="dateRange">發佈日期:</label>
 	    				<div data-role="controlgroup" data-type="horizontal">
@@ -902,7 +906,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="CP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed"  data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>訊息與活動</h1>
             </div>
@@ -916,7 +920,7 @@
         </div>
 		<!--地圖模組-->
 		<div data-role="page" id="Map_LP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed"  data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
 		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
                 <h1>生活服務</h1>
@@ -983,7 +987,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="Map_CP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed"  data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>生活服務</h1>
             </div>

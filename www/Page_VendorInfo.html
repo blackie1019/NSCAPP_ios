@@ -48,7 +48,48 @@
 		/*global variables*/
 		var langType=getAppSetting_Data().language,keywordType="01",keywordValue="",vendorType="00",Park="00",Base="00",SN="6";
 		var nowPark=getIdentifyParkBase().Park,nowBase=getIdentifyParkBase().Base;
+		var title,park_str,base_str,vendor_str,Type_str,btnBack_str,txt_keywordPlaceHolder_str,popupDialog_keyword_str,btnRoute_str,h2_vendorTitle_str,keywordSearchType_str;
+		var park=getIdentifyParkBase().Park,nearAlertSpot=null,Target_Collapsible_Classify1_ID="",map;//地圖模組
 		//function
+		//更換相關顯示語言
+		function loadDisplayLanguage(){
+			switch(langType){
+				case "ch":
+					title="廠商資訊";
+					park_str="園區";
+					base_str="基地";
+					vendor_str="廠商";
+					Type_str="產業";
+					txt_keywordPlaceHolder_str="請輸入關鍵字...";
+					popupDialog_keyword_str="關鍵字";
+					btnRoute_str="規劃路線";
+					btnBack_str="返回";
+					h2_vendorTitle_str="園區事業廠商資料";
+					keywordSearchType_str="查詢類別";
+					break;
+				case "eng":
+					title="Companies";
+					park_str="Science";
+					base_str="Parks";
+					vendor_str="Industry";
+					Type_str="Category";
+					txt_keywordPlaceHolder_str="Keyword...";
+					popupDialog_keyword_str="Keyword";
+					btnRoute_str="Route";
+					btnBack_str="Back";
+					h2_vendorTitle_str="Companies";
+					keywordSearchType_str="Type";
+					break;
+			}
+
+			$('h1.page_title').text(title);
+			$('#QP #txtKeyword').attr("placeholder",txt_keywordPlaceHolder_str);
+			$('#th_parkbase').text((langType=="ch"?park_str+"/"+base_str+"別":park_str+" "+base_str));
+			$('#th_vendortype').text((langType=="ch"?vendor_str+"/"+Type_str+"別":vendor_str+" "+Type_str));
+			$('#a_popupDialog_keyword').text(popupDialog_keyword_str);
+			$('a.btn_back').text(btnBack_str);
+			$('#h2_infoTitle').text(h2_vendorTitle_str);
+		}
 		function genSearchControl(){
 		    LoadingObject.show();
 			var jsonObject={"langType":langType};
@@ -82,7 +123,7 @@
 								setText: '確定',
 								cancelText: '取消',
 						        group: false,
-						        label: '查詢類別',
+						        label: keywordSearchType_str,
 							});  
 							// $('#LP').find('#mobiScroll_VendorInfo_keywordType').mobiscroll().select({		
 							// 	theme: 'ios',
@@ -104,8 +145,8 @@
 								setText: '確定',
 								cancelText: '取消',
 						        group: true,
-						        label: '基地',
-						        groupLabel: '園區'
+						        label: base_str,
+						        groupLabel: park_str
 							});  
 							$('#mobiScroll_VendorInfo_VendorType').mobiscroll().select({		
 								theme: 'ios',
@@ -116,8 +157,8 @@
 								setText: '確定',
 								cancelText: '取消',
 						        group: true,
-						        label: '產業類別',
-						        groupLabel: '廠商類別'
+						        label: Type_str,
+						        groupLabel: vendor_str
 							}); 
 				 			//園區基地別下拉判別
 							var selectData=getDefaultParkBaseSelectData(false,langType);
@@ -146,11 +187,13 @@
 		     var tmpParkBase=$('#mobiScroll_VendorInfo_ParkBase').mobiscroll('getValue').split("_");
 		    Park=tmpParkBase[0];
 		    Base=tmpParkBase[1];
-		    vendorType=$('#mobiScroll_VendorInfo_VendorType').mobiscroll('getValue').split('_')[1];
+		    vTypes=$('#mobiScroll_VendorInfo_VendorType').mobiscroll('getValue').split('_');
+		    vendorClass=vTypes[0];
+		    vendorType=vTypes[1];
 		    if(vendorType=="00"){
 		    	vendorType="";
 		    }
-			var jsonObject={"langType":langType,"keywordType":keywordType,"keywordValue":keywordValue,"vendorType":vendorType,"Park":Park,"Base":Base};
+			var jsonObject={"langType":langType,"keywordType":keywordType,"keywordValue":keywordValue,"vendorClass":vendorClass,"vendorType":vendorType,"Park":Park,"Base":Base};
 			// var jsonObject={"langType":langType,"keywordType":keywordType,"keywordValue":keywordValue,"Park":Park,"Base":Base,"count":100,"index":1};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="";
@@ -166,7 +209,17 @@
 		            }else{
 		                if(data.status=="success"){
 		                	for(var i=0;i<data.jsonOutput.items.length;i++){
-		                		htmlResult+="<li data-sn='"+data.jsonOutput.items[i].SN+"''><h2>"+data.jsonOutput.items[i].company+"</h2><p class='address'>"+data.jsonOutput.items[i].address+"</p><p class='tel02'>"+data.jsonOutput.items[i].tel+"</p><button data-role='none' data-title='"+data.jsonOutput.items[i].company+"' data-address='"+data.jsonOutput.items[i].address+"' class='btn06 btnRoute'>規劃路線</button></li>";
+		                		htmlResult+="<li data-sn='"+data.jsonOutput.items[i].SN+"''><div class='lp_content'><h2>"+data.jsonOutput.items[i].company+"</h2><p class='address'>"+data.jsonOutput.items[i].address;
+		                		if(data.jsonOutput.items[i].PDATE!=''&&data.jsonOutput.items[i].RDATE==''){
+		                			htmlResult+='<span>(尚未入區登記)</span>';
+		                		}
+		                		htmlResult+="</p></div><p class='tel02'>"+data.jsonOutput.items[i].tel+"</p>";
+		                		if(langType=="ch"){
+		                		htmlResult+="<button data-role='none' data-title='"+data.jsonOutput.items[i].company+"' data-latitude='"+data.jsonOutput.items[i].latitude+"' data-longitude='"+data.jsonOutput.items[i].longitude+"' data-address='"+data.jsonOutput.items[i].address+"' class='btn06 btnRoute'>"+"規劃路線"+"</button>";
+			                	}else{
+		                		htmlResult+="<button data-role='none' data-title='"+data.jsonOutput.items[i].company+"' data-latitude='"+data.jsonOutput.items[i].latitude+"' data-longitude='"+data.jsonOutput.items[i].longitude+"'  data-address='"+data.jsonOutput.items[i].company+"' class='btn06 btnERoute'>"+"Route"+"</button>";
+			                	}
+		                		htmlResult+="</li>";
 	            			}
 	            			if(htmlResult!=""){
 	            				htmlResult="<ul data-role='none'>"+htmlResult+"</ul>";
@@ -190,7 +243,7 @@
 		}
 		function changeToCP(sn){
 		    LoadingObject.show();
-			var jsonObject={"langType":langType,"SN":sn};
+			var jsonObject={"langType":langType,"SN":sn,"AppType":getAppType()};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var infoHtmlResult="",factoryHtmlResult="",tmpPark="",tmpParkIndex=0;
 		    $.ajax({
@@ -218,16 +271,19 @@
 		                			}
 		                			if(tmpPark!=data.jsonOutput.factory[i].Park){
 			                				tmpParkIndex++;
+			                				tmpPark=data.jsonOutput.factory[i].Park;
 			                				factoryHtmlResult+="</ul><br/><ul class='ulParkOther"+tmpParkIndex+"''>";
 			                			
 		                			}
-		                			factoryHtmlResult+="<li>"+
+		                			factoryHtmlResult+="<li data-title='"+data.jsonOutput.factory[i].name+"' data-address='"+data.jsonOutput.factory[i].address+"' data-sn='"+data.jsonOutput.SN+"' data-fid='"+data.jsonOutput.factory[i].F_ID+"' data-factoryregno='"+data.jsonOutput.factory[i].factoryRegNo+"'>"+
 		                							"<div class='title'>"+data.jsonOutput.factory[i].AreaName+"<span>"+data.jsonOutput.factory[i].name+"</span>"+"</div>"+
 						                			"<p>"+data.jsonOutput.factory[i].address+"</p>"+
 						                			"<p>"+data.jsonOutput.factory[i].tel+"</p>";
-						            if(data.jsonOutput.factory[i].Park==nowPark&&data.jsonOutput.factory[i].Base==nowBase){
-						            	factoryHtmlResult+="<div class='arrow'><img src='img/NSC/hook.png' alt='hook'></div>";
-						            }
+						            if(getIsInArea()=="true"){
+							            if(data.jsonOutput.factory[i].Park==nowPark&&data.jsonOutput.factory[i].Base==nowBase){
+							            	factoryHtmlResult+="<div class='arrow'><img src='img/NSC/hook.png' alt='hook'></div>";
+							            }
+							        }
 						            factoryHtmlResult+="</li>";
 		                		}
 		                		factoryHtmlResult+="</ul>";
@@ -235,6 +291,49 @@
 	            				$('#CP').find('#infoHtmlResult').html(infoHtmlResult);
 	            				$('#CP').find('#factoryHtmlResult').html(factoryHtmlResult).trigger('refresh');
 	            				$.mobile.changePage('#CP');
+	            			}else{
+	            				smoke.alert(ServiceCodeErrorString,{},function(){});
+	            			}
+		                }else{
+		                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		                }
+		            }
+		        },
+		        error: function(data){
+		            LoadingObject.hide(); 
+		            smoke.alert(ServiceErrorString,{},function(){});
+		        },
+		        complete: function() {
+		            LoadingObject.hide();
+		        }
+		    });
+		}
+		function changeTosub_CP(SN,F_ID,factoryRegNo){
+		    LoadingObject.show();
+			var jsonObject={"langType":langType,"SN":SN,"F_ID":F_ID,"factoryRegNo":factoryRegNo,"AppType":getAppType()};
+			var jsonObjectStr = JSON.stringify(jsonObject);
+			var infoHtmlResult="";
+		    $.ajax({
+		        url:DataURL_VendorInfo_sub_CP,
+		        data:  {"jsonInput":jsonObjectStr},
+		        type:"POST",
+		        dataType :"json",
+		        async:false,
+		        success:function(data){
+		            if(data==null){
+		                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		            }else{
+		                if(data.status=="success"){
+		                	if(data.jsonOutput!=null){
+		                		for(var i=0;i<data.jsonOutput.info.length;i++){
+		                			infoHtmlResult+="<tr>"+
+						                			"<th scope='row'>"+data.jsonOutput.info[i].row+"</th>"+
+						                			"<td>"+data.jsonOutput.info[i].value+"<td>"+
+						                			"</tr>";
+		                		}
+	            				$('#sub_CP').find('#title').html(data.jsonOutput.title);
+	            				$('#sub_CP').find('#infoHtmlResult').html(infoHtmlResult);
+	            				$.mobile.changePage('#sub_CP');
 	            			}else{
 	            				smoke.alert(ServiceCodeErrorString,{},function(){});
 	            			}
@@ -293,40 +392,45 @@
 			//產生menu
 			genMenu(this);
 			//menu登入確認
-			menuDisplayMemberSection(checkLogin(),this);	
+			menuDisplayMemberSection(checkLogin(),this);
+			//讀取中英文字
+			loadDisplayLanguage();
 			//查詢呈現
 			genSearchControl(langType);
 	        //關鍵字查詢
- 			$(this).find('#btnSearch').on('click',function(){
+ 			$(this).find('.btnSearch').on('click',function(){
 			    var keywordValue=$('#QP #txtKeyword').val();
 			    var keywordType=$('#mobiScroll_VendorInfo_keywordType').mobiscroll('getValue');
+
 			    doRefresh(keywordType,keywordValue);
 			    keywordType=null;keywordValue=null;
 			    delete keywordType;delete keywordValue;
  			});
  		});
  		$(document).on('pageinit','#LP',function(){	
-			$('#LP #select_keywordType').selectmenu('refresh', true);
-			// $( "#popupDialog_keyword" ).bind({
-			//    popupafterclose: function(event, ui) {
-			   	
-			//    }
-			// });
+			$('#LP #select_keywordType').selectmenu().selectmenu('refresh', true);
 			// 條列個別點擊事件
- 			$(this).find('#htmlResult').on('click','li',function(evt){
- 				if ($(evt.target).is("li")) {
-	 				var sn=$(this).data("sn");
+ 			$(this).find('#htmlResult').on('click','.lp_content',function(evt){
+	 				var sn=$(this).parent('li').data("sn");
 	 				changeToCP(sn);
 	 				sn=null;delete sn;
-	 			}
  			});
  			//規劃路線
 			$(this).find('#htmlResult').on('click','.btnRoute',function(evt){
 				var title=$(this).data('title');
 				var address=$(this).data('address');
-				alert(title+address);
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
  				//開啓地圖模組-路徑規劃功能
- 				openMapWithRoute(new posObject(title,address,"","","","",""));
+ 				openMapWithRoute(new posObject(title,address,latitude,longitude,"","",""));
+ 			});
+			$(this).find('#htmlResult').on('click','.btnERoute',function(evt){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+ 				//開啓地圖模組-路徑規劃功能
+ 				openMapWithRoute(new posObject(title,address,latitude,longitude,"","",""));
  			});
  			//關鍵字查詢
  			$(this).find('#btnSearch').on('click',function(){
@@ -339,17 +443,42 @@
 			    delete keywordType;delete keywordValue;
  			});
  		});
+		$(document).on('pageinit','#CP',function(){
+			$('#CP #factoryHtmlResult li').on('click',function(){
+ 				var SN=$(this).data("sn");
+ 				var F_ID=$(this).data("fid");
+ 				var factoryRegNo=$(this).data("factoryregno");
+ 				changeTosub_CP(SN,F_ID,factoryRegNo);
+			});
+		});
+		$(document).on('pageinit','#sub_CP',function(){
+
+		});
+		$(document).on('pagebeforeshow','#QP',function(){	
+			if(langType=="eng"){
+				$('#QP #footer').hide();
+				$('#QP #btnSearch').hide();
+				$('#QP #btnESearch').show();
+
+				$('#CP #div_factory').hide();
+			}else{
+				$('#QP #footer').show();
+				$('#QP #btnSearch').show();
+				$('#QP #btnESearch').hide();
+				$('#CP #div_factory').show();
+			}	
+		});
  		$(document).on('pageshow','#LP',function(){	
 	 		$('#select_keywordType').selectmenu("close");
 	 	});
-
 
 		/*地圖模組*/
 		/*Map function*/
 		function doClassify1Filter(Collapsible_Classify1_ID,classify1){
 			var classifyArray=[],classifyArrayStr="";
 			if(Collapsible_Classify1_ID!=""){
-				var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				// var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				var checkedList=$('#classify1List input[type=checkbox]:checked');
 				//取得SQL string
 				for(var i=0;i<checkedList.length;i++){
 					if(classifyArrayStr!=""){
@@ -417,7 +546,7 @@
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var nowCode1="";
 			//var classify1ListResult='<a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a>';
-			var classify1ListResult='<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
+			var classify1ListResult='<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
 		    $.ajax({
 		        url:commonURL_DB,
 		        data:  {"jsonInput":jsonObjectStr},
@@ -443,6 +572,11 @@
 								// classify1ListResult+='<li data-classify1="'+data.jsonOutput[i].code2+'" data-classify2="'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</li>';
 								classify1ListResult+='<input data-theme="f" data-classify1="'+data.jsonOutput[i].code1+'" data-classify2="'+data.jsonOutput[i].code2+'" type="checkbox" name="checkbox_classifyList" id="checkbox_classifyList_'+data.jsonOutput[i].code2+'"><label for="checkbox_classifyList_'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</label>';
 							}
+							if(data.jsonOutput.length>0){
+								classify1ListResult+='</ul><button data-theme="e" onclick="doClassify1Filter(&#39;Collapsible_Classify1_'+nowCode1+'&#39;,&#39;'+nowCode1+'&#39;);"'+'>查詢</button>';
+								classify1ListResult+='</div>';
+							}
+							
 							$('#Map_LP').find('#classify1List').html(classify1ListResult).trigger('create');
 						}
 						else{
@@ -843,9 +977,9 @@
 	</head>
 	<body>	
 		<div data-role="page" id="QP">	
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
-	            <h1>廠商資訊</h1>
+	            <h1 class="page_title">廠商資訊</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 			<div id="marquee"></div>
@@ -862,14 +996,14 @@
 					  </td>
 					</tr>
 					<tr>
-					  <th scope="row">園區/基地別</th>
+					  <th id="th_parkbase" scope="row">園區/基地別</th>
 					  <td>
 					  	<select data-role="none" name="mobiScroll_VendorInfo_ParkBase" id="mobiScroll_VendorInfo_ParkBase">
 						</select>
 					 </td>
 					</tr>
 					<tr>
-					  <th scope="row">廠商/產業別</th>
+					  <th id="th_vendortype" scope="row">廠商/產業別</th>
 					  <td>
 					  	<select data-role="none" name="mobiScroll_VendorInfo_VendorType" id="mobiScroll_VendorInfo_VendorType">
 						</select>
@@ -878,11 +1012,12 @@
 				</table>
 				</div>	
 				<div style="text-align:center;">
-				<a data-inline="true"  data-theme="e" id="btnSearch" data-role="button" href="#LP">查詢</a>
+				<a data-inline="true"  data-theme="e" class="btnSearch" id="btnSearch" data-role="button" href="#LP">查詢</a>
+				<a data-inline="true"  data-theme="e" class="btnSearch" id="btnESearch" data-role="button" href="#LP">Search</a>
 				</div>
 			</div>
 			</div>
-			<div data-theme="f" data-role="footer" data-position="fixed">
+			<div data-theme="f" data-role="footer" id="footer" data-position="fixed">
 				 <div data-role="navbar">
 				    <ul>
 	            		<li><a class="ui-link hover">園區廠商資訊</a></li>
@@ -892,10 +1027,10 @@
 			</div>
 		</div>
 		<div data-role="page" id="LP">
-			<div data-role="header" data-theme="f">
-		     	<a href="#QP" data-icon="arrow-l">返回</a>
-                <h1>廠商資訊</h1>
-                <a data-rel="popup" data-position-to="window" data-inline="true" data-mini="true" class="ui-btn-default" data-role="button" href="#popupDialog_keyword" data-transition="pop" data-icon="search">關鍵字</a>
+			<div data-role="header" data-position="fixed" data-theme="f">
+		     	<a href="#QP" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_title">廠商資訊</h1>
+                <a data-rel="popup" data-position-to="window" data-inline="true" data-mini="true" class="ui-btn-default" data-role="button" href="#popupDialog_keyword" data-transition="pop" id="a_popupDialog_keyword" data-icon="search">關鍵字</a>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class="list2" id="htmlResult">
@@ -903,7 +1038,7 @@
 			</div>
 			<div data-role="popup" id="popupDialog_keyword" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
 				<div style="text-align:center;padding:25px">
-					<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a>
+					<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a>
 					</div>
 			 		<table>
 				 		<tr>
@@ -926,25 +1061,41 @@
 			loading...
         </div>
 		<div data-role="page" id="CP">
-			<div data-role="header" data-theme="f">
-				<a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>廠商資訊</h1>
+			<div data-role="header" data-position="fixed" data-theme="f">
+				<a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_title">廠商資訊</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 					<div class='int'>
 						<div class='title' id="title"></div>
-						<h2 class="title5">園區事業廠商資料</h2>
+						<h2 class="title5" id="h2_infoTitle">園區事業廠商資料</h2>
 						<table width="100%" summary="最新消息資料表格" class="cptable" id="infoHtmlResult">
 						</table>
+						<div id="div_factory">
 						<h2 class="title5">工廠資料</h2>
 						<div  class="list2" id="factoryHtmlResult">
 						</div>
+						</div>
+					</div>
+			</div>
+		</div>
+		<div data-role="page" id="sub_CP">
+			<div data-role="header" data-position="fixed" data-theme="f">
+				<a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_title">工廠資訊</h1>
+            </div>
+			<div data-role="content" style="padding:0" id="content">
+					<div class='int'>
+						<div class='title' id="title"></div>
+						<h2 class="title5" id="h2_infoTitle">工廠資料</h2>
+						<table width="100%" summary="最新消息資料表格" class="cptable" id="infoHtmlResult">
+						</table>
 					</div>
 			</div>
 		</div>
 		<!--地圖模組-->
 		<div data-role="page" id="Map_LP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
 		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
                 <h1>生活服務</h1>
@@ -1011,7 +1162,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="Map_CP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>生活服務</h1>
             </div>

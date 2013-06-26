@@ -32,8 +32,20 @@ function swichLanguageTo(lang){
 }
 function genAppInstantMessage(contentPage,title){
     var content=$(contentPage).html(),aHTML="";
-    if(content.indexOf("marqueeDiv1")==-1){
-        aHTML='<div class="title2"><div class="tickercontainer" id="marqueeDiv1"><a rel="external" href="index.html#AppInstantMessage"><span>即時公告:</span>'+title+'</a></div><div style="display:none;" id="marqueeDiv2"><marquee class="tickercontainer" scrollamount="3"><a rel="external" href="index.html#AppInstantMessage"><span>即時公告:</span>'+title+'</a></marquee></div></div>';
+    if(typeof(content)!="undefined"&&content.indexOf("marqueeDiv1")==-1){
+        var headr_str="即時公告";
+        switch(getAppType()){
+            case "N":
+                headr_str="竹科即時公告";
+                break;
+            case "C":
+                headr_str="中科即時公告";
+                break;
+            case "S":
+                headr_str="南科即時公告";
+                break;
+        }
+        aHTML='<div class="title2"><div class="tickercontainer" id="marqueeDiv1"><a rel="external" href="index.html#AppInstantMessage"><span>'+headr_str+':</span>'+title+'</a></div><div style="display:none;" id="marqueeDiv2"><marquee class="tickercontainer" scrollamount="3"><a rel="external" href="index.html#AppInstantMessage"><span>'+headr_str+':</span>'+title+'</a></marquee></div></div>';
     }
     contentPage.html(aHTML+content);
     //設定啓動跑馬燈(3秒後)
@@ -83,6 +95,12 @@ function doLoadLBSLandInfoToPage(spotNo,page){
                                 $(page).find('#tel').text(targetObj.tel);
                                 $(page).find('#comment').text(targetObj.comment);
                                 $(page).find('#dataTag').text(targetObj.dataTag);
+                                //初始化
+                                var LBSView_map=new HyMap();
+                                // LBSView_map.ini(document.getElementById('LBS_map_canvas'),new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),12);
+                                LBSView_map.ini(document.getElementById('LBS_map_canvas'),new google.maps.LatLng(targetObj.targetLatitude,targetObj.targetLongitude),15);
+                                LBSView_map.clearMapMarker();
+                                LBSView_map.addMarker(new google.maps.LatLng(targetObj.targetLatitude,targetObj.targetLongitude),LBSView_map.map_icons.position.icon);
                             }else if($(page).attr("id")=="LBS_NewLandInfo"){   
                                 //For EditShow
                                 mobiScroll_LBS_ParkBase=$(page).find('#mobiScroll_LBS_ParkBase');
@@ -1114,7 +1132,7 @@ function genMenu(RootElement){
         html+=' <div data-role="popup" id="popupDialog_ERT" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;padding:20px;" class="ui-corner-all">'+
                 '<a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right" style="position:absolute;top: -10px;">關閉</a><ul data-role="listview" data-inset="true">'+
                 '<li><a href="javascript:openBrowser(&#39;http://ert.stsipa.gov.tw/STSP/IPHONE_F/leak-now.php&#39;)">台南園區</a></li>'+
-                '<li><a href="javascript:openBrowser(&#39;http://60.249.201.137/pda/#39;)">高雄園區</a></li>'+
+                '<li><a href="javascript:openBrowser(&#39;http://60.249.201.137/pda/&#39;)">高雄園區</a></li>'+
                 '</ul></dvi>';
     }
     if(typeof($(RootElement).find("#menu").html())!="undefined"){
@@ -1144,6 +1162,7 @@ function getImageArray(HTML_imgs){
     return imageArray;
 }
 //園區判別
+console.log(123);
 function identifyParkBase(){
     LoadingObject.show();
     var park,base,result_Base="",result_index="",ap,targetPoint;
@@ -1166,8 +1185,12 @@ function identifyParkBase(){
                                 ap.addJSONsPolyPoints(data.Parks[p_index].Bases[b_index].Points);
                                 result_Base=(ap.isPointIn(targetPoint))?data.Parks[p_index].ParkCode+"_"+data.Parks[p_index].Bases[b_index].BaseCode:"";
                                 if(result_Base!=""){
-                                    result_index=p_index+"_"+b_index;
-                                    break;
+                                    if(getDefaultParkAndBase().Park==data.Parks[p_index].ParkCode){
+                                        result_index=p_index+"_"+b_index;
+                                        break;
+                                    }else{
+                                        result_Base="";
+                                    }
                                 }
                             }
                         }
@@ -1178,13 +1201,16 @@ function identifyParkBase(){
                 }
                 if(result_Base==""){
                     setIdentifyParkBase(getDefaultParkAndBase());
+                    setIsInArea(false);
                 }else{
                     var defaultPark=result_Base.split('_')[0];
                     var defaultBase=result_Base.split('_')[1];
                     var defaultParkSelectIndex=result_index.split('_')[0];
                     var defaultBaseSelectIndex=result_index.split('_')[1];
                     setIdentifyParkBase({"Park":defaultPark,"Base":defaultBase,"ParkIndex":defaultParkSelectIndex,"BaseIndex":defaultBaseSelectIndex});
+                    setIsInArea(true);
                 }
+                console.log("1208");
             },
             error: function(data){
                 LoadingObject.hide();
@@ -1197,7 +1223,7 @@ function identifyParkBase(){
                 delete result_Base;delete ap;delete targetPoint;
             }
         });
-    }, onError);
+    },function(){setIdentifyParkBase(getDefaultParkAndBase());});
 }
 //LBS園區判別
 function getDefaultParkAndBase(){
@@ -1315,7 +1341,15 @@ function onError(error) {
     LoadingObject.hide();
 }
 function openBrowser(linkURL){
+    /*
+    20130620 Richard指示這邊先改成inapp模式，並確保不會讓使用者之後反應修改任何與inapp browser相關之問題
+    */
     var ref = window.open(encodeURI(linkURL), '_system', 'location=yes');
+    ref.addEventListener('loadstart', function() { alert(event.url); });
+    // openBrowserInApp(linkURL);
+}
+function openBrowserInApp(linkURL){
+    var ref = window.open(encodeURI(linkURL), '_blank', 'location=yes');
     ref.addEventListener('loadstart', function() { alert(event.url); });
 }
 // function openMap(address){
@@ -1428,14 +1462,26 @@ function iniGPRS(){
         setGPRSData({"lat":mapDefaultPoint.lat,"lng":mapDefaultPoint.lng});
     } 
 }
-function showInstantMessage(messageContent){
+function showInstantMessage(park,messageContent){
+    var Park_str="" 
+    switch(park){
+        case "01":
+            Park_str="竹科";
+            break;
+        case "03":
+            Park_str="中科";
+            break;
+        case "02":
+            Park_str="南科";
+            break;
+    }
     if(messageContent!=""){
     //structure header
         var header = $("<div>").
             attr("data-role", "header").
             attr("data-theme","a").
             addClass("ui-header ui-bar-f").
-            html("<h1>即時公告</h1>");
+            html("<h1>"+Park_str+"即時公告</h1>");
 
         //structure content div
         var content = $("<div>").

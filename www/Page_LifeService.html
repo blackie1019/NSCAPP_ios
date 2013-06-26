@@ -50,8 +50,36 @@
 		<script src="js/map.js"></script>
 		<script  type="text/javascript">
 		/*global variables*/
-		var park=getIdentifyParkBase().Park,dataArray=[],LP_jsonObjectArray=[],nearAlertSpot=null,Target_Collapsible_Classify1_ID="",map;
+		var langType=getAppSetting_Data().language,park=getIdentifyParkBase().Park,dataArray=[],LP_jsonObjectArray=[],nearAlertSpot=null,Target_Collapsible_Classify1_ID="",map;
+		var checkedClassify=[];
+		//語言變數
+		var btnSelect_all_str,btnSelect_none_str;
 		//function
+		//更換相關顯示語言
+		function loadDisplayLanguage(){
+			var title,btnBack_strs,btnSearch_str;
+			switch(langType){
+				case "ch":
+					title="生活服務";
+					btnBack_str="返回";
+					btnSelect_all_str="全選";
+					btnSelect_none_str="清除";
+					btnSearch_str="查詢";
+					break;
+				case "eng":
+					title="Life Information";
+					btnBack_str="Back";
+					btnSelect_all_str="All";
+					btnSelect_none_str="Clear";
+					btnSearch_str="Search";
+					break;
+			}
+
+			$('h1.page_title').text(title);
+			$('a.btn_back').text(btnBack_str);
+			$('#index #btnSelect').val(btnSelect_all_str);
+			$('#index #btnSearch').val(btnSearch_str);
+		}
 		function changeToLP(park,classifyArrayStr){
 			LoadingObject.show();
 			var classifyArray=[];
@@ -94,11 +122,11 @@
 		}
 		function getLifeServiceData(){
 		    LoadingObject.show();
-			var jsonObject={"command":"select c1 .code as code1 ,c2. code as code2, c1.chtName as name1,c2 .chtName as name2 ,c1. engName as ename1,c2 .engName as ename2 ,c1. ximage as image1, c2.ximage as image2 from xLBSClassify2 as c2 left join xLBSClassify1 as c1 on c2.upperClass =c1. code where c1.isValid ='Y' and c1.isPublic ='Y' and c2.isValid ='Y' and c2.isValid ='Y' order by code1, code2"};
+			var jsonObject={"langType":langType};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var sortResult="",nowCode1='',sub_dataArray=[];
 		    $.ajax({
-		        url:commonURL_DB,
+		        url:DataURL_Classify,
 		        data:  {"jsonInput":jsonObjectStr},
 		        type:"POST",
 		        dataType :"jsonp",
@@ -131,6 +159,9 @@
 		                		// 	sortResult+="<div class='next' id='btnNext'><img src='img/NSC/sort_spac.png'></div>";
 		                		// }
 	            			}
+	            			if(sub_dataArray.length>0){
+	            				dataArray.push({"code":nowCode1,"data":sub_dataArray});
+	            			}
 	            			sortResult+="</ul>"
 	        				$('#index').find('#sort').html(sortResult).trigger('create');
 	        				loadDataToList(data.jsonOutput[0].code1);
@@ -153,11 +184,19 @@
 			for(var i=0;i<dataArray.length;i++){
 				if(dataArray[i].code==code){
 					for(var index=0;index<dataArray[i].data.length;index++){
-					htmlResult+="<li><input data-role='none' type='checkbox' name='checkbox' data-code1='"+dataArray[i].code+"' data-code2='"+dataArray[i].data[index].code+"'>"+"<img class='icon_classify2' src='"+dataArray[i].data[index].img+"' />"+dataArray[i].data[index].name+"<span class='arrow'><img data-code1='"+dataArray[i].code+"' data-code2='"+dataArray[i].data[index].code+"' src='img/NSC/arrow.png'></<span></li>";
+					htmlResult+="<li><input ";
+					for(var checkedClassify_index=0;checkedClassify_index<checkedClassify.length;checkedClassify_index++){
+						if(checkedClassify[checkedClassify_index].code1==dataArray[i].code&&checkedClassify[checkedClassify_index].code2==dataArray[i].data[index].code){
+							htmlResult+="checked='checked'";
+							break;
+						}
+					}
+					htmlResult+=" data-role='none' type='checkbox' name='checkbox' data-code1='"+dataArray[i].code+"' data-code2='"+dataArray[i].data[index].code+"'>"+"<img class='icon_classify2' src='"+dataArray[i].data[index].img+"' />"+dataArray[i].data[index].name+"<span class='arrow'><img data-code1='"+dataArray[i].code+"' data-code2='"+dataArray[i].data[index].code+"' src='img/NSC/arrow.png'></<span></li>";
 					}
 					break;
 				}
 			}
+			$('#index').find('#btnSelect').val(btnSelect_all_str);
 			$('#index').find('#list').html(htmlResult!=""?"<ul data-role='none'>"+htmlResult+"</ul>":"").trigger('create');
 		}
 		// pageinit
@@ -173,44 +212,66 @@
 			genMenu(this);
 			//menu登入確認
 			menuDisplayMemberSection(checkLogin(),this);	
+			//更換相關顯示語言
+			loadDisplayLanguage();
 			//首頁資料
 			getLifeServiceData();
 			//全選/取消全部
 			$(this).on('click','#btnSelect',function(){
-				if($(this).val()=="全選"){
+				var checkboxs=$('input[type=checkbox]');
+				var isSelect;
+				if($(this).val()==btnSelect_all_str){
 					$(rootElement).find('#list input[type=checkbox]').attr('checked',true);
-					$(this).val('清除');
+					$(this).val(btnSelect_none_str);
+					isSelect=true;
 				}else{
 					$(rootElement).find('#list input[type=checkbox]').attr('checked',false);
-					$(this).val('全選');
+					$(this).val(btnSelect_all_str);
+					isSelect=false;
+					
+				}
+				for(var checkboxsIndex=0;checkboxsIndex<checkboxs.length;checkboxsIndex++){
+					var inArray=false;
+					var index;
+					var classifyItem={'code1':$(checkboxs[checkboxsIndex]).data('code1'),'code2':$(checkboxs[checkboxsIndex]).data('code2')};
+					for(var i=0;i<checkedClassify.length;i++){
+						if(checkedClassify[i].code1==classifyItem.code1&&checkedClassify[i].code2==classifyItem.code2){
+							inArray=true;
+							index=i;
+							break;
+						}
+					}
+					if(isSelect){
+	 					if(!inArray){
+	 						checkedClassify.push(classifyItem);
+	 					}
+	 				}else{
+	 					if(inArray){
+	 						if(index!=null){
+	 							checkedClassify.splice(index,1);
+	 						}
+	 					}
+	 				}
+	 				classifyItem=null;
+	 				delete classifyItem;
 				}
 			});
 			//查詢
 			$(this).on('click','#btnSearch',function(){
-				var checkElementList=$(rootElement).find('#list input[type=checkbox]');
-				var checkedList=[];
-				for(var i=0;i<checkElementList.length;i++){
-					if($(checkElementList[i]).attr('checked')=='checked'){
-						checkedList.push({"code1":$(checkElementList[i]).data('code1'),"code2":$(checkElementList[i]).data('code2')});
-					}
-				}
-				if(checkedList.length>0){
-					changeToLP(park,getClassifyArrayStr(checkedList));
+				if(checkedClassify.length>0){
+					changeToLP(park,getClassifyArrayStr(checkedClassify));
 				}else{
 					smoke.alert(classify2RequirementString,{ok:"確認"},function(){});
 				}
 			});
-			//各checkbox
-			$(this).on('click','input[type=checkbox]',function(){
- 				var ischecked=$(this).attr('checked');
-				$(this).attr('checked',(ischecked=='checked'?false:true));
- 			});
 			//各項目
 			$(this).find('#sort').on('click','li',function(){
 				$('#sort li').removeClass('here');
 				$(this).addClass('here');	
  				var code=$(this).data("code");
- 				loadDataToList(code);
+ 				loadDataToList(code); 	
+
+ 				//增加該類別子選項
  				code=null;delete code;
  			});
  			//各單選類別
@@ -221,21 +282,72 @@
  			});
  			//各類別點選
  			$(this).find('#list').on('click','li',function(){	
+ 				var inArray=false;
+ 				var index;
+				var classifyItem={'code1':$(this).find('input[type=checkbox]').data('code1'),'code2':$(this).find('input[type=checkbox]').data('code2')};
+				for(var i=0;i<checkedClassify.length;i++){
+					if(checkedClassify[i].code1==classifyItem.code1&&checkedClassify[i].code2==classifyItem.code2){
+						inArray=true;
+						index=i;
+						break;
+					}
+				}
  				if($(this).find('input[type=checkbox]').attr('checked')!="checked"){
+ 					if(!inArray){
+ 						checkedClassify.push(classifyItem);
+ 					}
  					$(this).find('input[type=checkbox]').attr('checked',true);
  				}else{
+ 					if(inArray){
+ 						if(index!=null){
+ 							checkedClassify.splice(index,1);
+ 						}
+ 					}
  					$(this).find('input[type=checkbox]').attr('checked',false);
  				}
+ 				classifyItem=null;
+ 				delete classifyItem;
+ 			});
+			//各checkbox
+			$(this).on('click','input[type=checkbox]',function(){
+ 				var inArray=false;
+ 				var index;
+				var classifyItem={'code1':$(this).data('code1'),'code2':$(this).data('code2')};
+				for(var i=0;i<checkedClassify.length;i++){
+					if(checkedClassify[i].code1==classifyItem.code1&&checkedClassify[i].code2==classifyItem.code2){
+						inArray=true;
+						index=i;
+						break;
+					}
+				}
+ 				if($(this).attr('checked')!="checked"){
+ 					if(!inArray){
+ 						checkedClassify.push(classifyItem);
+ 					}
+ 					$(this).attr('checked',true);
+ 				}else{
+ 					if(inArray){
+ 						if(index!=null){
+ 							checkedClassify.splice(index,1);
+ 						}
+ 					}
+ 					$(this).attr('checked',false);
+ 				}
+ 				classifyItem=null;
+ 				delete classifyItem;
  			});
  		});
-
-
+		$(document).on('pageinit','#index',function(){
+			//將子選項清除
+			checkedClassify=[];
+		});	
 		/*地圖模組*/
 		/*Map function*/
 		function doClassify1Filter(Collapsible_Classify1_ID,classify1){
 			var classifyArray=[],classifyArrayStr="";
 			if(Collapsible_Classify1_ID!=""){
-				var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				// var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				var checkedList=$('#classify1List input[type=checkbox]:checked');
 				//取得SQL string
 				for(var i=0;i<checkedList.length;i++){
 					if(classifyArrayStr!=""){
@@ -299,13 +411,13 @@
 		}
 		function genClassify1List(){
 			 LoadingObject.show();
-			var jsonObject={"command":"select c1 .code as code1 ,c2. code as code2, c1.chtName as name1,c2 .chtName as name2 ,c1. engName as ename1,c2 .engName as ename2 ,c1. ximage as image1, c2.ximage as image2 from xLBSClassify2 as c2 left join xLBSClassify1 as c1 on c2.upperClass =c1. code where c1.isValid ='Y' and c1.isPublic ='Y' and c2.isValid ='Y' and c2.isValid ='Y' order by code1, code2"};
+			var jsonObject={"langType":langType};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var nowCode1="";
 			//var classify1ListResult='<a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a>';
-			var classify1ListResult='<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
+			var classify1ListResult='<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
 		    $.ajax({
-		        url:commonURL_DB,
+		        url:DataURL_Classify,
 		        data:  {"jsonInput":jsonObjectStr},
 		        type:"POST",
 		        dataType :"jsonp",
@@ -328,6 +440,10 @@
 								}
 								// classify1ListResult+='<li data-classify1="'+data.jsonOutput[i].code2+'" data-classify2="'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</li>';
 								classify1ListResult+='<input data-theme="f" data-classify1="'+data.jsonOutput[i].code1+'" data-classify2="'+data.jsonOutput[i].code2+'" type="checkbox" name="checkbox_classifyList" id="checkbox_classifyList_'+data.jsonOutput[i].code2+'"><label for="checkbox_classifyList_'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</label>';
+							}
+							if(data.jsonOutput.length>0){
+								classify1ListResult+='</ul><button data-theme="e" onclick="doClassify1Filter(&#39;Collapsible_Classify1_'+nowCode1+'&#39;,&#39;'+nowCode1+'&#39;);"'+'>查詢</button>';
+								classify1ListResult+='</div>';
 							}
 							$('#Map_LP').find('#classify1List').html(classify1ListResult).trigger('create');
 						}
@@ -729,9 +845,9 @@
 	</head>
 	<body>	
 		 <div data-role="page" id="index">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
-                <h1>生活服務</h1>
+                <h1 class="page_title">生活服務</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 			    <!--path Start-->
@@ -744,10 +860,10 @@
 			</div>
 		</div>
 		<div data-role="page" id="Map_LP">
-			<div data-role="header" data-theme="f">
-				<a data-rel="back" data-icon="arrow-l">返回</a>
+			<div data-role="header" data-position="fixed" data-theme="f">
+				<a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
 		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
-                <h1>生活服務</h1>
+                <h1 class="page_title">生活服務</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div id='dataMap' class='acenter'>
@@ -811,9 +927,9 @@
 			</div>
 		</div>
 		<div data-role="page" id="Map_CP">
-			<div data-role="header" data-theme="f">
-				<a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>生活服務</h1>
+			<div data-role="header" data-position="fixed" data-theme="f">
+				<a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_title">生活服務</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 			</div>

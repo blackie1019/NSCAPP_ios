@@ -45,8 +45,59 @@
 		<script src="js/data.js"></script>
 		<script  type="text/javascript">
 		/*global variables*/
-		var nowAppCode="n",langType=getAppSetting_Data().language;
+		var nowAppCode="n",Park=getDefaultParkAndBase().Park,langType=getAppSetting_Data().language,txt_keywordPlaceHolder_str;
 		//function
+		//更換相關顯示語言
+		function loadDisplayLanguage(){
+			var title,btnBack_str,subTitle_QA_str,subTitle_ContactUs_str;
+			switch(langType){
+				case "ch":
+					title="關於";
+					btnBack_str="返回";
+					subTitle_QA_str="常見問題";
+					subTitle_ContactUs_str="聯絡我們";
+					txt_keywordPlaceHolder_str="請輸入關鍵字...";
+					break;
+				case "eng":
+					title="About";
+					btnBack_str="Back";
+					subTitle_QA_str="Q&A";
+					subTitle_ContactUs_str="Contact US";
+					txt_keywordPlaceHolder_str="Keyword...";
+					break;
+			}
+
+			$('h1.page_title').text(title);
+			$('a.btn_back').text(btnBack_str);
+			$('#QA_NP div.title2').html(subTitle_QA_str);
+			$('#QA_LP h1.page_subTitle').html(subTitle_QA_str);
+			$('#QA_CP h1.page_subTitle').html(subTitle_QA_str);
+			$('#ContactUs div.title2').html(subTitle_ContactUs_str);
+		}
+		function loadDisplay(){
+			var htmlResult="";
+			switch(langType){
+				case "ch":
+					htmlResult+='<ul style="padding:1em">'+
+				    '<li data-href="#Profile"><h2>個人資料</h2><div class="arrow"><img src="img/NSC/arrow.png" alt="arrow"></img></div></li>'+
+				    '<li data-href="#NotificaitonSetting"><h2>提醒通知</h2><div class="arrow"><img src="img/NSC/arrow.png" alt="arrow"></img></div></li>'+
+				    '<li data-href="#SystemMessage_LP"><h2>系統公告</h2><div class="arrow"><img src="img/NSC/arrow.png" alt="arrow"></img></div></li>'+
+				    '<li data-href="#AppInfo"><h2>其他APP</h2><div class="arrow"><img src="img/NSC/arrow.png" alt="arrow"></img></div></li>'+
+				    '<li data-href="#QA_NP"><h2>常見問題</h2><div class="arrow"><img src="img/NSC/arrow.png" alt="arrow"></img></div></li>'+
+				    '<li data-href="#ContactUs"><h2>聯絡我們</h2><div class="arrow"><img src="img/NSC/arrow.png" alt="arrow"></img></div></li>'+
+				    '<li style="height:30px;" data-href=""><h2>版本資訊</h2><input style="float:right;position:relative;top:-20px" type="submit" data-role="none" value="更新" id="btnDownload" class="btn02"></input></li>'+
+					'</ul>'
+					break;
+				case "eng":
+					htmlResult+='<ul style="padding:1em">'+
+				    '<li data-href="#QA_NP"><h2>Q&A</h2><div class="arrow"><img src="img/NSC/arrow.png" alt="arrow"></img></div></li>'+
+				    '<li data-href="#ContactUs"><h2>Contact Us</h2><div class="arrow"><img src="img/NSC/arrow.png" alt="arrow"></img></div></li>'+
+				    '<li style="height:30px;" data-href=""><h2>Version</h2><input style="float:right;position:relative;top:-20px" type="submit" data-role="none" value="update" id="btnDownload" class="btn02"></input></li>'+
+					'</ul>'
+					break;
+			}
+			$('#index').find('#htmlResult').html(htmlResult).trigger('create');
+		}
 		function doRefresh_Profile(){
 			var memberData=getLoginData(),htmlResult="";
 			if(memberData!=null){
@@ -77,7 +128,7 @@
 		            }else{
 		                if(data.status=="success"){
 		                	for(var i=0;i<data.jsonOutput.length;i++){
-		                		htmlResult+="<li data-typecode='"+data.jsonOutput[i].SN+"''><div class='image'><img src='http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/data/faqClassify/"+data.jsonOutput[i].ximage+"' alt='icon'></img></div><h2>"+data.jsonOutput[i].chtTitle+"</h2><p>"+data.jsonOutput[i].chtDesc+"</p><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></div></li>";
+		                		htmlResult+="<li data-typecode='"+data.jsonOutput[i].SN+"''><div class='image'><img src='"+Setting_FAQImgSrc+data.jsonOutput[i].ximage+"' alt='icon'></img></div><h2>"+data.jsonOutput[i].chtTitle+"</h2><p>"+data.jsonOutput[i].chtDesc+"</p><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></div></li>";
 		                	}
 		              //   	for(var i=0;i<data.jsonOutput.catalogs.length;i++){
 		              //   		htmlResult+="<li data-typecode='"+data.jsonOutput.catalogs[i].faqType+"''><div class='image'><img src='"+data.jsonOutput.catalogs[i].icon+"' alt='icon'></img></div><h2>"+data.jsonOutput.catalogs[i].subject+"</h2><p>"+data.jsonOutput.catalogs[i].desc+"</p><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></div></li>";
@@ -101,7 +152,7 @@
 		}
 		function changeToQA_LP(title,typeCode){
 	 		LoadingObject.show();
-			var jsonObject={"typeCode":typeCode,"langType":langType};
+			var jsonObject={"typeCode":typeCode,"langType":langType,"AppType":getAppType()};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult=""; 
 		    $.ajax({
@@ -123,7 +174,7 @@
 	            			// }	
 	            			if(htmlResult!=""){
 	            				$('#QA_LP').find('.title2').html(title);
-	            				$('#QA_LP').find('#htmlResult').html("<ul data-role='listview' data-filter='true' data-filter-placeholder='請輸入關鍵字...' data-inset='true'>"+htmlResult+"</ul>");
+	            				$('#QA_LP').find('#htmlResult').html("<ul data-role='listview' data-filter='true' data-filter-placeholder='"+txt_keywordPlaceHolder_str+"' data-inset='true'>"+htmlResult+"</ul>");
 	            			}
 	            			//切換至QA_LP
 	            			$.mobile.changePage('#QA_LP');
@@ -306,13 +357,13 @@
 		        }
 		    });
 		}
-		function doRefresh_ContactUs(Park){
+		function doRefresh_ContactUs(){
 		    LoadingObject.show();
-			var jsonObject={"command":"select chtDesc from aboutUs where parkArea='"+Park+"'","count":1,"index":1};
+			var jsonObject={"AppType":Park,"langType":langType};//這邊AppType確定要帶園區沒錯
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="";
 		    $.ajax({
-		        url:DataURL_FAQ_NP,
+		        url:DataURL_ContactUs,
 		        data:  {"jsonInput":jsonObjectStr},
 		        type:"POST",
 		        dataType :"jsonp",
@@ -322,7 +373,7 @@
 		                 smoke.alert(ServiceCodeErrorString,{},function(){});
 		            }else{
 		                if(data.status=="success"){
-		                	htmlResult+=data.jsonOutput[0].chtDesc;
+		                	htmlResult+=data.jsonOutput.chtDesc;
 	            			if(htmlResult!=""){
 	            				$('#ContactUs').find('#htmlResult').html(htmlResult).trigger('create');
 	            			}
@@ -349,7 +400,11 @@
 			//產生menu
 			genMenu(this);
 			//menu登入確認
-			menuDisplayMemberSection(checkLogin(),this);	
+			menuDisplayMemberSection(checkLogin(),this);
+			//取得顯示設定
+			loadDisplay();	
+			//更換相關顯示語言
+			loadDisplayLanguage();
 			//取得更新按鈕之url
 			getBtnDownloadURL(nowAppCode);
 			//條列連接頁面設定
@@ -365,6 +420,17 @@
  				openBrowser(url);
  				url=null;delete url;
 			});
+ 		});
+ 		$(document).on('pageinit','#NotificaitonSetting',function(){
+ 			var rootElement=this;
+ 			$(this).find('#slider_Notificaiton').on( "slidestop", function() {
+ 				if($(this).val()=="off"){
+ 					$(rootElement).find(div_Notification_radios).show();
+ 					// alert(	)
+ 				}else{
+ 					$(rootElement).find(div_Notification_radios).hide();
+ 				}
+ 			});
  		});
  		$(document).on('pageinit','#QA_NP',function(){	
  			$(this).find('#htmlResult').on('click','li',function(){
@@ -396,11 +462,18 @@
  			});
  		});
 		$(document).on('pageinit','#ContactUs',function(){
-			var Park='01';
 			//內容呈現
-			doRefresh_ContactUs(Park);
+			doRefresh_ContactUs();
 		});
  		//pagebeforeshow
+ 		$(document).on('pagebeforeshow','#NotificaitonSetting',function(){
+ 			var rootElement=this;
+ 			if($(this).find('#slider_Notificaiton').val()=="off"){
+				$(rootElement).find(div_Notification_radios).show();
+			}else{
+				$(rootElement).find(div_Notification_radios).hide();
+			}
+ 		});
 		$(document).on('pagebeforeshow','#QA_NP',function(){	
 			//條列呈現
 			doRefresh_QA_NP();
@@ -423,34 +496,24 @@
 			//內容呈現
 			doRefresh_AppInfo();
 		});
-
 		</script>
 	</head>
 	<body>	
 		<div data-role="page" id="index">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
-                <h1>關於</h1>
+                <h1 class="page_title">關於</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class="list2" id="htmlResult">
-				<ul style="padding:1em">
-				    <li data-href="#Profile"><h2>個人資料</h2><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>
-				    <li data-href="#NotificaitonSetting"><h2>提醒通知</h2><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>
-				    <li data-href="#SystemMessage_LP"><h2>系統公告</h2><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>
-				    <li data-href="#AppInfo"><h2>其他APP</h2><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>
-				    <li data-href="#QA_NP"><h2>常見問題</h2><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>
-				    <li data-href="#ContactUs"><h2>聯絡我們</h2><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>
-				    <li style="height:30px;" data-href=""><h2>版本資訊</h2><input style="float:right;position:relative;top:-20px" type="submit" data-role="none" value="更新" id="btnDownload" class="btn02"></input></li>
-				</ul>
 				</div>
 			</div>
 		</div>
 		<!--個人資料-->
 		<div data-role="page" id="Profile">
-			<div data-role="header" data-theme="f">
-			     <a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>關於</h1>
+			<div data-role="header" data-position="fixed" data-theme="f">
+			     <a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_title">關於</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class='title2'>個人資料</div>
@@ -460,21 +523,42 @@
 		</div>
 		<!--提醒通知-->
 		<div data-role="page" id="NotificaitonSetting">
-			<div data-role="header" data-theme="f">
-			     <a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>關於</h1>
+			<div data-role="header" data-position="fixed" data-theme="f">
+			     <a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_title">關於</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class='title2'>提醒通知</div>
 				<div class="list2" id="htmlResult">
+					<table>
+						<tr>
+							<td class="defaultTD"><label class="defaultLabel">通知設定:</label></td>
+							<td>
+								<select name="slider_Notificaiton" id="slider_Notificaiton" data-role="slider">
+									    <option value="on">On</option>
+									    <option selected="" value="off">Off</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					<div id="div_Notification_radios">
+					<fieldset data-role="controlgroup">
+					        <input type="radio" name="radio-choice-1" id="radio_Notification_1" value="1" checked="checked">
+					        <label for="radio_Notification_1">震動+響鈴</label>
+					        <input type="radio" name="radio-choice-1" id="radio_Notification_2" value="2">
+					        <label for="radio_Notification_2">震動</label>
+					        <input type="radio" name="radio-choice-1" id="radio_Notification_3" value="3">
+					        <label for="radio_Notification_3">響鈴</label>
+					</fieldset>
+					</div>
 				</div>
 			</div>
 		</div>
 		<!--系統公告-->
 		<div data-role="page" id="SystemMessage_LP">
-			<div data-role="header" data-theme="f">
-			    <a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>關於</h1>
+			<div data-role="header" data-position="fixed" data-theme="f">
+			    <a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_title">關於</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class='title2'>系統公告</div>
@@ -483,8 +567,8 @@
 			</div>
 		</div>
 		<div data-role="page" id="SystemMessage_CP">
-			<div data-role="header" data-theme="f">
-			    <a data-rel="back" data-icon="arrow-l">返回</a>
+			<div data-role="header" data-position="fixed" data-theme="f">
+			    <a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
                 <h1>系統公告</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
@@ -494,9 +578,9 @@
 		</div>
 		<!--其他APP-->
 		<div data-role="page" id="AppInfo">
-			<div data-role="header" data-theme="f">
-			    <a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>關於</h1>
+			<div data-role="header" data-position="fixed" data-theme="f">
+			    <a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_title">關於</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class='title2'>其他APP</div>
@@ -507,9 +591,9 @@
 		</div>
 		<!--常見問題-->
 		<div data-role="page" id="QA_NP">
-			<div data-role="header" data-theme="f">
-			    <a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>關於</h1>
+			<div data-role="header" data-position="fixed" data-theme="f">
+			    <a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_title">關於</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class='title2'>常見問題</div>
@@ -518,9 +602,9 @@
 			</div>
 		</div>
 		<div data-role="page" id="QA_LP">
-			<div data-role="header" data-theme="f">
-			    <a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>常見問題</h1>
+			<div data-role="header" data-position="fixed" data-theme="f">
+			    <a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_subTitle">常見問題</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class='title2'></div>
@@ -529,9 +613,9 @@
 			</div>
 		</div>
 		<div data-role="page" id="QA_CP">
-			<div data-role="header" data-theme="f">
-			    <a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>常見問題</h1>
+			<div data-role="header" data-position="fixed" data-theme="f">
+			    <a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1 class="page_subTitle">常見問題</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class='title2'></div>
@@ -541,16 +625,13 @@
 		</div>
 		<!--聯絡我們-->
 		<div data-role="page" id="ContactUs">
-			<div data-role="header" data-theme="f">
-			    <a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>關於</h1>
+			<div data-role="header" data-position="fixed" data-theme="f">
+			    <a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
+                <h1  class="page_title">關於</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class='title2'>聯絡我們</div>
 				<div class="list2" id="htmlResult">
-					如有任何問題，歡迎與我們聯繫：<br/>
-					聯絡電話：<a href="tel:035773311">(03)5773311</a><br/>
-					聯絡信箱：<a href="mailto:abc@sipa.gov.tw?subject=智慧達人+ 問題回報">abc@sipa.gov.tw</a><br/>
 				</div>
 			</div>
 		</div>

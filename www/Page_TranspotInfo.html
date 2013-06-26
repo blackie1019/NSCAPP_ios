@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html><!-- manifest="cache.appcache" 開啟Cache 功能-->
     <head>
+    	<meta name="viewport" content="user-scalable=yes"></meta><!--為了支援路線圖縮放-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
         <!--ios-->
         <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
@@ -26,10 +27,10 @@
 		  	 var nowDate = new Date();
 		  	 nowDate=new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
 			//高鐵
-			$('#index_01 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll().datetime({
+			$('#index_01 #mobiScroll_TranspotInfo_TravelDateTime_1').mobiscroll().datetime({
 				minDate: nowDate,
 				dateFormat:'yy/mm/dd',
-				dateOrder:'yyMDdd',
+				dateOrder:'yyMddD',
 				timeWheels: 'hhii a',
 				timeFormat: 'HH:ii',
 				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
@@ -48,12 +49,12 @@
 				setText: '確定',
 				cancelText: '取消'
 			}); 
-			$('#index_01 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('setValue',nowDate,true);
+			$('#index_01 #mobiScroll_TranspotInfo_TravelDateTime_1').mobiscroll('setValue',nowDate,true);
 			//台鐵
-			$('#index_02 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll().datetime({
+			$('#index_02 #mobiScroll_TranspotInfo_TravelDateTime_2').mobiscroll().datetime({
 				minDate: new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate()),
 				dateFormat:'yy/mm/dd',
-				dateOrder:'yyMDdd',
+				dateOrder:'yyMddD',
 				timeWheels: 'hhii a',
 				timeFormat: 'HH:ii',
 				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
@@ -72,12 +73,12 @@
 				setText: '確定',
 				cancelText: '取消'
 			});   
-			$('#index_02 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('setValue',nowDate,true);
+			$('#index_02 #mobiScroll_TranspotInfo_TravelDateTime_2').mobiscroll('setValue',nowDate,true);
 			//客運
-			$('#index_03 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll().datetime({
+			$('#index_03 #mobiScroll_TranspotInfo_TravelDateTime_3').mobiscroll().datetime({
 				minDate: new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate()),
 				dateFormat:'yy/mm/dd',
-				dateOrder:'yyMDdd',
+				dateOrder:'yyMddD',
 				timeWheels: 'hhii a',
 				timeFormat: 'HH:ii',
 				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
@@ -96,12 +97,12 @@
 				setText: '確定',
 				cancelText: '取消'
 			});   
-			$('#index_03 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('setValue',nowDate,true);
+			$('#index_03 #mobiScroll_TranspotInfo_TravelDateTime_3').mobiscroll('setValue',nowDate,true);
 			//市區公車
 			$('#index_04 #mobiScroll_TranspotInfo_TravelDateTime').mobiscroll().datetime({
 				minDate: new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate()),
 				dateFormat:'yy/mm/dd',
-				dateOrder:'yyMDdd',
+				dateOrder:'yyMddD',
 				timeWheels: 'hhii a',
 				timeFormat: 'HH:ii',
 				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
@@ -153,6 +154,8 @@
 	 		}
 		/*global variables*/
 		var AppType=getAppType(),Park=getIdentifyParkBase().Park,Base=getIdentifyParkBase().Base,LP_05_1_mapObject,divRouteMap_map,BusMap_map,setPosition_map;
+		var stopSwithStatus_index_01=true,stopSwithStatus_index_02=true;
+		var park=getIdentifyParkBase().Park,nearAlertSpot=null,Target_Collapsible_Classify1_ID="",map;//地圖模組
 		//function
 		function getAroundStop(targetPark,targetBase,lat,lng,hh,mm,sortBy){
 			LoadingObject.show();
@@ -171,7 +174,7 @@
 		                 smoke.alert(ServiceCodeErrorString,{},function(){});
 		            }else{
 		                if(data.statusCode!="500"){
-		                	titleHtmlResult+="<h2 style='text-align:left!important;'><div class='title'><span>你現在鄰近:</span>"+data.spotInfo.chtName+"<button id='btnsetPosition' data-mini='true' data-inline='true' id='btnGetLocationInMap' data-latitude='"+data.spotInfo.latitude+"' data-role='"+data.spotInfo.longitude+"' data-address='' data-title='"+data.spotInfo.chtName+"' data-spotno='"+data.spotInfo.spotNo+"'>定位</button></div></h2>";
+			                	titleHtmlResult+="<h2 style='text-align:left!important;'><div class='title'><span>你現在鄰近:</span>"+data.spotInfo.chtName+"<button id='btnsetPosition' data-mini='true' data-inline='true' data-latitude='"+data.spotInfo.latitude+"' data-role='"+data.spotInfo.longitude+"' data-address='' data-title='"+data.spotInfo.chtName+"' data-spotno='"+data.spotInfo.spotNo+"'>定位</button><button id='btnRoutePosition' data-mini='true' data-inline='true' data-latitude='"+data.spotInfo.latitude+"' data-longitude='"+data.spotInfo.longitude+"' data-address='' data-title='"+data.spotInfo.chtName+"' data-spotno='"+data.spotInfo.spotNo+"'>規劃路線</button></div></h2>";
 		                		for(var i=0;i<data.transportList.length;i++){
 		                			htmlResult+="<tr data-park='"+targetPark+"' data-traffictype='"+data.transportList[i].trafficType+"' data-lineno='"+data.transportList[i].lineNO+"' data-base='"+targetBase	+"' data-no='"+(i+1)+"' data-spotcode='"+data.transportList[i].stopCode+"' ";
 		                			if(i>4){
@@ -352,7 +355,7 @@
 			                if(data.chtMemo!=""){
 	    						divTimeTable_htmlResult+='<div class="note2"><p><span>註：</span>'+data.chtMemo+'</p></div>';
 	    					}
-	    					if(data.lineNO=="orange-go"){
+	    					if(data.lineNO=="orange-go"||data.lineNO=="ctspb07"||data.lineNO=="000210001"||data.lineNO=="000210002"||data.lineNO=="000210005"||data.lineNO=="000210007"){
 	    						divTimeTable_htmlResult+='<a data-role="button" data-theme="f" id="btnToCP_05" data-hh="'+data.timeList[0].beginHour+'" data-mm="'+data.timeList[0].beginMin+'" >高鐵轉乘資訊</a>';
 	    					}
 		                	//站點班次
@@ -371,7 +374,7 @@
 										    '<td>'+data.scheduleStopTimeList[i].transportList[transportList_index].xdistance+'公里</td>'+
 										    '</tr>';
 									}
-								    divStopList_htmlResult+='</tbody></table></div>';
+								    divStopList_htmlResult+='</tbody></table><div>'+data.chtMemo+'</div></div>';
 			                	}
 							}
 		                	//路線圖
@@ -502,11 +505,12 @@
 		            		}else{
 		            			htmlResult+="<tr><td colspan='4'>查無資料</td></tr>";
 		            		}
-	            			if(htmlResult!=""){
-	            				$('#LP_05_2').find('#title').html(data.quertTime+" "+lineText+" "+data.chtTitle);
-	            				$('#LP_05_2').find('#dataList').html("<tbody><tr><th scope='col'>班次</th><th scope='col'>發車時間</th></tr>"+htmlResult+"</tbody>");
-	            				$.mobile.changePage('#LP_05_2');
-	            			}
+	            			
+            				$('#LP_05_2').find('#title').html(data.quertTime+" "+lineText+" "+data.chtTitle);
+            				$('#LP_05_2').find('#dataList').html("<tbody><tr><th scope='col'>班次</th><th scope='col'>發車時間</th></tr>"+htmlResult+"</tbody>");
+            				$('#LP_05_2').find('#memo').html("<div>"+data.chtMemo+"</div>");
+            				$.mobile.changePage('#LP_05_2');
+	            			
 		                }else{
 		                    smoke.alert(data.message,{},function(){});
 		                }
@@ -543,7 +547,7 @@
 				 			//建立巴士marker
 				 			for(var i=0;i<data.busList.length;i++){
 				 				var posLatLng=new google.maps.LatLng(data.busList[i].latitude,data.busList[i].longitude);
-				 				BusMap_map.addMarker(posLatLng,(typeof(data.vehiclePic)!="undefined"?Setting_lineImgSrc+data.vehiclePic:BusMap_map.map_icons.position.icon));
+				 				BusMap_map.addBusMarker(posLatLng,genBusInfoHTML(data.lineName,data.busList[i]),(typeof(data.vehiclePic)!="undefined"?Setting_lineImgSrc+data.vehiclePic:BusMap_map.map_icons.position.icon));
 				 			}
 				 			if(data.busList.length>0){
 					 			//設定以第一台巴士為中心點
@@ -564,9 +568,21 @@
 		        }
 		    });
 		}
+		function genBusInfoHTML(lineName,data){
+			var content='<div>';
+				content+='<h2>巡迴巴士:'+lineName+'</h2>'+
+						'<ul class="busInfoHTML">'+
+						'<li>車牌號碼:'+data.busID+'</li>'+
+						'<li>行駛車速:'+data.speed+'公里/小時</li>'+
+						'<li>最近更新時間:'+data.updateTime+'</li>'+
+						'<li>目前狀態:'+(data.typeID=="ON"?"行駛中":"停駛中")+'</li>';
+						'</ul>';
+			    content+='</div>';
+			return content;
+		}
 		function gentransPlanningOptions(park,base){
 			LoadingObject.show();
-			var jsonObject={"command":"select chtTitle,latitude,longitude,chtAddress from RouteLocation where parkArea='"+park+"' and parkLocation='"+base+"'"};
+			var jsonObject={"command":"select chtTitle,latitude,longitude,chtAddress from RouteLocation where parkArea='"+park+"' and parkLocation='"+base+"' order by chtTitle COLLATE Chinese_PRC_Stroke_ci_as"};
 			// jsonObject={"command":"select chtTitle,latitude,longitude,chtAddress from RouteLocationwhere parkArea='"+park+"'}";
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="";
@@ -610,7 +626,7 @@
 			LoadingObject.show();
 			var jsonObject={"parkArea":Park,"lineNo":lineNo};
 			var jsonObjectStr = JSON.stringify(jsonObject);
-			var htmlResult="",FromDest_htmlResult="";
+			var htmlResult="",FromDest_htmlResult="",lineDesc_htmlResult="";
 		    $.ajax({
 		        url:DataURL_TranspoltInfo_index_03,
 		        data:  {"jsonInput":jsonObjectStr},
@@ -655,10 +671,26 @@
 									});
 									$('#index_03').trigger('create');
 		            			}
-
-		            			$('#index_03').find('#lineDesc').html("test");
+		            			switch(AppType){
+		            				case "N":
+		            					lineDesc_htmlResult+='<li>'+
+		            										'表列班次，非每班皆進入竹科，僅供參考，詳請逕洽各客運公司網站('+
+		            										'<a href="javascript:openBrowser(&#39;http://www.ubus.com.tw/&#39;)">統聯客運<a>'+'、'+
+		            										'<a href="javascript:openBrowser(&#39;http://www.yalanbus.com.tw/&#39;)">亞聯客運<a>'+'、'+
+		            										'<a href="javascript:openBrowser(&#39;http://www.kingbus.com.tw/index.php&#39;)">國光客運<a>'+
+		            										')。</li>';
+		            					break;
+		            				case "C":
+		            					lineDesc_htmlResult+='<li>'+
+		            										'表列班次，僅供參考，詳請逕洽各客運公司網站('+
+		            										'<a href="javascript:openBrowser(&#39;http://www.ubus.com.tw/&#39;)">統聯客運<a>'+'、'+
+		            										'<a href="javascript:openBrowser(&#39;http://www.kingbus.com.tw/index.php&#39;)">國光客運<a>'+
+		            										')。</li>';
+		            					break;
+		            			}
+		            			$('#index_03').find('#lineDesc').html(lineDesc_htmlResult);
     					 }else{
-		                    smoke.alert(data.messange,{},function(){});
+		                    smoke.alert(data.message,{},function(){});
 		                }
 		            }
 		        },
@@ -722,10 +754,10 @@
 		            			}
 
 		            			$('#index_04').find('#lineDesc').html($('#index_04').find('#selectLines option:selected').data('desc'));
-		            			$('#index_04').find('#formBtn').html('<input data-role="none" type="submit" name="reset"  id="btn_search" value="查詢" class="btn09"><input data-role="none" type="submit" name="button" id="btnAroundStop" value="附近站點" class="btn03"></input>');
+		            			$('#index_04').find('#formBtn').html('<input data-role="none" type="submit" name="reset"  id="btn_search" value="查詢" class="btn09"><input data-role="none" type="submit" name="button" id="btnAroundStop" value="鄰近站點" class="btn03"></input>');
 
     					 }else{
-		                    smoke.alert(data.messange,{},function(){});
+		                    smoke.alert(data.message,{},function(){});
 		                }
 		            }
 		        },
@@ -763,7 +795,8 @@
 			            			}
 			            			htmlResult+='</tbody></table>';
 			            		}
-			            		$('#LP_03').find('#pathImg').html('<img src="'+Setting_imgSrc+"line/"+data.lineMap+'" />').hide();
+			            		$('#LP_03').find('#pathImg').html('<img class="imgRouteMap" src="'+Setting_imgSrc+"line/"+data.lineMap+'" />').hide();
+								$('#LP_03').find('#note2').html(data.chtMemo);
 								$('#LP_03').find('#dataList').html(htmlResult);
 								if(isFocusRouteMap){
 									$('#LP_03').find('#btnPathImg').addClass('ui-btn-active');
@@ -779,7 +812,7 @@
 								$('#LP_03').trigger('create');
 	            				$.mobile.changePage('#LP_03');
 		                }else{
-		                    smoke.alert(data.messange,{},function(){});
+		                    smoke.alert(data.message,{},function(){});
 		                }
 		            }
 		        },
@@ -792,9 +825,18 @@
 		        }
 		    });
 		}
-		function changeToLP_04(lineNo,fromStop,destStop,hh,mm,isFocusRouteMap){
+		function changeToLP_04(lineNo,fromStop,destStop,hh,mm,isFocusRouteMap,goBack){
 			LoadingObject.show();
-			var jsonObject={"parkArea":Park,"lineNo":lineNo,"fromStopCode":fromStop,"destStopCode":destStop,"beginHour":hh,"beginMin":mm};
+			var jsonObject;
+			switch(AppType){
+				case "N":
+					jsonObject={"parkArea":Park,"lineNo":lineNo,"fromStopCode":fromStop,"destStopCode":destStop,"beginHour":hh,"beginMin":mm};
+					break;
+				case "C":
+				case "S":
+					jsonObject={"parkArea":Park,"lineNo":lineNo,"GoBack":goBack};
+					break;
+			}
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="";
 		    $.ajax({
@@ -811,13 +853,25 @@
 								$('#LP_04').find('#title').html(data.chtTitle+" "+data.quertTime);
 								$('#LP_04').find('#note').html('<p><span>註：</span>'+data.chtMemo+'</p>');
 								if(data.transportList.length>0){
-									htmlResult+='<tbody><tr><th scope="col" width="50%">'+data.transportList[0].fromStopName+'發車</th><th scope="col" width="50%">'+data.transportList[0].destStopName+'</th></tr>';
-		            				for(var i=0;i<data.transportList.length;i++){
-			            				htmlResult+='<tr><td>'+data.transportList[i].arriveHour+':'+(data.transportList[i].arriveMin.length>1?data.transportList[i].arriveMin:"0"+data.transportList[i].arriveMin)+'</td><td>'+data.transportList[i].destArriveHour+':'+data.transportList[i].destArriveMin+'<div class="red"></div></td></tr>'
-			            			}
-			            			htmlResult+='</tbody></table>';
-			            		}
-			            		$('#LP_04').find('#pathImg').html('<img src="'+Setting_imgSrc+"line/"+data.lineMap+'" />').hide();
+									switch(AppType){
+										case "N":
+											htmlResult+='<tbody><tr><th scope="col" width="50%">'+data.transportList[0].fromStopName+'發車</th><th scope="col" width="50%">'+data.transportList[0].destStopName+'</th></tr>';
+				            				for(var i=0;i<data.transportList.length;i++){
+					            				htmlResult+='<tr><td>'+data.transportList[i].arriveHour+':'+data.transportList[i].arriveMin+'</td><td>'+data.transportList[i].destArriveHour+':'+data.transportList[i].destArriveMin+'<div class="red"></div></td></tr>';
+					            			}
+					            			htmlResult+='</tbody></table>';
+						            		break;
+			            				case "C":
+										case "S":
+											htmlResult+='<tbody><tr><th scope="col" width="50%">站名</th><th scope="col" width="50%">到站時間</th></tr>';
+				            				for(var i=0;i<data.transportList.length;i++){
+					            				htmlResult+='<tr data-fromStopCode='+data.transportList[i].fromStopCode+'><td>'+data.transportList[i].fromStopName+'</td><td>'+data.transportList[i].arriveHour+':'+data.transportList[i].arriveMin+'<div class="red"></div></td></tr>';
+					            			}
+					            			htmlResult+='</tbody></table>';
+											break;
+									}
+								}
+			            		$('#LP_04').find('#pathImg').html('<img class="imgRouteMap" src="'+Setting_imgSrc+"line/"+data.lineMap+'" />').hide();
 								$('#LP_04').find('#dataList').html(htmlResult);
 								if(isFocusRouteMap){
 									$('#LP_04').find('#pathImg').show();
@@ -828,7 +882,11 @@
 								}
 	            				$.mobile.changePage('#LP_04');
 		                }else{
-		                    smoke.alert(data.messange,{},function(){});
+    					 	if(data.message!=""){
+			                    smoke.alert(data.message,{},function(){});
+		                    }else{
+		                    	smoke.alert(ServiceDataErrorString,{},function(){});
+		                    }
 		                }
 		            }
 		        },
@@ -868,7 +926,7 @@
                 										  '</div></li>';
                 			}
                 			if(typeof(data.stationInfo.chtStationName)!="undefined"){
-								nearestSpotInfo_htmlResult+='我的位置距離最近巡巴站牌 <span class="red"><strong>'+data.stationInfo.chtStationName+'</strong></span> 約 <span class="green"><strong>'+data.stationInfo.distance+'公尺</strong></span><br><input data-role="none" type="submit" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnRoute" value="規劃路線" class="btn11"></input><input data-role="none" type="submit" name="button" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnAroundStop" value="附近站點" class="btn10"></input>';
+								nearestSpotInfo_htmlResult+='我的位置距離最近巡巴站牌 <span class="red"><strong>'+data.stationInfo.chtStationName+'</strong></span> 約 <span class="green"><strong>'+data.stationInfo.distance+'公尺</strong></span><br><input data-role="none" type="submit" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnRoute" value="規劃路線" class="btn11"></input><input data-role="none" type="submit" name="button" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnAroundStop" value="鄰近站點" class="btn10"></input>';
 							}
 	            			if(transportList_htmlResult!=""){
 	            				transportList_htmlResult='<ul data-role="none">'+transportList_htmlResult+'</ul>';
@@ -1056,9 +1114,11 @@
 		                if(data.status=="success"){
 		                	if(data.jsonOutput.length>0){
 		                		htmlResult+=data.jsonOutput[0].HTML;
+		            		}else{
+		            			htmlResult+="無資料";
 		            		}
 	            			if(htmlResult!=""){
-	            				$('#index_07').find('#htmlResult').html(htmlResult).trigger('create');  
+	            				$('#index_'+type).find('#htmlResult').html(htmlResult).trigger('create');  
 	            			}
 		                }else{
 		                    smoke.alert(ServiceCodeErrorString,{},function(){});
@@ -1706,6 +1766,7 @@
 	            			$('#index').find('.helpline').html(data.jsonOutput.info[park_index].infoLink).trigger('create');
 	            			//其他下拉設定
 	            			$('#index_05').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
+	            			$('#index_06').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
 	            			$('#index_07').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
 	            			$('#index_08').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
 	            			$('#index_09').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
@@ -1887,6 +1948,15 @@
  			$(this).on('click','#btnsetPosition',function(){
  				changeTosetPosition();
  			});
+ 			$(this).on('click','#btnRoutePosition',function(){
+				var title=$(this).data('title');
+				var address=$(this).data('address');
+				var latitude=$(this).data('latitude');
+				var longitude=$(this).data('longitude');
+				var spotNo=$(this).data('spotno');
+ 				//開啓地圖模組-路徑規劃功能
+ 				openMapWithRoute(new posObject(title,address,latitude,longitude,spotNo,"",""));
+ 			});
 			$(this).on('click','#btnOrderByTime',function(){
 	 			//取得鄰近站點資料
 				getAroundStop(targetPark,targetBase,getGPRSData().lat,getGPRSData().lng,nowDate.getHours(),nowDate.getMinutes(),"time");
@@ -1997,8 +2067,19 @@
 			genStopSelect();
 			$(this).on('click','#btn_search',function(){
 				var fromdest=$(rootElement).find('#mobiScroll_stop').mobiscroll('getValue').split("_");
-				var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('getDate');
+				var datetime=$('#index_01 #mobiScroll_TranspotInfo_TravelDateTime_1').mobiscroll('getDate');
+				// alert($(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime_dummy').val());
 				changeToLP_01(fromdest[0],fromdest[1],datetime.getHours(),datetime.getMinutes());
+			});
+			$(this).on('click','#btnStopSwitch',function(){
+			   var mobiScroll_stop=$('#index_01 #mobiScroll_stop'),temp;
+			   var defaultStopValue= $(mobiScroll_stop).mobiscroll('getValue'),defaultStopValueStr=$(rootElement).find('#mobiScroll_stop_dummy').val();
+		       temp=defaultStopValue.split('_');
+		       defaultStopValue=temp[1]+"_"+temp[0];
+   		       temp=defaultStopValueStr.split('/');
+		       defaultStopValueStr=temp[1]+"/"+temp[0];
+		       $(mobiScroll_stop).val(defaultStopValue).mobiscroll('setValue',[defaultStopValue]);          
+		       $(rootElement).find('#mobiScroll_stop_dummy').val(defaultStopValueStr);
 			});
  		});
  		$(document).on('pageinit','#index_02',function(){	
@@ -2006,14 +2087,34 @@
 			//產生車站下拉
 			genRailStopSelect();
 			$(this).on('click','#btn_search',function(){
-				var from=$(rootElement).find('#mobiScroll_begin_stop').mobiscroll('getValue');
-				var dest=$(rootElement).find('#mobiScroll_end_stop').mobiscroll('getValue');
+				var from,dest;
+				if(stopSwithStatus_index_02){
+					from=$(rootElement).find('#mobiScroll_begin_stop').mobiscroll('getValue');
+					dest=$(rootElement).find('#mobiScroll_end_stop').mobiscroll('getValue');
+				}else{
+					from=$(rootElement).find('#mobiScroll_end_stop').mobiscroll('getValue');
+					dest=$(rootElement).find('#mobiScroll_begin_stop').mobiscroll('getValue');
+				}
 				if(from!=dest){
 					var carClass=$(rootElement).find('#select_type').val();
-					var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('getDate');
+					var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime_2').mobiscroll('getDate');
 					changeToLP_02(getIdentifyParkBase().Park,from,dest,datetime.getHours(),datetime.getMinutes(),carClass);
 				}else{
 					smoke.alert("起訖站不可相同",{},function(){});
+				}
+			});
+			$(this).on('click','#btnStopSwitch',function(){
+				var divStop_1=$(rootElement).find("#divStop_1"),divStop_2=$(rootElement).find("#divStop_2"),divBegin_stop=$(rootElement).find("#divBegin_stop"),divEnd_stop=$(rootElement).find("#divEnd_stop");
+				//切換狀態
+				stopSwithStatus_index_02=!stopSwithStatus_index_02;
+				if(stopSwithStatus_index_02){
+					//正向:起站為起站,訖站為訖站
+					divStop_1.html(divBegin_stop);
+					divStop_2.html(divEnd_stop);
+				}else{
+					//逆向:起站為訖站,訖站為起站
+					divStop_1.html(divEnd_stop);
+					divStop_2.html(divBegin_stop);
 				}
 			});
  		});
@@ -2027,7 +2128,7 @@
 	 			if(typeof($(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue'))!="undefined"){
  				var selectValue=$(rootElement).find('#selectLines').val();
  				var FromDestStop=$(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue').split('_');
- 				var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('getDate');
+ 				var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime_3').mobiscroll('getDate');
  				changeToLP_03(selectValue,FromDestStop[0],FromDestStop[1],datetime.getHours(),datetime.getMinutes(),false);
 	 			}else{
 	 				smoke.alert("請先選擇路線後挑選起訖站",{},function(){});
@@ -2037,6 +2138,18 @@
 		$(document).on('pageinit','#index_04',function(){
 			var rootElement=this;	
  			changeToIndex_04("");
+ 			//版本判別
+ 			switch(AppType){
+ 				case "N":
+ 					$(rootElement).find('#selectGoBack').css('display', 'none').parent('div').parent('.ui-select').css('display', 'none');
+ 					$(rootElement).find('#subDiv_N').show();
+ 					break;
+ 				case "C":
+ 				case "S":
+	 				$(rootElement).find('#selectGoBack').css('display', '').parent('div').parent('.ui-select').css('display', '');
+	 				$(rootElement).find('#subDiv_N').hide();
+ 					break;
+ 			}
  			$(this).on('change','#selectLines',function(){
  				changeToIndex_04($(this).val());
 	 		});
@@ -2045,7 +2158,8 @@
  				var selectValue=$(rootElement).find('#selectLines').val();
  				var FromDestStop=$(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue').split('_');
  				var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('getDate');
- 				changeToLP_04(selectValue,FromDestStop[0],FromDestStop[1],datetime.getHours(),datetime.getMinutes(),false);
+ 				var goBack=$(rootElement).find('#selectGoBack').val();
+ 				changeToLP_04(selectValue,FromDestStop[0],FromDestStop[1],datetime.getHours(),datetime.getMinutes(),false,goBack);
 	 			}else{
 	 				smoke.alert("請先選擇路線後挑選起訖站",{},function(){});
 	 			}
@@ -2115,6 +2229,10 @@
 			});
  		});
  		$(document).on('pageinit','#index_06',function(){	
+ 			$(this).on('change','#selectBase',function(){
+ 				var selectValue=$(this).val();
+ 				getAreaIntroData(Park,selectValue,"06");
+	 		});
  		});
  		$(document).on('pageinit','#index_07',function(){	
  			$(this).on('change','#selectBase',function(){
@@ -3227,6 +3345,7 @@
 	       $(this).find('#mobiScroll_stop_dummy').val(defaultStopValueStr);
  		});
  		$(document).on('pageshow','#index_02',function(){	
+ 			var rootElement=this;
  			genIndex(Park,Base);
  			//預設選取車站,N:003_1025,C:005_1319,S:010_1228:
 			var defaultStopValue="1025",defaultStopValueStr="新竹地區/新竹";
@@ -3247,7 +3366,11 @@
 		   var mobiScroll_begin_stop=$('#index_02 #mobiScroll_begin_stop');
 	       $(mobiScroll_begin_stop).val(defaultStopValue).mobiscroll('setValue',[defaultStopValue]);          
 	       $(this).find('#mobiScroll_begin_stop_dummy').val(defaultStopValueStr);
-	        
+	       //將切換狀態設為預設
+	       stopSwithStatus_index_02=true;
+			var divStop_1=$(rootElement).find("#divStop_1"),divStop_2=$(rootElement).find("#divStop_2"),divBegin_stop=$(rootElement).find("#divBegin_stop"),divEnd_stop=$(rootElement).find("#divEnd_stop");
+			divStop_1.html(divBegin_stop);
+			divStop_2.html(divEnd_stop);
  		});
  		$(document).on('pagebeforeshow','#index_03',function(){	
 			genIndex(Park,Base);
@@ -3269,7 +3392,10 @@
  			});
 		});
 		$(document).on('pagebeforeshow','#index_06',function(){	
-			genIndex(Park,Base);
+ 			genIndex(Park,Base);
+ 			//取得資料
+ 			var selectValue=$('#selectBase').val();
+ 			getAreaIntroData(Park,selectValue,"06");
 		});
  		$(document).on('pagebeforeshow','#index_07',function(){	
  			genIndex(Park,Base);
@@ -3357,7 +3483,8 @@
 		function doClassify1Filter(Collapsible_Classify1_ID,classify1){
 			var classifyArray=[],classifyArrayStr="";
 			if(Collapsible_Classify1_ID!=""){
-				var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				// var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');
+				var checkedList=$('#classify1List input[type=checkbox]:checked');
 				//取得SQL string
 				for(var i=0;i<checkedList.length;i++){
 					if(classifyArrayStr!=""){
@@ -3425,7 +3552,7 @@
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var nowCode1="";
 			//var classify1ListResult='<a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a>';
-			var classify1ListResult='<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
+			var classify1ListResult='<div style="text-align:right"><a class="popupCloseBtn" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div><div data-role="collapsible-set" data-theme="c" data-content-theme="c" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"><li><a data-theme="c" data-code="" href="javascript:doClassify1Filter(&#39;&#39;);" data-role="button">全部</a></li>'
 		    $.ajax({
 		        url:commonURL_DB,
 		        data:  {"jsonInput":jsonObjectStr},
@@ -3451,6 +3578,11 @@
 								// classify1ListResult+='<li data-classify1="'+data.jsonOutput[i].code2+'" data-classify2="'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</li>';
 								classify1ListResult+='<input data-theme="f" data-classify1="'+data.jsonOutput[i].code1+'" data-classify2="'+data.jsonOutput[i].code2+'" type="checkbox" name="checkbox_classifyList" id="checkbox_classifyList_'+data.jsonOutput[i].code2+'"><label for="checkbox_classifyList_'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</label>';
 							}
+							if(data.jsonOutput.length>0){
+								classify1ListResult+='</ul><button data-theme="e" onclick="doClassify1Filter(&#39;Collapsible_Classify1_'+nowCode1+'&#39;,&#39;'+nowCode1+'&#39;);"'+'>查詢</button>';
+								classify1ListResult+='</div>';
+							}
+							
 							$('#Map_LP').find('#classify1List').html(classify1ListResult).trigger('create');
 						}
 						else{
@@ -3851,7 +3983,7 @@
 	</head>
 	<body>	
 		<div data-role="page" id="index">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>交通資訊</h1>
             </div>
@@ -3870,7 +4002,7 @@
 			<div data-theme="f" data-role="footer" data-position="fixed">		
 			  <div data-role="navbar">
 			    <ul>
-			      <li class="navli"><a href="#page_aroundStop">鄰近交通站點</a></li>
+			      <li class="navli"><a href="#page_aroundStop">鄰近站點</a></li>
 			      <li class="navli"><a href="#page_transPlanning">園區路線規劃</a></li>
 			    </ul>
 			  </div>
@@ -3878,7 +4010,7 @@
 		</div>
 		<!--高鐵-->
 		<div data-role="page" id="index_01">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>高鐵</h1>
             </div>
@@ -3886,13 +4018,27 @@
 				<div class="int">
 			        <!--formbox star -->
 					<div class="formbox2">
-						<div>
+						<table class="tranTable">
+							<tr>
+								<td class="txtTD">起迄站：</td>
+								<td class="controlTD"><select data-role="none" name="mobiScroll_stop" id="mobiScroll_stop"></select></td>
+								<td class="switchTD" rowspan="2"><div class="btnSwitch" id="btnStopSwitch"></div></td>
+							</tr>
+							<tr>
+								<td class="txtTD">去程時間：</td>
+								<td class="controlTD"><input id="mobiScroll_TranspotInfo_TravelDateTime_1" class="i-txt" /></td>
+							</tr>
+						</table>
+<!-- 						<div>
+						  <div class="stopSwitchDiv">
+							<input data-role="none" class="btn10 stopSwitchBtn" id="btnStopSwitch" type="submit" value="起訖站互換">
+						  </div>
 						  <label for="select3">起迄站：</label>
 							 <select data-role="none" name="mobiScroll_stop" id="mobiScroll_stop">
 							</select>
 						  <label for="select4">去程時間：</label>
-						  <input id="mobiScroll_TranspotInfo_TravelDateTime" class="i-txt" />
-						</div>
+						  <input id="mobiScroll_TranspotInfo_TravelDateTime_1" class="i-txt" />
+						</div> -->
 
 						<div class="formBtn">
 						  <input data-role="none" type="submit" id="btn_search"  value="查詢" class="btn09">
@@ -3912,7 +4058,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="LP_01">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>高鐵-時刻表</h1>
             </div>
@@ -3923,7 +4069,7 @@
             </div>
         </div>
         <div data-role="page" id="CP_01">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>高鐵-轉乘資訊</h1>
             </div>
@@ -3949,7 +4095,7 @@
 		</div>
 		<!--台鐵-->
 		<div data-role="page" id="index_02">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>台鐵</h1>
             </div>
@@ -3957,22 +4103,68 @@
 				<div class="int">
 			        <!--formbox star -->
 					<div class="formbox2">
-						<div>
+						<table class="tranTable">
+							<tr>
+								<td class="txtTD">起站：</td>
+								<td class="controlTD">
+									<div id="divStop_1">
+										<div id="divBegin_stop">
+											<select data-role="none" name="mobiScroll_begin_stop" id="mobiScroll_begin_stop"></select>
+										</div>
+									</div>
+								</select></td>
+								<td class="switchTD" rowspan="2" style="padding-top:30px"><div class="btnSwitch" id="btnStopSwitch"></div></td>
+							</tr>
+							<tr>
+								<td class="txtTD">迄站：</td>
+								<td class="controlTD">
+									<div id="divStop_2">
+										<div id="divEnd_stop">
+											<select data-role="none" name="mobiScroll_end_stop" id="mobiScroll_end_stop"></select>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="txtTD">去程時間：</td>
+								<td class="controlTD"><input id="mobiScroll_TranspotInfo_TravelDateTime_2" class="i-txt" /></td>
+							</tr>
+							<tr>
+								<td class="txtTD">車種：</td>
+								<td class="controlTD">
+									<select  name="select4" id="select_type">
+									<option value="00">所有車種</option>
+									<option value="01">對號列車</option>
+									<option value="02">非對號列車</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+<!-- 						<div>
+							<div class="stopSwitchDiv">
+							<input data-role="none" class="btn10 stopSwitchBtn" id="btnStopSwitch" type="submit" value="起訖站互換">
+							</div>
 							<label for="select4">起站：</label>
-							<select data-role="none" name="mobiScroll_begin_stop" id="mobiScroll_begin_stop">
-							</select>
+							<div id="divStop_1">
+								<div id="divBegin_stop">
+									<select data-role="none" name="mobiScroll_begin_stop" id="mobiScroll_begin_stop"></select>
+								</div>
+							</div>
 							<label for="select4">迄站：</label>
-							<select data-role="none" name="mobiScroll_end_stop" id="mobiScroll_end_stop">
-							</select>
+							<div id="divStop_2">
+								<div id="divEnd_stop">
+									<select data-role="none" name="mobiScroll_end_stop" id="mobiScroll_end_stop"></select>
+								</div>
+							</div>
 							<label for="select4">去程時間：</label>
-							<input id="mobiScroll_TranspotInfo_TravelDateTime" class="i-txt" />
+							<input id="mobiScroll_TranspotInfo_TravelDateTime_2" class="i-txt" />
 							  <label for="select4">車種：</label>
 							<select  name="select4" id="select_type">
 							<option value="00">所有車種</option>
 							<option value="01">對號列車</option>
 							<option value="02">非對號列車</option>
 							</select>
-						</div>
+						</div> -->
 						<div class="formBtn">
 						  <input data-role="none" type="submit" id="btn_search" value="查詢" class="btn09">
 						</div>       
@@ -3991,7 +4183,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="LP_02">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>台鐵-時刻表</h1>
             </div>
@@ -4002,7 +4194,7 @@
             </div>
         </div>
         <div data-role="page" id="CP_02">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>台鐵-轉乘資訊</h1>
             </div>
@@ -4028,7 +4220,7 @@
 		</div>
 		<!--國道客運-->
 		<div data-role="page" id="index_03">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>國道客運</h1>
             </div>
@@ -4036,14 +4228,32 @@
 				<div class="int">
 			        <!--formbox star -->
 					<div class="formbox2">
-						<div>
+						<table class="tranTable">
+							<tr>
+								<td class="txtTD">選擇客運路線：</td>
+								<td class="controlTD"><select name="selectLines" id="selectLines"></select></td>
+							</tr>
+							<tr>
+								<td class="txtTD">起訖站：</td>
+								<td class="controlTD">
+									<select data-role="none" id="mobiScroll_FromDestStop" class="i-txt"></select>
+								</td>
+							</tr>
+							<tr>
+								<td class="txtTD">去程時間：</td>
+								<td class="controlTD">
+									<input id="mobiScroll_TranspotInfo_TravelDateTime_3" class="i-txt" />
+								</td>
+							</tr>
+						</table>
+<!-- 						<div>
 						  <label for="selectLines">選擇客運路線：</label>
 						  <select name="selectLines" id="selectLines"></select>
   							<label for="mobiScroll_FromDestStop">起訖站：</label>
 							<select data-role="none" id="mobiScroll_FromDestStop" class="i-txt"></select>
 							<label for="mobiScroll_TranspotInfo_TravelDateTime">去程時間：</label>
-							<input id="mobiScroll_TranspotInfo_TravelDateTime" class="i-txt" />
-						</div>
+							<input id="mobiScroll_TranspotInfo_TravelDateTime_3" class="i-txt" />
+						</div> -->
 
 						<div class="formBtn">
 						  <input data-role="none" type="submit" name="reset"  id="btn_search" value="查詢" class="btn09">
@@ -4052,8 +4262,7 @@
 			        <!--formbox end -->
 		        
 	                  <ul data-role="none"  class="intlist" id="lineDesc">
-<!-- 		                    <li>出發時間為新竹火車站的發車時間</li>
-		                    <li> 時刻表僅供參考，如有異動以各客運公司公告時間為準。</li> 		 -->                    
+		                                
 		               </ul>
 		        
 			    </div>
@@ -4082,7 +4291,7 @@
         </div>
 		<!--公車-->
 		<div data-role="page" id="index_04">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>公車</h1>
             </div>
@@ -4090,25 +4299,55 @@
 				<div class="int">
 			        <!--formbox star -->
 					<div class="formbox2">
-						<div>
+						<table class="tranTable">
+							<tr>
+								<td class="txtTD">選擇公車路線：</td>
+								<td class="controlTD"> 
+								  <select id="selectGoBack">
+								  	<option value="1">去</option>
+							  		<option value="2">回</option>
+								  </select>
+								  <select name="selectLines" id="selectLines"></select>
+								</td>
+							</tr>
+							<div id="subDiv_N">
+							<tr>
+								<td class="txtTD">起訖站：</td>
+								<td class="controlTD">
+									<select data-role="none" id="mobiScroll_FromDestStop" class="i-txt"></select>
+								</td>
+							</tr>
+							<tr>
+								<td class="txtTD">去程時間：</td>
+								<td class="controlTD">
+									<input id="mobiScroll_TranspotInfo_TravelDateTime" class="i-txt" />
+								</td>
+							</tr>
+							</div>
+						</table>
+<!-- 						<div>
 						  <label for="selectLines">選擇公車路線：</label>
+						  <select id="selectGoBack">
+						  	<option value="1">去</option>
+					  		<option value="2">回</option>
+						  </select>
 						  <select name="selectLines" id="selectLines"></select>
+						  <div id="subDiv_N">
   							<label for="mobiScroll_FromDestStop">起訖站：</label>
 							<select data-role="none" id="mobiScroll_FromDestStop" class="i-txt"></select>
 							<label for="mobiScroll_TranspotInfo_TravelDateTime">去程時間：</label>
 							<input id="mobiScroll_TranspotInfo_TravelDateTime" class="i-txt" />
-						</div>
+						  </div> 
+						</div> -->
 
 						<div class="formBtn" id="formBtn">
 						</div>       
 					</div>
 			        <!--formbox end -->
 		        
-	               <ul data-role="none"  class="intlist" id="lineDesc">
-<!-- 	                    <li>出發時間為新竹火車站的發車時間</li>
-	                    <li> 時刻表僅供參考，如有異動以各客運公司公告時間為準。</li> 	 -->	                    
-	               </ul>
-		        
+                  <ul data-role="none"  class="intlist" id="lineDesc">
+	                                
+	               </ul>                 	        
 			    </div>
 			</div>
 		</div>		
@@ -4125,17 +4364,17 @@
 				    </ul>
 				 </div>
 				<div id="timeTable">
-            	<div class="title3" id="title"></div>
-            	<table width="100%" summary="時刻表" class="lpTb3" id="dataList">
-				</table>
-				<div class="note2" id="note2"></div>
+	            	<div class="title3" id="title"></div>
+	            	<table width="100%" summary="時刻表" class="lpTb3" id="dataList">
+					</table>
+					<div class="note2" id="note2"></div>
     			</div>
     			<div class="acenter" id="pathImg"></div>
             </div>
         </div>
 		<!--巡迴巴士-->
 		<div data-role="page" id="index_05">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>巡迴巴士</h1>
             </div>
@@ -4206,7 +4445,7 @@
             </div>
         </div>
 		<div data-role="page" id="LP_05_2">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>巡迴巴士-時刻表</h1>
             </div>
@@ -4214,10 +4453,11 @@
             	<div class="title3" id="title"></div>
             	<table width="100%" summary="時刻表" class="lpTb2" id="dataList">
 				</table>
+				<div id="memo"></div>
             </div>
         </div>
 		<div data-role="page" id="CP_BusMap">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>巡迴巴士-巴士在哪</h1>
             </div>
@@ -4228,7 +4468,7 @@
             </div>
         </div>
 		<div data-role="page" id="CP_05">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>巡迴巴士-高鐵轉程</h1>
             </div>
@@ -4254,16 +4494,23 @@
         </div>
 		<!--飛機-->
 		<div data-role="page" id="index_06">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>飛機</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
+				<div class="int">
+				   <select id="selectBase">
+			        </select>
+					<div class="aleft2">
+						<div class="springboard" id="htmlResult"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!--自行開車-->
 		<div data-role="page" id="index_07">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>自行開車</h1>
             </div>
@@ -4289,7 +4536,7 @@
 		</div>
 		<!--計程車-->
 		<div data-role="page" id="index_08">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>計程車</h1>
             </div>
@@ -4298,14 +4545,15 @@
 				   <select id="selectBase">
 			        </select>
 					<div class="aleft2">
-					<p>若欲使用計程車服務，車費依照公定跳票費率計算，訂車可電洽：<br>(1) 紅帥汽車行：03-5713333<br>(2) 金立計程車行：03-5221111</p>
+						<div class="springboard" id="htmlResult"></div>
+					<!-- <p>若欲使用計程車服務，車費依照公定跳票費率計算，訂車可電洽：<br>(1) 紅帥汽車行：03-5713333<br>(2) 金立計程車行：03-5221111</p> -->
 					</div>
 				</div>
 			</div>
 		</div>
 		<!--停車場-->
 		<div data-role="page" id="index_09">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>停車場</h1>
             </div>
@@ -4333,7 +4581,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="CP_09">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>停車場</h1>
             </div>
@@ -4343,7 +4591,7 @@
 		</div>
 		<!--拖吊場-->
 		<div data-role="page" id="index_10">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>拖吊場</h1>
             </div>
@@ -4370,7 +4618,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="CP_10">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>拖吊場</h1>
             </div>
@@ -4379,11 +4627,11 @@
 			</div>
 		</div>
 		<!--各子頁面-->
-		<!--鄰近交通站點-->
+		<!--鄰近站點-->
 		<div data-role="page" id="page_aroundStop">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a href="#index" data-icon="arrow-l">返回</a>
-                <h1>鄰近交通站點</h1>
+                <h1>鄰近站點</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class="int">
@@ -4406,9 +4654,9 @@
 				</div>
 		</div>
 		<div data-role="page" id="page_setPosition">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
-                <h1>鄰近交通站點-定位</h1>
+                <h1>鄰近站點-定位</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content" class="acenter">
 				<input id="txtSearchInput" type="search" placeholder="請輸入查詢地址"></input>
@@ -4422,7 +4670,7 @@
 		</div>
 		<!--園區路線規劃-->
 		<div data-role="page" id="page_transPlanning">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back">返回</a>
                 <h1>園區路線規劃</h1>
             </div>
@@ -4469,7 +4717,7 @@
 		</div>
 		<!--地圖模組-->
 		<div data-role="page" id="Map_LP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
 		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
                 <h1>生活服務</h1>
@@ -4536,7 +4784,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="Map_CP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>生活服務</h1>
             </div>
@@ -4546,7 +4794,7 @@
 
 		<!--Test-->
 		<div data-role="page" id="test">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back">返回</a>
                 <h1>測試</h1>
             </div>

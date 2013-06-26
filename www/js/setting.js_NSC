@@ -1,8 +1,8 @@
 //global data
-var Setting_imgSrc="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/data/";
-var Setting_classifyImgSrc="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/data/classify/";
-var Setting_lineImgSrc="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/data/line/";
-var Setting_FAQImgSrc="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/data/faqClassify/";
+var Setting_imgSrc="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/data/";
+var Setting_classifyImgSrc="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/data/classify/";
+var Setting_lineImgSrc="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/data/line/";
+var Setting_FAQImgSrc="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/data/faqClassify/";
 var notfindPic=Setting_imgSrc+"notfind.png";
 //System String
 var LoadingString="資料讀取中..";
@@ -23,107 +23,86 @@ var SettingFailString="設定失敗，請重新操作";
 var DefaultPage_ch="Page_NewsAndEvents.html";
 var DefaultPage_eng="Page_AreaIntro.html"; 
 /*DB*/
-var commonURL_DB="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=commonURL_DB&jsoncallback=?";
+var commonURL_DB="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/GetSqlData.do?name=commonURL_DB&jsoncallback=?";
 /*LBS*/
-// var queryURL_LBS_LandInfo="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/querypool.do?name=queryURL_LBS_LandInfo&jsoncallback=?";
-// var queryURL_LBS_EntryPoint="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/queryentrance.do?name=queryURL_LBS_EntryPoint&jsoncallback=?";
-// var deleteURL_LBS_LandInfo="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/deletepool.do";
-// var deleteURL_LBS_EntryPoint="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/deleteentrance.do";
-// var updateURL_LBS_LandInfo="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/updatepool.do";
-// var updateURL_LBS_EntryPoint="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/updateentrance.do";
-// var insertURL_LBS_LandInfo="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/uploadpool.do";
-// var insertURL_LBS_EntryPoint="http://nscallinone.hyweb.com.tw:8080/MobileGipOpenAdmin/gipadmin/uploadentrance.do";
-var queryURL_LBS_LandInfo="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=queryURL_LBS_LandInfo&jsoncallback=?";
-var queryURL_LBS_EntryPoint="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=queryURL_LBS_EntryPoint&jsoncallback=?";
-var deleteURL_LBS_LandInfo="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=deleteURL_LBS_LandInfo&jsoncallback=?";
-var deleteURL_LBS_EntryPoint="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=deleteURL_LBS_EntryPoint&jsoncallback=?";
-var updateURL_LBS_LandInfo="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=updateURL_LBS_LandInfo&jsoncallback=?";
-var updateURL_LBS_EntryPoint="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=updateURL_LBS_EntryPoint&jsoncallback=?";
-var insertURL_LBS_LandInfo="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=insertURL_LBS_LandInfo&jsoncallback=?";
-var insertURL_LBS_EntryPoint="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=insertURL_LBS_EntryPoint&jsoncallback=?";
+var queryURL_LBS_LandInfo="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/querypool.do?name=queryURL_LBS_LandInfo&jsoncallback=?";
+var queryURL_LBS_EntryPoint="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/queryentrance.do?name=queryURL_LBS_EntryPoint&jsoncallback=?";
+var deleteURL_LBS_LandInfo="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/deletepool.do";
+var deleteURL_LBS_EntryPoint="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/deleteentrance.do";
+var updateURL_LBS_LandInfo="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/updatepool.do";
+var updateURL_LBS_EntryPoint="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/updateentrance.do";
+var insertURL_LBS_LandInfo="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/uploadpool.do";
+var insertURL_LBS_EntryPoint="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/uploadentrance.do";
 //Data
 /*科學園區簡介*/
-var DataURL_ParkIntro="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=DataURL_ParkIntro&jsoncallback=?";
+var DataURL_ParkIntro="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/GetParkInfo.do?name=DataURL_ParkIntro&jsoncallback=?";
 /*訊息與活動*/
-var DataURL_NewsAndEvents_LP="http://nscallinone2.hyweb.com.tw:8080/AppService/getNews.do?name=DataURL_NewsAndEvents_LP&jsoncallback=?";
-var DataURL_NewsAndEvents_CP="http://nscallinone2.hyweb.com.tw:8080/AppService/getNewsCP.do?name=DataURL_NewsAndEvents_CP&jsoncallback=?";
+var DataURL_NewsAndEvents_LP="http://TAP0923.nsc.gov.tw/AppService/getNews.do?name=DataURL_NewsAndEvents_LP&jsoncallback=?";
+var DataURL_NewsAndEvents_CP="http://TAP0923.nsc.gov.tw/AppService/getNewsCP.do?name=DataURL_NewsAndEvents_CP&jsoncallback=?";
 /*廠商資訊*/
-var DataURL_VendorInfo_QP="http://nscallinone2.hyweb.com.tw:8080/AppService/getVendorInfo.do?name=DataURL_VendorInfo_QP&jsoncallback=?";
-var DataURL_VendorInfo_LP="http://nscallinone2.hyweb.com.tw:8080/AppService/getVendorInfoLP.do?name=DataURL_VendorInfo_LP&jsoncallback=?";
-var DataURL_VendorInfo_CP="http://nscallinone2.hyweb.com.tw:8080/AppService/getVendorInfoCP.do?name=DataURL_VendorInfo_CP&jsoncallback=?";
-var DataURL_VendorInfo_sub_CP="http://nscallinone2.hyweb.com.tw:8080/AppService/getVendorInfoSubCP.do?name=DataURL_VendorInfo_sub_CP&jsoncallback=?";
+var DataURL_VendorInfo_QP="http://TAP0923.nsc.gov.tw/AppService/getVendorInfo.do?name=DataURL_VendorInfo_QP&jsoncallback=?";
+var DataURL_VendorInfo_LP="http://TAP0923.nsc.gov.tw/AppService/getVendorInfoLP.do?name=DataURL_VendorInfo_LP&jsoncallback=?";
+var DataURL_VendorInfo_CP="http://TAP0923.nsc.gov.tw/AppService/getVendorInfoCP.do?name=DataURL_VendorInfo_CP&jsoncallback=?";
+var DataURL_VendorInfo_sub_CP="http://TAP0923.nsc.gov.tw/AppService/getVendorInfoSubCP.do?name=DataURL_VendorInfo_sub_CP&jsoncallback=?";
 /*交通資訊*/
-var DataURL_TranspoltInfo_index="http://nscallinone2.hyweb.com.tw:8080/AppService/json/Page_TranspotInfo_index.json";
-var DataURL_TranspoltInfo_aroundStop="http://nscallinone.hyweb.com.tw:8080/TransportService/NeighborService?name=DataURL_TranspoltInfo_aroundStop&jsoncallback=?";
-var DataURL_TranspoltInfo_index_03="http://nscallinone.hyweb.com.tw:8080/TransportService/HighwayBusQueryService?name=DataURL_TranspoltInfo_index_03&jsoncallback=?";
-var DataURL_TranspoltInfo_index_04="http://nscallinone.hyweb.com.tw:8080/TransportService/PublicBusQueryService?name=DataURL_TranspoltInfo_index_04&jsoncallback=?";
-var DataURL_TranspoltInfo_index_05="http://nscallinone.hyweb.com.tw:8080/TransportService/TrafficLineService?name=DataURL_TranspoltInfo_index_05&jsoncallback=?";
-var DataURL_TranspoltInfo_LP_01="http://nscallinone.hyweb.com.tw:8080/TransportService/ThsrcTimetableService?name=DataURL_TranspoltInfo_LP_01&jsoncallback=?";
-var DataURL_TranspoltInfo_LP_02="http://nscallinone.hyweb.com.tw:8080/TransportService/RailwayTimetableService?name=DataURL_TranspoltInfo_LP_02&jsoncallback=?";
-var DataURL_TranspoltInfo_LP_03="http://nscallinone.hyweb.com.tw:8080/TransportService/HighwayBusTimetableService?name=DataURL_TranspoltInfo_LP_03&jsoncallback=?";
-var DataURL_TranspoltInfo_LP_04_1="http://nscallinone.hyweb.com.tw:8080/TransportService/PublicBusTimetableService?name=DataURL_TranspoltInfo_LP_04_1&jsoncallback=?";
-var DataURL_TranspoltInfo_LP_05_1="http://nscallinone.hyweb.com.tw:8080/TransportService/TrafficAllinOne?name=DataURL_TranspoltInfo_LP_05_1&jsoncallback=?";
-var DataURL_TranspoltInfo_BusStopMap="http://nscallinone.hyweb.com.tw:8080/TransportService/TurningPointService?name=DataURL_TranspoltInfo_BusStopMap&jsoncallback=?";
-var DataURL_TranspoltInfo_BusMap="http://nscallinone.hyweb.com.tw:8080/TransportService/BusLocationService?name=DataURL_TranspoltInfo_BusMap&jsoncallback=?";
-var DataURL_TranspoltInfo_LP_05_2="http://nscallinone.hyweb.com.tw:8080/TransportService/TrafficQueryLineService?name=DataURL_TranspoltInfo_LP_05_2&jsoncallback=?";
-var DataURL_TranspoltInfo_QP_05="http://nscallinone.hyweb.com.tw:8080/TransportService/TrafficQueryService?name=DataURL_TranspoltInfo_QP_05&jsoncallback=?";
-var DataURL_TranspoltInfo_CP_01="http://nscallinone.hyweb.com.tw:8080/TransportService/ThsrcTransferService?name=DataURL_TranspoltInfo_CP_01&jsoncallback=?";
-var DataURL_TranspoltInfo_CP_02="http://nscallinone.hyweb.com.tw:8080/TransportService/RailwayTransferService?name=DataURL_TranspoltInfo_CP_02&jsoncallback=?";
-var DataURL_TranspoltInfo_CP_05="http://nscallinone.hyweb.com.tw:8080/TransportService/TrafficTransferService?name=DataURL_TranspoltInfo_CP_05&jsoncallback=?";
-var DataURL_TranspoltInfo_CP_09="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=commonURL_DB&jsoncallback=?";
+var DataURL_TranspoltInfo_index="http://TAP0923.nsc.gov.tw/AppService/json/Page_TranspotInfo_index.json";
+var DataURL_TranspoltInfo_aroundStop="http://TAP0923.nsc.gov.tw/TransportService/NeighborService?name=DataURL_TranspoltInfo_aroundStop&jsoncallback=?";
+var DataURL_TranspoltInfo_index_03="http://TAP0923.nsc.gov.tw/TransportService/HighwayBusQueryService?name=DataURL_TranspoltInfo_index_03&jsoncallback=?";
+var DataURL_TranspoltInfo_index_04="http://TAP0923.nsc.gov.tw/TransportService/PublicBusQueryService?name=DataURL_TranspoltInfo_index_04&jsoncallback=?";
+var DataURL_TranspoltInfo_index_05="http://TAP0923.nsc.gov.tw/TransportService/TrafficLineService?name=DataURL_TranspoltInfo_index_05&jsoncallback=?";
+var DataURL_TranspoltInfo_LP_01="http://TAP0923.nsc.gov.tw/TransportService/ThsrcTimetableService?name=DataURL_TranspoltInfo_LP_01&jsoncallback=?";
+var DataURL_TranspoltInfo_LP_02="http://TAP0923.nsc.gov.tw/TransportService/RailwayTimetableService?name=DataURL_TranspoltInfo_LP_02&jsoncallback=?";
+var DataURL_TranspoltInfo_LP_03="http://TAP0923.nsc.gov.tw/TransportService/HighwayBusTimetableService?name=DataURL_TranspoltInfo_LP_03&jsoncallback=?";
+var DataURL_TranspoltInfo_LP_04_1="http://TAP0923.nsc.gov.tw/TransportService/PublicBusTimetableService?name=DataURL_TranspoltInfo_LP_04_1&jsoncallback=?";
+var DataURL_TranspoltInfo_LP_05_1="http://TAP0923.nsc.gov.tw/TransportService/TrafficAllinOne?name=DataURL_TranspoltInfo_LP_05_1&jsoncallback=?";
+var DataURL_TranspoltInfo_BusStopMap="http://TAP0923.nsc.gov.tw/TransportService/TurningPointService?name=DataURL_TranspoltInfo_BusStopMap&jsoncallback=?";
+var DataURL_TranspoltInfo_BusMap="http://TAP0923.nsc.gov.tw/TransportService/BusLocationService?name=DataURL_TranspoltInfo_BusMap&jsoncallback=?";
+var DataURL_TranspoltInfo_LP_05_2="http://TAP0923.nsc.gov.tw/TransportService/TrafficQueryLineService?name=DataURL_TranspoltInfo_LP_05_2&jsoncallback=?";
+var DataURL_TranspoltInfo_QP_05="http://TAP0923.nsc.gov.tw/TransportService/TrafficQueryService?name=DataURL_TranspoltInfo_QP_05&jsoncallback=?";
+var DataURL_TranspoltInfo_CP_01="http://TAP0923.nsc.gov.tw/TransportService/ThsrcTransferService?name=DataURL_TranspoltInfo_CP_01&jsoncallback=?";
+var DataURL_TranspoltInfo_CP_02="http://TAP0923.nsc.gov.tw/TransportService/RailwayTransferService?name=DataURL_TranspoltInfo_CP_02&jsoncallback=?";
+var DataURL_TranspoltInfo_CP_05="http://TAP0923.nsc.gov.tw/TransportService/TrafficTransferService?name=DataURL_TranspoltInfo_CP_05&jsoncallback=?";
+var DataURL_TranspoltInfo_CP_09="http://TAP0923.nsc.gov.tw/AppService/Main.do?name=commonURL_DB&jsoncallback=?";
 /*生活服務*/
-var DataURL_Classify="http://nscallinone2.hyweb.com.tw:8080/AppService/getLifeService.do?name=DataURL_Classify&jsoncallback=?"
+var DataURL_Classify="http://TAP0923.nsc.gov.tw/AppService/getLifeService.do?name=DataURL_Classify&jsoncallback=?"
 /*廠商徵才資訊*/
-var DataURL_Jobs_QP="http://nscallinone2.hyweb.com.tw:8080/AppService/getVendorJobInfo.do?name=DataURL_Jobs_QP&jsoncallback=?";
-var DataURL_Jobs_LP="http://nscallinone2.hyweb.com.tw:8080/AppService/getVendorJobInfoLP.do?name=DataURL_Jobs_LP&jsoncallback=?";
-var DataURL_Jobs_CP="http://nscallinone2.hyweb.com.tw:8080/AppService/getVendorJobInfoCP.do?name=DataURL_Jobs_CP&jsoncallback=?";
+var DataURL_Jobs_QP="http://TAP0923.nsc.gov.tw/AppService/getVendorJobInfo.do?name=DataURL_Jobs_QP&jsoncallback=?";
+var DataURL_Jobs_LP="http://TAP0923.nsc.gov.tw/AppService/getVendorJobInfoLP.do?name=DataURL_Jobs_LP&jsoncallback=?";
+var DataURL_Jobs_CP="http://TAP0923.nsc.gov.tw/AppService/getVendorJobInfoCP.do?name=DataURL_Jobs_CP&jsoncallback=?";
 /*關於*/
 /*系統公告*/
-var DataURL_SystemMessage="http://nscallinone2.hyweb.com.tw:8080/AppService/json/SystemMessage.json";
+var DataURL_SystemMessage="http://TAP0923.nsc.gov.tw/AppService/json/SystemMessage.json";
 /*其他APP*/
-var DataURL_AppInfo="http://nscallinone2.hyweb.com.tw:8080/AppService/json/AppInfo.json";
+var DataURL_AppInfo="http://TAP0923.nsc.gov.tw/AppService/json/AppInfo.json";
 /*常見問題*/
-var DataURL_FAQ_NP="http://nscallinone2.hyweb.com.tw:8080/AppService/getFAQInfo.do?name=DataURL_FAQ_NP&jsoncallback=?";
-var DataURL_FAQ_LP="http://nscallinone2.hyweb.com.tw:8080/AppService/getFAQLP.do?name=DataURL_FAQ_LP&jsoncallback=?";
-var DataURL_ContactUs="http://nscallinone2.hyweb.com.tw:8080/AppService/getAboutUs.do?name=DataURL_ContactUs&jsoncallback=?"
+var DataURL_FAQ_NP="http://TAP0923.nsc.gov.tw/AppService/getFAQInfo.do?name=DataURL_FAQ_NP&jsoncallback=?";
+var DataURL_FAQ_LP="http://TAP0923.nsc.gov.tw/AppService/getFAQLP.do?name=DataURL_FAQ_LP&jsoncallback=?";
+var DataURL_ContactUs="http://TAP0923.nsc.gov.tw/AppService/getAboutUs.do?name=DataURL_ContactUs&jsoncallback=?"
 /*即時業務資訊*/
 /*即時公告*/
-var InstantMessage="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=InstantMessage&jsoncallback=?";
+var InstantMessage="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/GetSqlData.do?name=InstantMessage&jsoncallback=?";
 /*內部訊息公告*/
-var InsideInstantMessage_LP="http://nscallinone2.hyweb.com.tw:8080/AppService/getInsideInstantMessageLP.do?name=InsideInstantMessage_LP&jsoncallback=?";
-var InsideInstantMessage_CP="http://nscallinone2.hyweb.com.tw:8080/AppService/getInsideInstantMessageCP.do?name=InsideInstantMessage_CP&jsoncallback=?";
+var InsideInstantMessage_LP="http://TAP0923.nsc.gov.tw/AppService/getInsideInstantMessageLP.do?name=InsideInstantMessage_LP&jsoncallback=?";
+var InsideInstantMessage_CP="http://TAP0923.nsc.gov.tw/AppService/getInsideInstantMessageCP.do?name=InsideInstantMessage_CP&jsoncallback=?";
 /*公文簽核待辦通知*/
-var DataURL_OfficialDocument_LP="http://nscallinone2.hyweb.com.tw:8080/AppService/json/Page_OfficialDocument_LP.json";
-var DataURL_OfficialDocument_index_lees="http://nscallinone2.hyweb.com.tw:8080/AppService/json/Page_OfficialDocument_index_lees.json";
-var DataURL_OfficialDocument_index_ken="http://nscallinone2.hyweb.com.tw:8080/AppService/json/Page_OfficialDocument_index_ken.json";
+var DataURL_OfficialDocument_LP="http://TAP0923.nsc.gov.tw/AppService/json/Page_OfficialDocument_LP.json";
+var DataURL_OfficialDocument_index_lees="http://TAP0923.nsc.gov.tw/AppService/json/Page_OfficialDocument_index_lees.json";
+var DataURL_OfficialDocument_index_ken="http://TAP0923.nsc.gov.tw/AppService/json/Page_OfficialDocument_index_ken.json";
 /*新聞剪影*/
-var DataURL_NewsAndDocument_index="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=DataURL_NewsAndDocument_index&jsoncallback=?";
-var DataURL_NewsAndDocument_LP="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=DataURL_NewsAndDocument_LP&jsoncallback=?";
-var DataURL_NewsAndDocument_CP="http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=DataURL_NewsAndDocument_CP&jsoncallback=?";
+var DataURL_NewsAndDocument_index="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/getNewsDocIndex.do?name=DataURL_NewsAndDocument_index&jsoncallback=?";
+var DataURL_NewsAndDocument_LP="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/getNewsDocLP.do?name=DataURL_NewsAndDocument_LP&jsoncallback=?";
+var DataURL_NewsAndDocument_CP="http://TAP0515.nsc.gov.tw:8080/MobileGipOpenAdmin/gipadmin/getNewsDocCP.do?name=DataURL_NewsAndDocument_CP&jsoncallback=?";
 
 /*LBS*/
 var mapDefaultPoint={"lat":24.78190,"lng":121.00594};//科學園區
 /*園區判定*/
-var DataURL_ParkBaseArea="http://nscallinone2.hyweb.com.tw:8080/AppService/json/area.json"; 
+var DataURL_ParkBaseArea="http://TAP0923.nsc.gov.tw/AppService/json/area.json"; 
 // var DataURL_ParkBaseArea="json/area.json"; 
 /*會員資料*/
-var DataURL_MemberData_getToken1="http://nscallinone2.hyweb.com.tw:8080/AppService/GetToken1.do?name=DataURL_MemberData_getToken1&jsoncallback=?";
-var DataURL_MemberData_vaildToken1="http://nscallinone2.hyweb.com.tw:8080/AppService/ValidToken1.do?name=DataURL_MemberData_vaildToken1&jsoncallback=?";
-var DataURL_MemberData_getToken2="http://nscallinone2.hyweb.com.tw:8080/AppService/GetToken2.do?name=DataURL_MemberData_getToken2&jsoncallback=?";
-var DataURL_MemberData_vaildToken2="http://nscallinone2.hyweb.com.tw:8080/AppService/ValidToken2.do?name=DataURL_MemberData_vaildToken2&jsoncallback=?";
-//Richard Dev
-/*Page_ChooseUser.html*/
-var DataURL_OfficialDocument_AGENT = "http://nscallinone2.hyweb.com.tw:8080/AppService/GetODAgentInfo.do";
-var DataURL_BFS_GETORGLIST = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgList.do?jsoncallback=?";
-var DataURL_BFS_GETORGINFO = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgInfo.do?jsoncallback=?";
-/*Page_BizFileSharing.html*/
-var DataURL_BFS = "http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do";
-var DataURL_BFS_Upload = "http://nscallinone.hyweb.com.tw:8080/BFS/Upload.do?src=mobile";
-var DataURL_BFS_android = "http://nscallinone.hyweb.com.tw:8080/BFS/Main2.do";
-var DataURL_BFS_android_Upload = "http://nscallinone.hyweb.com.tw:8080/BFS/Upload.do";
-/*Page_officialDocument.html*/
-var DataURL_OfficialDocument_LP = "http://nscallinone2.hyweb.com.tw:8080/AppService/GetODToListMobInfo.do";
-        
+var DataURL_MemberData_getToken1="http://TAP0923.nsc.gov.tw/AppService/GetToken1.do?name=DataURL_MemberData_getToken1&jsoncallback=?";
+var DataURL_MemberData_vaildToken1="http://TAP0923.nsc.gov.tw/AppService/ValidToken1.do?name=DataURL_MemberData_vaildToken1&jsoncallback=?";
+var DataURL_MemberData_getToken2="http://TAP0923.nsc.gov.tw/AppService/GetToken2.do?name=DataURL_MemberData_getToken2&jsoncallback=?";
+var DataURL_MemberData_vaildToken2="http://TAP0923.nsc.gov.tw/AppService/ValidToken2.do?name=DataURL_MemberData_vaildToken2&jsoncallback=?";
 //Setting load from web service
 function loadSetting(){
     //如果DB沒資料則取得資料後存回LocalStorage
@@ -147,7 +126,7 @@ function loadSetting(){
             "ParkEName":"CTSP",
             "Bases":[
                 {"BaseCode":"21","BaseName":"台中園區","BaseEName":"Taichung"},
-                {"BaseCode":"22","BaseName":"雲林園區","BaseEName":"Huwei"},
+                {"BaseCode":"22","BaseName":"虎尾園區","BaseEName":"Huwei"},
                 {"BaseCode":"23","BaseName":"后里園區","BaseEName":"Houli"},
                 {"BaseCode":"24","BaseName":"二林園區","BaseEName":"Erlin"},
                 {"BaseCode":"25","BaseName":"高等研究園區","BaseEName":"Advanced Research"}

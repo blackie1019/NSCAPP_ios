@@ -343,7 +343,7 @@ h1 {
 	background-image: -ms-linear-gradient(top, #fff 42%, #c8d8f2);
 	background-image: linear-gradient(to bottom, #fff 42%, #c8d8f2);
 	margin: 15px;
-	padding: 15px;
+	padding: 5px;
 	position: relative;
 	text-align: center;
 }
@@ -481,8 +481,7 @@ text-indent: 0em;
 }
 .list .arrow img {
 	vertical-align: middle;
-	height: 100%;
-	width: 100%;
+	width: 22px;
 }
 .list h2 {
 	font-size: 1.2em;
@@ -568,8 +567,7 @@ text-indent: 0em;
 }
 .list2 .arrow img {
 	vertical-align: middle;
-	height: 100%;
-	width: 100%;
+	width: 22px;
 }
 .list2 h2 {
 	font-size: 1.2em;
@@ -619,6 +617,12 @@ text-indent: 0em;
 	font-size: 1em;
 	margin-right: 25px;
 }
+div.lp_content{
+	width: 85%;
+}
+.lp_content span{
+	color:red;
+}
 .list2 p.address {
 	margin-right: 60px;
 }
@@ -665,8 +669,7 @@ text-indent: 0em;
 }
 .list3 .arrow img {
 	vertical-align: middle;
-	height: 100%;
-	width: 100%;
+	width: 22px;
 }
 .list3 h2 {
 	font-size: 1.2em;
@@ -759,8 +762,7 @@ text-indent: 0em;
 }
 .list4 .arrow img {
 	vertical-align: middle;
-	height: 100%;
-	width: 100%;
+	width: 22px;
 }
 
 /*list5*/
@@ -806,8 +808,7 @@ text-indent: 0em;
 }
 .list5 .arrow img {
 	vertical-align: middle;
-	height: 100%;
-	width: 100%;
+	width: 22px;
 }
 .list5 h2 {
 	/*清除父層設定開始*/
@@ -878,8 +879,7 @@ text-indent: 0em;
 }
 .list6 .arrow img {
 	vertical-align: middle;
-	height: 100%;
-	width: 100%;
+	width: 22px;
 }
 .list6 h2 {
 	font-size: 1em;
@@ -1039,8 +1039,7 @@ text-indent: 0em;
 }
 .list9 .arrow img {
 	vertical-align: middle;
-	height: 100%;
-	width: 100%;
+	width: 22px;
 }
 .list9 h2 {
 	font-size: 1em;
@@ -1059,6 +1058,7 @@ text-indent: 0em;
 
 /*footbtn*/
 .footbtn {
+	top: -32px;
 	position: absolute;
 	bottom: 55px;
 	left: 5%;
@@ -1166,6 +1166,7 @@ text-indent: 0em;
 	padding: 0px;
 }
 .cptable ul li {
+	margin: 10px 0px 10px 0px;
 }
 .cptable a {
 	text-decoration: none;
@@ -1883,14 +1884,13 @@ h1
  background-image: linear-gradient(to top, #ecece1, #eeede0 50%, #fff 50%, #e3e3d1);
  border-top: 1px solid #FFF;
  border-bottom: 1px solid #CCC;
- height: 120px;
  overflow:auto;
  position: relative;
  display: block;
 }
 .sort ul {
 	width: 470%;
-	height: 90px;
+	height: 76px;
 	margin: 0px 0px 0px 0px;
 	padding: 0px;
 }
@@ -1902,7 +1902,7 @@ h1
  margin: 0px 2px;
  padding: 0px;
 /* background: url(../img/NSC/services_btn@2x.png) no-repeat left top;*/
- width: 120px;
+width: 76px;
  display: inline-block;
 }
 .sort li.here {
@@ -1913,7 +1913,7 @@ h1
  margin: 0px 2px;
  padding: 0px;
  background: url(../img/NSC/services_btn_ov@2x.png) no-repeat left top;
- width: 120px;
+width: 76px;
  display: inline-block;
 }
 .sort li a {
@@ -1923,8 +1923,8 @@ h1
  text-decoration: none;
  white-space: nowrap;
  display: block;
- width: 120px;
- height: 104px;
+width: 76px;
+width: 76px;
  font-weight: bold;
  margin: 0px 2px;
  padding: 0px 0px 5px;
@@ -1934,49 +1934,7 @@ h1
 	height: 29px;
 	font-size: 1.5em;
 }
-.sort .next {
- background: url(../img/NSC/next@2x.png) no-repeat center center;
- display: block;
- height: 112px;
- width: 28px;
- position: absolute;
- top: 0px;
- right: 0px;
- padding-right: 0px;
-}
-.sort .next img {
- height: 112px;
- width: 28px;
-}
-.sort .pre {
- background: url(../img/NSC/pre@2x.png) no-repeat center center;
- display: block;
- height: 112px;
- width: 28px;
- position: absolute;
- top: 0px;
- left: 0px;
-}
-.sort .pre img {
- height: 112px;
- width: 28px;
-}
-/*path*/
-.path {
-	background: url(../img/NSC/pathbg@2x.png) repeat-x left center;
-	height: 40px;
-	font-size: 1em;
-	font-weight: bold;
-	color: #FFF;
-	line-height: 230%;
-	vertical-align: middle;
-}
-.path .before {
-	background: url(../img/NSC/path@2x.png) no-repeat 5px 2px;
-	padding-left: 30px;
-	padding-top: 3px;
-	padding-bottom: 6px;
-}
+
 /*location*/
 .location {
 	text-align: left;
@@ -2157,7 +2115,7 @@ font-size: 1em;
 /*title3*/
 .title3 {
 	width: 97%;
-	height: 34px;
+	/*height: 34px;*/
 	-webkit-box-shadow: 0 1px rgba(255,255,255,.25), inset 0 1px 1px rgba(0,0,0,.5);
 	-moz-box-shadow: 0 1px rgba(255,255,255,.25), inset 0 1px 1px rgba(0,0,0,.5);
 	box-shadow: 0 1px rgba(255,255,255,.25), inset 0 1px 1px rgba(0,0,0,.5);
@@ -2218,9 +2176,6 @@ font-size: 1em;
 }
 .title6 .arrow img{
 		width: 22px;
-	height: 22px;
-}
-.title6 .arrow img {
 	vertical-align: middle;
 }
 /*ServiceCt*/
@@ -2276,6 +2231,11 @@ font-size: 1em;
 	-moz-box-shadow: 0 0 7px rgba(145,145,144,.75);
 	box-shadow: 0 0 7px rgba(145,145,144,.75);
 	border: solid 5px #fff;
+}
+.busInfoHTML{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
 }
 /*btn*/
 .btn01 {
@@ -2349,7 +2309,7 @@ font-size: 1em;
 	right: 10px;
 }
 .btn06 {
-	width: 42px;
+	width: 45px;
 	height: 42px;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
@@ -2559,6 +2519,9 @@ float: right;
 	text-align:center;
 
 }
+.imgRouteMap{
+	width: 100%;
+}
 .aMap{
 	display:block;
 	margin: 1px;
@@ -2622,6 +2585,31 @@ float: right;
 .divLBSIMGList li.delete{
 	background: url(../img/NSC/icon02.png) no-repeat left center;
 }
+.tranTable{
+	width: 100%;
+}
+.tranTable .txtTD
+{
+	width: 100px;
+	min-width: 100px;
+	text-align: right;
+}
+.tranTable .controlTD{
+	width: 180px;
+	max-width: 180px;
+}
+.tranTable .controlTD .ui-btn-text{
+	max-width: 160px!important;
+}
+.tranTable .switchTD{
+	width: 40px;
+/*	padding-top: 25px;*/
+}
+.btnSwitch{
+	width: 32px;
+	height: 32px;
+	background: url(../img/NSC/change.png) no-repeat left center;
+}
 .btnlogin{
 	left: 50px;
 /*		display: block;
@@ -2662,6 +2650,17 @@ float: right;
 .tickercontainer a:link{ /* the outer div with the black border */
 	 text-decoration: none;
 	color: #FF0!important;
+}
+.popupCloseBtn {
+	width: 30px;
+	height: 30px;
+}
+.popupCloseBtn .ui-icon{
+	width: 30px;
+	height: 30px;
+	background-color:transparent;
+	text-align: center;
+	margin: 5px;
 }
 
 /*jQuery mobile Custom*/
@@ -2709,11 +2708,23 @@ float: right;
 	margin-top: 5px;
 	margin-right: 5px;
 }
+.navli a.hover {
+font-size: 16px;
+text-decoration: none;
+display: block;
+color: rgb(255, 255, 102);
+}
 .ui-btn-active {
 	color: #FFFF99!important;
 }
 .ui-btn-default {
 	color: #FFFFFF!important;
+}
+.defaultLabel{
+	font-size: 16px;
+}
+.defaultTD{
+	vertical-align:middle;
 }
 /*table*/
 table.fixed { table-layout:fixed; }

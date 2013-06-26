@@ -21,7 +21,7 @@
 		<script src="js/mobiscroll.custom.js" type="text/javascript"></script>
 		<script>
 		$(document).bind('mobileinit', function(){
-
+			$.mobile.listview.prototype.options.countTheme = "e";
 		});
 		</script>
 		<!--<script src="http://debug.phonegap.com/target/target-script-min.js#blackie1019"></script>-->
@@ -53,176 +53,324 @@
 			doVaildToken2(dataObject.token2,"Page_OfficialDocument.html");
 		}
 		</script>
-	</head>
-	<body>	
-		<div data-role="page" id="index">
-		<script  type="text/javascript">
-		//
-		/*global variables*/
-		var loginAccount="lees",inputAccount="lees";
-		//function
-		function changeAccount(input_account){
-			if(input_account!=inputAccount){
-				inputAccount=input_account;
-				doRefresh(loginAccount,inputAccount);
-			}
+		<script type="text/javascript">
+		/*
+		 * Global variables
+		*/
+		var loginUser = "";
+		var loginUserName = "";
+		var loginUserInfo = "";
+		//for 公文API
+		//original user
+		var orgCode = "";
+		var deptCode = "";
+		var userId = "";
+		
+		//current user mode(agent)
+		var _orgCode = "";
+		var _deptCode = "";
+		var _userId = "";
+		
+		/*
+		//MoveTo setting.js
+		*/
+		//-
+		var DataURL_OfficialDocument_LP = "http://nscallinone2.hyweb.com.tw:8080/AppService/GetODToListMobInfo.do";
+		//var DataURL_OfficialDocument_LP = "http://192.168.1.6:8081/AppService/GetODToListMobInfo.do";
+				
+		function iniControlSetting() {
+			var today=new Date().toISOString().slice(0,10);			
+			$("input[type=date]").val(today);
 		}
-		function doRefresh(login_account,input_account){
-		    LoadingObject.show();
-			var jsonObject={"loginAccount":login_account,"inputAccount":input_account};
-			var jsonObjectStr = JSON.stringify(jsonObject);
-			var htmlResult="",htmlAccount="",selectAccount="";
-			//假資料
-			var DataURL=DataURL_OfficialDocument_index_lees;
-			switch(input_account){
-				case "lees":
-					DataURL=DataURL_OfficialDocument_index_lees;
-					break;
-				case "ken":
-					DataURL=DataURL_OfficialDocument_index_ken;
-				 	break;
-			}
-		    $.ajax({
-		        url:DataURL,
-		        data:  {"jsonInput":jsonObjectStr},
-		        type:"POST",
-		        dataType :"json",
-		        async:false,
-		        success:function(data){
-		            if(data==null){
-		                 smoke.alert(ServiceCodeErrorString,{},function(){});
-		            }else{
-		                if(data.status=="success"){
-	                		htmlAccount+="<img src='img/NSC/title2_icon.png'>"+data.jsonOutput.account[0].name+"<a data-rel='popup' data-position-to='window' href='#popupDialog_account' data-transition='pop'><img src='img/NSC/arrow5.png' alt='下拉選單'></a>";
-		                	for(var i=0;i<data.jsonOutput.account.length;i++){
-			        			selectAccount+="<label><input type='radio' name='selectedAccount' data-value='"+data.jsonOutput.account[i].account+"' id='radio_account_"+data.jsonOutput.account[i].account+"' data-theme='c'";
-			        			if(input_account==data.jsonOutput.account[i].account){
-			        				selectAccount+=" checked='checked' ";
-			        			}
-			        			selectAccount+=">"+data.jsonOutput.account[i].name+"</label>";
-		                	}
-		                	for(var i=0;i<data.jsonOutput.type.length;i++){
-		                		htmlResult+="<li data-type='"+data.jsonOutput.type[i].code+"''><p>"+data.jsonOutput.type[i].value+"</p><div class='number'>"+data.jsonOutput.type[i].count+"</div></li>";
-	            			}
-	            			if(htmlResult!=""){
-	            				$('#index').find('#htmlAccount').html(htmlAccount);
-	            				$('#index').find('#select_account').html(selectAccount);
-	            				$('#index').find('#htmlResult').html("<ul>"+htmlResult+"</ul>");
-	            				$('#index').trigger('create');
-	            			}
-		                }else{
-		                    smoke.alert(ServiceCodeErrorString,{},function(){});
-		                }
-		            }
-		        },
-		        error: function(data){
-		            LoadingObject.hide(); 
-		            smoke.alert(ServiceErrorString,{},function(){});
-		        },
-		        complete: function() {
-		            LoadingObject.hide();
-		        }
-		    });
-		}
-		function changeToLP(login_account,input_account,type){
-		    LoadingObject.show();
-			var jsonObject={"loginAccount":login_account,"inputAccount":input_account,"type":type};
-			var jsonObjectStr = JSON.stringify(jsonObject);
-			var htmlResult="";
-		    $.ajax({
-		        url:DataURL_OfficialDocument_LP,
-		        data:  {"jsonInput":jsonObjectStr},
-		        type:"POST",
-		        dataType :"json",
-		        async:false,
-		        success:function(data){
-		            if(data==null){
-		                 smoke.alert(ServiceCodeErrorString,{},function(){});
-		            }else{
-		                if(data.status=="success"){
-		                	htmlResult+="<div class='title2'>"+data.jsonOutput.type.value+"</div>";
-							for(var i=0;i<data.jsonOutput.items.length;i++){
-		                		htmlResult+="<li><h2>"+data.jsonOutput.items[i].title+"</h2><p>公文送達時間："+data.jsonOutput.items[i].dateTime+"</p></li>";
-		                	}
-            				$('#LP').find('#htmlResult').html("<ul>"+htmlResult+"</ul>").trigger('create');
-            				$.mobile.changePage('#LP');
-		                }else{
-		                    smoke.alert(ServiceCodeErrorString,{},function(){});
-		                }
-		            }
-		        },
-		        error: function(data){
-		            LoadingObject.hide(); 
-		            smoke.alert(ServiceErrorString,{},function(){});
-		        },
-		        complete: function() {
-		            LoadingObject.hide();
-		        }
-		    });
-		}
-		// pageshow
-		$(document).on('pageinit','#index',function(){	
-			//產生跑馬燈
-			var jsonObject=getAppInstantMessage();
-			if(jsonObject!=null){
-				var title=jsonObject.chtTitle;
-				genAppInstantMessage($('#content'),title);
-			}
+		
+		// pageinit
+		$(document).on('pageinit','#index',function(){
+			var member = getLoginData();
+			//alert(JSON.stringify(member));
+			userId=member.accountSN||"B00541";
+			orgCode=member.idept_govCode||"N";			
+			if (orgCode=='N') {
+				orgCode="SIPA";
+			} else if (orgCode=='C') {
+				orgCode="CTSP";
+			} else if (orgCode=='S') {
+				orgCode="STSIPA";
+			} else {//M
+				orgCode="NSC";
+			}			
+			deptCode=member.idept_nscuCode||"08";
+			loginUser=member.account||"leee.ntspb";
+			loginUserName=member.accountName||"李日興";
+			loginUserInfo=(member.accountName+"("+userId+")")||"李日興(B00541)";
+			$('#currentUser').html(loginUserInfo);
+			//設定代理人
+			_orgCode = orgCode;
+			_deptCode = deptCode;
+			_userId = userId;
+			//寫到localstorage供其他頁使用
+			window.localStorage.setItem("SettingData_userId", userId);
+			window.localStorage.setItem("SettingData_orgCode", orgCode);
+			
 			//產生menu
 			genMenu(this);
 			//menu登入確認
-			menuDisplayMemberSection(checkLogin(),this);	
- 			//條列個別點擊事件
- 			$(this).find('#htmlResult').on('click','li',function(){
- 				var type=$(this).data("type");
- 				changeToLP(loginAccount,inputAccount,type);
- 				type=null;delete type;
- 			});
- 			//選擇帳號 取消與確定事件綁定
- 			$('#popupDialog_account').on('click','#btnCancel',function(){
- 				$("#popupDialog_account input[type=radio][value="+inputAccount+"]").attr("checked","checked");
- 				$("#popupDialog_account input[type=radio][value!="+inputAccount+"]").attr("checked","");
- 				$('#popupDialog_account').popup('close');
- 			});
- 			$('#popupDialog_account').on('click','#btnChange',function(){
- 				$('#popupDialog_account').popup('close');
- 				changeAccount($("#popupDialog_account input[type=radio][name*=selectedAccount]:checked").data("value"));
- 			});
- 		});
-		$(document).on('pagebeforeshow','#index',function(){	
+			menuDisplayMemberSection(checkLogin(),this);
+			//控制項初始化設定
+			iniControlSetting();
  			//條列呈現
- 			doRefresh(loginAccount,inputAccount);
+			loadData(orgCode, deptCode, userId, true);
+			
+			//bind events
+			$(this).find('#itemList').on('click','li',function() {
+				loadDataLP(_orgCode, _deptCode, _userId, $(this).attr('index'));
+				$.mobile.changePage('#LP');
+			});
+			
+			$('#openAgent').click(function() {
+				$('#popupDialog_account').popup('open');
+			});
+			$('#btnCancel').click(function() {
+				$('#popupDialog_account').popup('close');
+			});
+			$('#btnChange').click(function() {
+				//loadData();
+				var selectedAgent = decodeURI($('input[name="selectedAgent"]:checked').val())||'';
+				selectedAgent = JSON.parse(selectedAgent);
+				
+				//if (selectedAgentName=="") {
+				//	selectedAgentName=loginUserName;
+				//}
+				
+				//if (confirm("確定要載入被代理人"+selectedAgent.userName+"("+selectedAgent.userId+")的資訊嗎?")) {
+					// do it
+					//window.location.reload();	
+					_orgCode = selectedAgent.compId;
+					_deptCode = selectedAgent.deptId;
+					_userId = selectedAgent.userId;
+					
+					loadData(_orgCode, _deptCode, _userId, false);
+					// changeuser
+					$('#currentUser').html(selectedAgent.userName+"("+selectedAgent.userId+")");
+					
+					$('#popupDialog_account').popup('close');
+				//}
+			});
+			
+			$('#chooseUser').click(function() {
+				//設定回去路徑
+				window.localStorage.setItem("SettingData_chooseUserBackPage", "Page_OfficialDocument.html");
+				window.location='Page_ChooseUser.html';
+			});
+ 		});
+		
+		$(document).on('pageinit','#LP',function() {
+			var member = getLoginData();
+			loginUser=member.account||"leee.ntspb";
+			loginUserName=member.accountName||"李日興";
+			userId=member.accountSN||"B00541";
+			orgCode=member.idept_govCode||"N";
+			if (orgCode=='N') {
+				orgCode="SIPA";
+			} else if (orgCode=='C') {
+				orgCode="CTSP";
+			} else if (orgCode=='S') {
+				orgCode="STSIPA";
+			} else {//M
+				orgCode="NSC";
+			}
+			
+			deptCode=member.idept_nscuCode||"08";
+			//產生menu
+			genMenu(this);
+			//menu登入確認
+			menuDisplayMemberSection(checkLogin(),this);
+			//控制項初始化設定
+			iniControlSetting();
+ 			//條列呈現
+			
 		});
+		
+		function loadDataLP(_orgCode,_deptCode,_userId,index) {			
+			LoadingObject.show();			
+			var htmlResult="";
+			$('#itemListLP').html(htmlResult);			
+			/*var jsonObj = {'orgCode':orgCode,
+				'deptCode':deptCode,
+				'userId':userId};
+				*/
+			var jsonObj = {'orgCode':_orgCode,
+			'deptCode':_deptCode,
+			'userId':_userId};		
+			var jsonObjStr = JSON.stringify(jsonObj);			
+			$.ajax({
+				type: 'post',
+				url: DataURL_OfficialDocument_LP,
+				data: "jsonInput="+jsonObjStr+"&jsoncallback=?",
+				dataType :"json",
+		        //async:false,
+				success: function(response) {
+					//htmlResult = "<ul data-role=\"listview\" data-theme=\"d\" id=\"itemListView\">";					
+					if (response.status == "success") {
+						var detail = response.jsonOutput.detail[index];						
+						var itemSubject = detail.itemSubject;
+						var itemCount = detail.itemCount;
+						var itemDate = detail.itemDate;
+						var list = detail.list;														
+						
+						htmlResult = "<ul>";				
+						for (var i=0; i<list.length; i++) {							
+							htmlResult += "<li>";
+							htmlResult += "<h2>" + list[i].title + "</h2>";
+							htmlResult += "<p>公文送達時間："+list[i].dateTime+"</p>";
+							htmlResult += "</li>";						
+							//htmlResult += "<li><a href=\"#\">"+itemSubject+" <span class=\"ui-li-count\">"+itemCount+"</span></a></li>";
+						}
+					
+						htmlResult += "</ul>";						
+						$('#itemListLP').html(htmlResult);
+						$('#itemList').trigger('create');
+					
+					}
+				},
+				error: function(xhr,msg,err) {					
+					//alert('ajax request error');					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					//$('#loading').fadeOut();
+					LoadingObject.hide();
+				}
+			});
+		}
+		
+		function loadData(_orgCode,_deptCode,_userId,updateAgent) {
+			LoadingObject.show();
+			var htmlResult="";
+			$('#itemList').html(htmlResult);
+			/*var jsonObj = {'orgCode':orgCode,
+				'deptCode':deptCode,
+				'userId':userId};
+				*/
+			var jsonObj = {'orgCode':_orgCode,
+			'deptCode':_deptCode,
+			'userId':_userId};
+			
+			var jsonObjStr = JSON.stringify(jsonObj);
+			//alert(jsonObjStr);
+			$.ajax({				
+				type: 'post',
+				url: DataURL_OfficialDocument_LP,
+				data: "jsonInput="+jsonObjStr+"&jsoncallback=?",
+				dataType :"json",
+		        //async:false,
+				success: function(response) {
+					OD_RESULT = response;					
+					//htmlResult = "<ul data-role=\"listview\" data-theme=\"d\" id=\"itemListView\">";
+					htmlResult = "<ul>";
+					
+					if (response.status == "success") {					
+						var detail = response.jsonOutput.detail;
+						var agentOf = response.jsonOutput.agentOf;						
+						
+						if (detail!=null && detail!='undefined') {
+						
+							for (var i=0; i<detail.length; i++) {
+								var itemSubject = detail[i].itemSubject;
+								var itemCount = detail[i].itemCount;
+								var itemDate = detail[i].itemDate;
+								var list = detail[i].list;																				
+								
+								htmlResult += "<li index=\""+i+"\">";
+								htmlResult += "<p>" + itemSubject + "</p>";
+								htmlResult += "<div class=\"number\">" + itemCount + "</div>";
+								htmlResult += "</li>";
+								//htmlResult += "<li><a href=\"#\">"+itemSubject+" <span class=\"ui-li-count\">"+itemCount+"</span></a></li>";
+							}						
+							htmlResult += "</ul>";
+							$('#itemList').html(htmlResult);
+							//$('#itemList').trigger('create');
+						}
+						
+						if (updateAgent==true&&agentOf!=null && agentOf!='undefined') {							
+							//代理他人
+							htmlResult = "<fieldset data-role=\"controlgroup\">";
+							htmlResult += "<legend>查詢被代理人待辦業務</legend>";
+							
+							//本人
+							var jsonObject = {"compId":orgCode,"userId":userId,"userName":loginUserName,"deptId":deptCode};
+							htmlResult += "<input type=\"radio\" name=\"selectedAgent\" id=\"selectedAgent\" value=\""+encodeURI(JSON.stringify(jsonObject))+"\" checked=\"checked\" />";
+							htmlResult += "<label for=\"selectedAgent\"><span>"+loginUserName+"("+userId+")</span></label>";
+														
+							for (var j=0; j<agentOf.length; j++) {
+								htmlResult += "<input type=\"radio\" name=\"selectedAgent\" id=\"selectedAgent"+j+"\" value=\""+encodeURI(JSON.stringify(agentOf[j]))+"\" />";
+								htmlResult += "<label for=\"selectedAgent"+j+"\"><span>"+agentOf[j].userName+"("+agentOf[j].userId+")</span></label>";
+							}
+							htmlResult += "</fieldset>";
+							$('#agentOf').html(htmlResult).trigger('create');
+						}
+					}
+				},
+				error: function(xhr,msg,err) {
+					//alert('ajax request error');					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					//$('#loading').fadeOut();
+					LoadingObject.hide();
+				}
+			});
+		}
 		</script>
-			<div data-role="header" data-theme="f">
+		
+	</head>
+	<body>	
+		<div data-role="page" id="index">		
+			<div data-role="header" data-position="fixed" data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>公文簽核待辦通知</h1>
-            </div>
-			<div data-role="content" style="padding:0" id="content">
-				<div class="title2" id="htmlAccount">
-				</div>
-				<div class="list6" id="htmlResult">
-				</div>
+            </div>			
+			<div data-role="content" style="padding:0">			
+			<div class="title2">
+				<img src="img/NSC/title2_icon.png" id="chooseUser">
+				<img src="img/NSC/arrow5.png" id="openAgent">
+				<span id="currentUser"/>				
+			</div>			
+
+			<!--int Start-->
+			<div class="int2">
+				
+			<!--list star -->
+			<div class="list6" id="itemList">				
 			</div>
+			<!--list end -->
+				
+			</div>
+			<!--int End-->		
+		
+			</div>		
+			
+			<!--代理人切換popup-->
 			<div data-role="popup" id="popupDialog_account" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
     			<div style="text-align:center;">	
-    				<div id='select_account'>
+    				<div id="agentOf">
+						<!--代理他人-->
     				</div>
     				<div>
-    					<a data-inline="true"  data-theme="c" id="btnCancel" data-role="button">取消</a>
-						<a data-inline="true"  data-theme="e" id="btnChange" data-role="button">切換</a>
+						<input type="button" name="reset" value="取消" class="btn09" id="btnCancel" data-inline="true"/>
+						<input type="button" name="reset" value="切換" class="btn09" id="btnChange" data-inline="true" data-theme="a"/>					
 					</div>
 		    	</div>
 			</div>
 		</div>
 		<div data-role="page" id="LP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>公文簽核待辦通知</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
-				<div class="list2" id="htmlResult">
-				</div>
+
+					<div class="list2" id="itemListLP">					
+					</div>					
 			</div>
 		</div>
 	</body>

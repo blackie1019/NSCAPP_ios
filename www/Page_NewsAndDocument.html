@@ -47,7 +47,9 @@
 			/*global variables*/
 			var tmpKeyWord="",
 				tmpBeginDate="",
-				tmpEndDate="";
+				tmpEndDate="".
+				targetCategory1="",
+				targetCategory2="";
 			//function
 			function showAll(){
 				tmpKeyWord="";
@@ -55,6 +57,22 @@
 				tmpEndDate="";
 				//條列呈現
 				changeToLP(tmpKeyWord,tmpBeginDate,tmpEndDate,"","");
+			}
+			function changeDiv(type) {
+				switch(type){
+					case 1:
+		 				$('#classify_LP #divHistoryItems').show();
+		 				$('#classify_LP #divTodayItems').hide();
+		 				$('#classify_LP #aHistoryItems').addClass('ui-btn-active');
+		 				$('#classify_LP #aTodayItems').removeClass('ui-btn-active');
+						break;
+					case 0:	 	
+						$('#classify_LP #divHistoryItems').hide();
+		 				$('#classify_LP #divTodayItems').show();
+		 						 				$('#classify_LP #aTodayItems').addClass('ui-btn-active');
+		 				$('#classify_LP #aHistoryItems').removeClass('ui-btn-active');
+						break;
+				}
 			}
 			function doRefresh(){
 			    LoadingObject.show();
@@ -81,9 +99,9 @@
 									htmlResult+="<div class='int2'><div class='list6'><ul>";
 									for(var category2_index=0;category2_index<data.jsonOutput.category1[i].category2.length;category2_index++){
 										htmlResult+="<li data-category1='"+data.jsonOutput.category1[i].code+"' data-category2="+data.jsonOutput.category1[i].category2[category2_index].code+"><p>"+data.jsonOutput.category1[i].category2[category2_index].value+"</p>";
-										if(data.jsonOutput.category1[i].category2[category2_index].count!="0"){
+										// if(data.jsonOutput.category1[i].category2[category2_index].count!="0"){
 											htmlResult+="<div class='number'>"+data.jsonOutput.category1[i].category2[category2_index].count+"</div>";
-										}
+										// }
 										htmlResult+="</li>";
 
 									}
@@ -108,6 +126,8 @@
 			}
 			function changeToLP(tmpKeyWord,tmpBeginDate,tmpEndDate,category1,category2){
 			    LoadingObject.show();
+			    targetCategory1=category1;
+			    targetCategory2=category2;
 				var jsonObject={"keyWord":tmpKeyWord,"dateRange":{"beginDate":tmpBeginDate,"endDate":tmpEndDate},"category1":""+category1+"","category2":""+category2+""};
 				var jsonObjectStr = JSON.stringify(jsonObject);
 				var htmlResult="",title="";
@@ -122,23 +142,106 @@
 			                 smoke.alert(ServiceCodeErrorString,{},function(){});
 			            }else{
 			                if(data.status=="success"){
-			                	if(data.jsonOutput.category1.value!=""){
+			                	if(data.jsonOutput.category2.value!=""){
+				                	htmlResult+="<div class='title6'>"+data.jsonOutput.category2.value+"</div>";
+				               	}else if(data.jsonOutput.category1.value!=""){
+			                		htmlResult+="<div class='title6'>"+data.jsonOutput.category1.value+"</div>";
+				                }else{
+				                	htmlResult+="<div class='title6'>查詢結果</div>";	
+				                }
+								//產生新聞條列內容
+								if(data.jsonOutput.items.length>0){
+									htmlResult+="<div id='divHistoryItems'><ul>";
+									for(var i=0;i<data.jsonOutput.items.length;i++){
+				                		title=data.jsonOutput.items[i].title;
+				                		if(title.length>25){
+				                			title=title.substr(0,25)+"...";
+				                		}
+				                		htmlResult+="<li data-sn='"+data.jsonOutput.items[i].sn+"'><h2>"+title+"</h2><p>"+data.jsonOutput.items[i].source+"</p>";
+				                		// htmlResult+="<div class='floatleft'>分類："+data.jsonOutput.items[i].category.value+"</div>";
+				                		htmlResult+="<div class='floatright'>"+data.jsonOutput.items[i].date+"</div><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>";
+			            			}
+			            			htmlResult+="</ul></div>";
+			            		}
+	            				$('#LP').find('#htmlResult').html(htmlResult);
+	            				$.mobile.changePage('#LP');
+			                }else{
+			                    smoke.alert(data.message,{},function(){});
+			                }
+			            }
+			        },
+			        error: function(data){
+			            LoadingObject.hide(); 
+			            smoke.alert(ServiceErrorString,{},function(){});
+			        },
+			        complete: function() {
+			            LoadingObject.hide();
+			        }
+			    });
+			}
+			function changeToclassify_LP(category1,category2){
+			    LoadingObject.show();
+			    targetCategory1=category1;
+			    targetCategory2=category2;
+				var jsonObject={"keyWord":"","dateRange":{"beginDate":"","endDate":""},"category1":""+category1+"","category2":""+category2+""};
+				var jsonObjectStr = JSON.stringify(jsonObject);
+				var htmlResult="",title="";
+			    $.ajax({
+			        url:DataURL_NewsAndDocument_LP,
+			        data:  {"jsonInput":jsonObjectStr},
+			        type:"POST",
+			        dataType :"json",
+			        async:false,
+			        success:function(data){
+			            if(data==null){
+			                 smoke.alert(ServiceCodeErrorString,{},function(){});
+			            }else{
+			                if(data.status=="success"){
+			                	if(data.jsonOutput.category2.value!=""){
+				                	htmlResult+="<div class='title6'>"+data.jsonOutput.category2.value+"</div>";
+				               	}else if(data.jsonOutput.category1.value!=""){
 			                		htmlResult+="<div class='title6'>"+data.jsonOutput.category1.value+"</div>";
 				                }else{
 				                	htmlResult+="<div class='title6'>全部訊息</div>";	
 				                }
-								//產生條列內容
-								for(var i=0;i<data.jsonOutput.items.length;i++){
-			                		title=data.jsonOutput.items[i].title;
-			                		if(title.length>25){
-			                			title=title.substr(0,25)+"...";
-			                		}
-			                		htmlResult+="<li data-sn='"+data.jsonOutput.items[i].sn+"'><h2>"+title+"</h2><p>"+data.jsonOutput.items[i].source+"</p><div class='floatleft'>分類："+data.jsonOutput.items[i].category.value+"</div><div class='floatright'>"+data.jsonOutput.items[i].date+"</div><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>";
+				                //產生上方Tab切換
+                					$('#classify_LP #navBar').html('<div data-role="navbar"><ul>'+
+										'<li class="navli"><a href="javascript:changeDiv(0);" id="aTodayItems">今日新聞</a></li>'+
+										'<li class="navli"><a href="javascript:changeDiv(1);" id="aHistoryItems">歷史新聞</a></li>'+
+									'</ul></div>');
+				                //產生今日新聞條列內容
+									htmlResult+="<div id='divTodayItems'><ul>";
+									for(var i=0;i<data.jsonOutput.items_today.length;i++){
+				                		title=data.jsonOutput.items_today[i].title;
+				                		if(title.length>25){
+				                			title=title.substr(0,25)+"...";
+				                		}
+				                		htmlResult+="<li data-sn='"+data.jsonOutput.items_today[i].sn+"'><h2>"+title+"</h2><p>"+data.jsonOutput.items_today[i].source+"</p>";
+				                		// htmlResult+="<div class='floatleft'>分類："+data.jsonOutput.items_today[i].category.value+"</div>";
+				                		htmlResult+="<div class='floatright'>"+data.jsonOutput.items_today[i].date+"</div><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>";
+			            			}
+			            			htmlResult+="</ul></div>";
+								//產生歷史新聞條列內容
+									htmlResult+="<div id='divHistoryItems'><ul>";
+									for(var i=0;i<data.jsonOutput.items.length;i++){
+				                		title=data.jsonOutput.items[i].title;
+				                		if(title.length>25){
+				                			title=title.substr(0,25)+"...";
+				                		}
+				                		htmlResult+="<li data-sn='"+data.jsonOutput.items[i].sn+"'><h2>"+title+"</h2><p>"+data.jsonOutput.items[i].source+"</p>";
+				                		// htmlResult+="<div class='floatleft'>分類："+data.jsonOutput.items[i].category.value+"</div>";
+				                		htmlResult+="<div class='floatright'>"+data.jsonOutput.items[i].date+"</div><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>";
+			            			}
+			            			htmlResult+="</ul></div>";
+	            				$('#classify_LP').find('#htmlResult').html(htmlResult);
+	            				$('#classify_LP #navBar').trigger('create');
+            				 	if(data.jsonOutput.items.length>0&&data.jsonOutput.items_today.length>0){
+		            				$('#classify_LP #divHistoryItems').hide();
+		            				$('#classify_LP #aTodayItems').addClass('ui-btn-active');
 		            			}
-		            			if(htmlResult!=""){
-		            				$('#LP').find('#htmlResult').html("<ul>"+htmlResult+"</ul>").trigger('create');
-		            				$.mobile.changePage('#LP');
-		            			}
+		            			$('#classify_LP #btnSearch').attr("onClick","javascript:setLP_AdvSearch('"+category1+"','"+category2+"');");
+	            				$.mobile.changePage('#classify_LP');
+		            			
 			                }else{
 			                    smoke.alert(data.message,{},function(){});
 			                }
@@ -228,7 +331,23 @@
 					changeToLP(tmpKeyWord,tmpBeginDate,tmpEndDate,"","");
 					$('#popupDialog_advSearch').popup('close');
 				}			
-				
+			}
+			function setLP_AdvSearch(category1,category2){
+				var doRefresh=true;
+				// $('#popupDialog_advSearch').popup('close');
+				tmpKeyWord=$('#popupLP_Dialog_advSearch #adv_keyword').val();
+				tmpBeginDate=$('#popupLP_Dialog_advSearch #beginDate').val().replace('-','/').replace('-','/');
+				tmpEndDate=$('#popupLP_Dialog_advSearch #endDate').val().replace('-','/').replace('-','/');
+				if(tmpBeginDate!=""&&tmpEndDate!=""&&tmpEndDate<tmpBeginDate){
+					doRefresh=false;
+					$('#popupLP_Dialog_advSearch').popup('close');
+					smoke.alert("輸入的時間區間不正確",{},function(){});
+				}
+				if(doRefresh){
+					//條列呈現
+					changeToLP(tmpKeyWord,tmpBeginDate,tmpEndDate,category1,category2);
+					$('#popupLP_Dialog_advSearch').popup('close');
+				}			
 			}
 			function iniControlSetting(){
 				var today=new Date().toISOString().slice(0,10);
@@ -251,25 +370,41 @@
 				//條列個別點擊事件
 	 			$(this).find('#htmlResult').on('click','.title6',function(){
 	 				var category1=$(this).data("category1");
-	 				changeToLP(tmpKeyWord,tmpBeginDate,tmpEndDate,category1,"");
+	 				if(category1!=-1){
+		 				changeToclassify_LP(category1,"");
+		 			}else{
+		 				// changeToLP("","","","","");
+		 				var nowDate = new Date();
+		  				nowDate=nowDate.getFullYear()+"/"+(nowDate.getMonth()+1)+"/"+nowDate.getDate();
+			 			changeToLP("",nowDate,nowDate,"","");
+		 			}
 	 				category1=null;delete category1;
 	 			});
 	 			$(this).find('#htmlResult').on('click','li',function(){
 	 				var category1=$(this).data("category1");
 	 				var category2=$(this).data("category2");
-	 				changeToLP(tmpKeyWord,tmpBeginDate,tmpEndDate,category1,category2);
+	 				changeToclassify_LP(category1,category2);
 	 				category1=null;category2=null;delete category1;delete category2;
 	 			});
 	 		});
 			$(document).on('pageinit','#LP',function(){	
+				var rootElement=this;
 	 			$(this).find('#htmlResult').on('click','li',function(){
 	 				var sn=$(this).data("sn");
 	 				changeToCP(sn);
 	 				sn=null;delete sn;
 	 			});
-			});
-			$(document).on('pageinit',"#CP",function(){	
-
+	 		});
+			$(document).on('pageinit','#classify_LP',function(){	
+				var rootElement=this;
+	 			$(this).find('#htmlResult').on('click','li',function(){
+	 				var sn=$(this).data("sn");
+	 				changeToCP(sn);
+	 				sn=null;delete sn;
+	 			});
+	 			$(this).find('#a_LP_Dialog_advSearch').on('click',function(){
+	 				$( "#popupLP_Dialog_advSearch" ).popup( "open");
+	 			});
 			});
 			// pageshow
 			$(document).on('pagebeforeshow','#index',function(){	
@@ -280,7 +415,7 @@
 	</head>
 	<body>	
 		<div data-role="page" id="index">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>新聞剪影</h1>
             </div>
@@ -327,17 +462,54 @@
 			</div>
 		</div>
 		<div data-role="page" id="LP">
-			<div data-role="header" data-theme="f">
-		     	<a href="#index" data-icon="arrow-l">返回</a>
+			<div data-role="header" data-position="fixed" data-theme="f">
+			     <a data-rel="back" data-icon="arrow-l">返回</a>
 	            <h1>新聞剪影</h1>
 	        </div>
-			<div data-role="content" style="padding:0" id="content">
+			<div data-role="content" style="padding:0px" id="content">
 				<div class="list2" id="htmlResult">
 				</div>
 			</div>
 		</div>
+		<div data-role="page" id="classify_LP">
+			<div data-role="header" data-position="fixed" data-theme="f">
+		     	<a data-rel="back" data-icon="arrow-l">返回</a>
+	            <h1>新聞剪影</h1>
+	            <div id="navBar"></div>
+	        </div>
+			<div data-role="content" style="padding:0px" id="content">
+				<div class="list2" id="htmlResult">
+				</div>
+			</div>
+			<div data-theme="f" data-role="footer" data-position="fixed">		
+			  <div data-role="navbar">
+			    <ul>
+			      <li class="navli"><a data-rel="popup" data-theme="f" data-position-to="window" id="a_LP_Dialog_advSearch" data-transition="pop">進階搜索</a></li>
+			    </ul>
+			  </div>
+			</div>
+			<!--popup-->
+			<div data-role="popup" id="popupLP_Dialog_advSearch" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+				<div style="padding:25px">
+					<div style="text-align:right"><a data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" style="position:absolute;top: -5px;left:-10px;">關閉</a></div>
+	    			<div id="advSearch">	
+	    				<label for="keyword">關鍵字:</label>
+	    				<input data-theme="c" type="search" id="adv_keyword" value="" placeholder="請輸入關鍵字..."></input>
+	    				<label for="dateRange">日期:</label>
+	    				<div data-role="controlgroup" data-type="horizontal">
+						<label for="dateRange">起:</label><input type="date" id="beginDate">
+						</div>
+						至
+						<div data-role="controlgroup" data-type="horizontal">
+	    				迄日:<input type="date" id="endDate">
+		    			</div>
+	    				<a id="btnSearch" data-theme="f" onclick="javascript:setLP_AdvSearch();" data-role="button">查詢</a>
+			    	</div>
+			    </div>
+			</div>
+		</div>
 		<div data-role="page" id="CP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>新聞剪影</h1>
             </div>

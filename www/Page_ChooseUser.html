@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh"><!-- manifest="cache.appcache" 開啟Cache 功能-->
+    <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <!--ios-->
+        <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+        <!--android-->
+        <!--
+         <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
+        -->
+        <!--jQuery-->
+        <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<!--json2-->
+		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
+		<!--Google Map API v3-->
+		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>
+		<!--mobiScroll-->
+		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
+		<link href="css/mobiscroll.custom-2.4.3.min.css" rel="stylesheet" type="text/css"></link>
+		<script src="js/mobiscroll.custom.js" type="text/javascript"></script>
+		<script>
+		$(document).bind('mobileinit', function(){
+			$.support.cors = true;
+			$.mobile.allowCrossDomainPages = true; 
+			//ajaxEnabled: false ;
+		});
+		</script>
+		<!--<script src="http://debug.phonegap.com/target/target-script-min.js#blackie1019"></script>-->
+		<!--jQuery mobile-->
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-NSC-1.3.0.css"></link>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.0.min.js"></script>
+        <!--Plug in-->
+        <script src="js/jquery.hammer.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/smoke.min.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/smoke.theme.100s.css"> -->
+        <script src="js/smoke.js"></script>
+		<!--Hyweb CSS-->
+		<link rel="stylesheet" type="text/css" href="css/index.css"></link>
+		<!--HYAPP-->
+		<!--NSCAPP Javascript-->	
+		<script src="js/setting.js"></script>
+		<script src="js/loading.js"></script> 
+		<script src="js/pnpolygon.js"></script>
+		<script src="js/location.js"></script>	
+		<script src="js/data.js"></script>	
+		<script type="text/javascript">	
+		</script>
+	<script type="text/javascript">
+		/*
+		 * Global variables
+		*/		
+		/* 
+		//MoveTo setting.js
+		var DataURL_OfficialDocument_AGENT = "http://nscallinone2.hyweb.com.tw:8080/AppService/GetODAgentInfo.do";
+		//var DataURL_OfficialDocument_AGENT = "http://192.168.1.6:8081/AppService/GetODAgentInfo.do";
+		var DataURL_BFS_GETORGLIST = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgList.do?jsoncallback=?";
+		var DataURL_BFS_GETORGINFO = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgInfo.do?jsoncallback=?";
+		//var DataURL_BFS_GETORGLIST = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgList.do?jsoncallback=?";
+		//var DataURL_BFS_GETORGINFO = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgInfo.do?jsoncallback=?";
+		*/
+		var peopleSNs = "";//B00541
+		var peopleToSend = "";//leee.ntspb
+		var peopleNameToSend = "";//李日興
+		
+		function iniControlSetting(){
+			var today=new Date().toISOString().slice(0,10);
+			$("input[type=date]").val(today);
+		}
+		
+		// pageinit
+		$(document).on('pageinit','#LP',function(){
+			//產生menu
+			genMenu(this);
+			//控制項初始化設定
+			iniControlSetting();					
+ 		});		
+		
+		function loadOrgInfo(_unit_parts) {		
+			LoadingObject.show();
+			//拿nscuCode去找人員
+			getUserList(_unit_parts[0], _unit_parts[1], function(data) {				
+				LoadingObject.hide();
+				var htmlResult = "";									
+				if(data==null){
+					 smoke.alert(ServiceCodeErrorString,{},function(){});
+				}else{
+					if(data.status=="success"){							
+						htmlResult += "<fieldset data-role=\"controlgroup\">";
+						
+						var userList = data.jsonOutput.userList;
+						for(var i=0;i<userList.length;i++){							
+							var userId=userList[i].userId;
+							var userName=userList[i].userName;												
+							var sn=userList[i].sn;
+							htmlResult += "<input value=\""+userId+"\" sn=\""+sn+"\" userName=\""+userName+"\" type=\"radio\" name=\"radio-1a\" id=\"radio-"+i+"a\" class=\"custom\" />";
+							htmlResult += "<label for=\"radio-"+i+"a\">"+userName+"("+sn+")</label>";
+						}						
+						htmlResult += "</fieldset>";						
+						
+						if(htmlResult!=""){						
+							$('#peopleList').html(htmlResult);
+							//$("#peopleList input[type='checkbox']").checkboxradio("refresh");
+							$('#peopleList').trigger("create");
+							//$('#chkAll').show();
+							//$('#cancelAll').show();
+							//$("#peopleList input[name='checkbox-1a']").checkboxradio("refresh");
+							//$('#chkAllBlock').show();
+							/*  */
+							$('#peopleList input[type=radio]').click(function() {				
+								if ($(this).attr('checked')) {
+									peopleToSend = $(this).val();
+									peopleNameToSend = $(this).attr("userName");
+									peopleSNs = $(this).attr("sn");
+								}
+								/*else {
+									peopleToSend = peopleToSend.replace($(this).val() + ",", "");
+									peopleNameToSend = peopleNameToSend.replace($(this).attr("userName") + ",", "");
+									peopleSNs = peopleSNs.replace($(this).attr("sn") + ",", "");
+								}*/
+								//alert(peopleToSend+"\n"+peopleNameToSend + "\n" + peopleSNs);
+							});/*  */
+							
+							//全選
+							/*  *
+							$('#chkAll').click(function() {
+								//reset
+								peopleSNs = ""
+								peopleToSend = "";
+								peopleNameToSend = "";				
+								$("#peopleList input[type='radio']").each(function() {									 
+									 //$(this).checkboxradio('enable');
+									 $(this).attr('checked',true).checkboxradio("refresh");									 
+									 peopleSNs += $(this).val() + ",";
+									 peopleToSend += $(this).val() + ",";
+									 peopleNameToSend += $(this).attr("userName") + ",";
+								 });
+							});
+							//取消全選
+							$('#cancelAll').click(function() {
+								//reset
+								peopleSNs = "";
+								peopleToSend = "";
+								peopleNameToSend = "";				
+								$("#peopleList input[type='checkbox']").each(function() {
+									 $(this).attr('checked',false).checkboxradio("refresh");									 
+								 });
+							});/*  */
+						}
+						
+					}else{
+						smoke.alert(ServiceCodeErrorString,{},function(){});
+					}
+				}
+			});
+			
+		}
+		
+		function loadOrgLevel5(_unit_parts) {		
+			/*  */
+			LoadingObject.show();
+			var htmlResult = "";
+			$('#dept5 option').remove();//先清空再load
+			var jsonObj = {"AppType":_unit_parts[0],"level":"3"};
+			var jsonObjStr = JSON.stringify(jsonObj);
+			
+			$.ajax({
+				url:DataURL_BFS_GETORGLIST,
+				data: {"jsonInput":jsonObjStr},				
+				type:"POST",
+				dataType :"jsonp",
+				async:false,
+				success:function(data){
+					LoadingObject.hide();
+					
+					if(data==null){
+						 smoke.alert(ServiceCodeErrorString,{},function(){});
+					}else{				
+						if(data.status=="success"){							
+							
+							for(var i=0;i<data.jsonOutput.unit.length;i++){							
+								var level=data.jsonOutput.unit[i].level;	// 樹狀階層								
+								var nscuCode=data.jsonOutput.unit[i].nscuCode;	// ORG代碼
+								var nscuId=data.jsonOutput.unit[i].nscuId;	// ORG代碼
+								var parentNscuId = getParentNscuId(data.jsonOutput.unit[i]);								
+								var nscuDesc=data.jsonOutput.unit[i].nscuDesc; 	// 單位顯示名稱
+								
+								if (level == "5" && parentNscuId == _unit_parts[2]) {
+									var value = _unit_parts[0]+","+nscuCode+","+nscuId;
+									htmlResult+="<option value=\""+value+"\">"+nscuDesc+"</option>";
+								}					
+							}
+							
+							if(htmlResult!=""){
+								$('#dept5').html(htmlResult);
+							}
+							
+							//bind event
+							$('#dept5').change(function() {
+								var unit_part = $(this).val();// govCode,nscuCode,nscuId								
+								if (unit_part != '') {
+									loadOrgInfo(unit_part.split(","));
+								}
+							});
+							
+						}else{
+							smoke.alert(ServiceCodeErrorString,{},function(){});
+						}
+					}
+					
+				},
+				error: function(data){
+					LoadingObject.hide();					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					LoadingObject.hide();
+					jsonObjStr=null;
+					delete jsonObjStr;
+				}
+			}); /*  */
+		}
+		function loadOrgLevel4(_unit_parts) {		
+			/*  */
+			LoadingObject.show();
+			var htmlResult = "";
+			$('#dept4 option').remove();//先清空再load
+			var jsonObj = {"AppType":_unit_parts[0],"nscuCode":_unit_parts[1],"level":"3"};
+			var jsonObjStr = JSON.stringify(jsonObj);
+			
+			$.ajax({
+				url:DataURL_BFS_GETORGLIST,
+				data: {"jsonInput":jsonObjStr},				
+				type:"POST",
+				dataType :"jsonp",
+				async:false,
+				success:function(data){
+					LoadingObject.hide();
+					
+					if(data==null){
+						 smoke.alert(ServiceCodeErrorString,{},function(){});
+					}else{				
+						if(data.status=="success"){							
+							for(var i=0;i<data.jsonOutput.unit.length;i++){							
+								var level=data.jsonOutput.unit[i].level;	// 樹狀階層								
+								var nscuCode=data.jsonOutput.unit[i].nscuCode;	// ORG代碼
+								var nscuId=data.jsonOutput.unit[i].nscuId;	// ORG代碼
+								var parentNscuId = getParentNscuId(data.jsonOutput.unit[i]);								
+								var nscuDesc=data.jsonOutput.unit[i].nscuDesc; 	// 單位顯示名稱
+								
+								if (_unit_parts[0] == "M") {//國科會
+									if (level == "3" && parentNscuId == _unit_parts[2]) {
+										var value = _unit_parts[0]+","+nscuCode+","+nscuId;
+										htmlResult+="<option value=\""+value+"\">"+nscuDesc+"</option>";
+									}
+								} else {								
+									if (level == "4" && parentNscuId == _unit_parts[2]) {
+										var value = _unit_parts[0]+","+nscuCode+","+nscuId;
+										htmlResult+="<option value=\""+value+"\">"+nscuDesc+"</option>";
+									}
+								}				
+							}
+							
+							if(htmlResult!=""){
+								$('#dept4').html(htmlResult);
+							}
+							
+							//bind event
+							$('#dept4').change(function() {
+								var unit_part = $(this).val();// govCode,nscuCode,nscuId
+								if (unit_part != '') {
+									loadOrgInfo(unit_part.split(","));
+									loadOrgLevel5(unit_part.split(","));									
+								}
+							});
+							
+						}else{
+							smoke.alert(ServiceCodeErrorString,{},function(){});
+						}
+					}
+					
+				},
+				error: function(data){
+					LoadingObject.hide();					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					LoadingObject.hide();
+					jsonObjStr=null;
+					delete jsonObjStr;
+				}
+			}); /*  */
+		}
+		
+		//找單位parent nscuID
+		function getParentNscuId(unit) {
+			var units = unit.parentPath.split(",");	
+			return (units.length>1)?units[units.length-1]:units;
+		}		
+		// choose user page
+		$(document).on('pageinit','#chooseUserPage',function(){
+			$('#chkAll').hide();
+			$('#cancelAll').hide();
+			
+			//第一層變動事件，載入第二層
+			$('#dept3').change(function() {
+				var unit_part = $(this).val();// govCode,nscuCode,nscuId
+				if (unit_part != '')
+					loadOrgLevel4(unit_part.split(","));
+			});
+							
+			//確認人員
+			$('#confirmButton').click(function() {
+				//checkdate				
+				if ($('#dateBegin').val()!='' && $('#dateEnd').val()!=''
+				&& $('#dateBegin').val()<=$('#dateEnd').val()) {
+					//do nothing
+				} else {
+					smoke.alert("請輸入正確的日期區間",{},function(){});
+					return;
+				}
+				
+				//check user
+				if (peopleToSend == '' || peopleNameToSend == '') {
+					smoke.alert("尚未新增傳送對象",{},function(){});
+					return;
+				}
+				//alert(peopleSNs + "\n" + peopleToSend + "\n" + peopleNameToSend);
+				
+				//暫存要寄的對象
+				//window.localStorage.setItem("SettingData_peopleSNs", peopleSNs);
+				//window.localStorage.setItem("SettingData_peopleToSend", peopleToSend);
+				//window.localStorage.setItem("SettingData_peopleNameToSend", peopleNameToSend);
+				//設定代理人--客製
+				var userId = window.localStorage.getItem("SettingData_userId");
+				//(=GovCode: 機關別(M=本部,A=核安署,N=竹科,C=中科,S=南科,R=偵測分署)
+				var orgCode = window.localStorage.getItem("SettingData_orgCode");
+				var compId = "SIPA";
+				if (orgCode=='N') {
+					compId="SIPA";
+				} else if (orgCode=='C') {
+					compId="CTSP";
+				} else if (orgCode=='S') {
+					compId="STSIPA";
+				} else {//M
+					compId="NSC";
+				}
+				var fromUserId = userId||"B00541";
+				var toUserId = peopleSNs||'';//應該是單選
+				var agt_sdate = $('#dateBegin').val() + " 08:00";
+				var agt_edate = $('#dateEnd').val() + " 18:00";
+				var agt_desc = $('#desc').val();
+				
+				//呼叫代理人設定service
+				setAgent(compId, fromUserId, toUserId, agt_sdate, agt_edate, agt_desc, 
+				function(response) {
+					if (response.status == "success") {
+						smoke.alert(response.message,{},function(){
+							var backPage = window.localStorage.getItem("SettingData_chooseUserBackPage");
+							window.location.href=backPage;
+						});
+					}					
+				});				
+				//$.mobile.changePage('#confirmPage', {changeHash:true, reloadPage:true, dataUrl:'#confirmPage'});
+			});
+			//查詢人員
+			$('#searchButton').click(function() {
+				smoke.alert("尚未實作",{},function(){});
+			});
+			
+		});        
+		
+		// SOA related functions
+		function getOrgList(govCode,level) {//全部單位,展開層級			
+			var htmlResult = "";
+			var jsonObj = {"AppType":govCode, "level":level};
+			var jsonObjStr = JSON.stringify(jsonObj);
+			var orgList = [];
+			$.ajax({
+				url:DataURL_BFS_GETORGLIST,
+				data: {"jsonInput":jsonObjStr},				
+				type:"POST",
+				dataType :"jsonp",
+				async:false,
+				success:function(data){				
+					if(data==null){
+						 smoke.alert(ServiceCodeErrorString,{},function(){});
+					}else{
+						if(data.status=="success"){						
+							orgList = data.jsonOutput.unit;
+							//alert(JSON.stringify(orgList));
+						}else{
+							smoke.alert(ServiceCodeErrorString,{},function(){});
+						}
+					}					
+				},
+				error: function(data){
+					LoadingObject.hide();					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					LoadingObject.hide();
+					jsonObjStr=null;
+					delete jsonObjStr;
+				}
+			}); /*  */
+			
+			return orgList;
+		}
+		function getUserList(govCode, nscuCode, onSuccess) {
+			var htmlResult = "";
+			var jsonObj = {"AppType":govCode,"nscuCode":nscuCode,"userStatus":"Y"};
+			var jsonObjStr = JSON.stringify(jsonObj);
+			
+			$.ajax({
+				url:DataURL_BFS_GETORGINFO,
+				data: {"jsonInput":jsonObjStr},				
+				type:"POST",
+				dataType :"jsonp",
+				async:false,
+				success:onSuccess,
+				error: function(data){
+					LoadingObject.hide();					
+					smoke.alert(ServiceErrorString,{},function(){});
+				},
+				complete: function() {
+					LoadingObject.hide();
+					jsonObjStr=null;
+					delete jsonObjStr;
+				}
+			}); /*  */
+		}
+		
+		function setAgent(compId, fromUserId, toUserId, agt_sdate, agt_edate, agt_desc, onSuccess) {
+			var htmlResult = "";
+			var jsonObj = {"compId":compId,"fromUserId":fromUserId,"toUserId":toUserId,
+						"agt_sdate":agt_sdate,"agt_edate":agt_edate,"agt_desc":agt_desc,"actionFlag":"A"};
+			var jsonObjStr = JSON.stringify(jsonObj);
+			//alert(jsonObjStr);
+			/*  */
+			$.ajax({
+				url:DataURL_OfficialDocument_AGENT,
+				data: "jsonInput="+jsonObjStr+"&jsoncallback=?",
+				type:"POST",
+				dataType :"jsonp",
+				//async:false,
+				success:onSuccess,
+				error: function(err, msg, status){
+					LoadingObject.hide();
+					alert(JSON.stringify(err)+"\n"+msg+"\n"+status);
+					//smoke.alert(ServiceErrorString,{},function(){});					
+				},
+				complete: function() {
+					LoadingObject.hide();
+					jsonObjStr=null;
+					delete jsonObjStr;
+				}
+			}); /*  */
+		}
+
+		</script>
+		
+	</head>
+	<body>				
+
+		<div data-role="page" id="chooseUserPage">
+			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>選擇對象</h1></div>
+			<div data-role="content">
+				<!--int Start-->
+				<div class="int">
+					<!--formbox star -->
+					  <div class="formbox5">
+						<div data-role="fieldcontain">
+							<label for="dateBegin">起日：</label>
+							<input type="date" id="dateBegin"/>
+							
+							<label for="dateEnd">迄日：</label>
+							<input type="date" id="dateEnd"/>
+							<br/>
+							<textarea cols="40" rows="8" name="desc" id="desc" placeholder="代理說明"></textarea>
+						</div><br/>
+						
+						<div class="aleft2">
+							<label for="">請選擇代理人：</label>
+						  <select name="dept3" id="dept3">
+							<option value="">請選擇單位</option>
+							<option value="M,nsc1,2">本會會內</option>
+							<option value="N,U0,73">科學工業園區管理局</option>
+							<option value="C,61,94">中部科學工業園區管理局</option>
+							<option value="S,60,20">南部科學工業園區管理局</option>
+							</select>
+							  <select name="dept4" id="dept4">
+								<option value="">請選擇處/組室</option>						
+							  </select>
+								<select name="dept5" id="dept5">
+								<option value="">請選擇科別</option>
+							  </select>
+							  <!--input name="peopleSearch" type="text" id="peopleSearch" placeholder="請輸入關鍵字" size="25">
+							  <input type="button" name="reset" value="查詢" class="btn09" id="searchButton"/-->
+							</div>							
+					</div>
+					<!--formbox end -->					
+					<!--a href="#" id="cancelAll" data-role="button" data-inline="true" data-mini="true">取消全選</a-->
+					<!--a href="#" id="chkAll" data-role="button" data-inline="true" data-mini="true" data-theme="b">全選</a-->
+				  <div id="peopleList">
+				  
+				  </div>				
+					<input type="button" name="reset" value="確認" class="btn09" id="confirmButton" data-theme="a" data-inline="true"/>
+				</div>
+				<!--int End-->
+			</div>
+		</div>		
+	</body>
+</html>

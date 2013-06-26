@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 	</head>
 	<body onload="onLoad()">
+		Loading...
         <!--ios-->
         <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
         <!--android-->
@@ -48,38 +49,52 @@
 		<script src="js/data.js"></script>
 		<div data-role="page" id="ini">
 		<script  type="text/javascript">
-		/*global variables*/
-		$(document).on('pageshow','#ini',function(){	
-			$.mobile.allowCrossDomainPages = true;
-			if(getAppFisrtIni()=="true"){
-	    		// 清除session&WebSql資料
-		    	clearAllStorage();
+			/*global variables*/
+			$(document).on('pageshow','#ini',function(){	
+				$.mobile.allowCrossDomainPages = true;
+				var nowAppType=getAppType(),AppFisrtIni=getAppFisrtIni(),isSetAppType=false;
+				//清除&初始化WebSql資料
+				if(nowAppType!=null){
+					isSetAppType=true;
+				}
 	 			resetDB();
-				//載入設定
-				loadSetting();
-				//只有國科會版本設定為true,其他都是false
-	 			setAppType_isShowAll(true);
-	 			//設定App已經初始化
-	 			setAppFisrtIni(false);
-	 		}
-			//設定AppType:N(竹科),C(中科),S(南科)
-			if(getAppType()==null){
-				setAppType("N");
-			}
-			//取得並設定GPRS座標;
-			iniGPRS();
-			//園區判別
-			identifyParkBase();
-			//等待五秒取回GPRS位置
-			setTimeout("afterWait()",5000);
-		});
+				if(AppFisrtIni=="true"){
+		    		// 清除session&WebSql資料
+			    	clearAllStorage();
+					//載入設定
+					loadSetting();
+					//只有國科會版本設定為true,其他都是false
+		 			setAppType_isShowAll(true);
+		 			//設定App已經初始化
+		 			setAppFisrtIni(false);
+		 		}
+				// Default AppSetting 
+				doDefaultAppSetting(); 
+				//設定AppType:N(竹科),C(中科),S(南科)
+				if(!isSetAppType){
+					setAppType("N");
+				}else{
+					setAppType(nowAppType);
+				}
+				//取得並設定GPRS座標;
+				iniGPRS();
+				//園區判別
+				//暫時關閉園區判別[開始]
+				identifyParkBase();
+                //暫時關閉園區判別[結束]
+	            // setIdentifyParkBase(getDefaultParkAndBase());
+                // setIsInArea(false);
+				//等待五秒取回GPRS位置
+				setTimeout("afterWait()",10000);
+			});
 		function afterWait(){
+			console.log("90");
 			var Park=getIdentifyParkBase().Park;
-			// Default AppSetting 
-			doDefaultAppSetting(); 
+			console.log("92:"+Park);
 			// app即時公告
 			LoadingObject.show();
-			var jsonObject={"command":"select chtTitle,chtDesc,Convert(varchar(10),createdTime,111) as createdTime from appInstantMessage where isValid='Y' and CURRENT_TIMESTAMP>beginDate AND CURRENT_TIMESTAMP<endDate AND parkArea='"+Park+"'","count":1,"index":1};
+			var jsonObject={"command":"select chtTitle,chtDesc,Convert(varchar(10),createdTime,111) as createdTime,parkArea from appInstantMessage where isValid='Y' and CURRENT_TIMESTAMP>beginDate AND CURRENT_TIMESTAMP<endDate AND parkArea='"+Park+"'","count":1,"index":1};
+			console.log(jsonObject.command);
 			var jsonObjectStr = JSON.stringify(jsonObject);
 		    $.ajax({
 		        url:InstantMessage,
@@ -88,19 +103,19 @@
 		        dataType :"jsonp",
 		        async:false,
 		        success:function(data){
-		            if(data==null){
+		            if(data==null&&typeof(data.jsonOutput)!="undefined"){
 		                 smoke.alert(ServiceCodeErrorString,{},function(){});
 		            }else{
 		                if(data.status=="success"){
-		                	window.localStorage.setItem("SettingData_AppInstantMessage",JSON.stringify(data.jsonOutput[0]));
 		                	if(data.jsonOutput.length>0){
-            					showInstantMessage(data.jsonOutput[0].chtTitle);
+			                	window.localStorage.setItem("SettingData_AppInstantMessage",JSON.stringify(data.jsonOutput[0]));
+            					showInstantMessage(Park,data.jsonOutput[0].chtTitle);
             				}else{
+            					window.localStorage.setItem("SettingData_AppInstantMessage",null);
             					//這邊載入的時候要稍微延遲避免二次切換
-            					    setTimeout("goToIndexPage()",5000);
+            					setTimeout("goToIndexPage()",5000);
             				}
 		                }else{
-		                
 		                    smoke.alert(ServiceCodeErrorString,{},function(){});
 		                }
 		            }
@@ -117,6 +132,8 @@
 		function onLoad(){
 			if(navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)&&typeof(navigator.device)=="undefined"){
 				document.addEventListener("deviceready",onDeviceReady,false);
+				//記錄這是第一次
+				setAppFisrtIni(true);
 			}else{
 				// onDeviceReady();
 				//記錄這是第一次

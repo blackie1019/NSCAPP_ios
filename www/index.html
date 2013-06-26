@@ -54,14 +54,16 @@
 				var AppSetting_Data=getAppSetting_Data();
 				//預設轉拋頁面
 				if(AppSetting_Data.language=="ch"){
-			        $.mobile.changePage(DefaultPage_ch);
+					window.location.href=DefaultPage_ch;
+			        // $.mobile.changePage(DefaultPage_ch);
 			    }else{
-			    	$.mobile.changePage(DefaultPage_eng);
+			    	window.location.href=DefaultPage_eng;
+			    	// $.mobile.changePage(DefaultPage_eng);
 			    }
-				// //產生menu
-				// genMenu(this);
-				// //menu登入確認
-				// menuDisplayMemberSection(checkLogin(),this);
+				//產生menu
+				genMenu(this);
+				//menu登入確認
+				menuDisplayMemberSection(checkLogin(),this);
 
 			});
 			$(document).on('pageinit','#AppInstantMessage',function(){
@@ -72,7 +74,7 @@
 				delete jsonObject;delete htmlResult;	
 			});
 			</script>
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 <!-- 		        <a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>首頁</h1> -->
             </div>
@@ -89,7 +91,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="AppInstantMessage">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>即時公告</h1>
             </div>

@@ -48,7 +48,7 @@
 		//function
 		function doRefresh(){
 		    LoadingObject.show();
-			var jsonObject={"park":getDefaultParkAndBase().Park};
+			var jsonObject={"Park":getDefaultParkAndBase().Park};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="";
 		    $.ajax({
@@ -67,6 +67,7 @@
 		                		if(Desc.length>20){
 		                			Desc=Desc.substr(0,40)+"...";
 		                		}
+		                		
 		                		htmlResult+="<li data-sn='"+data.jsonOutput[i].SN+"''><h2>"+data.jsonOutput[i].chtTitle+"</h2><p>"+Desc+"</p><div class='floatleft'>"+"資訊室"+"</div><div class='floatright'>"+data.jsonOutput[i].createdTime+"</div><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></img></div></li>";
 	            			}
 	            			if(htmlResult!=""){
@@ -88,7 +89,7 @@
 		}
 		function changeToCP(sn){
 		    LoadingObject.show();
-			var jsonObject={"park":getDefaultParkAndBase().Park,"SN":sn};
+			var jsonObject={"Park":getDefaultParkAndBase().Park,"SN":sn};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="";
 		    $.ajax({
@@ -104,6 +105,7 @@
 		                if(data.status=="success"){
 		                	if(data.jsonOutput.length>0){
 		                		htmlResult+="<div class='title2'>"+data.jsonOutput[0].chtTitle+"</div><div class='floatleft'>"+"資訊室"+"</div><div class='floatright'>"+data.jsonOutput[0].createdTime+"</div><div class='int'><p>"+data.jsonOutput[0].chtDesc+"</p></div>";
+		                		
 	            				$('#CP').find('#htmlResult').html("<ul>"+htmlResult+"</ul>").trigger('create');
 	            				$.mobile.changePage('#CP');
 	            			}else{
@@ -150,7 +152,7 @@
 	</head>
 	<body>	
 		<div data-role="page" id="LP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>內部訊息公告</h1>
 		     	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right" data-mini="true">
@@ -163,7 +165,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="CP">
-			<div data-role="header" data-theme="f">
+			<div data-role="header" data-position="fixed" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>內部訊息公告</h1>
             </div>
