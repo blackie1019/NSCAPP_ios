@@ -27,9 +27,9 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
-
+#import "Flurry.h"
 #import <Cordova/CDVPlugin.h>
-
+#import <AdSupport/ASIdentifierManager.h>
 @implementation AppDelegate
 
 @synthesize window, viewController;
@@ -59,8 +59,18 @@
  */
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+    // Flurry startSession
+    
+    [Flurry startSession:@"BPG4FJYH35T7C2ZFHP5S"];
+//    [Flurry logPageView];
+    [Flurry logEvent:@"Xcode Test" timed:YES];
+//    [Flurry endTimedEvent:@"BlackieTest" withParameters:nil];
+    //[Flurry setUserID:@"blackie1019"];
+    
+    NSString *flurryVersion=[Flurry getFlurryAgentVersion];
+    NSLog(@"%@",flurryVersion);
+    
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
-
     self.window = [[[UIWindow alloc] initWithFrame:screenBounds] autorelease];
     self.window.autoresizesSubviews = YES;
 

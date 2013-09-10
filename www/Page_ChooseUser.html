@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
         <!--ios-->
         <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+        <script type="text/javascript" src="js/ios/flurryPlugin.js"></script>
         <!--android-->
         <!--
          <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
@@ -14,7 +15,8 @@
 		<!--json2-->
 		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
 		<!--Google Map API v3-->
-		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>
+		<!--<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>-->
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<!--mobiScroll-->
 		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
@@ -45,7 +47,11 @@
 		<script src="js/pnpolygon.js"></script>
 		<script src="js/location.js"></script>	
 		<script src="js/data.js"></script>	
-		<script type="text/javascript">	
+		<script  type="text/javascript">
+			document.addEventListener("deviceready",onDeviceReady,false);
+			function onDeviceReady(){
+				window.plugins.flurry.logEvent("[plugin]Page_ChooseUser.html");
+			}
 		</script>
 	<script type="text/javascript">
 		/*
@@ -63,16 +69,23 @@
 		var peopleSNs = "";//B00541
 		var peopleToSend = "";//leee.ntspb
 		var peopleNameToSend = "";//李日興
-		
+		var orgCode = "";
+		var orgCodeName = "";
 		function iniControlSetting(){
 			var today=new Date().toISOString().slice(0,10);
 			$("input[type=date]").val(today);
+			orgCode = window.localStorage.getItem("SettingData_orgCode");
+			orgCodeName = window.localStorage.getItem("SettingData_orgCodeName");			
 		}
 		
 		// pageinit
 		$(document).on('pageinit','#LP',function(){
 			//產生menu
 			genMenu(this);
+			//手勢動作
+			// $(this).on('swiperight',function(){
+			// 	$( "#menu" ).panel( "toggle" );
+			// });
 			//控制項初始化設定
 			iniControlSetting();					
  		});		
@@ -302,6 +315,9 @@
 		$(document).on('pageinit','#chooseUserPage',function(){
 			$('#chkAll').hide();
 			$('#cancelAll').hide();
+			iniControlSetting();
+			//20130708 組織選單，只顯示登入者的單位			
+			$('#dept3 option').slice(1).not('[orgCode="'+orgCode+'"]').remove();
 			
 			//第一層變動事件，載入第二層
 			$('#dept3').change(function() {
@@ -335,8 +351,12 @@
 				//設定代理人--客製
 				var userId = window.localStorage.getItem("SettingData_userId");
 				//(=GovCode: 機關別(M=本部,A=核安署,N=竹科,C=中科,S=南科,R=偵測分署)
-				var orgCode = window.localStorage.getItem("SettingData_orgCode");
+				orgCode = window.localStorage.getItem("SettingData_orgCode");
+				orgCodeName = window.localStorage.getItem("SettingData_orgCodeName");
 				var compId = "SIPA";
+				if (orgCodeName!="")
+					compId=orgCodeName;
+				/*
 				if (orgCode=='N') {
 					compId="SIPA";
 				} else if (orgCode=='C') {
@@ -345,7 +365,7 @@
 					compId="STSIPA";
 				} else {//M
 					compId="NSC";
-				}
+				}*/
 				var fromUserId = userId||"B00541";
 				var toUserId = peopleSNs||'';//應該是單選
 				var agt_sdate = $('#dateBegin').val() + " 08:00";
@@ -465,7 +485,7 @@
 	<body>				
 
 		<div data-role="page" id="chooseUserPage">
-			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>選擇對象</h1></div>
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>代理人設定</h1></div>
 			<div data-role="content">
 				<!--int Start-->
 				<div class="int">
@@ -485,10 +505,10 @@
 							<label for="">請選擇代理人：</label>
 						  <select name="dept3" id="dept3">
 							<option value="">請選擇單位</option>
-							<option value="M,nsc1,2">本會會內</option>
-							<option value="N,U0,73">科學工業園區管理局</option>
-							<option value="C,61,94">中部科學工業園區管理局</option>
-							<option value="S,60,20">南部科學工業園區管理局</option>
+							<option value="M,nsc1,2" orgCode="M">國科會</option>
+							<option value="N,U0,73" orgCode="N">科學工業園區管理局</option>
+							<option value="C,61,94" orgCode="C">中部科學工業園區管理局</option>
+							<option value="S,60,20" orgCode="S">南部科學工業園區管理局</option>
 							</select>
 							  <select name="dept4" id="dept4">
 								<option value="">請選擇處/組室</option>						

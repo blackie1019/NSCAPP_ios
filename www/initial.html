@@ -7,6 +7,7 @@
 		Loading...
         <!--ios-->
         <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+        <script type="text/javascript" src="js/ios/flurryPlugin.js"></script>
         <!--android-->
         <!--
          <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
@@ -50,7 +51,8 @@
 		<div data-role="page" id="ini">
 		<script  type="text/javascript">
 			/*global variables*/
-			$(document).on('pageshow','#ini',function(){	
+			$(document).on('pageshow','#ini',function(){
+
 				$.mobile.allowCrossDomainPages = true;
 				var nowAppType=getAppType(),AppFisrtIni=getAppFisrtIni(),isSetAppType=false;
 				//清除&初始化WebSql資料
@@ -88,13 +90,10 @@
 				setTimeout("afterWait()",10000);
 			});
 		function afterWait(){
-			console.log("90");
 			var Park=getIdentifyParkBase().Park;
-			console.log("92:"+Park);
 			// app即時公告
 			LoadingObject.show();
-			var jsonObject={"command":"select chtTitle,chtDesc,Convert(varchar(10),createdTime,111) as createdTime,parkArea from appInstantMessage where isValid='Y' and CURRENT_TIMESTAMP>beginDate AND CURRENT_TIMESTAMP<endDate AND parkArea='"+Park+"'","count":1,"index":1};
-			console.log(jsonObject.command);
+			var jsonObject={"langType":getAppSetting_Data().language,"Park":Park};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 		    $.ajax({
 		        url:InstantMessage,
@@ -109,7 +108,7 @@
 		                if(data.status=="success"){
 		                	if(data.jsonOutput.length>0){
 			                	window.localStorage.setItem("SettingData_AppInstantMessage",JSON.stringify(data.jsonOutput[0]));
-            					showInstantMessage(Park,data.jsonOutput[0].chtTitle);
+            					showInstantMessage(Park,data.jsonOutput[0].title);
             				}else{
             					window.localStorage.setItem("SettingData_AppInstantMessage",null);
             					//這邊載入的時候要稍微延遲避免二次切換
@@ -135,12 +134,13 @@
 				//記錄這是第一次
 				setAppFisrtIni(true);
 			}else{
-				// onDeviceReady();
+				onDeviceReady();
 				//記錄這是第一次
 				setAppFisrtIni(true);
 			}
 		}
 		function onDeviceReady(){
+			window.plugins.flurry.logEvent("[plugin]initial.html");
 			var deviceObject={"uuid":device.uuid,"name":device.name,"platform":device.platform,"version":device.version};
 			setDeviceData(deviceObject);
 		}

@@ -1,4 +1,10 @@
-//constructor 
+//google API動態載入		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+var langCode="zh-TW";
+if(getAppSetting_Data().language=="eng"){
+	langCode="en";
+}
+google.load('maps', '3.x', { 'other_params' : 'key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false&language=' + langCode});
+//constructor
 function HyMap(draggable){
 	//static variable
 	var mapDiv,center,zoomsize;
@@ -16,7 +22,8 @@ function HyMap(draggable){
 		directionsService,
 		DirectionsService,
 		selectedTravelMode,
-		isDraggable;
+		isDraggable,
+		LBSCenterLatLng;
 	//initialize
 	this.map_markers=[];
 	this.map_paths=[];
@@ -52,6 +59,22 @@ HyMap.prototype.ini=function(mapDiv,center,zoomsize){
 	 //加入自身
 	 oThis.addSelfMarker();
 }
+//[setLBSCenterLatLng]設定LBS的X公尺中心點
+HyMap.prototype.setLBSCenterLatLng=function(LBSCenterLatLng,isSameToCenter){
+	var oThis=this;
+	this.LBSCenterLatLng=LBSCenterLatLng;
+	if(isSameToCenter==true){
+		oThis.center=new google.maps.LatLng(LBSCenterLatLng.lat,LBSCenterLatLng.lng);
+		oThis.refresh();
+	}
+}
+//[showLBSCenterMarker]呈現目前LBS中心點
+HyMap.prototype.showLBSCenterMarker=function(){
+	var oThis=this;
+	if(typeof(oThis.LBSCenterLatLng)!="undefined"){
+		oThis.addMarker(new google.maps.LatLng(oThis.LBSCenterLatLng.lat,oThis.LBSCenterLatLng.lng),oThis.map_icons.position.icon,false);
+	}
+}
 //[setDivDirectionDetail]設定規劃路徑逐步結果顯示
 HyMap.prototype.setDivDirectionDetail=function(div){
 	var oThis=this;
@@ -76,7 +99,7 @@ HyMap.prototype.addSelfMarker=function(){
 	 oThis.addMarker(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),oThis.map_icons.self.icon);
 }
 //[addMarker]新增Marker
-HyMap.prototype.addMarker=function(posLatLng,iconImg){
+HyMap.prototype.addMarker=function(posLatLng,iconImg,isDraggable){
 	var oThis=this;
 	var marker = new google.maps.Marker({
 	    map:oThis.map,
@@ -84,7 +107,7 @@ HyMap.prototype.addMarker=function(posLatLng,iconImg){
 	    animation: google.maps.Animation.DROP,
 	    icon: iconImg,
 	    position:posLatLng,
-	    draggable: oThis.isDraggable
+	    draggable:(typeof(isDraggable)!="undefined"?isDraggable:oThis.isDraggable)
 	});
 	oThis.map_markers.push(marker);
 }
@@ -125,13 +148,16 @@ HyMap.prototype.genTrafficBusLine=function(jsonData){
 	//清除目前畫面內容
 	oThis.clearMapMarker();
 	oThis.clearPolyLine();
+	//清除導航目的點坐標位置
+	oThis.LBSCenterLatLng=null;
 	//加入自身
 	oThis.addSelfMarker();
 	for(var i=0;i<jsonData.length;i++){
 		var  posLatLng=new google.maps.LatLng(jsonData[i].lat,jsonData[i].lng);
 		if(jsonData[i].type=='lbs'){
 			//如果是LBS則addMarker
-			 oThis.addMarker(posLatLng,oThis.map_icons.position.icon);
+			 // oThis.addMarker(posLatLng,oThis.map_icons.position.icon);
+			 oThis.addAdvMarker(jsonData[i].title,jsonData[i].address,jsonData[i].lat,jsonData[i].lng,jsonData[i].spotNo,jsonData[i].ximage,jsonData[i].iconImg,false);
 		}
 		posLatLngArray.push(posLatLng);
 	}
@@ -167,6 +193,8 @@ HyMap.prototype.showTargetMarker=function(title,address,latitude,longitude,spotN
 	//清除目前畫面內容
 	oThis.clearMapMarker();
 	oThis.clearPolyLine();
+	//設定目的點坐標位置
+	oThis.LBSCenterLatLng={"lat":latitude,"lng":longitude};
 	//加入自身
  	oThis.addSelfMarker();
   	//重新設定zoom
@@ -205,13 +233,15 @@ HyMap.prototype.showTargetAndOtherMarker=function(posObjectArray,setSelfToCenter
 	}else{
 		oThis.center=new google.maps.LatLng(posObjectArray[0].latitude,posObjectArray[0].longitude);
 	}
+	//設定目的點坐標位置
+	oThis.LBSCenterLatLng={"lat":posObjectArray[0].latitude,"lng":posObjectArray[0].longitude};
   	oThis.map.setCenter(oThis.center);
   	for(var i=0;i<posObjectArray.length;i++){	
   		oThis.addAdvMarker(posObjectArray[i].title,posObjectArray[i].address,posObjectArray[i].latitude,posObjectArray[i].longitude,posObjectArray[i].spotNo,posObjectArray[i].ximage,posObjectArray[i].xicon);
 	}
 }
 //[addAdvMarker]新增進階Marker
-HyMap.prototype.addAdvMarker=function(title,address,latitude,longitude,spotNo,ximage,iconImg){
+HyMap.prototype.addAdvMarker=function(title,address,latitude,longitude,spotNo,ximage,iconImg,hasInFoBtn){
 	var oThis=this;
 	var marker = new google.maps.Marker({
 	    map:oThis.map,
@@ -222,7 +252,7 @@ HyMap.prototype.addAdvMarker=function(title,address,latitude,longitude,spotNo,xi
 	});
 	//增加InfoWindow
 	google.maps.event.addListener(marker, 'click', function() {
-	   var infowindow=new google.maps.InfoWindow(genGMAPInfoWindowHTML(title,address,latitude,longitude,spotNo,ximage,iconImg));
+	   var infowindow=new google.maps.InfoWindow(genGMAPInfoWindowHTML(title,address,latitude,longitude,spotNo,ximage,iconImg,hasInFoBtn));
    	   infowindow.open(oThis.map,this);
 	});
 	oThis.map_markers.push(marker);
@@ -230,11 +260,14 @@ HyMap.prototype.addAdvMarker=function(title,address,latitude,longitude,spotNo,xi
 //[doSearchByAddress]地址查詢
 HyMap.prototype.doSearchByAddress=function(addr){
 	var oThis=this;
+	var result;
 	oThis.geocoder.geocode( { 'address': addr}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
 		//清除目前畫面內容
 		oThis.clearMapMarker();
 		oThis.clearPolyLine();
+		//變更目的點坐標位置
+		oThis.LBSCenterLatLng={"lat":results[0].geometry.location.lat(),"lng":results[0].geometry.location.lng()};
 	 	//加入自身
 	 	oThis.addSelfMarker();
       	//重新設定zoom
@@ -244,10 +277,18 @@ HyMap.prototype.doSearchByAddress=function(addr){
       	oThis.map.setCenter(oThis.center);
       	//增加Marker
       	oThis.addAdvMarker(addr,addr,results[0].geometry.location.lat(),results[0].geometry.location.lng(),"","",oThis.map_icons.position.icon);
+    	result={"lat":results[0].geometry.location.lat(),"lng":results[0].geometry.location.lng()};
     }else{
-      alert('Geocode was not successful for the following reason: ' + status);
+      // alert('Geocode was not successful for the following reason: ' + status);
+        if(getAppSetting_Data().language!="eng"){
+	        alert('查詢發生異常，請重新確認地址或地標確實存在或網路服務是否正常');
+	    }else{
+	    	alert('Address or keywords not found');
+	    }
+	    result=null;
     }
   });
+	return result
 }
 //[getAddressByLatLng]座標反查地址
 HyMap.prototype.getAddressByLatLng=function(posLatLng,inputControl){
@@ -305,6 +346,47 @@ HyMap.prototype.doRoutePath=function(posLatLng1,posLatLng2,option_pos1,option_po
 			oThis.addPolyLine(response.routes[0].overview_path);
 			//規劃路線逐步內容
 			$(oThis.divDirectionDetail).html(genGmapStepListHtml(response));
+			//紀錄最終點坐標位置
+			oThis.LBSCenterLatLng={"lat":response.routes[0].legs[0].end_location.lat(),"lng":response.routes[0].legs[0].end_location.lng()};
+			//添加目的地附件LBS點資訊
+			// var jsonObject={
+			// 	  "queryType": "1",
+			// 	  "langType": getAppSetting_Data().language,
+			// 	  "park": getIdentifyParkBase().Park,
+			// 	  "currentLat": getGPRSData.lat,
+			// 	  "currentLng": getGPRSData.lng,
+			// 	  "queryLat":response.routes[0].legs[0].end_location.lat(),
+			// 	  "queryLng":response.routes[0].legs[0].end_location.lng()
+			// }
+			// var jsonObjectStr = JSON.stringify(jsonObject);
+		 //    $.ajax({
+		 //        url:DataURL_LBSQueryService,
+		 //        data:  {"jsonInput":jsonObjectStr},
+		 //        type:"POST",
+		 //        dataType :"json",
+		 //        async:false,
+		 //        success:function(data){
+		 //            if(data==null){
+		 //                 smoke.alert(ServiceCodeErrorString,{},function(){});
+		 //            }else{
+		 //                if(data.statusCode=="200"){
+		 //                	if(data.spotList.length>0){
+		 //                		for(var i=0;i<data.spotList.length;i++){
+		 //                			oThis.addAdvMarker(data.spotList[i].name,data.spotList[i].address,data.spotList[i].latitude,data.spotList[i].longitude,data.spotList[i].spotNo,Setting_imgSrc+data.spotList[i].mainImage,getXiconImg(data.spotList[i].classify2));
+			//                 		console.log(data.spotList[i].name+","+data.spotList[i].latitude+","+data.spotList[i].longitude);
+			//                 	}
+		 //            		}
+		 //                }else{
+		 //                    smoke.alert(ServiceCodeErrorString,{},function(){});
+		 //                }
+		 //            }
+		 //        },
+		 //        error: function(data){
+		 //            smoke.alert(ServiceErrorString,{},function(){});
+		 //        },
+		 //        complete: function() {
+		 //        }
+		 //    });
 		}
 	});
 }
@@ -316,6 +398,8 @@ HyMap.prototype.changeCenterWithAddress=function(addr){
 		//清除目前畫面內容
 		oThis.clearMapMarker();
 		oThis.clearPolyLine();
+		//變更目的點坐標位置
+		oThis.LBSCenterLatLng={"lat":results[0].geometry.location.lat(),"lng":results[0].geometry.location.lng()};
 		//重設自身
 		oThis.center=results[0].geometry.location;
 		 //加入自身(不可用原function)
@@ -325,7 +409,12 @@ HyMap.prototype.changeCenterWithAddress=function(addr){
 		//重設地圖中心
       	oThis.map.setCenter(oThis.center);
     }else{
-      alert('Geocode was not successful for the following reason: ' + status);
+      // alert('Geocode was not successful for the following reason: ' + status);
+        if(getAppSetting_Data().language!="eng"){
+	        alert('查詢發生異常，請重新確認地址或地標確實存在或網路服務是否正常');
+	    }else{
+	    	alert('Address or keywords not found');
+	    }
     }
   });
 }
@@ -356,6 +445,7 @@ HyMap.prototype.loadMapData=function(){
 				break;
 			case "spot":
 				if(mapData.posObjects.length==1){
+					//20130704 暫時將所有指定點都設為最後目的地坐標(提供500公尺查詢使用)
 					if(mapData.posObjects[0].latitude==""){
 						oThis.doSearchByAddress(mapData.posObjects[0].address);
 					}else{
@@ -406,64 +496,133 @@ HyMap.prototype.closeNearAlert=function(){
 }
 HyMap.prototype.nearSuccess=function(){
 	var oThis=this;
+	var str_nearBy="你已經接近";
+	if(getAppSetting_Data().language=="eng"){
+		str_nearBy="You are nearby ";
+	}
+	//取得設定資訊
+	var NotificationDataObject=getNotificationData();
 	//訊息
-	smoke.alert("你已經接近"+oThis.nearAlertSpot.title+"("+oThis.nearAlertSpot.address+")",{},function(){});
-	//震動
-	navigator.notification.vibrate(2500);
-	//響聲
-	navigator.notification.beep(2);
+	smoke.alert(str_nearBy+oThis.nearAlertSpot.title+"("+oThis.nearAlertSpot.address+")",{},function(){});
+	var hasVibrate=true,hasBeep=true;
+	if(typeof(NotificationDataObject)!=="undefined"&&NotificationDataObject!=null){
+		if(NotificationDataObject.enable){
+			switch(NotificationDataObject.value){
+				case "2":
+					hasBeep=false;
+					break;
+				case "3":
+					hasVibrate=false;
+					break;
+			}
+		}else{
+			hasVibrate=false;
+			hasBeep=false;
+		}
+	}
+	if(hasVibrate){
+		//震動
+		navigator.notification.vibrate(2500);
+	}
+	if(hasBeep){
+		//響聲
+		navigator.notification.beep(2);
+	}
 }
 //function
-function genGMAPInfoWindowHTML(title,address,latitude,longitude,spotNo,ximage,xicon){
+function genGMAPInfoWindowHTML(title,address,latitude,longitude,spotNo,ximage,xicon,hasInFoBtn){
+	var str_route="路線規劃",str_Notification="接近提醒";
+	if(getAppSetting_Data().language=="eng"){
+		str_route="Route";
+		str_Notification="Notification";
+	}
 	var contentHTML='<div class="gmapInfoWindow">'+
 					'<div id="btnLBSCP" data-spotno="'+spotNo+'"><div class="ximage"><img src="'+ximage+'"></img></div>'+
 					'<div class="title">'+title+'</div>';
-		if(spotNo!=""){		
-					contentHTML+='<div class="arrow"><img src="img/NSC/arrow.png" alt="arrow"></div>';
-		};
-		contentHTML+='</div>'+
-					'<div class="function">'+
-					'<button class="btn10" data-title="'+title+'" data-address="'+address+'" data-ximage="'+ximage+'" data-xicon="'+xicon+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-spotno="'+spotNo+'" id="btnDoRoute_InfoWindow">路線規劃</button>';
-		// if(spotNo!=""){
-		// 	contentHTML+='<button class="btn10" id="btnLBSCP" data-spotno="'+spotNo+'" id="btnDoRoute_InfoWindow">景點資料</button>';
-		// }
-		contentHTML+='<button class="btn10" data-title="'+title+'" data-address="'+address+'" data-latitude="'+latitude+'" data-spotno="'+spotNo+'" data-longitude="'+longitude+'" data-spotno="'+spotNo+'" id="btnSetNearAlert">接近提醒</button>'+
-					'</div>'+'</div>';
+		if(typeof(hasInFoBtn)=="undefined"||hasInFoBtn!=false){
+			if(spotNo!=""){		
+						contentHTML+='<div class="arrow"><img src="img/NSC/arrow.png" alt="arrow"></div>';
+			};
+			contentHTML+='</div>'+
+						'<div class="function">'+
+						'<button class="btn10" data-title="'+title+'" data-address="'+address+'" data-ximage="'+ximage+'" data-xicon="'+xicon+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-spotno="'+spotNo+'" id="btnDoRoute_InfoWindow">'+str_route+'</button>';
+			// if(spotNo!=""){
+			// 	contentHTML+='<button class="btn10" id="btnLBSCP" data-spotno="'+spotNo+'" id="btnDoRoute_InfoWindow">景點資料</button>';
+			// }
+			contentHTML+='<button class="btn10" data-title="'+title+'" data-address="'+address+'" data-latitude="'+latitude+'" data-spotno="'+spotNo+'" data-longitude="'+longitude+'" data-spotno="'+spotNo+'" id="btnSetNearAlert">'+str_Notification+'</button>'+
+						'</div>';
+		}
+		contentHTML+='</div>';
 	return {'content': contentHTML };
 }
 function getStepDirectionImg(instructions){
     var htmlResult="";
-    htmlResult+="<div class='dir-ds-icon ";
-    if (instructions.indexOf("向左急轉") >= 0){
-        htmlResult+="dir-tt-turn-sharp-left-19";
-    }else if(instructions.indexOf("向右急轉") >= 0){
-        htmlResult+=".dir-tt-turn-sharp-right-19";
-    }else if (instructions.indexOf("<b>左</b>微轉") >= 0){
-        htmlResult+="dir-tt-turn-slight-left-19";
-    }else if(instructions.indexOf("<b>左</b>轉") >= 0){
-        htmlResult+="dir-tt-turn-left-19 ";
-    }else if(instructions.indexOf("<b>右</b>微轉") >= 0){
-        htmlResult+="dir-tt-turn-slight-right-19";
-    }else if(instructions.indexOf("<b>右</b>轉") >= 0){
-        htmlResult+="dir-tt-turn-right-19";
-    }else if(instructions.indexOf("上匝道") >= 0){
-        htmlResult+="dir-tt-merge-19";
-    }else if(instructions.indexOf("出口下交流道") >= 0){
-        if(instructions.indexOf("靠左於") >= 0){
-            htmlResult+="dir-tt-ramp-left-19";
-        }else{
-             htmlResult+="dir-tt-ramp-right-19";
-        }
-    }else if(instructions.indexOf("分岔路口靠左") >= 0){
-        htmlResult+="dir-tt-fork-left-19";
-    }else if(instructions.indexOf("分岔路口靠右") >= 0){
-        htmlResult+="dir-tt-fork-right-19";
-    }else if(instructions.indexOf('')>=0){
-        htmlResult+="dir-tt-uturn-left-19";
-    }else{
-        //alert(instructions.indexOf("左轉")+","+instructions);
-    }
-    htmlResult+=" '></div>";
+    if(getAppSetting_Data().language!="eng"){
+    	htmlResult+="<div class='dir-ds-icon ";
+	    if (instructions.indexOf("向左急轉") >= 0){
+	        htmlResult+="dir-tt-turn-sharp-left-19";
+	    }else if(instructions.indexOf("向右急轉") >= 0){
+	        htmlResult+=".dir-tt-turn-sharp-right-19";
+	    }else if (instructions.indexOf("<b>左</b>微轉") >= 0){
+	        htmlResult+="dir-tt-turn-slight-left-19";
+	    }else if(instructions.indexOf("<b>左</b>轉") >= 0){
+	        htmlResult+="dir-tt-turn-left-19 ";
+	    }else if(instructions.indexOf("<b>右</b>微轉") >= 0){
+	        htmlResult+="dir-tt-turn-slight-right-19";
+	    }else if(instructions.indexOf("<b>右</b>轉") >= 0){
+	        htmlResult+="dir-tt-turn-right-19";
+	    }else if(instructions.indexOf("上匝道") >= 0){
+	        htmlResult+="dir-tt-merge-19";
+	    }else if(instructions.indexOf("出口下交流道") >= 0){
+	        if(instructions.indexOf("靠左於") >= 0){
+	            htmlResult+="dir-tt-ramp-left-19";
+	        }else{
+	             htmlResult+="dir-tt-ramp-right-19";
+	        }
+	    }else if(instructions.indexOf("分岔路口靠左") >= 0){
+	        htmlResult+="dir-tt-fork-left-19";
+	    }else if(instructions.indexOf("分岔路口靠右") >= 0){
+	        htmlResult+="dir-tt-fork-right-19";
+	    }else if(instructions.indexOf('')>=0){
+	        htmlResult+="dir-tt-uturn-left-19";
+	    }else{
+	        //alert(instructions.indexOf("左轉")+","+instructions);
+	    }
+        htmlResult+=" '></div>";
+	}else{
+		// console.log(instructions);
+     //    htmlResult+="<div class='dir-ds-icon ";
+	 //    if (instructions.indexOf("向左急轉") >= 0){
+	 //        htmlResult+="dir-tt-turn-sharp-left-19";
+	 //    }else if(instructions.indexOf("向右急轉") >= 0){
+	 //        htmlResult+=".dir-tt-turn-sharp-right-19";
+	 //    }else if (instructions.indexOf("Slight <b>left</b>") >= 0){
+	 //        htmlResult+="dir-tt-turn-slight-left-19";
+	 //    }else if(instructions.indexOf("Turn <b>left</b>") >= 0){
+	 //        htmlResult+="dir-tt-turn-left-19 ";
+	 //    }else if(instructions.indexOf("Slight <b>right</b>") >= 0){
+	 //        htmlResult+="dir-tt-turn-slight-right-19";
+	 //    }else if(instructions.indexOf("Turn <b>right</b>") >= 0){
+	 //        htmlResult+="dir-tt-turn-right-19";
+	 //    }else if(instructions.indexOf("上匝道") >= 0){
+	 //        htmlResult+="dir-tt-merge-19";
+	 //    }else if(instructions.indexOf("出口下交流道") >= 0){
+	 //        if(instructions.indexOf("靠左於") >= 0){
+	 //            htmlResult+="dir-tt-ramp-left-19";
+	 //        }else{
+	 //             htmlResult+="dir-tt-ramp-right-19";
+	 //        }
+	 //    }else if(instructions.indexOf("分岔路口靠左") >= 0){
+	 //        htmlResult+="dir-tt-fork-left-19";
+	 //    }else if(instructions.indexOf("分岔路口靠右") >= 0){
+	 //        htmlResult+="dir-tt-fork-right-19";
+	 //    }else if(instructions.indexOf('')>=0){
+	 //        htmlResult+="dir-tt-uturn-left-19";
+	 //    }else{
+	 //        //alert(instructions.indexOf("左轉")+","+instructions);
+	 //    }
+	//	   htmlResult+=" '></div>";
+	}
     return htmlResult;
 }
 function genGmapStepListHtml(response){
@@ -520,19 +679,18 @@ function posObject(title,address,latitude,longitude,spotNo,ximage,xicon){
 //function
 //[openMap]至地圖模組開啓指定點
 function openMap(var1,lat,lng){
-	//預設var1應為posObject
+	var posObject1=var1;
+	//預設var1應為posObject1
 	//如果postObject為string(地址或地名)
 	if(typeof(var1.title)==="undefined"){
 		if(typeof(lat)!=="undefined"&&typeof(lng)!=="undefined"){
-			posObject=new posObject(var1,var1,lat,lng,"","","position");
+			posObject1=new posObject(var1,var1,lat,lng,"","","position");
 		}else{
-			posObject=new posObject(var1,var1,"","","","","position");
+			posObject1=new posObject(var1,var1,"","","","","position");
 		}
-	}else{
-		posObject=var1;
 	}
 	//儲存現在資料狀態
-	var mapData={"method":"spot","posObjects":[posObject]};
+	var mapData={"method":"spot","posObjects":[posObject1]};
 	setMapData(mapData);
 	//至地圖模組
 	// window.location.href="Page_LifeService.html#Map_LP";
@@ -541,6 +699,7 @@ function openMap(var1,lat,lng){
 //[openMapWithRoute]至地圖模組規劃路徑, posObject1如果不傳則為自身
 function openMapWithRoute(posObject2,posObject1){
 	//調整目前資料
+	var posObject1,posObject2;
 	if(typeof(posObject1)==="undefined"){
 		posObject1=new posObject("目前所在位置","目前所在位置",getGPRSData().lat,getGPRSData().lng,"","","route_A");
 	}else if(posObject1.xicon==""){

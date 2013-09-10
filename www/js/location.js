@@ -52,8 +52,9 @@ function Loc(){
             this.currentLat=lat;
             this.currentLng=lng;
         }else if(this.currentLat==null&&this.currentLng==null){
-            this.currentLat=mapDefaultPoint.lat;
-            this.currentLng=mapDefaultPoint.lng;
+            var point=getMapDefaultPoint();
+            this.currentLat=point.lat;
+            this.currentLng=point.lng;
         }
         this.directionsDisplay = new google.maps.DirectionsRenderer();
         if(mapElement!=null){
@@ -77,6 +78,7 @@ function Loc(){
                 this.setMarker(this.currentLat,this.currentLng);
             }        
         }
+        console.log(this.currentLat+","+this.currentLng);
     };
     this.setMarker=function(lat,lng){
         this.currentLat=lat;
@@ -103,6 +105,7 @@ function Loc(){
                     draggable:true
                 });
             } else {
+                  // alert('查無指定地址或地標');
                 alert("輸入地址有誤，請先確認地址是否為真實存在之地址");
             }
         });

@@ -342,8 +342,8 @@ h1 {
 	background-image: -o-linear-gradient(top, #fff 42%, #c8d8f2);
 	background-image: -ms-linear-gradient(top, #fff 42%, #c8d8f2);
 	background-image: linear-gradient(to bottom, #fff 42%, #c8d8f2);
-	margin: 15px;
-	padding: 5px;
+	margin: 5px;
+	padding: 10px;
 	position: relative;
 	text-align: center;
 }
@@ -484,14 +484,15 @@ text-indent: 0em;
 	width: 22px;
 }
 .list h2 {
-	font-size: 1.2em;
+	font-size: 1em;
 	font-weight: bold;
 	color: #333;
 	margin: 0px 60px 0px 0px;
 	padding: 0px;
+	position: relative;
 }
 .list p {
-	font-size: 1em;
+	font-size: 0.8em;
 	color: #333;
 	margin: 0.5em 60px 0.5em 0px;
 	padding: 0px;
@@ -579,7 +580,7 @@ text-indent: 0em;
 .list2 p {
 	font-size: 1em;
 	color: #333;
-	margin: 0.3em 25px 0.3em 0px;
+	margin: 0.3em 0px 0.3em 0px;
 	padding: 0px;
 }
 .list2 .image {
@@ -608,6 +609,7 @@ text-indent: 0em;
 	top: 2.2em;
 }
 .list2 .floatleft {
+	margin-left:10px;
 	float: left;
 	font-size: 1em;
 	color: #C30;
@@ -793,7 +795,7 @@ div.lp_content{
 	border-bottom: 1px solid #999;
 	position: relative;
 	overflow: hidden;
-	min-height: 3.5em;
+	min-height: 5.8em;
 	vertical-align: middle;
 }
 .list5 input {
@@ -1585,7 +1587,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 .springboard2 .traffic02 {
 	font-weight: bold;
@@ -1599,7 +1601,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 .springboard2 .traffic03 {
 	font-weight: bold;
@@ -1613,7 +1615,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 .springboard2 .traffic04 {
 	font-weight: bold;
@@ -1627,7 +1629,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 .springboard2 .traffic05 {
 	font-weight: bold;
@@ -1641,7 +1643,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 .springboard2 .traffic06 {
 	font-weight: bold;
@@ -1655,7 +1657,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 .springboard2 .traffic07 {
 	font-weight: bold;
@@ -1669,7 +1671,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 .springboard2 .traffic08 {
 	font-weight: bold;
@@ -1683,7 +1685,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 
 .springboard2 .traffic09 {
@@ -1698,7 +1700,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 .springboard2 .traffic10 {
 	font-weight: bold;
@@ -1712,7 +1714,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 .springboard2 .traffic11 {
 	font-weight: bold;
@@ -1726,7 +1728,7 @@ h1
 	font-size: 0.9em;
 	white-space: normal;
 	padding-top: 2.6em;
-	margin: 0.5em;
+	margin: 0.4em;
 }
 
 .springboard .bus01 {
@@ -1789,6 +1791,7 @@ h1
 .helpline {
 	text-align: center;
 	padding: 5px;
+	margin-bottom:30px; 
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -1932,7 +1935,9 @@ width: 76px;
 .sort p{
 	margin: 0px;
 	height: 29px;
-	font-size: 1.5em;
+	font-size: 1em;
+	text-transform:none;
+	/*font-size: 0.3em;*/
 }
 
 /*location*/
@@ -1975,11 +1980,11 @@ right: 0px;
 	text-align:left;
 	background-color:#FFF;
 	border-collapse:collapse;
-	font-size: 1.3em;
+	font-size: 1em;
 }
 .divForm table th,.divViewForm table th{
 	color: #3c3b3b;
-	width: 30%;
+	width: 25%;
 	padding: 10px 5px;
 	vertical-align: middle;
 	text-align: right;
@@ -1987,7 +1992,9 @@ right: 0px;
 	border-bottom: 1px solid #ababab;
 	white-space: nowrap;
 }
-
+.divForm .ui-input-text{
+	font-size:1em;
+}
 .divForm table td,.divViewForm table td{	
 	line-height: 160%;
 	width: 65%;
@@ -2104,7 +2111,7 @@ font-size: 1em;
 	background-image: linear-gradient(to top, #151c28 50%, #2b3852 51%, #40567c);
 	margin: 0px;
 	font-size: 1.2em;
-	padding: 0px 25px 0px 25px;
+	padding: 0px 5px 0px 5px;
 	color: #FFF;
 	line-height: 180%;
 }
@@ -2406,6 +2413,102 @@ font-size: 1em;
 	font-weight: bold;
 	margin: 1px;
 }
+.btn12 {
+ width: 85px;
+ height: 28px;
+ -webkit-border-radius: 6px;
+ -moz-border-radius: 6px;
+ border-radius: 6px;
+ background-color: #324e86;
+ -webkit-box-shadow: 0 1px rgba(255,255,255,.25), inset 0 1px 1px rgba(0,0,0,.5);
+ -moz-box-shadow: 0 1px rgba(255,255,255,.25), inset 0 1px 1px rgba(0,0,0,.5);
+ box-shadow: 0 1px rgba(255,255,255,.25), inset 0 1px 1px rgba(0,0,0,.5);
+ border: solid 1px #354f73;
+ background-image: -webkit-linear-gradient(bottom, #3b68a5, #1b3e8c 50%, #2e6dbb 50%, #41b2f4);
+ background-image: -moz-linear-gradient(bottom, #3b68a5, #1b3e8c 50%, #2e6dbb 50%, #41b2f4);
+ background-image: -o-linear-gradient(bottom, #3b68a5, #1b3e8c 50%, #2e6dbb 50%, #41b2f4);
+ background-image: -ms-linear-gradient(bottom, #3b68a5, #1b3e8c 50%, #2e6dbb 50%, #41b2f4);
+ background-image: linear-gradient(to top, #3b68a5, #1b3e8c 50%, #2e6dbb 50%, #41b2f4);
+ color: #FFF;
+ text-align: center;
+ vertical-align: middle;
+ white-space: normal;
+ font-size: 0.8em;
+ font-weight: bold;
+ margin: 1px;
+}
+.btn13 {
+ width: 85px;
+ height: 28px;
+ border: solid 1px #31adec;
+
+ -webkit-border-radius: 6px;
+ -moz-border-radius: 6px;
+ border-radius: 6px;
+ background-color: #004c74;
+ background-image: -webkit-linear-gradient(bottom, #27a8ea, #86ddfd);
+ background-image: -moz-linear-gradient(bottom, #27a8ea, #86ddfd);
+ background-image: -o-linear-gradient(bottom, #27a8ea, #86ddfd);
+ background-image: -ms-linear-gradient(bottom, #27a8ea, #86ddfd);
+ background-image: linear-gradient(to top, #27a8ea, #86ddfd);
+ color: #FFF;
+ text-align: center;
+ vertical-align: middle;
+ white-space: normal;
+ font-size: 0.8em;
+ font-weight: bold;
+ margin: 1px;
+}
+
+.btn14 {
+ width: 85px;
+ height: 28px;
+ border: solid 1px #0080cb;
+
+ -webkit-border-radius: 6px;
+ -moz-border-radius: 6px;
+ border-radius: 6px;
+ background-color: #004c74;
+ background-image: -webkit-linear-gradient(bottom, #016da5, #0eb0eb);
+ background-image: -moz-linear-gradient(bottom, #016da5, #0eb0eb);
+ background-image: -o-linear-gradient(bottom, #016da5, #0eb0eb);
+ background-image: -ms-linear-gradient(bottom, #016da5, #0eb0eb);
+ background-image: linear-gradient(to top, #016da5, #0eb0eb);
+
+ color: #FFF;
+ text-align: center;
+ vertical-align: middle;
+ white-space: normal;
+ font-size: 0.8em;
+ font-weight: bold;
+ margin: 1px;
+}
+
+.btn15 {
+ width: 85px;
+ height: 28px;
+ border: solid 1px #065c8a;
+
+ -webkit-border-radius: 6px;
+ -moz-border-radius: 6px;
+ border-radius: 6px;
+ background-color: #004c74;
+ background-image: -webkit-linear-gradient(bottom, #004c74, #1482c4);
+ background-image: -moz-linear-gradient(bottom, #004c74, #1482c4);
+ background-image: -o-linear-gradient(bottom, #004c74, #1482c4);
+ background-image: -ms-linear-gradient(bottom, #004c74, #1482c4);
+ background-image: linear-gradient(to top, #004c74, #1482c4);
+
+ color: #FFF;
+ text-align: center;
+ vertical-align: middle;
+ white-space: normal;
+ font-size: 0.8em;
+ font-weight: bold;
+ margin: 1px;
+}
+ 
+
 .formBtn .btn08 {
 	width: 160px;
 	height: 32px;
@@ -2475,11 +2578,14 @@ font-size: 1em;
 	font-size: 1.2em;
 	font-weight: bold;
 }
+.divTitle{
+	padding-bottom: 10px;
+}
 .update {
 float: right;
 font-size: 1em;
 color: #333;
-margin-top: -20px;
+margin-top: 0px;
 }
 .more a,.more a:active {
 font-weight: bold;
@@ -2587,23 +2693,38 @@ float: right;
 }
 .tranTable{
 	width: 100%;
+	vertical-align: middle;
 }
 .tranTable .txtTD
 {
-	width: 100px;
-	min-width: 100px;
+	width: 65px;
+	min-width: 65px;
 	text-align: right;
+	vertical-align: middle;
+	line-height: 20px;
 }
 .tranTable .controlTD{
-	width: 180px;
-	max-width: 180px;
+/*	width: 180px;
+	max-width: 180px;*/
 }
 .tranTable .controlTD .ui-btn-text{
-	max-width: 160px!important;
+/*	max-width: 160px!important;*/
 }
 .tranTable .switchTD{
 	width: 40px;
 /*	padding-top: 25px;*/
+}
+.tranTable .ui-select .ui-btn-inner{
+	text-align: left;
+	padding: 5px;
+}
+.tranTable .ui-select .ui-btn-text {
+ text-overflow: clip;
+ font-size: 0.8em; 
+}
+.dw-i{
+	text-align: left;
+	font-size: 0.8em; 
 }
 .btnSwitch{
 	width: 32px;
@@ -2726,6 +2847,16 @@ color: rgb(255, 255, 102);
 .defaultTD{
 	vertical-align:middle;
 }
+.engLabel .ui-btn-text{
+	font-size: 0.9em!important;
+}
+.chLabel .ui-btn-text{
+	font-size: 1em!important;
+}
+.engLabel .ui-btn-inner,.chLabel .ui-btn-inner{
+	width: 65px!important;
+}
+
 /*table*/
 table.fixed { table-layout:fixed; }
 table.fixed td { overflow: hidden; }
@@ -2805,6 +2936,14 @@ table.fixed td { overflow: hidden; }
 .subDiv label{
 	color: #fff;	
 }
+.sub  ul{
+	list-style:none;
+	margin:0px; 
+	padding:0px;
+}
+.sub ul li{
+	margin: 10px;
+}
 .routePath{
 	background-color:#2b3852;
 	text-shadow:none;	
@@ -2877,6 +3016,9 @@ padding-right: 23px;
 }
 .next a:hover {
 	color: #C00!important;
+}
+#subDiv_contactInfo span{
+	line-height:1em!important;
 }
 /*note*/
 .note {

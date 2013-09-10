@@ -12,7 +12,8 @@
 		<!--json2-->
 		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
 		<!--Google Map API v3-->
-		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>
+		<!--<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>-->
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<!--mobiScroll-->
 		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
@@ -66,8 +67,8 @@
 		var loginUser = "";
 		var loginUserName = "";
 		/*MoveTo setting.js
-		var DataURL_BFS_android = "http://nscallinone.hyweb.com.tw:8080/BFS/Main2.do";
-        var DataURL_BFS_android_Upload = "http://nscallinone.hyweb.com.tw:8080/BFS/Upload.do";
+		var DataURL_BFS_android = "http://TAP0515.nsc.gov.tw/BFS/Main2.do";
+        var DataURL_BFS_android_Upload = "http://TAP0515.nsc.gov.tw/BFS/Upload.do";
 		var DataURL_BFS_GETORGLIST = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgList.do?jsoncallback=?";
 		var DataURL_BFS_GETORGINFO = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgInfo.do?jsoncallback=?";
 		*/
@@ -189,7 +190,7 @@
 					$.ajax({
 						cache: false,
 						type: 'post',
-						url: DataURL_BFS_android,
+						url: DataURL_BFS,
 						data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
 						dataType: 'json',
 						success: function(response) {
@@ -364,7 +365,7 @@
 			
 				$.ajax({					
 					type: 'post',
-					url: DataURL_BFS_android,
+					url: DataURL_BFS,
 					data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
 					dataType: 'json',
 					async: false,
@@ -683,7 +684,7 @@
 			//http://localhost:8081/AppService/Main.do?name=DataURL_BFS&jsonInput=&jsoncallback=?
 			$.ajax({				
 				type: 'post',
-				url: DataURL_BFS_android,
+				url: DataURL_BFS,
 				data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
 				dataType :"json",
 		        //async:false,
@@ -782,7 +783,7 @@
 							var jsonObjStr = JSON.stringify(jsonObj);
 							$.ajax({
 								type: 'post',
-								url: DataURL_BFS_android,
+								url: DataURL_BFS,
 								data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
 								dataType :"json",
 								//async:false,
@@ -1101,7 +1102,7 @@ function fail(error) {
 	</head>
 	<body>	
 		<div data-role="page" id="LP">		
-			<div data-role="header" data-position="fixed" data-theme="b">
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="b">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>即時業務資訊</h1>
 		     	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right" data-mini="true">
@@ -1146,7 +1147,7 @@ function fail(error) {
 				
 			</div>
 			
-			<div data-theme="a" data-role="footer" data-position="fixed" data-tap-toggle="false">		
+			<div data-theme="a" data-role="footer" data-position="fixed" data-fullscreen="false" data-tap-toggle="false">		
 			  <div data-role="navbar">
 			    <ul>
 			      <li class="navli">
@@ -1222,7 +1223,7 @@ function fail(error) {
 		
 		<!-- 新增檔案頁面 -->
 		<div data-role="page" id="newFilePage">
-			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>傳送檔案</h1></div>
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>傳送檔案</h1></div>
 			<div data-role="content">		
 
 				<div class="int">
@@ -1239,7 +1240,7 @@ function fail(error) {
 		
 		<!-- 選擇人員頁面  -->
 		<div data-role="page" id="chooseUserPage">
-			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>選擇對象</h1></div>
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>選擇對象</h1></div>
 			<div data-role="content">
 				<!--int Start-->
 				<div class="int">
@@ -1277,7 +1278,7 @@ function fail(error) {
 		
 		<!-- 寄送確認頁面  -->
 		<div data-role="page" id="confirmPage">
-			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
 			<div data-role="content">
 				<!--int Start-->				
 				<div class="int">					
@@ -1306,7 +1307,7 @@ function fail(error) {
 	
 		<!-- 檔案選擇頁面  -->
 		<div data-role="page" id="selectFilePage">
-			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
 			<div data-role="content">
 				<!--int Start-->				
 				<div class="int">										

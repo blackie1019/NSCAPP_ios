@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
         <!--ios-->
         <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+                <script type="text/javascript" src="js/ios/flurryPlugin.js"></script>
         <!--android-->
         <!--
          <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
@@ -13,7 +14,8 @@
 		<!--json2-->
 		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
 		<!--Google Map API v3-->
-		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false&region=zh-TW"></script>
+		<!--<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>-->
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<!--mobiScroll-->
 		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
@@ -54,12 +56,22 @@
 		<!--     <body> -->
 		<!--巡查資料回傳-->
         <div data-role="page" id="LBS_PostBack">
+			<script  type="text/javascript">
+				document.addEventListener("deviceready",onDeviceReady,false);
+				function onDeviceReady(){
+					window.plugins.flurry.logEvent("[plugin]Page_LBS.html");
+				}
+			</script>
         	<script type="text/javascript">
 			/*pageini event*/
 			$(document).on('pageinit','#LBS_PostBack',function(){
 				var rootElement=this;
 				//產生menu
 				genMenu(this);
+				// //手勢動作
+				// $(this).on('swiperight',function(){
+				// 	$( "#menu" ).panel( "toggle" );
+				// });
 				$(this).on('click','#btnLBS_PostBack_List',function(){
 			        $.mobile.changePage('#LBS_PostBack_List');
 				});
@@ -78,8 +90,20 @@
 			    	getDefaultParkBase();
 					//判斷預設園區
 			 		var defaultParkBase=getDefaultBaseData();
+			 		console.log(defaultParkBase);
 					if(defaultParkBase==null||defaultParkBase==""){
-						defaultParkBase="01_01";
+						switch(getAppType())
+						{
+							case "N":
+								defaultParkBase="01_01";
+							break;
+							case "S":
+								defaultParkBase="02_11";
+							break;
+							case "C":
+								defaultParkBase="03_21";
+							break;
+						}
 			    	}
 			    	var temp=defaultParkBase.split("_");
 			 		var mobiScroll_LBS_ParkBase=$('#LBS_NewLandInfo').find('#mobiScroll_LBS_ParkBase');
@@ -146,7 +170,7 @@
 			        }else{
 			            smoke.alert("刪除失敗，請重新載入頁面！",{},function(){});
 			        }
-			        //$(rootElement).find('#deletePopupDialog').popup("close")
+			        $(rootElement).find('#deletePopupDialog').popup("close");
 			        $.mobile.changePage('#LBS_PostBack_List');
 				});
 				$(this).on('click','#uploadButton',function(){
@@ -217,7 +241,7 @@
 			$(document).on('pageinit','#LBS_NewEntryPoint',function(){
 				var rootElement=this;
 				$(this).find('#positionButton').live('click',function(){
-					if(getTarget_LBS_LandInfoActionType()=="edit")
+					if(getTarget_LBS_LandInfoActionType()=="edit"&&getTarget_LBS_EntryPointActionType()=="edit")
 					{
 						smoke.confirm("是否需要重新定位",function(e){
 							loc.initialize("LBS_NewEntryPoint",$(rootElement).find('#targetLatitude'),$(rootElement).find('#targetLongitude'));	
@@ -249,10 +273,10 @@
 			                smoke.alert("刪除失敗，請重新載入頁面！",{},function(){});
 			            }
 			        }else if(getTarget_LBS_LandInfoActionType()=="add"){
-			        	var EntryPoinID=getTarget_LBS_EntryPointID();
+			        	var EntryPointID=getTarget_LBS_EntryPointID();
 			        	deleteLBS_EnrtyPointToTempDB(EntryPointID);
 			        }
-			        //$(rootElement).find('#deletePopupDialog').popup("close")
+			        $(rootElement).find('#deletePopupDialog').popup("close");
 			        $.mobile.changePage('#LBS_EntryPoint');
 				});
 				$(this).on('click','#uploadButton',function(){
@@ -780,7 +804,7 @@
 		        <p>該刪除動作經使用者確認後將直接刪除相關資料與圖片且不可恢復</p>
     			<div style="text-align:center;">	
 		        <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">取消</a>
-		        <a href="#" data-role="button" data-inline="true" data-rel="back"  id="deleteButton" data-transition="flow" data-theme="">確認</a>
+		        <a href="#" data-role="button" data-inline="true" id="deleteButton" data-transition="flow" data-theme="">確認</a>
 		    	</div>
 		    </div>
 			</div>
@@ -937,7 +961,7 @@
 	                  </table>	
 			</div>
 			<div style="text-align:center;">			
-				<button data-inline="true"  data-theme="e" id="uploadButton" style="width: 1272px;">新增</button>
+				<button data-inline="true"  data-theme="e" id="uploadButton" style="width: 127px;">新增</button>
 				<a href="#deleteEntryPointPopupDialog" id="btnDeletePopupDialog" data-role="button" data-inline="true" data-rel="popup" data-position-to="window"  data-theme="e" >刪除</a>			
 			</div>
 			<div data-role="popup" id="deleteEntryPointPopupDialog" data-overlay-theme="a" data-theme="c" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
@@ -949,7 +973,7 @@
 		        <p>該刪除動作經使用者確認後將直接刪除相關資料與圖片且不可恢復</p>
     			<div style="text-align:center;">	
 		        <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">取消</a>
-		        <a href="#" data-role="button" data-inline="true" data-rel="back"  id="deleteButton" data-transition="flow" data-theme="">確認</a>
+		        <a href="#" data-role="button" data-inline="true" id="deleteButton" data-transition="flow" data-theme="">確認</a>
 		    	</div>
 		    </div>
 		</div>

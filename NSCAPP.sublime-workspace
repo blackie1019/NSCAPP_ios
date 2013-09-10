@@ -1,0 +1,1928 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"allt",
+				"allTr_4"
+			],
+			[
+				"alltr",
+				"allTr_2"
+			],
+			[
+				"all",
+				"allTr_1"
+			],
+			[
+				"firs",
+				"first_no"
+			],
+			[
+				"traffic",
+				"trafficTable"
+			],
+			[
+				"selectv",
+				"selectValueBeforeTr"
+			],
+			[
+				"selectval",
+				"selectValueBeforeTr"
+			],
+			[
+				"first",
+				"first_no-1"
+			],
+			[
+				"selectV",
+				"selectValueBeforeTr"
+			],
+			[
+				"defa",
+				"defaultPoint"
+			],
+			[
+				"meap",
+				"mapDefaultPoint_N"
+			],
+			[
+				"cu",
+				"currentLng  (variable)"
+			],
+			[
+				"Page",
+				"Page_InstantDataBox"
+			],
+			[
+				"insta",
+				"Page_InstantDataBox"
+			],
+			[
+				"hei",
+				"height:80px"
+			],
+			[
+				"def",
+				"defaultParkBase"
+			],
+			[
+				"pos",
+				"mapData.posObjects.length"
+			],
+			[
+				"res",
+				"result"
+			],
+			[
+				"result",
+				"result"
+			],
+			[
+				"cons",
+				"console	jsProp"
+			],
+			[
+				"sim",
+				"simulatedClick"
+			],
+			[
+				"simu",
+				"simulateA"
+			],
+			[
+				"hid",
+				"hideArea"
+			],
+			[
+				"tim",
+				"timer"
+			],
+			[
+				"lazy",
+				"lazyload"
+			],
+			[
+				"fai",
+				"fail"
+			],
+			[
+				"alb",
+				"albumID"
+			],
+			[
+				"albu",
+				"albumID"
+			],
+			[
+				"resp",
+				"response"
+			],
+			[
+				"ajax",
+				"ajax	jQuery"
+			],
+			[
+				"mo",
+				"mouseover	jQuery"
+			],
+			[
+				"roo",
+				"rootElement"
+			],
+			[
+				"con",
+				"console	jsProp"
+			],
+			[
+				"unde",
+				"undefined	jsProp"
+			],
+			[
+				"pro",
+				"profileDiv"
+			],
+			[
+				"func",
+				"function	jsProp"
+			],
+			[
+				"ng-co",
+				"ng-controller	angular controller"
+			],
+			[
+				"checkli",
+				"checkedList  (variable)"
+			],
+			[
+				"attr",
+				"attr()	jQuery"
+			],
+			[
+				"remove",
+				"removeAttribute	jsDOM"
+			],
+			[
+				"fun",
+				"function	jsProp"
+			],
+			[
+				"longit",
+				"longitude"
+			],
+			[
+				"posobj",
+				"posObject2"
+			],
+			[
+				"va",
+				"val()	jQuery"
+			],
+			[
+				"btnB",
+				"btnBackIndex_str"
+			],
+			[
+				"opt",
+				"option	<option>"
+			],
+			[
+				"cha",
+				"change	jsEvent"
+			],
+			[
+				"headbo",
+				"headerBottomHtml"
+			],
+			[
+				"Notici",
+				"NotificationDataObject"
+			],
+			[
+				"Notification",
+				"NotificationDataObject"
+			],
+			[
+				"settingd",
+				"SettingData_NotificaitonData"
+			],
+			[
+				"Setting",
+				"Setting_imgSrc"
+			],
+			[
+				"btnCl",
+				"btnClear"
+			],
+			[
+				"Map_",
+				"Map_LP"
+			],
+			[
+				"str_",
+				"str_Notification"
+			],
+			[
+				"str_n",
+				"str_Notification"
+			],
+			[
+				"classif",
+				"classify1"
+			],
+			[
+				"setting",
+				"Setting_imgSrc"
+			],
+			[
+				"jsono",
+				"jsonObject"
+			],
+			[
+				"map_lab",
+				"map_labRoutePointEnd_str"
+			],
+			[
+				"map_l",
+				"map_labRoutePointStart_str"
+			],
+			[
+				"map_la",
+				"map_labRoutePointEnd_str"
+			],
+			[
+				"mapbt",
+				"map_btnSearch_str"
+			],
+			[
+				"map_btnLi",
+				"map_btnListShow_str"
+			],
+			[
+				"map_btnSe",
+				"map_btnSetAlert_str"
+			],
+			[
+				"btnClass",
+				"btnClassify1Filter"
+			],
+			[
+				"map_",
+				"map_btnSetAlert_str"
+			],
+			[
+				"map_b",
+				"map_btnSearch_str"
+			],
+			[
+				"全部",
+				"全部"
+			],
+			[
+				"Confi",
+				"domConfig	jsDOM"
+			],
+			[
+				"fromDests",
+				"FromDestStop_value"
+			],
+			[
+				"chtName",
+				"chtName"
+			],
+			[
+				"classify",
+				"classifyArray"
+			],
+			[
+				"LP_",
+				"LP_jsonObjectArray"
+			],
+			[
+				"z",
+				"z-index"
+			],
+			[
+				"gr",
+				"gray"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"ab",
+				"absolute"
+			],
+			[
+				"div",
+				"divForm"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"btnBack",
+				"btn_Back_str"
+			],
+			[
+				"VisitInfo",
+				"VisitInfo_content"
+			],
+			[
+				"ui-bt",
+				"ui-btn-text"
+			],
+			[
+				"remo",
+				"remove()	jQueryCallbacks"
+			],
+			[
+				"巡迴",
+				"巡迴巴士-時刻表"
+			],
+			[
+				"end_s",
+				"end_stop_codeValue"
+			],
+			[
+				"tr",
+				"trigger	jsProp"
+			],
+			[
+				"begin_s",
+				"begin_stop_codeValue"
+			],
+			[
+				"mobiScroll_",
+				"mobiScroll_end_stop"
+			],
+			[
+				"divStop",
+				"divStop_2"
+			],
+			[
+				"LP_0",
+				"LP_05_1"
+			],
+			[
+				"max",
+				"max-height"
+			],
+			[
+				"transportList_",
+				"transportList_htmlResult"
+			],
+			[
+				"java",
+				"javascript"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"appTyp",
+				"AppType"
+			],
+			[
+				"fa",
+				"fadeIn()	jQuery"
+			],
+			[
+				"slid",
+				"slideUp()	jQuery"
+			],
+			[
+				"prel",
+				"preloadDiv"
+			],
+			[
+				"fad",
+				"fadeIn()	jQuery"
+			],
+			[
+				"s",
+				"script	Tag"
+			],
+			[
+				"le",
+				"length	jsWindow"
+			],
+			[
+				"dou",
+				"document	jsWindow"
+			],
+			[
+				"dic",
+				"div_Notification_radios"
+			],
+			[
+				"v",
+				"val"
+			],
+			[
+				"sli",
+				"slider_Notificaiton"
+			],
+			[
+				"page",
+				"pageinit"
+			],
+			[
+				"js",
+				"jsonOutput"
+			],
+			[
+				"btnsele",
+				"btnSelect_all_str"
+			],
+			[
+				"btnse",
+				"btnSelect_none_str"
+			],
+			[
+				"btns",
+				"btnSelect_all_str"
+			],
+			[
+				"btnsl",
+				"btnSelect_all_str"
+			],
+			[
+				"btnSelect_",
+				"btnSelect_all_str"
+			],
+			[
+				"che",
+				"checkedClassify"
+			],
+			[
+				"ch",
+				"checkedClassify"
+			],
+			[
+				"co",
+				"code2"
+			],
+			[
+				"add",
+				"addToClassifyList"
+			],
+			[
+				"sub",
+				"subDiv_introInfo"
+			],
+			[
+				"openb",
+				"openBrowserInApp"
+			],
+			[
+				"open",
+				"openBrowser"
+			],
+			[
+				"app",
+				"AppType"
+			],
+			[
+				"lined",
+				"lineDesc_htmlResult"
+			],
+			[
+				"htm",
+				"htmlResult"
+			],
+			[
+				"ht",
+				"htmlResult"
+			],
+			[
+				"inf",
+				"infowindowHTML"
+			],
+			[
+				"not",
+				"note2"
+			],
+			[
+				"html",
+				"htmlResult"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "www/Page_About.html",
+			"settings":
+			{
+				"buffer_size": 26555,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "www/js/setting.js",
+			"settings":
+			{
+				"buffer_size": 26113,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 131 files for \"commonURL_DB\"\n\n/Users/blackie/Desktop/NSCAPP_ios/www/Page_TranspotInfo.html:\n 1219: 		        url:commonURL_DB,\n 1265: 		        url:commonURL_DB,\n 1778: 		        url:commonURL_DB,\n 1834: 		        url:commonURL_DB,\n 1913: 		        url:commonURL_DB,\n\n/Users/blackie/Desktop/NSCAPP_ios/www/js/setting.js:\n   49: var commonURL_DB=\"http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=commonURL_DB&jsoncallback=?\";\n   88: var DataURL_TranspoltInfo_CP_09=\"http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=commonURL_DB&jsoncallback=?\";\n\n/Users/blackie/Desktop/NSCAPP_ios/www/js/setting_dev.js:\n   49: var commonURL_DB=\"http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=commonURL_DB&jsoncallback=?\";\n   88: var DataURL_TranspoltInfo_CP_09=\"http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do?name=commonURL_DB&jsoncallback=?\";\n\n/Users/blackie/Desktop/NSCAPP_ios/www/js/setting_nsc_production.js:\n   49: var commonURL_DB=\"http://mas.most.gov.tw/AppService/Main.do?name=commonURL_DB&jsoncallback=?\";\n   88: var DataURL_TranspoltInfo_CP_09=\"http://mas.most.gov.tw/AppService/Main.do?name=commonURL_DB&jsoncallback=?\";\n\n/Users/blackie/Desktop/NSCAPP_ios/www/js/setting_nsc_testing.js:\n   49: var commonURL_DB=\"http://TAP0923.nsc.gov.tw/AppService/Main.do?name=commonURL_DB&jsoncallback=?\";\n   88: var DataURL_TranspoltInfo_CP_09=\"http://TAP0923.nsc.gov.tw/AppService/Main.do?name=commonURL_DB&jsoncallback=?\";\n\n17 matches across 5 files\n",
+			"settings":
+			{
+				"buffer_size": 1493,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "www/js/data.js",
+			"settings":
+			{
+				"buffer_size": 74977,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "www/Page_TranspotInfo.html",
+			"settings":
+			{
+				"buffer_size": 235821,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 341.0,
+		"selected_items":
+		[
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"remov",
+				"Emmet: Remove Tag"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"list p",
+				"Package Control: List Packages"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"INSTA",
+				"Package Control: Install Package"
+			],
+			[
+				"INST",
+				"Package Control: Install Package"
+			],
+			[
+				"LIST P",
+				"Package Control: List Packages"
+			],
+			[
+				"INS",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 588.0
+	},
+	"console":
+	{
+		"height": 297.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_AreaIntro.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_BizFileSharing_android.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_ChooseUser.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_InsideInstantMessage.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_InstantDataBox.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_Jobs.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_LBS.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_LifeService.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_Login.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_NewsAndDocument.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_NewsAndEvents.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_OfficialDocument.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_TranspotInfo.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_VendorInfo.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/setting_dev.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/setting.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/setting_nsc_test.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/setting_nsc_testing.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/initial.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_About.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/setting_nsc_production.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/Page_BizFileSharing.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/index.html",
+		"/Users/blackie/Desktop/test.html",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/location.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/data.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/map.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/ios/flurryPlugin.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/setting_nsc.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/css/index.css",
+		"/Users/blackie/Desktop/NSCAPP_ios/NSCAPP.sublime-project",
+		"/Users/blackie/Desktop/FB_ProfilePicSwitcher/favor.html",
+		"/Users/blackie/Library/Application Support/Sublime Text 2/Packages/Git/Git.sublime-settings",
+		"/Users/blackie/Desktop/BlackieStudio/settings.py",
+		"/Users/blackie/Desktop/BlackieStudio/views.py",
+		"/Users/blackie/Desktop/BlackieStudio/urls.py",
+		"/Users/blackie/Desktop/BlackieStudio/infoView.py~",
+		"/Users/blackie/Desktop/BlackieStudio/info_views.py",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/setting.js_NSC",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/setting 拷貝.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/loading.js",
+		"/Users/blackie/Desktop/NSCAPP_ios/www/js/app.js",
+		"/Users/blackie/Desktop/z-index example/normal.html",
+		"/Users/blackie/Desktop/z-index example/adv.html",
+		"/Users/blackie/Desktop/z-index example/simple.html",
+		"/Users/blackie/Library/Application Support/Sublime Text 2/Installed Packages/Package Control.sublime-package",
+		"/Users/blackie/Downloads/DrinkPlayFun/index.html",
+		"/Users/blackie/Library/Application Support/Sublime Text 2/Packages/User/Git.sublime-settings",
+		"/Users/blackie/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/blackie/Downloads/DrinkPlayFun/css/bootstrap-responsive.css",
+		"/Users/blackie/Library/Application Support/Sublime Text 2/Packages/Pretty JSON/Pretty JSON.sublime-settings",
+		"/Users/blackie/Downloads/Page_BizFileSharing.html",
+		"/Users/blackie/Desktop/整理資料",
+		"/Users/blackie/Desktop/NSCAPP_ios_N/www/initial.html",
+		"/Users/blackie/Desktop/NSCAPP_ios_S/www/initial.html",
+		"/Users/blackie/Desktop/NSCAPP_ios_C/www/initial.html"
+	],
+	"find":
+	{
+		"height": 37.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"",
+			"margin: 0;"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"^",
+			"commonURL",
+			"common_url",
+			"getFAQInfo",
+			"commonURL_DB",
+			"common",
+			"browser",
+			"URL",
+			"open",
+			"data-fullScreen=\"true\"",
+			" data-position=\"fixed\" data-fullscreen=\"false\"",
+			" data-position=\"fixed\" data-fullscreen=\"true\"",
+			" data-position=\"fixed\"",
+			"http://TAP0923.nsc.gov.tw/",
+			"http://nscallinone.hyweb.com.tw:8080/",
+			"http://nscallinone2.hyweb.com.tw:8080/",
+			"toggle",
+			"toogleBtnNexAndBtnPrev",
+			"too",
+			"toggle",
+			"CP_01",
+			"toCP",
+			"toogleBtnNexAndBtnPrev",
+			"cp_01",
+			"Target_1",
+			"Targer_1",
+			"cp_01",
+			"$('#page_aroundStop #btnPrev')",
+			"btnNext",
+			"btnpre",
+			"pre",
+			"btnPre",
+			"http://mas.most.gov.tw/",
+			"http://nscallinone.hyweb.com.tw:8080/",
+			"http://nscallinone2.hyweb.com.tw:8080/",
+			"地圖模組",
+			"http://TAP0923.nsc.gov.tw/",
+			"http://nscallinone.hyweb.com.tw:8080/",
+			"http://nscallinone2.hyweb.com.tw:8080/",
+			"地圖",
+			"http://nscallinone.hyweb.com.tw:8080/",
+			"getXiconImg",
+			"DataURL_LBSQueryService",
+			"getXiconImg",
+			"select ",
+			"select",
+			"LP_jsonObjectArray",
+			".xicon",
+			"data-xicon",
+			"find",
+			"0",
+			"mapdefaultpoint",
+			"mapdefault",
+			"doRefre",
+			"changepage",
+			"titleSearch",
+			"24",
+			"24.7819",
+			"mapDefaultPoint",
+			"LBS_MapPage",
+			"btnSearchLocation",
+			"flur",
+			"furry",
+			"        <",
+			"flurry",
+			"gotoin",
+			"identifyParkBase",
+			"flurry",
+			"2PP533V68KWVJVGRH493",
+			"conso",
+			"1 附加檔案	 ",
+			"install",
+			"flurry",
+			"map",
+			"03",
+			"IdentifyParkBase",
+			"deleteButton",
+			"width: 127",
+			"LBS_NewEntryPoint",
+			"addAdvMarker",
+			"convertToGMAPMarkers()",
+			".map_markers",
+			"marker",
+			"7",
+			"loadMapData",
+			"posObjectArray",
+			"showTargetAndOtherMarker",
+			"loadMapData",
+			"map_markers",
+			"console",
+			"push",
+			"addAdvMarker",
+			"8",
+			"addAdvMarker",
+			"convertToGMAPMarkers",
+			"genMapShowContent",
+			"convertToGMAPMarkers",
+			"btnMAPShow",
+			"break",
+			"break;",
+			"break",
+			"公尺",
+			"http://TAP0923.nsc.gov.tw/TransportService",
+			"nscallinone.hyweb.com.tw:8080",
+			"nscallinone.hyweb.com.tw:8080/TransportService/",
+			"nscallinone.hyweb.com.tw:8080/",
+			"nscallinone2.hyweb.com.tw:8080/",
+			"nscallinone.hyweb.com.tw:8080/",
+			"AppService",
+			"nscallinone.hyweb.com.tw:8080/",
+			"nscallinone2.hyweb.com.tw:8080/",
+			"http://s3-ap-southeast-1.amazonaws.com/blackie-cdn",
+			"btn12",
+			"時刻及站點",
+			"getDefaultParkBase",
+			"園區",
+			"園區判別",
+			"getDefaultParkBase",
+			"getDefaultParkAndBase",
+			"identifyParkBase",
+			"getDefaultBaseData",
+			"mobiScroll_LBS_ParkBas",
+			"deleteButton",
+			"doDeleteLBSUnSubmitData",
+			"deleteButton",
+			"刪除",
+			"route2",
+			"route1"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			" data-position=\"fixed\" data-fullscreen=\"false\"",
+			" data-position=\"fixed\" data-fullscreen=\"true\"",
+			"http://mas.most.gov.tw/",
+			"http://TAP0923.nsc.gov.tw/",
+			"toggleBtnNexAndBtnPrev",
+			"http://TAP0923.nsc.gov.tw/",
+			"http://mas.most.gov.tw/",
+			"http://TAP0923.nsc.gov.tw/",
+			"BPG4FJYH35T7C2ZFHP5S",
+			"",
+			"http://TAP0923.nsc.gov.tw/TransportService/",
+			"TAP0923.nsc.gov.tw/TransportService",
+			"TAP0515.nsc.gov.tw/",
+			"TAP0923.nsc.gov.tw/",
+			"TAP0515.nsc.gov.tw/",
+			"TAP0923.nsc.gov.tw/",
+			"TAP0923.nsc.gov.tw",
+			"//d1mwy13430000y.cloudfront.net",
+			"page2",
+			"page1",
+			"TAP0515.nsc.gov.tw",
+			"TAP0923.nsc.gov.tw",
+			"LBSCenterLatLng",
+			".name",
+			".address",
+			"var title=jsonObject.title;",
+			"margin: 0.4em;",
+			"margin: 0;",
+			"http://ext.pimg.tw/galinsong/1345438068-3538344221.jpg",
+			"DataURL_BFS_android",
+			"TAP0515.nsc.gov.tw:8080",
+			"TAP0515.nsc.gov.tw",
+			"TAP0923.nsc.gov.tw/",
+			"nscallinone2.hyweb.com.tw:8080/",
+			"nscallinone.hyweb.com.tw:8080/",
+			"nscallinone2.hyweb.com.tw:8080/",
+			"http://TAP0923.nsc.gov.tw/",
+			"http://TAP0515.nsc.gov.tw/",
+			"http://TAP0923.nsc.gov.tw/",
+			"http://nscallinone2.hyweb.com.tw:8080/AppService/",
+			"class=\"popupCloseBtn\" data-rel=\"back\" data-role=\"button\" data-theme=\"a\" data-icon=\"delete\""
+		],
+		"reverse": false,
+		"show_context": false,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "www/Page_About.html",
+					"settings":
+					{
+						"buffer_size": 26555,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5759,
+								5759
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"sublime_auto_complete": true,
+							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1975.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "www/js/setting.js",
+					"settings":
+					{
+						"buffer_size": 26113,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1986,
+								1998
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"sublime_auto_complete": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"settings":
+					{
+						"buffer_size": 1493,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										123,
+										135
+									],
+									[
+										158,
+										170
+									],
+									[
+										193,
+										205
+									],
+									[
+										228,
+										240
+									],
+									[
+										263,
+										275
+									],
+									[
+										342,
+										354
+									],
+									[
+										418,
+										430
+									],
+									[
+										550,
+										562
+									],
+									[
+										649,
+										661
+									],
+									[
+										725,
+										737
+									],
+									[
+										857,
+										869
+									],
+									[
+										967,
+										979
+									],
+									[
+										1028,
+										1040
+									],
+									[
+										1145,
+										1157
+									],
+									[
+										1252,
+										1264
+									],
+									[
+										1316,
+										1328
+									],
+									[
+										1436,
+										1448
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"detect_indentation": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"sublime_auto_complete": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "www/js/data.js",
+					"settings":
+					{
+						"buffer_size": 74977,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								67130,
+								67028
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"sublime_auto_complete": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 14067.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "www/Page_TranspotInfo.html",
+					"settings":
+					{
+						"buffer_size": 235821,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								58562,
+								58571
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"sublime_auto_complete": true,
+							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 20598.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 36.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Users/blackie/Desktop/Dev/AWSLearnNote/AWSLearnNote.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 269.0,
+	"status_bar_visible": true
+}

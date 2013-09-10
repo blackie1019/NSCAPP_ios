@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
         <!--ios-->
         <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+                <script type="text/javascript" src="js/ios/flurryPlugin.js"></script>
         <!--android-->
         <!--
          <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
@@ -13,7 +14,8 @@
 		<!--json2-->
 		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
 		<!--Google Map API v3-->
-		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>
+		<!--<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>-->
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<!--mobiScroll-->
 		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
@@ -43,6 +45,12 @@
 		<script src="js/photo.js"></script>	
 		<script src="js/location.js"></script>	
 		<script src="js/data.js"></script>
+		<script  type="text/javascript">
+			document.addEventListener("deviceready",onDeviceReady,false);
+			function onDeviceReady(){
+				window.plugins.flurry.logEvent("[plugin]Page_InsideInstantMessage.html");
+			}
+		</script>
 		<script  type="text/javascript">
 		/*global variables*/
 		//function
@@ -104,7 +112,7 @@
 		            }else{
 		                if(data.status=="success"){
 		                	if(data.jsonOutput.length>0){
-		                		htmlResult+="<div class='title2'>"+data.jsonOutput[0].chtTitle+"</div><div class='floatleft'>"+"資訊室"+"</div><div class='floatright'>"+data.jsonOutput[0].createdTime+"</div><div class='int'><p>"+data.jsonOutput[0].chtDesc+"</p></div>";
+		                		htmlResult+="<div class='title2'>"+data.jsonOutput[0].chtTitle+"</div><div class='floatleft'>"+"資訊室"+"</div><div class='floatright'>"+data.jsonOutput[0].createdTime+"</div><div style='margin: 20px;' class='int'><p>"+data.jsonOutput[0].chtDesc+"</p></div>";
 		                		
 	            				$('#CP').find('#htmlResult').html("<ul>"+htmlResult+"</ul>").trigger('create');
 	            				$.mobile.changePage('#CP');
@@ -130,13 +138,17 @@
 			//產生跑馬燈
 			var jsonObject=getAppInstantMessage();
 			if(jsonObject!=null){
-				var title=jsonObject.chtTitle;
+				var title=jsonObject.title;
 				genAppInstantMessage($('#content'),title);
 			}
 			//產生menu
 			genMenu(this);
 			//menu登入確認
 			menuDisplayMemberSection(checkLogin(),this);	
+			// //手勢動作
+			// $(this).on('swiperight',function(){
+			// 	$( "#menu" ).panel( "toggle" );
+			// });
  			//條列個別點擊事件
  			$(this).find('#htmlResult').on('click','li',function(){
  				var sn=$(this).data("sn");
@@ -152,7 +164,7 @@
 	</head>
 	<body>	
 		<div data-role="page" id="LP">
-			<div data-role="header" data-position="fixed" data-theme="f">
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>內部訊息公告</h1>
 		     	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right" data-mini="true">
@@ -165,7 +177,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="CP">
-			<div data-role="header" data-position="fixed" data-theme="f">
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>內部訊息公告</h1>
             </div>

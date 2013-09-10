@@ -6,6 +6,7 @@
 	<body>
 		        <!--ios-->
         <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+                <script type="text/javascript" src="js/ios/flurryPlugin.js"></script>
         <!--android-->
         <!--
          <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
@@ -48,6 +49,12 @@
 		<script src="js/loading.js"></script> 
 		<!--首頁-->
 		<div data-role="page" id="index">
+			<script  type="text/javascript">
+				document.addEventListener("deviceready",onDeviceReady,false);
+				function onDeviceReady(){
+					window.plugins.flurry.logEvent("[plugin]index.html");
+				}
+			</script>
 			<script>
 			/*pageini event*/
 			$(document).on('pageinit','#index',function(){
@@ -68,7 +75,7 @@
 			});
 			$(document).on('pageinit','#AppInstantMessage',function(){
 				var jsonObject=getAppInstantMessage(),htmlResult="";
-        		htmlResult+="<div class='title2'>"+jsonObject.chtTitle+"</div><div class='floatleft'>"+"資訊室"+"</div><div class='floatright'>"+jsonObject.createdTime+"</div><div class='int'><p>"+jsonObject.chtDesc+"</p></div>";
+        		htmlResult+="<div class='title2'>"+jsonObject.title+"</div><div class='floatleft'>"+"資訊室"+"</div><div class='floatright'>"+jsonObject.createdTime+"</div><div style='margin: 20px;' class='int'><p>"+jsonObject.desc+"</p></div>";
 				$(this).find('#htmlResult').html("<ul>"+htmlResult+"</ul>").trigger('create');
 				jsonObject=null;htmlResult=null;
 				delete jsonObject;delete htmlResult;	

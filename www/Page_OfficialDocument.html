@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
         <!--ios-->
         <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+                <script type="text/javascript" src="js/ios/flurryPlugin.js"></script>
         <!--android-->
         <!--
          <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
@@ -13,7 +14,8 @@
 		<!--json2-->
 		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
 		<!--Google Map API v3-->
-		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>
+		<!--<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>-->
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<!--mobiScroll-->
 		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
@@ -65,6 +67,7 @@
 		var orgCode = "";
 		var deptCode = "";
 		var userId = "";
+		var orgCodeName = "";
 		
 		//current user mode(agent)
 		var _orgCode = "";
@@ -75,28 +78,32 @@
 		//MoveTo setting.js
 		*/
 		//-
-		var DataURL_OfficialDocument_LP = "http://nscallinone2.hyweb.com.tw:8080/AppService/GetODToListMobInfo.do";
+		//var DataURL_OfficialDocument_LP = "http://nscallinone2.hyweb.com.tw:8080/AppService/GetODToListMobInfo.do";
 		//var DataURL_OfficialDocument_LP = "http://192.168.1.6:8081/AppService/GetODToListMobInfo.do";
 				
 		function iniControlSetting() {
 			var today=new Date().toISOString().slice(0,10);			
-			$("input[type=date]").val(today);
+			$("input[type=date]").val(today);			
 		}
 		
 		// pageinit
-		$(document).on('pageinit','#index',function(){
+		$(document).on('pageinit','#index',function(){			
 			var member = getLoginData();
 			//alert(JSON.stringify(member));
 			userId=member.accountSN||"B00541";
 			orgCode=member.idept_govCode||"N";			
 			if (orgCode=='N') {
-				orgCode="SIPA";
+				//orgCode="SIPA";
+				orgCodeName="SIPA";
 			} else if (orgCode=='C') {
-				orgCode="CTSP";
+				//orgCode="CTSP";
+				orgCodeName="CTSP";
 			} else if (orgCode=='S') {
-				orgCode="STSIPA";
+				//orgCode="STSIPA";
+				orgCodeName="STSIPA";
 			} else {//M
-				orgCode="NSC";
+				//orgCode="NSC";
+				orgCodeName="NSC";
 			}			
 			deptCode=member.idept_nscuCode||"08";
 			loginUser=member.account||"leee.ntspb";
@@ -104,12 +111,14 @@
 			loginUserInfo=(member.accountName+"("+userId+")")||"李日興(B00541)";
 			$('#currentUser').html(loginUserInfo);
 			//設定代理人
-			_orgCode = orgCode;
+			//_orgCode = orgCode;
+			_orgCode = orgCodeName;
 			_deptCode = deptCode;
 			_userId = userId;
 			//寫到localstorage供其他頁使用
 			window.localStorage.setItem("SettingData_userId", userId);
 			window.localStorage.setItem("SettingData_orgCode", orgCode);
+			window.localStorage.setItem("SettingData_orgCodeName", orgCodeName);
 			
 			//產生menu
 			genMenu(this);
@@ -126,7 +135,7 @@
 				$.mobile.changePage('#LP');
 			});
 			
-			$('#openAgent').click(function() {
+			$('#openAgent, #currentUser').click(function() {
 				$('#popupDialog_account').popup('open');
 			});
 			$('#btnCancel').click(function() {
@@ -150,6 +159,7 @@
 					
 					loadData(_orgCode, _deptCode, _userId, false);
 					// changeuser
+					//$('#currentUser').html(selectedAgent.userName+"("+selectedAgent.userId+")");
 					$('#currentUser').html(selectedAgent.userName+"("+selectedAgent.userId+")");
 					
 					$('#popupDialog_account').popup('close');
@@ -184,6 +194,10 @@
 			genMenu(this);
 			//menu登入確認
 			menuDisplayMemberSection(checkLogin(),this);
+			// //手勢動作
+			// $(this).on('swiperight',function(){
+			// 	$( "#menu" ).panel( "toggle" );
+			// });
 			//控制項初始化設定
 			iniControlSetting();
  			//條列呈現
@@ -325,15 +339,15 @@
 	</head>
 	<body>	
 		<div data-role="page" id="index">		
-			<div data-role="header" data-position="fixed" data-theme="f">
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>公文簽核待辦通知</h1>
             </div>			
 			<div data-role="content" style="padding:0">			
 			<div class="title2">
-				<img src="img/NSC/title2_icon.png" id="chooseUser">
+				<img src="img/NSC/title2_icon.png" id="chooseUser"><span style="padding-left:15px"></span>
 				<img src="img/NSC/arrow5.png" id="openAgent">
-				<span id="currentUser"/>				
+				<span id="currentUser"/>
 			</div>			
 
 			<!--int Start-->
@@ -363,7 +377,7 @@
 			</div>
 		</div>
 		<div data-role="page" id="LP">
-			<div data-role="header" data-position="fixed" data-theme="f">
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>公文簽核待辦通知</h1>
             </div>

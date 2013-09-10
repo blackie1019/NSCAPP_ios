@@ -49,7 +49,7 @@ function Photo(){
                     afterfunc();
                 }, 
                 function(error) {
-                    alert(error);
+                    //alert(error);
                     o.sourceCapture="off";
                 }, 
                 { 

@@ -25,24 +25,70 @@ function swichLanguageTo(lang){
     if(dataJsonObject.language!=lang){
         dataJsonObject.language=lang;
         setAppSetting_Data(dataJsonObject);
-        $.mobile.changePage('index.html');
+            // app即時公告
+            var Park=getIdentifyParkBase().Park;
+            LoadingObject.show();
+            var jsonObject={"langType":getAppSetting_Data().language,"Park":Park};
+            var jsonObjectStr = JSON.stringify(jsonObject);
+            $.ajax({
+                url:InstantMessage,
+                data:  {"jsonInput":jsonObjectStr},
+                type:"POST",
+                dataType :"jsonp",
+                async:false,
+                success:function(data){
+                    if(data==null&&typeof(data.jsonOutput)!="undefined"){
+                         smoke.alert(ServiceCodeErrorString,{},function(){});
+                    }else{
+                        if(data.status=="success"){
+                            if(data.jsonOutput.length>0){
+                                window.localStorage.setItem("SettingData_AppInstantMessage",JSON.stringify(data.jsonOutput[0]));
+                            }else{
+                                window.localStorage.setItem("SettingData_AppInstantMessage",null);
+                            }
+                        }else{
+                            smoke.alert(ServiceCodeErrorString,{},function(){});
+                        }
+                    }
+                    $.mobile.changePage('index.html');
+                },
+                error: function(data){
+                    LoadingObject.hide(); 
+                    smoke.alert(ServiceErrorString,{},function(){});
+                },
+                complete: function() {
+                    LoadingObject.hide();
+                }
+            });
         // genMenu($('div[data-role="page"]:eq(0)'));
         // $('div[data-role="page"]:eq(0)').page('create');
     }
 }
 function genAppInstantMessage(contentPage,title){
-    var content=$(contentPage).html(),aHTML="";
+    var content=$(contentPage).html(),aHTML="",langType=getAppSetting_Data().language;
     if(typeof(content)!="undefined"&&content.indexOf("marqueeDiv1")==-1){
         var headr_str="即時公告";
         switch(getAppType()){
             case "N":
-                headr_str="竹科即時公告";
+                if(langType=="ch"){
+                    headr_str="竹科即時公告";
+                }else{
+                    headr_str="HS News";
+                }
                 break;
             case "C":
-                headr_str="中科即時公告";
+                if(langType=="ch"){
+                    headr_str="中科即時公告";
+                }else{
+                    headr_str="CS News";
+                }
                 break;
             case "S":
-                headr_str="南科即時公告";
+                if(langType=="ch"){
+                    headr_str="南科即時公告";
+                }else{
+                    headr_str="SS News";
+                }
                 break;
         }
         aHTML='<div class="title2"><div class="tickercontainer" id="marqueeDiv1"><a rel="external" href="index.html#AppInstantMessage"><span>'+headr_str+':</span>'+title+'</a></div><div style="display:none;" id="marqueeDiv2"><marquee class="tickercontainer" scrollamount="3"><a rel="external" href="index.html#AppInstantMessage"><span>'+headr_str+':</span>'+title+'</a></marquee></div></div>';
@@ -823,7 +869,7 @@ function doLogIn(account,pw,token){
                     if(data.status=="success"){
                         if(typeof(data.jsonOutput.token1)!="undefined"){
                             if(typeof(data.jsonOutput.accountInfo)!="undefined"){
-                                var dataObj={"token1":data.jsonOutput.token1,"account":data.jsonOutput.accountInfo.account,"accountName":data.jsonOutput.accountInfo.accountName,"accountSN":data.jsonOutput.accountSN,"idept_govCode":data.jsonOutput.accountInfo.idept_govCode,"idept_nscuCode":data.jsonOutput.accountInfo.idept_nscuCode,"idept":data.jsonOutput.accountInfo.idept_govCode+data.jsonOutput.accountInfo.idept_nscuCode,"ideptName":data.jsonOutput.accountInfo.ideptName};
+                               var dataObj={"token1":data.jsonOutput.token1,"account":data.jsonOutput.accountInfo.account,"accountSN":data.jsonOutput.accountInfo.accountSN,"accountName":data.jsonOutput.accountInfo.accountName,"accountSN":data.jsonOutput.accountSN,"idept_govCode":data.jsonOutput.accountInfo.idept_govCode,"idept_nscuCode":data.jsonOutput.accountInfo.idept_nscuCode,"idept":data.jsonOutput.accountInfo.idept_govCode+data.jsonOutput.accountInfo.idept_nscuCode,"ideptName":data.jsonOutput.accountInfo.ideptName};
                                 setLoginData(dataObj);
                                 $('#index #logoutButton').closest('.ui-btn').show();
                                 $('#LBS_PostBack #logoutButton').closest('.ui-btn').show();
@@ -917,7 +963,7 @@ function doVaildLogin(account,pw,page){
                 }else{
                     if(data.status=="success"){
                         if(typeof(data.jsonOutput.token1)!="undefined"){
-                            dataObject={"token1":dataObject.token1,"token2":data.jsonOutput.token1,"account":dataObject.account,"accountName":dataObject.accountName,"idept_govCode":dataObject.idept_govCode,"idept_nscuCode":dataObject.idept_nscuCode,"idept":dataObject.idept,"ideptName":dataObject.ideptName};
+                            dataObject={"token1":dataObject.token1,"token2":data.jsonOutput.token1,"account":dataObject.account,"accountSN":dataObject.accountSN,"accountName":dataObject.accountName,"idept_govCode":dataObject.idept_govCode,"idept_nscuCode":dataObject.idept_nscuCode,"idept":dataObject.idept,"ideptName":dataObject.ideptName}; 
                             setLoginData(dataObject);
                             // $.mobile.changePage(page);
                             window.location.href=page;
@@ -1078,9 +1124,9 @@ function genMenu(RootElement){
         html+=genAppTypeChangeMenuLi(lang);
         html+='<fieldset data-role="controlgroup" data-type="horizontal" class="acenter">';
         html+='<input type="radio" name="radio-choice-lang" id="radio-choice-ch" onclick="swichLanguageTo(&#39;ch&#39;)" value="ch" data-lang="ch" checked="checked">';
-        html+='<label for="radio-choice-ch" style="font-size:1em;">中文</label>';
+        html+='<label for="radio-choice-ch" class="chLabel">中文</label>';
         html+='<input type="radio" name="radio-choice-lang" checked="checked" id="radio-choice-eng" onclick="swichLanguageTo(&#39;eng&#39;)" value="eng"  data-lang="eng">';
-        html+='<label for="radio-choice-eng" style="font-size:1em;">English</label>';
+        html+='<label for="radio-choice-eng" class="engLabel">English</label>';
         html+='</fieldset>';
         html+='<li data-icon="false"><a rel="external" href="Page_AreaIntro.html"><img class="ui-li-icon ui-corner-none nsc-menu-ui-li-icon" src="img/SlideMenu/info_icon01.png">About SP</a></li>';
         html+='<li data-icon="false"><a rel="external" href="Page_VendorInfo.html"><img class="ui-li-icon ui-corner-none nsc-menu-ui-li-icon" src="img/SlideMenu/info_icon03.png">Companies</a></li>';
@@ -1092,9 +1138,9 @@ function genMenu(RootElement){
         html+=genAppTypeChangeMenuLi(lang);
         html+='<fieldset data-role="controlgroup" data-type="horizontal" class="acenter">';
         html+='<input type="radio" name="radio-choice-lang" checked="checked" id="radio-choice-ch" onclick="swichLanguageTo(&#39;ch&#39;)" value="ch"  data-lang="ch" checked="checked">';
-        html+='<label for="radio-choice-ch" style="font-size:1em;">中文</label>';
+        html+='<label for="radio-choice-ch" class="chLabel">中文</label>';
         html+='<input type="radio" name="radio-choice-lang" id="radio-choice-eng" onclick="swichLanguageTo(&#39;eng&#39;)" value="eng" data-lang="eng">';
-        html+='<label for="radio-choice-eng" style="font-size:1em;">English</label>';
+        html+='<label for="radio-choice-eng" class="engLabel">English</label>';
         html+='</fieldset>';
         html+='<li data-icon="false"><a rel="external" href="Page_AreaIntro.html"><img class="ui-li-icon ui-corner-none nsc-menu-ui-li-icon" src="img/SlideMenu/info_icon01.png">科學園區簡介</a></li>';
         html+='<li data-icon="false"><a rel="external" href="Page_NewsAndEvents.html"><img class="ui-li-icon ui-corner-none nsc-menu-ui-li-icon" src="img/SlideMenu/info_icon02.png">訊息與活動</a></li>';
@@ -1344,12 +1390,23 @@ function openBrowser(linkURL){
     /*
     20130620 Richard指示這邊先改成inapp模式，並確保不會讓使用者之後反應修改任何與inapp browser相關之問題
     */
-    var ref = window.open(encodeURI(linkURL), '_system', 'location=yes');
-    ref.addEventListener('loadstart', function() { alert(event.url); });
-    // openBrowserInApp(linkURL);
+    if(navigator.userAgent.match(/(iPhone|iPod|iPad)/)){
+        openBrowserInApp(linkURL);
+    }else{
+        var tempURL=encodeURI(linkURL)
+        if(linkURL.indexOf("GetFile.do?") !== -1){
+            tempURL=linkURL;
+        }
+        var ref = window.open(tempURL, '_system', 'location=yes');
+        ref.addEventListener('loadstart', function() { alert(event.url); });
+    }
 }
 function openBrowserInApp(linkURL){
-    var ref = window.open(encodeURI(linkURL), '_blank', 'location=yes');
+    var tempURL=encodeURI(linkURL)
+    if(linkURL.indexOf("GetFile.do?") !== -1){
+        tempURL=linkURL;
+    }
+    var ref = window.open(tempURL, '_blank', 'location=no,enableViewportScale=yes');
     ref.addEventListener('loadstart', function() { alert(event.url); });
 }
 // function openMap(address){
@@ -1459,8 +1516,26 @@ function iniGPRS(){
         });
     }else{
         smoke.alert(gprsErrorString,{},function(){});
-        setGPRSData({"lat":mapDefaultPoint.lat,"lng":mapDefaultPoint.lng});
+        var point=getMapDefaultPoint();
+        setGPRSData({"lat":point.lat,"lng":point.lng});
     } 
+}
+function getMapDefaultPoint(){
+    var defaultPoint;
+    switch(getAppType()){
+        case "N":
+            defaultPoint=mapDefaultPoint_N;
+            break;
+        case "C":
+            defaultPoint=mapDefaultPoint_C;
+            break;
+        case "S":
+            defaultPoint=mapDefaultPoint_S;
+            break;
+        default:
+            defaultPoint=mapDefaultPoint_N;
+    }  
+    return defaultPoint;
 }
 function showInstantMessage(park,messageContent){
     var Park_str="" 

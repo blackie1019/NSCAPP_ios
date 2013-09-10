@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
         <!--ios-->
         <script type="text/javascript" src="js/ios/cordova-2.5.0.js"></script>
+        <script type="text/javascript" src="js/ios/flurryPlugin.js"></script>
         <!--android-->
         <!--
          <script type="text/javascript" src="js/android/cordova-2.4.0.js"></script>
@@ -14,7 +15,8 @@
 		<!--json2-->
 		<script type="text/javascript" src="js/js.min/json2.min.js"></script>
 		<!--Google Map API v3-->
-		<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>
+		<!--<script type="text/javascript"	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false"></script>-->
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<!--mobiScroll-->
 		<script src="js/mobiscroll.core.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/mobiscroll.select.js"></script>
@@ -46,6 +48,12 @@
 		<script src="js/photo.bfs.js"></script>
 		<script src="js/location.js"></script>	
 		<script src="js/data.js"></script>	
+		<script  type="text/javascript">
+			document.addEventListener("deviceready",onDeviceReady,false);
+			function onDeviceReady(){
+				window.plugins.flurry.logEvent("[plugin]Page_BizFileSharing.html");
+			}
+		</script>		
 		<script type="text/javascript">
 		
 		//取得頁面二次驗證token
@@ -70,11 +78,11 @@
 		/*  
 		//MoveTo setting.js
 		var DataURL_BFS = "http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do";
-        var DataURL_BFS_Upload = "http://nscallinone.hyweb.com.tw:8080/BFS/Upload.do?src=mobile";
+        var DataURL_BFS_Upload = "http://TAP0515.nsc.gov.tw/BFS/Upload.do?src=mobile";
 		
 		var DataURL_BFS = "http://nscallinone2.hyweb.com.tw:8080/AppService/Main.do";
-        var DataURL_BFS_Upload = "http://nscallinone.hyweb.com.tw:8080/BFS/Upload.do?src=mobile";
-		var DataURL_BFS_MAIN2 = "http://nscallinone.hyweb.com.tw:8080/BFS/Main2.do";
+        var DataURL_BFS_Upload = "http://TAP0515.nsc.gov.tw/BFS/Upload.do?src=mobile";
+		var DataURL_BFS_MAIN2 = "http://TAP0515.nsc.gov.tw/BFS/Main2.do";
 		
 		var DataURL_BFS = "http://localhost:8081/AppService/Main.do";
         var DataURL_BFS_Upload = "http://localhost:8080/BFS/Upload.do?src=mobile";
@@ -119,6 +127,10 @@
 			genMenu(this);
 			//menu登入確認
 			menuDisplayMemberSection(checkLogin(),this);
+			//手勢動作
+			$(this).on('swiperight',function(){
+				$( "#menu" ).panel( "toggle" );
+			});
 			//控制項初始化設定
 			iniControlSetting();
  			//條列呈現
@@ -171,7 +183,7 @@
 			});
 			
 			$('#downloadButton').click(function() {
-				openBrowser($('#dl'+downloadFileNo).text());
+				openBrowserInApp($('#dl'+downloadFileNo).text());
 				$('#popupDialog_listmenu').popup('close');
 			});
 			
@@ -254,8 +266,11 @@
 				var jsonObjStr = JSON.stringify(jsonObj);
 				/* */
 				$.ajax({
-					url:DataURL_BFS_Upload,
-					data: "jsonInput="+jsonObjStr,
+					//url:DataURL_BFS_Upload,
+					url: DataURL_BFS,
+					//data: "jsonInput="+jsonObjStr,
+					data: {"name":"DataURL_BFS_Upload","jsonInput":jsonObjStr,"jsoncallback":"?"},
+					//data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS_Upload&jsoncallback=?",
 					type:"POST",
 					dataType :"json",
 					async:false,
@@ -400,7 +415,8 @@
 							var userId=userList[i].userId;
 							var userName=userList[i].userName;													
 							htmlResult += "<input value=\""+userId+"\" userName=\""+userName+"\" type=\"checkbox\" name=\"checkbox-1a\" id=\"checkbox-"+i+"a\" class=\"custom\" />";
-							htmlResult += "<label for=\"checkbox-"+i+"a\">"+userName+"("+userId+")</label>";
+							//htmlResult += "<label for=\"checkbox-"+i+"a\">"+userName+"("+userId+")</label>";
+							htmlResult += "<label for=\"checkbox-"+i+"a\">"+userName+"</label>";
 							//$('#peopleList').append(htmlResult);
 							//$('#checkbox-'+i+'a').attr('checked',true).checkboxradio('refresh');
 							//htmlResult+="<option value=\""+nscuCode+"\">"+space+nscuDesc+"("+nscuCode+")(level "+level+")</option>";
@@ -730,7 +746,8 @@
 							
 							$('#groupList').append(
 							"<div data-role=\"collapsible\" data-collapsed=\"true\" data-iconpos=\"right\" data-theme=\"c\">"
-							+"	<h3><font color=blue>" + mailBody + "("+mailId+")</font>"
+							//+"	<h3><font color=blue>" + mailBody + "("+mailId+")</font>"
+							+"	<h3><font color=blue>" + mailBody + "</font>"
 							+"		<p style=\"font-weight:normal;font-size:12px;\" align=\"right\">"+((_ListType==0)?senderName:receiverName)+" "+transferTime+"</p>"
 							+"	</h3>"							
 							+"	<ul data-role=\"listview\" data-split-icon=\"gear\">"
@@ -778,7 +795,7 @@
 							$.ajax({
 								type: 'post',
 								url: DataURL_BFS,
-								data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",
+								data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS&jsoncallback=?",								
 								dataType :"json",
 								//async:false,
 								success: function(response) {
@@ -874,7 +891,7 @@
 	</head>
 	<body>	
 		<div data-role="page" id="LP">		
-			<div data-role="header" data-position="fixed" data-theme="b">
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="b">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>即時業務資訊</h1>
 		     	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right" data-mini="true">
@@ -919,7 +936,7 @@
 				
 			</div>
 			
-			<div data-theme="a" data-role="footer" data-position="fixed" data-tap-toggle="false">		
+			<div data-theme="a" data-role="footer" data-position="fixed" data-fullscreen="false" data-tap-toggle="false">		
 			  <div data-role="navbar">
 			    <ul>
 			      <li class="navli">
@@ -995,7 +1012,7 @@
 		
 		<!-- 新增檔案頁面 -->
 		<div data-role="page" id="newFilePage">
-			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>傳送檔案</h1></div>
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>傳送檔案</h1></div>
 			<div data-role="content">		
 
 				<div class="int">
@@ -1011,7 +1028,7 @@
 		
 		<!-- 選擇人員頁面  -->
 		<div data-role="page" id="chooseUserPage">
-			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>選擇對象</h1></div>
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>選擇對象</h1></div>
 			<div data-role="content">
 				<!--int Start-->
 				<div class="int">
@@ -1020,7 +1037,7 @@
 					  <div class="aleft2">						  
 						  <select name="dept3" id="dept3">
 							<option value="">請選擇單位</option>
-							<option value="M,nsc1,2">本會會內</option>
+							<option value="M,nsc1,2">國科會</option>
 							<option value="N,U0,73">科學工業園區管理局</option>
 							<option value="C,61,94">中部科學工業園區管理局</option>
 							<option value="S,60,20">南部科學工業園區管理局</option>
@@ -1049,7 +1066,7 @@
 		
 		<!-- 寄送確認頁面  -->
 		<div data-role="page" id="confirmPage">
-			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
+			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
 			<div data-role="content">
 				<!--int Start-->				
 				<div class="int">					
