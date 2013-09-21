@@ -94,13 +94,13 @@
 
 			$('h1.page_title').text(title);
 			$('#QP #txtKeyword').attr("placeholder",txt_keywordPlaceHolder_str);
+			$('#LP #txtKeyword').attr("placeholder",txt_keywordPlaceHolder_str);
 			$('#th_parkbase').html((langType=="ch"?park_str+"/"+base_str+"別":park_str+"<br/>"+base_str));
 			$('#th_vendortype').html((langType=="ch"?vendor_str+"/"+Type_str+"別":vendor_str+"<br/>"+Type_str));
 			$('#a_popupDialog_keyword').text(popupDialog_keyword_str);
 			$('a.btn_back').text(btnBack_str);
 			$('#h2_infoTitle').text(h2_vendorTitle_str);
 			$('.btn_backIndex').text(btnBackIndex_str);
-
 						//地圖模組
 			var map_btnSearch_str,map_btnRoute_str,map_btnClassify1Filter_str,map_btnSetAlert_str,map_btnMAPShow_str,map_btnListShow_str,map_btnRoute_MAPShow_str,map_btnRoute_PathShow_str,map_labRoutePointStart_str,map_labRoutePointEnd_str,map_btnKeyWordSearch_str,map_txtSearchKeyWord_str;
 			switch(langType){
@@ -526,16 +526,20 @@
 
 		});
 		$(document).on('pagebeforeshow','#QP',function(){	
+
 			if(langType=="eng"){
 				$('#QP #footer').hide();
 				$('#QP #btnSearch').hide();
 				$('#QP #btnESearch').show();
-
+				$('#LP #btnSearch').hide();
+				$('#LP #btnESearch').show();
 				$('#CP #div_factory').hide();
 			}else{
 				$('#QP #footer').show();
 				$('#QP #btnSearch').show();
 				$('#QP #btnESearch').hide();
+				$('#LP #btnSearch').show();
+				$('#LP #btnESearch').hide();
 				$('#CP #div_factory').show();
 			}	
 		});
@@ -1141,7 +1145,7 @@
 		});
 		//pageshow
 		$(document).on('pageshow','#Map_LP',function(){
-			switchFooterFunction('default');
+			//switchFooterFunction('default');
 			var mapData=getMapData();
 			if(typeof(mapData)!=="undefined"&&mapData!=null){
 				//關閉幕前顯示div
@@ -1253,6 +1257,7 @@
 					</table>
 					<div style="text-align:center;">
 						<a data-inline="true"  data-theme="e" id="btnSearch" href="#LP_temp" data-role="button">查詢</a>
+						<a data-inline="true"  data-theme="e" id="btnESearch" href="#LP_temp" data-role="button">Search</a>
 					</div>	
 				</div>    	
 			</div>

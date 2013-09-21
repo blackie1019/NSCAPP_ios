@@ -89,9 +89,10 @@
 			$('#index #btnSearch').val(btnSearch_str);
 
 			//地圖模組
-			var map_btnSearch_str,map_btnRoute_str,map_btnClassify1Filter_str,map_btnSetAlert_str,map_btnMAPShow_str,map_btnListShow_str,map_btnRoute_MAPShow_str,map_btnRoute_PathShow_str,map_labRoutePointStart_str,map_labRoutePointEnd_str,map_btnKeyWordSearch_str,map_txtSearchKeyWord_str,btnBackIndex_str;
+			var map_btnSearch_str,map_btnRoute_str,map_btnClassify1Filter_str,map_btnSetAlert_str,map_btnMAPShow_str,map_btnListShow_str,map_btnRoute_MAPShow_str,map_btnRoute_PathShow_str,map_labRoutePointStart_str,map_labRoutePointEnd_str,map_btnKeyWordSearch_str,map_txtSearchKeyWord_str,btnBackIndex_str,btn_Back_str;
 			switch(langType){
 				case "ch":
+					title="生活服務";
 					map_btnSearch_str="搜尋地圖";
 					map_btnRoute_str="規劃路徑";
 					map_btnClassify1Filter_str="週邊生活服務";
@@ -104,9 +105,11 @@
 					map_txtSearchKeyWord_str="地址/地名/廠商名稱";
 					map_labRoutePointStart_str="起點";
 					map_labRoutePointEnd_str="終點";
-					btnBackIndex_str="回主頁"
+					btnBackIndex_str="回主頁";
+					btn_Back_str="返回";
 					break;
 				case "eng":
+					title="Life Information";
 					map_btnSearch_str="Search Map";
 					map_btnRoute_str="Directions";
 					map_btnClassify1Filter_str="Nearby";	
@@ -120,8 +123,10 @@
 					map_labRoutePointStart_str="Start";
 					map_labRoutePointEnd_str="End";
 					btnBackIndex_str="Home";
+					btn_Back_str="Back";
 					break;
 			}
+			$('h1.page_title').text(title);
 			$('#Map_LP #footer').find('#btnSearch').text(map_btnSearch_str);
 			$('#Map_LP #footer').find('#btnRoute').text(map_btnRoute_str);
 			$('#Map_LP #footer').find('#btnClassify1Filter').text(map_btnClassify1Filter_str);
@@ -143,6 +148,8 @@
 			$('#Map_LP #routeList').find("#divRouteHeader").text(map_btnRoute_str);
 			$('#Map_LP #routeList').find("#divDirectionHeader").text(map_btnRoute_str);
 			$('.btn_backIndex').text(btnBackIndex_str);
+			$('#Map_LP .btn_back').text(btn_Back_str);
+			$('#Map_CP .btn_back').text(btn_Back_str);
 		}
 		function changeToLP(park,classifyArray,base,targetCenter){	
 			LoadingObject.show();
@@ -1107,7 +1114,7 @@
 		});
 		//pageshow
 		$(document).on('pageshow','#Map_LP',function(){
-			switchFooterFunction('default');
+			//switchFooterFunction('default');
 			var mapData=getMapData();
 			if(typeof(mapData)!=="undefined"&&mapData!=null){
 				//關閉幕前顯示div

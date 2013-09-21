@@ -28,7 +28,7 @@ body {
         color-stop(0.51, #E4E4E4)
     );
     background-attachment:fixed; 
-    text-transform:uppercase;
+    text-transform:none;
 	margin: 0;
 	font-size: 0.8em;
 	line-height: 1.231;
@@ -254,6 +254,7 @@ h1 {
 	padding: 0px;
 }
 .toplist li {
+	text-transform:capitalize;
 	font-weight: bold;
 	color: #FFF;
 	vertical-align: middle;
@@ -1471,8 +1472,7 @@ h1
 
 /*springboard*/
 .springboard {
-	margin-top: 1em;
-	margin-bottom: 1em;
+	margin: 1em;
 }
 .springboard ul {
 	margin: 0px auto;
@@ -1892,7 +1892,7 @@ h1
  display: block;
 }
 .sort ul {
-	width: 470%;
+	width: 900px;
 	height: 76px;
 	margin: 0px 0px 0px 0px;
 	padding: 0px;
@@ -2944,6 +2944,9 @@ table.fixed td { overflow: hidden; }
 .sub ul li{
 	margin: 10px;
 }
+.subDiv_contactInfo ul{
+	text-align: left;
+}
 .routePath{
 	background-color:#2b3852;
 	text-shadow:none;	
@@ -3050,6 +3053,10 @@ padding-right: 23px;
 }
 span[jsdisplay=duration]{
 	display: none;
+}
+/*selectBase*/
+.isIntroOnly{
+	text-transform:capitalize;
 }
 /*gmap steps各方向圖示*/
 td.gmap-icon{

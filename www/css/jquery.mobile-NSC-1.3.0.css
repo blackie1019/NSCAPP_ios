@@ -3260,7 +3260,7 @@ div.ui-slider-switch.ui-mini {
 		display: block;
 		padding: .4em 0;
 		margin: .4em 0;
-		text-transform: uppercase;
+		text-transform: capitalize;
 		font-size: .9em;
 		font-weight: normal;
 	}

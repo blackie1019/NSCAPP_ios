@@ -54,7 +54,10 @@
 			$(document).on('pageshow','#ini',function(){
 
 				$.mobile.allowCrossDomainPages = true;
-				var nowAppType=getAppType(),AppFisrtIni=getAppFisrtIni(),isSetAppType=false;
+				var nowAppType=getAppType(),AppFisrtIni=getAppFisrtIni(),isSetAppType=false,AppLang;
+				if(getAppSetting_Data()!==null){
+					AppLang=getAppSetting_Data().language;
+				}
 				//清除&初始化WebSql資料
 				if(nowAppType!=null){
 					isSetAppType=true;
@@ -71,7 +74,7 @@
 		 			setAppFisrtIni(false);
 		 		}
 				// Default AppSetting 
-				doDefaultAppSetting(); 
+				doDefaultAppSetting(AppLang); 
 				//設定AppType:N(竹科),C(中科),S(南科)
 				if(!isSetAppType){
 					setAppType("N");

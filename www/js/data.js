@@ -15,8 +15,11 @@ function setDefaultAppSetting(attributes){
     }
     setAppSetting_Data(dataJsonObject);
 }
-function doDefaultAppSetting(){
+function doDefaultAppSetting(AppLang){
     var dataJsonObject={"language":'ch',"park":"01"};
+    if(typeof(AppLang)!=="undefined"||AppLang==null){
+        dataJsonObject.language=AppLang;
+    }
     //設定至Storage
     setAppSetting_Data(dataJsonObject);
 }  
@@ -1208,8 +1211,8 @@ function getImageArray(HTML_imgs){
     return imageArray;
 }
 //園區判別
-console.log(123);
-function identifyParkBase(){
+function identifyParkBase(callback){
+    var callback=callback;
     LoadingObject.show();
     var park,base,result_Base="",result_index="",ap,targetPoint;
     navigator.geolocation.getCurrentPosition(function(position){
@@ -1256,7 +1259,6 @@ function identifyParkBase(){
                     setIdentifyParkBase({"Park":defaultPark,"Base":defaultBase,"ParkIndex":defaultParkSelectIndex,"BaseIndex":defaultBaseSelectIndex});
                     setIsInArea(true);
                 }
-                console.log("1208");
             },
             error: function(data){
                 LoadingObject.hide();
