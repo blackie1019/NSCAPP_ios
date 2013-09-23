@@ -62,6 +62,7 @@
 				case "ch":
 					title="關於";
 					btnBack_str="返回";
+					btnBackMain_str="回主頁";
 					subTitle_QA_str="常見問題";
 					subTitle_ContactUs_str="聯絡我們";
 					txt_keywordPlaceHolder_str="請輸入關鍵字...";
@@ -69,6 +70,7 @@
 				case "eng":
 					title="About";
 					btnBack_str="Back";
+					btnBackMain_str="Home";
 					subTitle_QA_str="Q&A";
 					subTitle_ContactUs_str="Contact US";
 					txt_keywordPlaceHolder_str="Keyword...";
@@ -77,6 +79,7 @@
 
 			$('h1.page_title').text(title);
 			$('a.btn_back').text(btnBack_str);
+			$('a.btn_backIndex').text(btnBackMain_str);
 			$('#QA_NP div.title2').html(subTitle_QA_str);
 			$('#QA_LP h1.page_subTitle').html(subTitle_QA_str);
 			$('#QA_CP h1.page_subTitle').html(subTitle_QA_str);

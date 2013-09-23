@@ -120,13 +120,13 @@
 					break;
 				case "eng":
 					map_btnSearch_str="Search Map";
-					map_btnRoute_str="Directions";
+					map_btnRoute_str="Instructions";
 					map_btnClassify1Filter_str="Nearby";	
 					map_btnSetAlert_str="Notification";
 					map_btnMAPShow_str="Map View";
 					map_btnListShow_str="List View";
 					map_btnRoute_MAPShow_str="Map";
-					map_btnRoute_PathShow_str="Directions";
+					map_btnRoute_PathShow_str="Instructions";
 					map_btnKeyWordSearch_str="Search";
 					map_txtSearchKeyWord_str="Address、Companies";
 					map_labRoutePointStart_str="Start";
@@ -248,6 +248,7 @@
 		}
 		function doRefresh(keywordType,keywordValue){
 		    LoadingObject.show();
+		    $('#LP').find('#htmlResult').html("").trigger('create');
 		     var tmpParkBase=$('#mobiScroll_VendorInfo_ParkBase').mobiscroll('getValue').split("_");
 		    Park=tmpParkBase[0];
 		    Base=tmpParkBase[1];
