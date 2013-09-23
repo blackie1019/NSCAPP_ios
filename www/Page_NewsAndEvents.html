@@ -305,11 +305,15 @@
 		function setKeyword(){
 			tmpKeyWord=$('#popupDialog_titleSearch #search').val();
 			$('#popupDialog_titleSearch').popup('close');
+			//先清空
+			$('#LP').find('#htmlResult').html("<ul></ul>");
+			$('#LP').trigger('create');
 			//條列呈現
 			doRefresh(langType,tmpTypeCode,tmpCatalog,tmpUnit,tmpKeyWord,tmpBeginDate,tmpEndDate,tmpOrderBys,tmpCount,tmpIndex);
 			$.mobile.changePage('#LP_temp');
 		}
 		function setDateRange(){
+			console.log(123);
 			var isRefresh=true;
 			tmpBeginDate=$('#popupDialog_dateRange #beginDate').val().replace('-','/').replace('-','/');
 			tmpEndDate=$('#popupDialog_dateRange #endDate').val().replace('-','/').replace('-','/');
@@ -384,7 +388,7 @@
 	 		$('#LP').find('#footerTool').fixedtoolbar('updatePagePadding');
 	 	});
  		$(document).on('pageshow','#LP_temp',function(){
- 			setDateRange();	
+ 			//setDateRange();	
 	 		$.mobile.changePage('#LP');
 	 	});
 		/*地圖模組*/
@@ -1028,7 +1032,7 @@
 		     	</div>
 		     	 <div id="sub-menu" style="overflow:auto"></div>
             </div>
-			<div data-role="content" style="padding:0" id="content">
+			<div data-role="content" style="padding:0" id="content" data-iscroll="enable">
 			  	<!--toplist Start-->
 			  	<!-- <div id="sub-menu" style="overflow:auto"></div> -->
 			  	<!--toplist end-->
@@ -1104,7 +1108,7 @@
 						<div data-role="controlgroup" data-type="horizontal">
 	    				迄日:<input type="date" id="endDate">
 		    			</div>
-	    					<a data-theme="c" href="#LP_temp" data-role="button">查詢</a>
+	    					<a data-theme="c" href="javascript:setDateRange();" data-role="button">查詢</a>
 			    	</div>
 			    </div>
 			</div>
@@ -1114,7 +1118,7 @@
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>訊息與活動</h1>
             </div>
-			<div data-role="content" style="padding:0" id="content">
+			<div data-role="content" style="padding:0" id="content" >
 				<div id="htmlResult">
 				</div>
 			</div>

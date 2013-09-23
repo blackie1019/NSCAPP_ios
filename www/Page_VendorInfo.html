@@ -279,7 +279,11 @@
 		                		// 	htmlResult+='<span>(尚未入區登記)</span>';
 		                		// }
 		                		if(data.jsonOutput.items[i].inArea=='N'){
-		                			htmlResult+='<span>(尚未入區登記)</span>';
+		                			if(langType=="eng"){
+		                				htmlResult+='<span>(Not yet in the tenant list)</span>';
+		                			}else{
+			                			htmlResult+='<span>(尚未入區登記)</span>';
+			                		}
 		                		}
 		                		htmlResult+="</p></div><p class='tel02'>"+data.jsonOutput.items[i].tel+"</p>";
 		                		if(langType=="ch"){
@@ -546,6 +550,15 @@
 		});
  		$(document).on('pageshow','#LP',function(){	
 	 		$('#select_keywordType').selectmenu("close");
+	 	});
+	 	 $(document).on('pageshow','#LP_temp',function(){
+	 	 	$.mobile.changePage('#LP');
+ 			var keywordValue=$('#popupDialog_keyword #txtKeyword').val();
+			var keywordType=$('#select_keywordType').val();
+			console.log(keywordType+","+keywordValue);
+		    doRefresh(keywordType,keywordValue);
+		    keywordType=null;keywordValue=null;
+		    delete keywordType;delete keywordValue;	
 	 	});
 		/*地圖模組*/
 		/*Map function*/
@@ -1307,7 +1320,7 @@
 				<a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
 		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
                 <h1 class="page_title">生活服務</h1>
-                <a class="btn_backIndex" href="#index" data-icon="home">回主頁</a>
+                <a class="btn_backIndex" href="#QP" data-icon="home">回主頁</a>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div id='dataMap' class='acenter'>
@@ -1374,7 +1387,7 @@
 			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f">
 				<a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
                 <h1 class="page_title">生活服務</h1>
-                <a class="btn_backIndex" href="#index" data-icon="home">回主頁</a>
+                <a class="btn_backIndex" href="#QP" data-icon="home">回主頁</a>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 			</div>

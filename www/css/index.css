@@ -581,8 +581,8 @@ text-indent: 0em;
 .list2 p {
 	font-size: 1em;
 	color: #333;
-	margin: 0.3em 0px 0.3em 0px;
-	padding: 0px;
+	margin: 0.3em;
+	padding: 0px 15px 0px 0px;
 }
 .list2 .image {
 	float: left;
@@ -831,9 +831,9 @@ div.lp_content{
 .list5 .ptext {
 	font-size: 0.8em;
 	color: #333;
-	margin: 0.1em 25px 0.1em 0em;
+	margin: 0.1em 0px 0.1em 0em;
 	padding: 0px;
-	text-indent: 0em;
+	text-indent: 0em!important;
 }
 .list5 .image {
 	float: left;

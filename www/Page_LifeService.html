@@ -65,13 +65,14 @@
 		//function
 		//更換相關顯示語言
 		function loadDisplayLanguage(){
-			var title,btnBack_strs,btnSearch_str;
+			var title,btnBack_strs,btnSearch_str,btnSelect_all_none_str;
 			switch(langType){
 				case "ch":
 					title="生活服務";
 					btnBack_str="返回";
 					btnSelect_all_str="全選";
 					btnSelect_none_str="清除";
+					btnSelect_all_none_str="全部清除";
 					btnSearch_str="查詢";
 					break;
 				case "eng":
@@ -79,6 +80,7 @@
 					btnBack_str="Back";
 					btnSelect_all_str="All";
 					btnSelect_none_str="Clear";
+					btnSelect_all_none_str="All Clear";
 					btnSearch_str="Search";
 					break;
 			}
@@ -86,6 +88,7 @@
 			$('a.btn_back').text(btnBack_str);
 			$('#index #btnSelect').val(btnSelect_all_str);
 			$('#index #btnClear').val(btnSelect_none_str);
+			$('#index #btnAllClear').val(btnSelect_all_none_str);
 			$('#index #btnSearch').val(btnSearch_str);
 
 			//地圖模組
@@ -361,7 +364,7 @@
 			// $(this).on('swiperight',function(){
 			// 	$( "#menu" ).panel( "toggle" );
 			// });
-			//取消全部
+			//取消該部分選擇
 			$(this).on('click','#btnClear',function(){
 				var checkboxs=$('input[type=checkbox]');
 				var isSelect=false;
@@ -391,6 +394,11 @@
 	 				classifyItem=null;
 	 				delete classifyItem;
 				}
+			});
+			//取消全部部分的選擇
+			$(this).on('click','#btnAllClear',function(){
+				checkedClassify=[];
+				$(rootElement).find('#list input[type=checkbox]').attr('checked',false);
 			});
 			//全選
 			$(this).on('click','#btnSelect',function(){
@@ -1164,6 +1172,7 @@
 			    <div class="aleft">
 			    	<input data-role='none' type="submit" id="btnSelect" value="全選" class="btn01">
 					<input data-role='none' type="submit" id="btnClear" value="清除" class="btn01">
+					<input data-role='none' type="submit" id="btnAllClear" value="全部清除" class="btn03">
 			    </div>
 			    <div class="list" id='list'></div>
 			    <div class="acenter"><input data-role='none' type="submit"  id="btnSearch" value="查詢" class="btn04"></div>
