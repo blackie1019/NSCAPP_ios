@@ -60,12 +60,13 @@
 			$(document).on('pageinit','#index',function(){
 				var AppSetting_Data=getAppSetting_Data();
 				//預設轉拋頁面
-				if(AppSetting_Data.language=="ch"){
-					window.location.href=DefaultPage_ch;
-			        // $.mobile.changePage(DefaultPage_ch);
+				if(AppSetting_Data.language=="eng"){
+					window.location.href=DefaultPage_eng;
 			    }else{
-			    	window.location.href=DefaultPage_eng;
-			    	// $.mobile.changePage(DefaultPage_eng);
+			    	if(AppSetting_Data.language!="ch"){
+			    		doDefaultAppSetting();
+			    	}
+			    	window.location.href=DefaultPage_ch;
 			    }
 				//產生menu
 				genMenu(this);

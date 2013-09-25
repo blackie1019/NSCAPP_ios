@@ -68,6 +68,8 @@
 				var rootElement=this;
 				//產生menu
 				genMenu(this);
+				//新增,修改 LBS分類
+				genLBSClassify(getAppSetting_Data().language);
 				// //手勢動作
 				// $(this).on('swiperight',function(){
 				// 	$( "#menu" ).panel( "toggle" );
@@ -674,10 +676,10 @@
 									<option value="02_11">台南園區</option>
 									<option value="02_12">高雄園區</option>
 								</optgroup>
-						  		<optgroup data-value="00" label="凌網測試">
+<!-- 						  		<optgroup data-value="00" label="凌網測試">
 									<option value="00_91">重慶南路</option>
 									<option value="00_92">凌網台北分公司</option>
-								</optgroup>
+								</optgroup> -->
 							</select>
 						</td>
 						</tr>
@@ -685,7 +687,7 @@
 	                      <th scope="row"><span class="must">*</span>分類項目</th>
 	                      <td colspan="4">
 	                      	<select data-role="none" name="mobiScroll_LBS_classify" id="mobiScroll_LBS_classify">
-									<optgroup data-value="A" label="機關">
+<!-- 									<optgroup data-value="A" label="機關">
 										<option value="A_001">管理局</option>
 										<option value="A_002">公會</option>
 										<option value="A_003">服務大樓</option>
@@ -737,7 +739,7 @@
 									</optgroup>
 									<optgroup data-value="K" label="iTaiwan熱點">
 										<option value="K_031">iTaiwan熱點</option>
-									</optgroup>
+									</optgroup> -->
 								</select>
 							</td>
 	                    </tr>	

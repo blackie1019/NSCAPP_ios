@@ -65,7 +65,7 @@
 		//function
 		//更換相關顯示語言
 		function loadDisplayLanguage(){
-			var title,btnBack_strs,btnSearch_str,btnSelect_all_none_str;
+			var title,btnBack_str,btnSearch_str,btnSelect_all_none_str;
 			switch(langType){
 				case "ch":
 					title="生活服務";
@@ -867,7 +867,6 @@
 				var ximage=LP_jsonObjectArray[i].ximage;//待續
 				var xicon=LP_jsonObjectArray[i].xicon;//待續
 				map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
-				console.log(latitude+"	"+longitude);
 				//nearAlertSpotList
 			    nearAlertSpotListHtmlResult+='<input type="radio" id="radio_nearAlertSpot_'+i+'" name="radio_nearAlertSpotList" data-spotno="'+spotNo+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-title="'+title+'" data-address="'+address+'" data-theme="c">'+'<label for="radio_nearAlertSpot_'+i+'">'+title+'</label>';
 			}
@@ -1115,6 +1114,12 @@
  				var tel=$(this).data('tel');
  				if(typeof(tel)!="undefined"&&tel!=""){
 	 				window.location.href="tel:"+tel;
+	 			}else{
+	 				if(langType!='eng'){
+	 					smoke.alert("無電話諮訊",{},function(){});
+	 				}else{
+		 				smoke.alert("No Service Number",{},function(){});
+		 			}
 	 			}
 	 			tel=null;
 	 			delete tel;

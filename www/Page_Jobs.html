@@ -1032,6 +1032,12 @@
  				var tel=$(this).data('tel');
  				if(typeof(tel)!="undefined"&&tel!=""){
 	 				window.location.href="tel:"+tel;
+	 			}else{
+	 				if(langType!='eng'){
+	 					smoke.alert("無電話諮訊",{},function(){});
+	 				}else{
+		 				smoke.alert("No Service Number",{},function(){});
+		 			}
 	 			}
 	 			tel=null;
 	 			delete tel;

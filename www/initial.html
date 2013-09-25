@@ -54,8 +54,9 @@
 			$(document).on('pageshow','#ini',function(){
 
 				$.mobile.allowCrossDomainPages = true;
-				var nowAppType=getAppType(),AppFisrtIni=getAppFisrtIni(),isSetAppType=false,AppLang;
+				var nowAppType=getAppType(),AppFisrtIni=getAppFisrtIni(),isSetAppType=false,AppLang='ch';
 				if(getAppSetting_Data()!==null){
+					console.log(getAppSetting_Data());
 					AppLang=getAppSetting_Data().language;
 				}
 				//清除&初始化WebSql資料
@@ -90,7 +91,7 @@
 	            // setIdentifyParkBase(getDefaultParkAndBase());
                 // setIsInArea(false);
 				//等待五秒取回GPRS位置
-				setTimeout("afterWait()",10000);
+				setTimeout("afterWait()",8000);
 			});
 		function afterWait(){
 			var Park=getIdentifyParkBase().Park;
@@ -109,6 +110,7 @@
 		                 smoke.alert(ServiceCodeErrorString,{},function(){});
 		            }else{
 		                if(data.status=="success"){
+		                	console.log("init OK");
 		                	if(data.jsonOutput.length>0){
 			                	window.localStorage.setItem("SettingData_AppInstantMessage",JSON.stringify(data.jsonOutput[0]));
             					showInstantMessage(Park,data.jsonOutput[0].title);

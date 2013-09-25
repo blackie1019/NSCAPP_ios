@@ -1,8 +1,0 @@
-{
-	"startPage": false,
-	"transition": "none",
-	"splashImage": "images/splash.png",
-	"splashInterval": 3000,
-	"loadingMessage": "資料讀取中",
-	"loadingMessageTextVisible": true
-}

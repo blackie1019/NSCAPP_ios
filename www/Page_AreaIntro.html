@@ -270,17 +270,15 @@
 						menuStringArray.push("Art Infromation");
 						break;
 				}
-				if(menuStringArray.length==6){
-					htmlResult+='<ul class="toplist" data-role="none" >'+
-						        '<li><a class="sub_link" data-href="subDiv_introInfo">'+menuStringArray[0]+'</a></li>'+
-						        '<li><a class="sub_link" data-href="subDiv_traffic">'+menuStringArray[1]+'</a></li>'+
-						        '<li><a class="sub_link" data-href="subDiv_visitInfo">'+menuStringArray[2]+'</a></li>'+
-						        '<li><a class="sub_link" data-href="subDiv_investmentInfo">'+menuStringArray[3]+'</a></li>'+
-						        '<li><a class="sub_link" data-href="subDiv_contactInfo">'+menuStringArray[4]+'</a></li>';
-					if(getAppType()=="S"){
-		 		        htmlResult+='<li><a class="sub_link" data-href="subDiv_artInfo">'+menuStringArray[5]+'</a></li>';
-		 		    }
-		 		}
+				htmlResult+='<ul class="toplist" data-role="none" >'+
+					        '<li><a class="sub_link" data-href="subDiv_introInfo">'+menuStringArray[0]+'</a></li>'+
+					        '<li><a class="sub_link" data-href="subDiv_traffic">'+menuStringArray[1]+'</a></li>'+
+					        '<li><a class="sub_link" data-href="subDiv_visitInfo">'+menuStringArray[2]+'</a></li>'+
+					        '<li><a class="sub_link" data-href="subDiv_investmentInfo">'+menuStringArray[3]+'</a></li>'+
+					        '<li><a class="sub_link" data-href="subDiv_contactInfo">'+menuStringArray[4]+'</a></li>';
+				if(getAppType()=="S"){
+	 		        htmlResult+='<li><a class="sub_link" data-href="subDiv_artInfo">'+menuStringArray[5]+'</a></li>';
+	 		    }
 				htmlResult+='</ul>';
 				$('#index #sub-menu').html(htmlResult);
 			}
@@ -389,7 +387,7 @@
 				//取得上方顯示
 				loadDisplayLanguage();
 				//產生上方topList
-				$("#index sub-menu").html(genTopList());
+				genTopList();
 				//讀取資料
 				getAreaIntroData(Park,"00","subDiv_introInfo");	
 				//subDiv
@@ -801,7 +799,6 @@
 				var ximage=LP_jsonObjectArray[i].ximage;//待續
 				var xicon=LP_jsonObjectArray[i].xicon;//待續
 				map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
-				console.log(latitude+"	"+longitude);
 				//nearAlertSpotList
 			    nearAlertSpotListHtmlResult+='<input type="radio" id="radio_nearAlertSpot_'+i+'" name="radio_nearAlertSpotList" data-spotno="'+spotNo+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-title="'+title+'" data-address="'+address+'" data-theme="c">'+'<label for="radio_nearAlertSpot_'+i+'">'+title+'</label>';
 			}
@@ -1049,6 +1046,12 @@
  				var tel=$(this).data('tel');
  				if(typeof(tel)!="undefined"&&tel!=""){
 	 				window.location.href="tel:"+tel;
+	 			}else{
+	 				if(langType!='eng'){
+	 					smoke.alert("無電話諮訊",{},function(){});
+	 				}else{
+		 				smoke.alert("No Service Number",{},function(){});
+		 			}
 	 			}
 	 			tel=null;
 	 			delete tel;

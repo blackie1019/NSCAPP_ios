@@ -43,8 +43,8 @@
 				timeFormat: 'HH:ii',
 				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
 				monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-				dayNames: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
-				dayNamesShort: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				dayNames: ['星期日','星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+				dayNamesShort: ['星期日','星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
 				stepMinute: 30,
 				monthText: '月',
 				dayText: '日',
@@ -67,8 +67,8 @@
 				timeFormat: 'HH:ii',
 				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
 				monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-				dayNames: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
-				dayNamesShort: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				dayNames: ['星期日','星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+				dayNamesShort: ['星期日','星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
 				stepMinute: 30,
 				monthText: '月',
 				dayText: '日',
@@ -91,8 +91,8 @@
 				timeFormat: 'HH:ii',
 				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
 				monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-				dayNames: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
-				dayNamesShort: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				dayNames: ['星期日','星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+				dayNamesShort: ['星期日','星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
 				stepMinute: 30,
 				monthText: '月',
 				dayText: '日',
@@ -115,8 +115,8 @@
 				timeFormat: 'HH:ii',
 				monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
 				monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-				dayNames: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
-				dayNamesShort: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+				dayNames: ['星期日','星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+				dayNamesShort: ['星期日','星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
 				stepMinute: 30,
 				monthText: '月',
 				dayText: '日',
@@ -4847,6 +4847,12 @@
  				var tel=$(this).data('tel');
  				if(typeof(tel)!="undefined"&&tel!=""){
 	 				window.location.href="tel:"+tel;
+	 			}else{
+	 				if(langType!='eng'){
+	 					smoke.alert("無電話諮訊",{},function(){});
+	 				}else{
+		 				smoke.alert("No Service Number",{},function(){});
+		 			}
 	 			}
 	 			tel=null;
 	 			delete tel;
@@ -4904,6 +4910,7 @@
 					</div>
 					<!--springboard End-->
 			    	<div class="helpline"></div>
+			    	<a onclick="javascript:openBrowser('http://117.56.78.38/sipa/index1.html',3)" class="ui-link">新竹科學園區即時交通網</a>
 			    </div>
 			</div>
 			<div data-theme="f" data-role="footer" data-position="fixed" data-fullscreen="false">		

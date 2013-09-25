@@ -1388,28 +1388,66 @@ function onError(error) {
     smoke.alert('code:'+ error.code+'\n'+'message:'+ error.message + '\n',{},function(){});
     LoadingObject.hide();
 }
-function openBrowser(linkURL){
+function openBrowser(linkURL,zoomSize){
     /*
     20130620 Richard指示這邊先改成inapp模式，並確保不會讓使用者之後反應修改任何與inapp browser相關之問題
     */
-    if(navigator.userAgent.match(/(iPhone|iPod|iPad)/)){
-        openBrowserInApp(linkURL);
-    }else{
+    // if(navigator.userAgent.match(/(iPhone|iPod|iPad)/)){
+    //     openBrowserInApp(linkURL);
+    // }else{
         var tempURL=encodeURI(linkURL)
         if(linkURL.indexOf("GetFile.do?") !== -1){
             tempURL=linkURL;
         }
-        var ref = window.open(tempURL, '_system', 'location=yes');
+        var ref = window.open(tempURL, '_system', 'EnableViewPortScale=yes,location=yes');
         ref.addEventListener('loadstart', function() { alert(event.url); });
-    }
+        if(typeof(zoomSize)!=="undefined"||zoomSize!=null){
+            if (ref.addEventListener) {
+              ref.addEventListener('load', function(){
+                ref.document.body.style.webkitTransform ="scale3D(2,2,1)";
+                // ref.document.body.style.zoom=zoomSize;
+                // ref.document.body.style.webkitTransform ='scale('+zoomSize+')';// Chrome, Opera, Safari
+                // ref.document.body.style.msTransform = 'scale('+zoomSize+')'; // IE 9
+                // ref.document.body.style.transform = 'scale('+zoomSize+')';
+                }, false);
+            }
+            else if (ref.attachEvent) {
+              ref.attachEvent('onload', function(){
+                // ref.document.body.style.zoom=zoomSize;
+                // ref.document.body.style.webkitTransform ='scale('+zoomSize+')';// Chrome, Opera, Safari
+                // ref.document.body.style.msTransform = 'scale('+zoomSize+')'; // IE 9
+                // ref.document.body.style.transform = 'scale('+zoomSize+')';
+              });
+            }
+        }
+    // }
 }
-function openBrowserInApp(linkURL){
+function openBrowserInApp(linkURL,zoomSize){
     var tempURL=encodeURI(linkURL)
     if(linkURL.indexOf("GetFile.do?") !== -1){
         tempURL=linkURL;
     }
     var ref = window.open(tempURL, '_blank', 'location=no,enableViewportScale=yes');
     ref.addEventListener('loadstart', function() { alert(event.url); });
+    if(typeof(zoomSize)!=="undefined"||zoomSize!=null){
+        if (ref.addEventListener) {
+          ref.addEventListener('load', function(){
+            // ref.document.body.style.zoom=zoomSize;
+            ref.document.body.style.webkitTransform ='scale('+zoomSize+')';// Chrome, Opera, Safari
+            ref.document.body.style.msTransform = 'scale('+zoomSize+')'; // IE 9
+            ref.document.body.style.transform = 'scale('+zoomSize+')';
+            }, false);
+        }
+        else if (ref.attachEvent) {
+          ref.attachEvent('onload', function(){
+            // ref.document.body.style.zoom=zoomSize;
+            ref.document.body.style.webkitTransform ='scale('+zoomSize+')';// Chrome, Opera, Safari
+            ref.document.body.style.msTransform = 'scale('+zoomSize+')'; // IE 9
+            ref.document.body.style.transform = 'scale('+zoomSize+')';
+          });
+        }
+    }
+
 }
 // function openMap(address){
 //     var url="http://maps.google.com/maps?q="+address;
@@ -1585,4 +1623,55 @@ function showInstantMessage(park,messageContent){
            div.popup().popup('open');
         }, 500);
     }
+}
+function genLBSClassify(langType){
+    LoadingObject.show();
+    var jsonObject={"langType":langType};
+    var jsonObjectStr = JSON.stringify(jsonObject);
+    var nowClassify1="",htmlResult="";
+    $.ajax({
+        url:DataURL_Classify,
+        data:  {"jsonInput":jsonObjectStr},
+        type:"POST",
+        dataType :"jsonp",
+        async:false,
+        success:function(data){
+            if(data==null){
+                 smoke.alert(ServiceCodeErrorString,{},function(){});
+            }else{
+                if(data.status=="success"){
+                    for(var i=0;i<data.jsonOutput.length;i++){   
+                        if(nowClassify1!=data.jsonOutput[i].code1){
+                            nowClassify1=data.jsonOutput[i].code1;
+                            htmlResult+='</optgroup><optgroup data-value="'+data.jsonOutput[i].code1+'" label="'+data.jsonOutput[i].name1+'">'
+                        }       
+                        htmlResult+='<option value="'+data.jsonOutput[i].code1+'_'+data.jsonOutput[i].code2+'">'+data.jsonOutput[i].name2+'</option>';
+                    }
+                    htmlResult+='</optgroup>';
+                    $('#mobiScroll_LBS_classify').html(htmlResult);
+                    $('#mobiScroll_LBS_classify').mobiscroll().select({
+                        theme: 'ios',
+                        label:'Name',
+                        inputClass:'i-txt',
+                        display: 'bottom',
+                        mode: 'scroller',
+                        setText: '確定',
+                        cancelText: '取消',
+                        group: true,
+                        label: '次分類',
+                        groupLabel: '大分類'
+                    });   
+                }else{
+                    smoke.alert(ServiceCodeErrorString,{},function(){});
+                }
+            }
+        },
+        error: function(data){
+            LoadingObject.hide(); 
+            smoke.alert(ServiceErrorString,{},function(){});
+        },
+        complete: function() {
+            LoadingObject.hide();
+        }
+    });
 }
