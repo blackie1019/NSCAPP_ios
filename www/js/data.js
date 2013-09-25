@@ -1392,35 +1392,16 @@ function openBrowser(linkURL,zoomSize){
     /*
     20130620 Richard指示這邊先改成inapp模式，並確保不會讓使用者之後反應修改任何與inapp browser相關之問題
     */
-    // if(navigator.userAgent.match(/(iPhone|iPod|iPad)/)){
-    //     openBrowserInApp(linkURL);
-    // }else{
+    if(navigator.userAgent.match(/(iPhone|iPod|iPad)/)){
+        openBrowserInApp(linkURL);
+    }else{
         var tempURL=encodeURI(linkURL)
         if(linkURL.indexOf("GetFile.do?") !== -1){
             tempURL=linkURL;
         }
         var ref = window.open(tempURL, '_system', 'EnableViewPortScale=yes,location=yes');
-        ref.addEventListener('loadstart', function() { alert(event.url); });
-        if(typeof(zoomSize)!=="undefined"||zoomSize!=null){
-            if (ref.addEventListener) {
-              ref.addEventListener('load', function(){
-                ref.document.body.style.webkitTransform ="scale3D(2,2,1)";
-                // ref.document.body.style.zoom=zoomSize;
-                // ref.document.body.style.webkitTransform ='scale('+zoomSize+')';// Chrome, Opera, Safari
-                // ref.document.body.style.msTransform = 'scale('+zoomSize+')'; // IE 9
-                // ref.document.body.style.transform = 'scale('+zoomSize+')';
-                }, false);
-            }
-            else if (ref.attachEvent) {
-              ref.attachEvent('onload', function(){
-                // ref.document.body.style.zoom=zoomSize;
-                // ref.document.body.style.webkitTransform ='scale('+zoomSize+')';// Chrome, Opera, Safari
-                // ref.document.body.style.msTransform = 'scale('+zoomSize+')'; // IE 9
-                // ref.document.body.style.transform = 'scale('+zoomSize+')';
-              });
-            }
-        }
-    // }
+        // ref.addEventListener('loadstart', function() { alert(event.url); });
+    }
 }
 function openBrowserInApp(linkURL,zoomSize){
     var tempURL=encodeURI(linkURL)
@@ -1428,31 +1409,16 @@ function openBrowserInApp(linkURL,zoomSize){
         tempURL=linkURL;
     }
     var ref = window.open(tempURL, '_blank', 'location=no,enableViewportScale=yes');
-    ref.addEventListener('loadstart', function() { alert(event.url); });
-    if(typeof(zoomSize)!=="undefined"||zoomSize!=null){
-        if (ref.addEventListener) {
-          ref.addEventListener('load', function(){
-            // ref.document.body.style.zoom=zoomSize;
-            ref.document.body.style.webkitTransform ='scale('+zoomSize+')';// Chrome, Opera, Safari
-            ref.document.body.style.msTransform = 'scale('+zoomSize+')'; // IE 9
-            ref.document.body.style.transform = 'scale('+zoomSize+')';
-            }, false);
-        }
-        else if (ref.attachEvent) {
-          ref.attachEvent('onload', function(){
-            // ref.document.body.style.zoom=zoomSize;
-            ref.document.body.style.webkitTransform ='scale('+zoomSize+')';// Chrome, Opera, Safari
-            ref.document.body.style.msTransform = 'scale('+zoomSize+')'; // IE 9
-            ref.document.body.style.transform = 'scale('+zoomSize+')';
-          });
-        }
-    }
+    // ref.addEventListener('loadstart', function() { alert(event.url); });
 
 }
 // function openMap(address){
 //     var url="http://maps.google.com/maps?q="+address;
 //     openBrowser(url);
 // }
+function numberFilter(value){
+    return value.replace(/#[0-9]+|\*[0-9]+|分機[0-9]+|[^0-9]+/g, '');  
+}
 function getParkBase(inputData,inputType,returnType){
     var result=null;
     var jsonObject_ParkBase=getParkBaseData();

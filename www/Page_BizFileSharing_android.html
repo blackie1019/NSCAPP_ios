@@ -72,6 +72,9 @@
 		var DataURL_BFS_GETORGLIST = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgList.do?jsoncallback=?";
 		var DataURL_BFS_GETORGINFO = "http://nscallinone2.hyweb.com.tw:8080/AppService/getOrgInfo.do?jsoncallback=?";
 		*/
+		//DataURL_BFS = "http://192.168.1.6:8081/AppService/Main.do";
+        //DataURL_BFS_android_Upload = "http://192.168.1.6:8081/AppService/Upload.do";
+		
 		var ListType = 0;//0:已接收檔案列表(default)  1:已傳送檔案列表
 		var peopleToSend = "";//leee.ntspb,wclee.ntspb
 		var peopleNameToSend = "";//李日興,李婉倩		
@@ -164,7 +167,7 @@
 			
 			$('#downloadButton').click(function() {
 				openBrowser($('#dl'+downloadFileNo).text());
-				$('#popupDialog_listmenu').popup('close');
+				$('#popupDialog_listmenu').popup('close');			
 			});
 			
 			//轉寄
@@ -242,18 +245,23 @@
 			$(this).on('click','#chooseUserButton', function() {				
 				// 選擇對象前先上傳
 				var imageArray=getImageArray2($('#newFilePage').find('#imageArray img'));
-				var jsonObj = {'loginUser':loginUser,'fileArray':imageArray};
+				var jsonObj = {'loginUser':loginUser,'imageArray':imageArray};
 				var jsonObjStr = JSON.stringify(jsonObj);
 				/* */
-				$.ajax({
-					url:DataURL_BFS_android_Upload,
-					data: "jsonInput="+jsonObjStr,
+				$.ajax({					
+					//url:DataURL_BFS_Upload,
+					url: DataURL_BFS,
+					//data: "jsonInput="+jsonObjStr,
+					data: {"name":"DataURL_BFS_Upload","jsonInput":jsonObjStr,"jsoncallback":"?"},
+					//data: "jsonInput="+jsonObjStr+"&name=DataURL_BFS_Upload&jsoncallback=?",
 					type:"POST",
 					dataType :"json",
 					async:false,
 					success:function(data){
 						LoadingObject.hide();
 						// TO-DO after uploaded
+						smoke.alert(JSON.stringify(data),{},function(){});
+							
 						if (data!=null && data.status=="success") {
 							window.localStorage.setItem("SettingData_forwardOrSend", 'send');
 							window.localStorage.setItem("SettingData_upload_result",JSON.stringify(data));
@@ -968,10 +976,15 @@ function doDirectoryListing(e) {
 	dirReader.readEntries(gotFiles,onError);		
 }
 
+/**
+* 進到選取檔案頁面
+*/
 function doSelectFile(e) {
-	//alert('請選擇檔案路徑');
+
+	$.mobile.changePage('#selectFilePage');//切換選擇檔案頁面
+	$('#listFiles').empty();//先清空
 	
-	$.mobile.changePage('#selectFilePage');
+	//讀取SD card的root層檔案
 	var dirReader = fileSystem.root.createReader();
 	dirReader.readEntries(function(entries) {
 		var s = "<ul data-role=\"listview\">";
@@ -989,15 +1002,17 @@ function doSelectFile(e) {
 			var fileName = fileURI.substr(fileURI.lastIndexOf('/')+1);
 			var ext = fileName.substr(fileName.lastIndexOf('.')+1, fileName.length);
 			//alert(fileName+","+ext);
-			if (ext!='txt' && ext!='jpg' && ext!='doc'
-			 && ext!='TXT' && ext!='JPG' && ext!='DOC') {
-				smoke.alert("目前上傳支援格式：txt|jpg|doc",{},function(){});				
-			} else {
-				/*  */
+			//if (ext!='txt' && ext!='jpg' && ext!='doc'
+			// && ext!='TXT' && ext!='JPG' && ext!='DOC') {
+			//	smoke.alert("目前上傳支援格式：txt|jpg|doc",{},function(){});				
+			//} else {
+			
+				//上傳前置設定
+			
 				var options = new FileUploadOptions();
 				options.fileKey="file";
 				options.fileName=fileURI.substr(fileURI.lastIndexOf('/')+1);
-				options.mimeType="text/plain";
+				//options.mimeType="text/plain";
 
 				var params = new Object();
 				params.value1 = "jsonInput";
@@ -1008,7 +1023,7 @@ function doSelectFile(e) {
 				var ft = new FileTransfer();
 				ft.upload(fileURI, DataURL_BFS_android_Upload, win, fail, options);						
 				/*  */
-			}
+			//}
 		});		
 	}, onError);	
 }
@@ -1018,13 +1033,13 @@ function onFSSuccess(fs) {
 
 	getById("#selectFileButton").addEventListener("touchstart",doSelectFile);
 	
-	getById("#dirListingButton").addEventListener("touchstart",doDirectoryListing);			
-	getById("#addFileButton").addEventListener("touchstart",doAppendFile);			
-	getById("#readFileButton").addEventListener("touchstart",doReadFile);			
-	getById("#metadataFileButton").addEventListener("touchstart",doMetadataFile);			
-	getById("#deleteFileButton").addEventListener("touchstart",doDeleteFile);			
-	logit( "Got the file system: "+fileSystem.name +"<br/>" +
-									"root entry name is "+fileSystem.root.name + "<p/>")	
+	//getById("#dirListingButton").addEventListener("touchstart",doDirectoryListing);			
+	//getById("#addFileButton").addEventListener("touchstart",doAppendFile);			
+	//getById("#readFileButton").addEventListener("touchstart",doReadFile);			
+	//getById("#metadataFileButton").addEventListener("touchstart",doMetadataFile);			
+	//getById("#deleteFileButton").addEventListener("touchstart",doDeleteFile);			
+	//logit( "Got the file system: "+fileSystem.name +"<br/>" +
+	//								"root entry name is "+fileSystem.root.name + "<p/>")	
 
 	//doDirectoryListing();
 }   
@@ -1039,7 +1054,7 @@ function onDeviceReady() {
 }
 
 function init() {
-	document.addEventListener("deviceready", onDeviceReady, true);
+	document.addEventListener("deviceready", onDeviceReady, true);	
 }  
 
 function uploadFile(fileURI) {
@@ -1102,7 +1117,7 @@ function fail(error) {
 	</head>
 	<body>	
 		<div data-role="page" id="LP">		
-			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="b">
+			<div data-role="header" data-position="fixed" data-theme="b">
 		     	<a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1>即時業務資訊</h1>
 		     	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right" data-mini="true">
@@ -1147,7 +1162,7 @@ function fail(error) {
 				
 			</div>
 			
-			<div data-theme="a" data-role="footer" data-position="fixed" data-fullscreen="false" data-tap-toggle="false">		
+			<div data-theme="a" data-role="footer" data-position="fixed" data-tap-toggle="false">		
 			  <div data-role="navbar">
 			    <ul>
 			      <li class="navli">
@@ -1223,7 +1238,7 @@ function fail(error) {
 		
 		<!-- 新增檔案頁面 -->
 		<div data-role="page" id="newFilePage">
-			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>傳送檔案</h1></div>
+			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>傳送檔案</h1></div>
 			<div data-role="content">		
 
 				<div class="int">
@@ -1240,7 +1255,7 @@ function fail(error) {
 		
 		<!-- 選擇人員頁面  -->
 		<div data-role="page" id="chooseUserPage">
-			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>選擇對象</h1></div>
+			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>選擇對象</h1></div>
 			<div data-role="content">
 				<!--int Start-->
 				<div class="int">
@@ -1249,7 +1264,7 @@ function fail(error) {
 					  <div class="aleft2">						  
 						  <select name="dept3" id="dept3">
 							<option value="">請選擇單位</option>
-							<option value="M,nsc1,2">本會會內</option>
+							<option value="M,nsc1,2">國科會</option>
 							<option value="N,U0,73">科學工業園區管理局</option>
 							<option value="C,61,94">中部科學工業園區管理局</option>
 							<option value="S,60,20">南部科學工業園區管理局</option>
@@ -1278,7 +1293,7 @@ function fail(error) {
 		
 		<!-- 寄送確認頁面  -->
 		<div data-role="page" id="confirmPage">
-			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
+			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
 			<div data-role="content">
 				<!--int Start-->				
 				<div class="int">					
@@ -1307,7 +1322,7 @@ function fail(error) {
 	
 		<!-- 檔案選擇頁面  -->
 		<div data-role="page" id="selectFilePage">
-			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
+			<div data-role="header" data-position="fixed" data-theme="f"><button class="btnBack" data-icon="arrow-l">返回</button><h1>寄送確認</h1></div>
 			<div data-role="content">
 				<!--int Start-->				
 				<div class="int">										

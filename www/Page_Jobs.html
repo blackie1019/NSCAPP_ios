@@ -73,7 +73,7 @@
 					break;
 				case "eng":
 					map_btnSearch_str="Search Map";
-					map_btnRoute_str="Instructions";
+					map_btnRoute_str="Directions";
 					map_btnClassify1Filter_str="Nearby";	
 					map_btnSetAlert_str="Notification";
 					map_btnMAPShow_str="Map View";
@@ -516,6 +516,12 @@
 			                			// LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":getXiconImg(data.spotList[i].classify2),"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
 		
 				                	}
+			            		}else{
+			            			var alertMessage="查無資料";
+			            			if(langType=="eng"){
+			            				alertMessage="not find";
+			            			}
+			            			smoke.alert(alertMessage,{},function(){});
 			            		}
 	            				convertToGMAPMarkers();
 	        					$('#popupDialog_classify1Filter').popup('close');
@@ -677,7 +683,13 @@
 											"<button data-role='none' id='btnRoute' data-xicon='"+Setting_classifyImgSrc+data.spotList[0].xicon+"' data-ximage='"+Setting_imgSrc+data.spotList[0].mainImage+"' data-title='"+data.spotList[0].name+"' data-latitude='"+data.spotList[0].latitude+"' data-longitude='"+data.spotList[0].longitude+"' data-spotno='"+data.spotList[0].spotNo+"' data-address='"+data.spotList[0].address+"'  class='route'>"+str_route+"</button>"+
 											"<button data-role='none' id='btnTel' data-tel='"+data.spotList[0].telNumber+"'  class='tel'>"+str_call+"</button>"+
 											"</li></ul></div>";
-		   					}
+		   					}else{
+		            			var alertMessage="查無資料";
+		            			if(langType=="eng"){
+		            				alertMessage="not find";
+		            			}
+		            			smoke.alert(alertMessage,{},function(){});
+		            		}
 	        				$('#Map_CP').find('#content').html(htmlResult); 
 	        				$.mobile.changePage('#Map_CP');
 		                }else{
@@ -1031,10 +1043,10 @@
  			$(this).on('click','#btnTel',function(){
  				var tel=$(this).data('tel');
  				if(typeof(tel)!="undefined"&&tel!=""){
-	 				window.location.href="tel:"+tel;
+	 				window.location.href="tel:"+numberFilter(tel);
 	 			}else{
 	 				if(langType!='eng'){
-	 					smoke.alert("無電話諮訊",{},function(){});
+	 					smoke.alert("無電話資訊",{},function(){});
 	 				}else{
 		 				smoke.alert("No Service Number",{},function(){});
 		 			}

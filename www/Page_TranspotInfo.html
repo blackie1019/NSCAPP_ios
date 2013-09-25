@@ -186,7 +186,7 @@
 					break;
 				case "eng":
 					map_btnSearch_str="Search Map";
-					map_btnRoute_str="Instructions";
+					map_btnRoute_str="Directions";
 					map_btnClassify1Filter_str="Nearby";	
 					map_btnSetAlert_str="Notification";
 					map_btnMAPShow_str="Map View";
@@ -752,9 +752,10 @@
 		        }
 		    });
 		}
-		function changeToIndex_03(lineNo){
+		function changeToIndex_03(Park,Base,lineNo){
+			console.log(Base);
 			LoadingObject.show();
-			var jsonObject={"parkArea":Park,"lineNo":lineNo};
+			var jsonObject={"parkArea":Park,"parkLocation":Base,"lineNo":lineNo};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="",FromDest_htmlResult="",lineDesc_htmlResult="";
 		    $.ajax({
@@ -847,9 +848,9 @@
 		        }
 		    });
 		}
-		function changeToIndex_04(lineNo){
+		function changeToIndex_04(Park,Base,lineNo){
 			LoadingObject.show();
-			var jsonObject={"parkArea":Park,"lineNo":lineNo};
+			var jsonObject={"parkArea":Park,"parkLocation":Base,"lineNo":lineNo};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="",FromDest_htmlResult="";
 		    $.ajax({
@@ -1946,6 +1947,12 @@
 		                			LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":Setting_classifyImgSrc+data.spotList[i].xicon,"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
 		                		
 			                	}
+		            		}else{
+		            			var alertMessage="查無資料";
+		            			if(langType=="eng"){
+		            				alertMessage="not find";
+		            			}
+		            			smoke.alert(alertMessage,{},function(){});
 		            		}
             				$.mobile.changePage("#Map_LP");
             				convertToGMAPMarkers();
@@ -2006,6 +2013,8 @@
 	            			$('#index').find('#selectBase').selectmenu();
 	            			$('#index').find('.helpline').html(data.jsonOutput.info[park_index].infoLink).trigger('create');
 	            			//其他下拉設定
+	            			$('#index_03').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
+	            			$('#index_04').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
 	            			$('#index_05').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
 	            			$('#index_06').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
 	            			$('#index_07').find('#selectBase').html(selectHTML).selectmenu().selectmenu('refresh');
@@ -2669,10 +2678,15 @@
 			});
  		});
  		$(document).on('pageinit','#index_03',function(){
- 			var rootElement=this;	
- 			changeToIndex_03("");
+ 			var rootElement=this,selectBase=$(rootElement).find('#selectBase').val();
+ 			changeToIndex_03(Park,selectBase,"");
+ 			$(this).on('change','#selectBase',function(){
+ 				var selectValue=$(this).val();
+ 				changeToIndex_03(Park,selectValue,"");
+ 			});
  			$(this).on('change','#selectLines',function(){
- 				changeToIndex_03($(this).val());
+ 				var selectBase=$(rootElement).find('#selectBase').val();
+	 			changeToIndex_03(Park,selectBase,$(this).val());
 	 		});
 	 		$(this).on('click','#btn_search',function(){
 	 			if(typeof($(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue'))!="undefined"){
@@ -2686,8 +2700,8 @@
 	 		});	
  		});
 		$(document).on('pageinit','#index_04',function(){
-			var rootElement=this;	
- 			changeToIndex_04("");
+ 			var rootElement=this,selectBase=$(rootElement).find('#selectBase').val();
+ 			changeToIndex_04(Park,selectBase,"");
  			//版本判別
  			switch(AppType){
  				case "N":
@@ -2700,8 +2714,13 @@
 	 				$(rootElement).find('#subDiv_N').hide();
  					break;
  			}
+ 			$(this).on('change','#selectBase',function(){
+ 				var selectValue=$(this).val();
+ 				changeToIndex_04(Park,selectValue,"");
+ 			});
  			$(this).on('change','#selectLines',function(){
- 				changeToIndex_04($(this).val());
+ 				var selectBase=$(rootElement).find('#selectBase').val();
+	 			changeToIndex_04(Park,selectBase,$(this).val());
 	 		});
 	 		$(this).on('click','#btn_search',function(){
 	 			if(typeof($(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue'))!="undefined"){
@@ -4024,7 +4043,15 @@
  			//電話按扭
  			$(this).on('click','#btnTel',function(){
  				var tel=$(this).data('tel');
- 				window.location.href="tel:"+tel;
+ 				if(typeof(tel)!="undefined"&&tel!=""){
+	 				window.location.href="tel:"+numberFilter(tel);
+	 			}else{
+	 				if(langType!='eng'){
+	 					smoke.alert("無電話資訊",{},function(){});
+	 				}else{
+		 				smoke.alert("No Service Number",{},function(){});
+		 			}
+	 			}
  			});
  		});
  		$(document).on('pageinit','#CP_10',function(){
@@ -4059,7 +4086,15 @@
  			//電話按扭
  			$(this).on('click','#btnTel',function(){
  				var tel=$(this).data('tel');
- 				window.location.href="tel:"+tel;
+ 				if(typeof(tel)!="undefined"&&tel!=""){
+	 				window.location.href="tel:"+numberFilter(tel);
+	 			}else{
+	 				if(langType!='eng'){
+	 					smoke.alert("無電話資訊",{},function(){});
+	 				}else{
+		 				smoke.alert("No Service Number",{},function(){});
+		 			}
+	 			}
  			});
  		});
 		$(document).on('pageinit','#page_setPosition',function(){
@@ -4332,6 +4367,12 @@
 			                			// LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":getXiconImg(data.spotList[i].classify2),"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
 		
 				                	}
+			            		}else{
+			            			var alertMessage="查無資料";
+			            			if(langType=="eng"){
+			            				alertMessage="not find";
+			            			}
+			            			smoke.alert(alertMessage,{},function(){});
 			            		}
 	            				convertToGMAPMarkers();
 	        					$('#popupDialog_classify1Filter').popup('close');
@@ -4846,10 +4887,10 @@
  			$(this).on('click','#btnTel',function(){
  				var tel=$(this).data('tel');
  				if(typeof(tel)!="undefined"&&tel!=""){
-	 				window.location.href="tel:"+tel;
+	 				window.location.href="tel:"+numberFilter(tel);
 	 			}else{
 	 				if(langType!='eng'){
-	 					smoke.alert("無電話諮訊",{},function(){});
+	 					smoke.alert("無電話資訊",{},function(){});
 	 				}else{
 		 				smoke.alert("No Service Number",{},function(){});
 		 			}
@@ -4910,7 +4951,6 @@
 					</div>
 					<!--springboard End-->
 			    	<div class="helpline"></div>
-			    	<a onclick="javascript:openBrowser('http://117.56.78.38/sipa/index1.html',3)" class="ui-link">新竹科學園區即時交通網</a>
 			    </div>
 			</div>
 			<div data-theme="f" data-role="footer" data-position="fixed" data-fullscreen="false">		
@@ -5151,6 +5191,7 @@
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class="int">
+					<select id="selectBase"></select>
 			        <!--formbox star -->
 					<div class="formbox2">
 						<table class="tranTable">
@@ -5222,6 +5263,7 @@
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div class="int">
+					<select id="selectBase"></select>
 			        <!--formbox star -->
 					<div class="formbox2">
 						<table class="tranTable">
@@ -5271,7 +5313,7 @@
 			        <!--formbox end -->
 		        
                   <ul data-role="none"  class="intlist" id="lineDesc">
-	                                
+	                 <li>表列班次僅供參考，班車資訊如有變動，依各縣市客運公司公告為準。</li>
 	               </ul>                 	        
 			    </div>
 			</div>
