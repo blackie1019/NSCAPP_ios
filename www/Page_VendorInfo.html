@@ -54,7 +54,7 @@
 		</script>
 		<script  type="text/javascript">
 		/*global variables*/
-		var AppType=getAppType(),langType=getAppSetting_Data().language,LP_jsonObjectArray=[],keywordType="01",keywordValue="",vendorType="00",Park="00",Base="00",SN="6";
+		var isInArea=getIsInArea(),AppType=getAppType(),langType=getAppSetting_Data().language,LP_jsonObjectArray=[],keywordType="01",keywordValue="",vendorType="00",Park="00",Base="00",SN="6";
 		var nowPark=getIdentifyParkBase().Park,nowBase=getIdentifyParkBase().Base;
 		var title,park_str,base_str,vendor_str,Type_str,btnBack_str,txt_keywordPlaceHolder_str,popupDialog_keyword_str,btnRoute_str,h2_vendorTitle_str,keywordSearchType_str,btnBackIndex_str;
 		var park=getIdentifyParkBase().Park,nearAlertSpot=null,Target_Collapsible_Classify1_ID="",map;//地圖模組
@@ -225,12 +225,14 @@
 						        groupLabel: vendor_str
 							}); 
 				 			//園區基地別下拉判別
+				 			if(isInArea=="true"){
 							var selectData=getDefaultParkBaseSelectData(false,langType);
 					 		var mobiScroll_Jobs_ParkBase=$('#QP').find('#mobiScroll_VendorInfo_ParkBase');
 					        $(mobiScroll_Jobs_ParkBase).val(selectData.defaultParkBase).mobiscroll('setValue',[selectData.defaultParkBase]);
 					        $('#QP').find('#mobiScroll_VendorInfo_ParkBase_dummy').val(selectData.defaultParkBaseStr);
 					        temp=null;selectData=null;
 					        delete temp;delete selectData;
+							}
 							$('#QP').trigger('create');
 		                }else{
 		                    smoke.alert(ServiceCodeErrorString,{},function(){});
@@ -257,6 +259,9 @@
 		    vendorType=vTypes[1];
 		    if(vendorType=="00"){
 		    	vendorType="";
+		    }
+		    if(Base=="00"){
+		    	Base="";
 		    }
 			var jsonObject={"AppType":AppType,"langType":langType,"keywordType":keywordType,"keywordValue":keywordValue,"vendorClass":vendorClass,"vendorType":vendorType,"Park":Park,"Base":Base};
 			// var jsonObject={"langType":langType,"keywordType":keywordType,"keywordValue":keywordValue,"Park":Park,"Base":Base,"count":100,"index":1};
@@ -427,6 +432,11 @@
 		    var htmlResult="";
 		  	for(var park_index=0;park_index<Park.length;park_index++){
 		  		htmlResult+='<optgroup data-value="'+Park[park_index].code+'" label="'+Park[park_index].value+'">';
+		  		if(langType!="eng"){
+		  			htmlResult+='<option value="'+Park[park_index].code+'_00">全部</option>';
+		  		}else{
+		  			htmlResult+='<option value="'+Park[park_index].code+'_00">All</option>';
+		  		}
 		  		for(var base_index=0;base_index<Park[park_index].Base.length;base_index++){
 		  			htmlResult+='<option value="'+Park[park_index].code+'_'+Park[park_index].Base[base_index].code+'">'+Park[park_index].Base[base_index].value+'</option>';
 		  		}
@@ -1144,6 +1154,7 @@
  				//呈現當前坐標內容
  				map.showTargetMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
  				$.mobile.changePage('#Map_LP');
+ 				switchLPShowType("map");
  				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;
  				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;
  			});

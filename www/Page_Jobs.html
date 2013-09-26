@@ -1024,6 +1024,7 @@
  				//呈現當前坐標內容
  				map.showTargetMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
  				$.mobile.changePage('#Map_LP');
+ 				switchLPShowType("map");
  				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;
  				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;
  			});

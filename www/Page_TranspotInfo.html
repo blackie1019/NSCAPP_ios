@@ -634,13 +634,19 @@
 				 			BusMap_map.ini(document.getElementById('BusMap_map_canvas'),new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),12);
 				 			//產生路線
 				 			//建立巴士marker
+				 			var firstPos=null;
 				 			for(var i=0;i<data.busList.length;i++){
+				 				if(typeof(data.busList[i].latitude)!=="undefined"&&data.busList[i].latitude!=null&&data.busList[i].latitude!=""&&typeof(data.busList[i].longitude)!=="undefined"&&data.busList[i].longitude!=null&&data.busList[i].longitude!=""){
 				 				var posLatLng=new google.maps.LatLng(data.busList[i].latitude,data.busList[i].longitude);
+				 				if(firstPos==null){
+				 					firstPos=posLatLng;
+				 				}
 				 				BusMap_map.addBusMarker(posLatLng,genBusInfoHTML(data.lineName,data.busList[i]),(typeof(data.vehiclePic)!="undefined"?Setting_lineImgSrc+data.vehiclePic:BusMap_map.map_icons.position.icon));
+					 			}
 				 			}
-				 			if(data.busList.length>0){
+				 			if(firstPos!=null){
 					 			//設定以第一台巴士為中心點
-					 			BusMap_map.center=new google.maps.LatLng(data.busList[0].latitude,data.busList[0].longitude);
+					 			BusMap_map.center=firstPos;
 					 		}
 				 			$.mobile.changePage('#CP_BusMap');
 		                }else{
@@ -4868,6 +4874,7 @@
  				//呈現當前坐標內容
  				map.showTargetMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
  				$.mobile.changePage('#Map_LP');
+ 				switchLPShowType("map");
  				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;
  				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;
  			});
@@ -5235,18 +5242,18 @@
 			</div>
 		</div>
 		<div data-role="page" id="LP_03">
-			<div data-role="header" data-theme="f">
+			<div data-role="header"  data-position="fixed" data-fullscreen="false" data-theme="f">
 				<a data-rel="back" data-icon="arrow-l">返回</a>
                 <h1>國道客運-時刻表</h1>
-            </div>
-            <div data-role="content" style="padding:0" id="content">
-            	<div data-role="navbar">
+                <div data-role="navbar">
 				    <ul>
 				      <li class="navli"><a class="ui-btn-active" id="btnTimeTable">時刻表</a></li>
 	  			      <li class="navli"><a id="btnPathImg">路線圖</a></li>
 				    </ul>
 				 </div>
-				<div id="timeTable">
+            </div>
+            <div data-role="content" style="padding:0" id="content">
+				<div style="padding-top:80px;" id="timeTable">
             	<div class="title3" id="title"></div>
             	<table width="100%" summary="時刻表" class="lpTb3" id="dataList">
 				</table>
