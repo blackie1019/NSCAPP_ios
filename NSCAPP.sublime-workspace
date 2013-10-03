@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"br",
+				"break"
+			],
+			[
+				"firs",
+				"firstPos"
+			],
+			[
 				"lat",
 				"latitude"
 			],
@@ -114,10 +122,6 @@
 			[
 				"all",
 				"allTr_1"
-			],
-			[
-				"firs",
-				"first_no"
 			],
 			[
 				"traffic",
@@ -510,10 +514,6 @@
 			[
 				"dou",
 				"document	jsWindow"
-			],
-			[
-				"dic",
-				"div_Notification_radios"
 			]
 		]
 	},
@@ -571,7 +571,7 @@
 			"file": "www/Page_TranspotInfo.html",
 			"settings":
 			{
-				"buffer_size": 237353,
+				"buffer_size": 238129,
 				"line_ending": "Unix"
 			}
 		},
@@ -595,7 +595,7 @@
 			"file": "www/js/data.js",
 			"settings":
 			{
-				"buffer_size": 77287,
+				"buffer_size": 78767,
 				"line_ending": "Unix"
 			}
 		},
@@ -603,7 +603,7 @@
 			"file": "www/Page_VendorInfo.html",
 			"settings":
 			{
-				"buffer_size": 64627,
+				"buffer_size": 64740,
 				"line_ending": "Unix"
 			}
 		},
@@ -619,7 +619,7 @@
 			"file": "www/js/setting.js",
 			"settings":
 			{
-				"buffer_size": 25095,
+				"buffer_size": 26113,
 				"line_ending": "Unix"
 			}
 		}
@@ -705,6 +705,7 @@
 	"file_history":
 	[
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/js/setting.js",
+		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/js/setting_dev.js",
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/index.html",
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/Page_LBS.html",
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/js/mobiscroll.custom.js",
@@ -816,9 +817,40 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": true,
+		"case_sensitive": false,
 		"find_history":
 		[
+			"yyyy/",
+			"LP_05_1",
+			"go\"",
+			"go",
+			"console",
+			"changeToIndex_04",
+			"changeToIndex_03",
+			"changeToLP_03",
+			"yyyy/",
+			"day",
+			"date",
+			"changeToLP_04",
+			"changeToLP_02",
+			"changeToLP_01",
+			"\"yyyy-MM-dd\"",
+			"changeToLP_04",
+			"changeToLP_03",
+			"changeToLP_01",
+			"LP_02",
+			"LP_01",
+			"LP_04",
+			"LP_03",
+			"LP_04",
+			"line",
+			"/line",
+			"LP_04",
+			"查無",
+			"LP_05",
+			"LP_03",
+			"LP_05",
+			"CP_BusMap",
 			"btnMap",
 			"switchLPShowType",
 			"btnMAPShow",
@@ -915,38 +947,7 @@
 			"setAll",
 			"不限定",
 			"全部",
-			"全選",
-			"#index",
-			"index",
-			"back",
-			"btn_back",
-			"btn_backindex",
-			"getBusStopMap",
-			"LP_05_1",
-			"btnESearch",
-			"checkedClassify",
-			"btnClear",
-			"LP_temp",
-			"titleSearch",
-			"LP",
-			"\"LP\"",
-			".list2 p ",
-			"int p",
-			"ptext",
-			"尚未",
-			"脫",
-			"btn_back",
-			"btnBack",
-			"412",
-			"Directions",
-			"directions",
-			"$(document).on('pageshow','#Map_LP',function(){",
-			"doRo",
-			"map.",
-			"MapData",
-			"setMapData",
-			"switchFooterFunction",
-			"btnRoute"
+			"全選"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -954,6 +955,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"\"yyyy/MM/dd\"",
 			"Instructions",
 			"text-transform: capitalize;",
 			"text-transform:capitalize;",
@@ -1002,7 +1004,7 @@
 			"http://nscallinone2.hyweb.com.tw:8080/AppService/",
 			"class=\"popupCloseBtn\" data-rel=\"back\" data-role=\"button\" data-theme=\"a\" data-icon=\"delete\""
 		],
-		"reverse": false,
+		"reverse": true,
 		"show_context": false,
 		"use_buffer2": true,
 		"whole_word": false,
@@ -1011,7 +1013,7 @@
 	"groups":
 	[
 		{
-			"selected": 12,
+			"selected": 9,
 			"sheets":
 			[
 				{
@@ -2065,15 +2067,15 @@
 					"file": "www/Page_TranspotInfo.html",
 					"settings":
 					{
-						"buffer_size": 237353,
+						"buffer_size": 238129,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								200732,
-								200732
+								125422,
+								125422
 							]
 						],
 						"settings":
@@ -2230,7 +2232,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 79452.0,
+						"translation.y": 209.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2405,7 +2407,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 901.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2590,15 +2592,15 @@
 					"file": "www/js/data.js",
 					"settings":
 					{
-						"buffer_size": 77287,
+						"buffer_size": 78767,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								61989,
-								62000
+								24232,
+								24232
 							]
 						],
 						"settings":
@@ -2757,7 +2759,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 18605.0,
+						"translation.y": 7425.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2767,15 +2769,15 @@
 					"file": "www/Page_VendorInfo.html",
 					"settings":
 					{
-						"buffer_size": 64627,
+						"buffer_size": 64740,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								52986,
-								52986
+								28608,
+								28610
 							]
 						],
 						"settings":
@@ -2933,7 +2935,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 18882.0,
+						"translation.y": 10235.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2950,8 +2952,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								1395,
+								1395
 							]
 						],
 						"settings":
@@ -3014,15 +3016,15 @@
 					"file": "www/js/setting.js",
 					"settings":
 					{
-						"buffer_size": 25095,
+						"buffer_size": 26113,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								25095,
-								25095
+								467,
+								485
 							]
 						],
 						"settings":
@@ -3071,116 +3073,12 @@
 								"bh_single_quote_open",
 								"bh_single_quote_close"
 							],
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2.0,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5.0,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10.0,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"sublime_auto_complete": true,
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 7720.0,
+						"translation.y": 48.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

@@ -44,6 +44,11 @@ function HyMap(draggable){
 //[iniMap]地圖初始化
 HyMap.prototype.ini=function(mapDiv,center,zoomsize){
 	var oThis=this;
+	//清除LocalStorage MapData資料
+	clearMapData();
+	//清除目前畫面內容
+	oThis.clearMapMarker();
+	oThis.clearPolyLine();
 	//設定static variable
 	oThis.mapDiv=mapDiv;
 	oThis.center=center;

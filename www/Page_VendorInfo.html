@@ -91,7 +91,6 @@
 					keywordSearchType_str="Type";
 					break;
 			}
-
 			$('h1.page_title').text(title);
 			$('#QP #txtKeyword').attr("placeholder",txt_keywordPlaceHolder_str);
 			$('#LP #txtKeyword').attr("placeholder",txt_keywordPlaceHolder_str);
@@ -301,7 +300,11 @@
 	            			if(htmlResult!=""){
 	            				htmlResult="<ul data-role='none'>"+htmlResult+"</ul>";
 	            			}else{
-	            				htmlResult="查無資料";
+	            				if(langType=="eng"){
+									htmlResult="not find";
+	            				}else{
+		            				htmlResult="查無資料";
+		            			}
 	            			}
 	            			$('#LP').find('#htmlResult').html(htmlResult).trigger('create');
 		                }else{

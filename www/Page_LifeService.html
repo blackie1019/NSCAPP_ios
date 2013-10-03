@@ -164,8 +164,8 @@
 				  "langType": langType,
 				  "park": park,
 				  "inner": getIsInArea(),
-				  "currentLat": getGPRSData.lat,
-				  "currentLng": getGPRSData.lng,
+				  "currentLat": getGPRSData().lat,
+				  "currentLng": getGPRSData().lng,
 				  "queryLat": targetCenter.lat,
 				  "queryLng": targetCenter.lng,
 				  "LBSSpotClassifyArray":classifyArray
@@ -177,8 +177,8 @@
 				  "park": park,
 				  "parkLocation":base,
 				  "inner": false,
-  				  "currentLat": getGPRSData.lat,
-				  "currentLng": getGPRSData.lng,
+  				  "currentLat": getGPRSData().lat,
+				  "currentLng": getGPRSData().lng,
 				  "queryLat": targetCenter.lat,
 				  "queryLng": targetCenter.lng,
 				  "LBSSpotClassifyArray":classifyArray
@@ -215,7 +215,7 @@
 							//重設地圖中心
 							map.center=new google.maps.LatLng(targetCenter.lat,targetCenter.lng);
             				//設定defaultLBSCenter
-            				// map.setLBSCenterLatLng({"lat":targetCenter.lat,"lng":targetCenter.lng},true);
+            				//map.setLBSCenterLatLng({"lat":targetCenter.lat,"lng":targetCenter.lng},true);
 		                }else{
 		                    smoke.alert(ServiceCodeErrorString,{},function(){});
 		                }
@@ -569,8 +569,8 @@
 				  "langType": langType,
 				  "park": getIdentifyParkBase().Park,
 				  "inner": getIsInArea(),
-				  "currentLat": getGPRSData.lat,
-				  "currentLng":getGPRSData.lng,
+				  "currentLat": getGPRSData().lat,
+				  "currentLng":getGPRSData().lng,
 				  "LBSSpotClassifyArray":classifyArray
 				};
 				//如果有LBSCenterLatLng的值(lat,lng)，則改為目的點為querylat,querylng
@@ -579,8 +579,8 @@
 					  "queryType": "1",
 					  "langType": langType,
 					  "park": getIdentifyParkBase().Park,
-					  "currentLat": getGPRSData.lat,
-					  "currentLng":getGPRSData.lng,
+					  "currentLat": getGPRSData().lat,
+					  "currentLng":getGPRSData().lng,
 					  "queryLat": map.LBSCenterLatLng.lat,
 					  "queryLng": map.LBSCenterLatLng.lng,
 	  				  "LBSSpotClassifyArray":classifyArray
@@ -715,8 +715,8 @@
 				"langType": langType,
 				"park": getIdentifyParkBase().Park,
 				"inner": getIsInArea(),
-				"currentLat": getGPRSData.lat,
-				"currentLng":getGPRSData.lng,
+				"currentLat": getGPRSData().lat,
+				"currentLng":getGPRSData().lng,
 				"spotNo":sn
 			}
 			var jsonObjectStr = JSON.stringify(jsonObject);
@@ -866,9 +866,9 @@
 		function convertToGMAPMarkers(){
 			//地圖初始化
 			genMapShowContent();
-			switchLPShowType("map"); 
+			switchFooterFunction('default');
 			//呈現LBS中心點位置
-			map.showLBSCenterMarker();
+			//map.showLBSCenterMarker();
 			var nearAlertSpotListHtmlResult="";
 			var str_ok="確定";
 			var str_cancel="取消";

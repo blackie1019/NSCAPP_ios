@@ -294,9 +294,9 @@
 		        }
 		    });
 		}
-		function changeToLP_01(fromStation,destStation,beginHour,beginMin){
+		function changeToLP_01(fromStation,destStation,day,beginHour,beginMin){
 			LoadingObject.show();
-			var jsonObject={"fromStation":fromStation,"destStation":destStation,"beginHour":beginHour,"beginMin":beginMin};
+			var jsonObject={"fromStation":fromStation,"destStation":destStation,"queryDate":day,"beginHour":beginHour,"beginMin":beginMin};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="";
 		    $.ajax({
@@ -342,9 +342,9 @@
 		        }
 		    });
 		}
-		function changeToLP_02(park,fromStation,destStation,beginHour,beginMin,carClass){
+		function changeToLP_02(park,fromStation,destStation,day,beginHour,beginMin,carClass){
 			LoadingObject.show();
-			var jsonObject={"parkArea":park,"fromStation":fromStation,"destStation":destStation,"beginHour":beginHour,"beginMin":beginMin,"carClass":carClass};
+			var jsonObject={"parkArea":park,"fromStation":fromStation,"destStation":destStation,"queryDate":day,"beginHour":beginHour,"beginMin":beginMin,"carClass":carClass};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="";
 		    $.ajax({
@@ -759,7 +759,6 @@
 		    });
 		}
 		function changeToIndex_03(Park,Base,lineNo){
-			console.log(Base);
 			LoadingObject.show();
 			var jsonObject={"parkArea":Park,"parkLocation":Base,"lineNo":lineNo};
 			var jsonObjectStr = JSON.stringify(jsonObject);
@@ -778,9 +777,9 @@
 		                	if(lineNo==""){
 		                		htmlResult+='<option value="00">請選擇</option>';
 				                for(var i=0;i<data.lineList.length;i++){		                
-					                	htmlResult+='<option value="'+data.lineList[i].lineNo+'">'+data.lineList[i].chtTitle+'</option>'
-					                	$('#index_03').find('#selectLines').html(htmlResult).selectmenu('refresh');
+					                	htmlResult+='<option value="'+data.lineList[i].lineNo+'">'+data.lineList[i].chtTitle+'</option>';
 		            			}	
+		            			$('#index_03').find('#selectLines').html(htmlResult).selectmenu('refresh');
 		            		}else{
 		            			for(var i=0;i<data.stopList.length;i++){		   
 			                		FromDest_htmlResult+="<optgroup data-value='"+data.stopList[i].stopCode+"' label='"+data.stopList[i].chtName+"'>";
@@ -873,9 +872,9 @@
 		                	if(lineNo==""){
 		                		htmlResult+='<option value="00">請選擇</option>';
 				                for(var i=0;i<data.lineList.length;i++){		                
-					                	htmlResult+='<option value="'+data.lineList[i].lineNo+'">'+data.lineList[i].chtTitle+'</option>'
-					                	$('#index_04').find('#selectLines').html(htmlResult).selectmenu('refresh');
+					                	htmlResult+='<option value="'+data.lineList[i].lineNo+'">'+data.lineList[i].chtTitle+'</option>';
 		            			}	
+			                	$('#index_04').find('#selectLines').html(htmlResult).selectmenu('refresh');
 		            		}else{
 		            			for(var i=0;i<data.stopList.length;i++){		   
 			                		FromDest_htmlResult+="<optgroup data-value='"+data.stopList[i].stopCode+"' label='"+data.stopList[i].chtName+"'>";
@@ -934,9 +933,9 @@
 		        }
 		    });
 		}
-		function changeToLP_03(lineNo,fromStop,destStop,hh,mm,isFocusRouteMap){
+		function changeToLP_03(lineNo,fromStop,destStop,day,hh,mm,isFocusRouteMap){
 			LoadingObject.show();
-			var jsonObject={"parkArea":Park,"lineNo":lineNo,"fromStopCode":fromStop,"destStopCode":destStop,"beginHour":hh,"beginMin":mm};
+			var jsonObject={"parkArea":Park,"lineNo":lineNo,"fromStopCode":fromStop,"destStopCode":destStop,"queryDate":day,"beginHour":hh,"beginMin":mm};
 			var jsonObjectStr = JSON.stringify(jsonObject);
 			var htmlResult="";
 		    $.ajax({
@@ -989,12 +988,12 @@
 		        }
 		    });
 		}
-		function changeToLP_04(lineNo,fromStop,destStop,hh,mm,isFocusRouteMap,goBack){
+		function changeToLP_04(lineNo,fromStop,destStop,day,hh,mm,isFocusRouteMap,goBack){
 			LoadingObject.show();
 			var jsonObject;
 			switch(AppType){
 				case "N":
-					jsonObject={"parkArea":Park,"lineNo":lineNo,"fromStopCode":fromStop,"destStopCode":destStop,"beginHour":hh,"beginMin":mm};
+					jsonObject={"parkArea":Park,"lineNo":lineNo,"fromStopCode":fromStop,"destStopCode":destStop,"queryDate":day,"beginHour":hh,"beginMin":mm};
 					break;
 				case "C":
 				case "S":
@@ -1035,7 +1034,7 @@
 											break;
 									}
 								}
-			            		$('#LP_04').find('#pathImg').html('<img class="imgRouteMap" src="'+Setting_imgSrc+"line/"+data.lineMap+'" />').hide();
+			            		$('#LP_04').find('#pathImg').html('<img class="imgRouteMap" src="'+Setting_lineImgSrc+data.lineMap+'" />').hide();
 								$('#LP_04').find('#dataList').html(htmlResult);
 								if(isFocusRouteMap){
 									$('#LP_04').find('#pathImg').show();
@@ -1930,8 +1929,8 @@
 					"inner": getIsInArea(),
 					"currentLat": getGPRSData().lat,
 					"currentLng": getGPRSData().lng,
-					"currentLat":posObject.latitude,
-					"currentLng":posObject.longitude,
+					"queryLat":posObject.latitude,
+					"queryLng":posObject.longitude,
 					"LBSSpotClassifyArray":classifyArray
 				};
 			}
@@ -2497,11 +2496,11 @@
 				switch(trafficType){
 					//公車
 					case "00":
-						changeToLP_04(lineNo,"","",nowDate.getHours(),nowDate.getMinutes(),true);
+						changeToLP_04(lineNo,"","",convertToDay(nowDate,"yyyy/MM/dd")+"("+dayOfWeek(nowDate)+")",nowDate.getHours(),nowDate.getMinutes(),true);
 						break;
 					//國道客運
 					case "06":
-						changeToLP_03(lineNo,"","",nowDate.getHours(),nowDate.getMinutes(),true);
+						changeToLP_03(lineNo,"","",convertToDay(nowDate,"yyyy/MM/dd")+"("+dayOfWeek(nowDate)+")",nowDate.getHours(),nowDate.getMinutes(),true);
 						break;
 					//巡巴
 					case "09":
@@ -2642,7 +2641,7 @@
 				var fromdest=$(rootElement).find('#mobiScroll_stop').mobiscroll('getValue').split("_");
 				var datetime=$('#index_01 #mobiScroll_TranspotInfo_TravelDateTime_1').mobiscroll('getDate');
 				// alert($(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime_dummy').val());
-				changeToLP_01(fromdest[0],fromdest[1],datetime.getHours(),datetime.getMinutes());
+				changeToLP_01(fromdest[0],fromdest[1],convertToDay(datetime,"yyyy/MM/dd")+"("+dayOfWeek(datetime)+")",datetime.getHours(),datetime.getMinutes());
 			});
 			$(this).on('click','#btnStopSwitch',function(){
 			   var mobiScroll_stop=$('#index_01 #mobiScroll_stop'),temp;
@@ -2667,7 +2666,7 @@
 				if(from!=dest){
 					var carClass=$(rootElement).find('#select_type').val();
 					var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime_2').mobiscroll('getDate');
-					changeToLP_02(getIdentifyParkBase().Park,from,dest,datetime.getHours(),datetime.getMinutes(),carClass);
+					changeToLP_02(getIdentifyParkBase().Park,from,dest,convertToDay(datetime,"yyyy/MM/dd")+"("+dayOfWeek(datetime)+")",datetime.getHours(),datetime.getMinutes(),carClass);
 				}else{
 					smoke.alert("起訖站不可相同",{},function(){});
 				}
@@ -2684,7 +2683,10 @@
 			});
  		});
  		$(document).on('pageinit','#index_03',function(){
- 			var rootElement=this,selectBase=$(rootElement).find('#selectBase').val();
+ 			var rootElement=this;selectBase=$(this).find('#selectBase').val();
+ 			if(typeof(selectBase)!=="undefined"||selectBase==null){
+ 				selectBase=base;
+ 			}
  			changeToIndex_03(Park,selectBase,"");
  			$(this).on('change','#selectBase',function(){
  				var selectValue=$(this).val();
@@ -2699,15 +2701,17 @@
  				var selectValue=$(rootElement).find('#selectLines').val();
  				var FromDestStop=$(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue').split('_');
  				var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime_3').mobiscroll('getDate');
- 				changeToLP_03(selectValue,FromDestStop[0],FromDestStop[1],datetime.getHours(),datetime.getMinutes(),false);
+ 				changeToLP_03(selectValue,FromDestStop[0],FromDestStop[1],convertToDay(datetime,"yyyy/MM/dd")+"("+dayOfWeek(datetime)+")",datetime.getHours(),datetime.getMinutes(),false);
 	 			}else{
 	 				smoke.alert("請先選擇路線後挑選起訖站",{},function(){});
 	 			}
 	 		});	
  		});
 		$(document).on('pageinit','#index_04',function(){
- 			var rootElement=this,selectBase=$(rootElement).find('#selectBase').val();
- 			changeToIndex_04(Park,selectBase,"");
+ 			var rootElement=this;selectBase=$(this).find('#selectBase').val();
+ 			if(typeof(selectBase)!=="undefined"||selectBase==null){
+ 				selectBase=base;
+ 			}
  			//版本判別
  			switch(AppType){
  				case "N":
@@ -2734,7 +2738,7 @@
  				var FromDestStop=$(rootElement).find('#mobiScroll_FromDestStop').mobiscroll('getValue').split('_');
  				var datetime=$(rootElement).find('#mobiScroll_TranspotInfo_TravelDateTime').mobiscroll('getDate');
  				var goBack=$(rootElement).find('#selectGoBack').val();
- 				changeToLP_04(selectValue,FromDestStop[0],FromDestStop[1],datetime.getHours(),datetime.getMinutes(),false,goBack);
+ 				changeToLP_04(selectValue,FromDestStop[0],FromDestStop[1],convertToDay(datetime,"yyyy/MM/dd")+"("+dayOfWeek(datetime)+")",datetime.getHours(),datetime.getMinutes(),false,goBack);
 	 			}else{
 	 				smoke.alert("請先選擇路線後挑選起訖站",{},function(){});
 	 			}
