@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"sh",
+				".showMap"
+			],
+			[
 				"br",
 				"break"
 			],
@@ -510,10 +514,6 @@
 			[
 				"le",
 				"length	jsWindow"
-			],
-			[
-				"dou",
-				"document	jsWindow"
 			]
 		]
 	},
@@ -563,7 +563,7 @@
 			"file": "www/Page_LifeService.html",
 			"settings":
 			{
-				"buffer_size": 57503,
+				"buffer_size": 57823,
 				"line_ending": "Unix"
 			}
 		},
@@ -571,7 +571,7 @@
 			"file": "www/Page_TranspotInfo.html",
 			"settings":
 			{
-				"buffer_size": 238129,
+				"buffer_size": 238286,
 				"line_ending": "Unix"
 			}
 		},
@@ -587,7 +587,7 @@
 			"file": "www/Page_AreaIntro.html",
 			"settings":
 			{
-				"buffer_size": 57218,
+				"buffer_size": 57277,
 				"line_ending": "Unix"
 			}
 		},
@@ -620,6 +620,14 @@
 			"settings":
 			{
 				"buffer_size": 26113,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "www/js/map.js",
+			"settings":
+			{
+				"buffer_size": 26662,
 				"line_ending": "Unix"
 			}
 		}
@@ -820,6 +828,52 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"index_04",
+			"LP_04",
+			"更早",
+			"上",
+			"分機",
+			"#",
+			"conver",
+			"setLBSCenterLatLng",
+			"LBSCenterLatLng",
+			"showLBSCenterMarker",
+			"map_icons.position",
+			"position.position",
+			"position_icon11.png",
+			"convertToGMAPMarkers",
+			"changeToL",
+			"getGPRSData",
+			"changeTo",
+			"refresh",
+			"changeTo",
+			"genMapShow",
+			"convertToG",
+			"changeToLP",
+			"btnSearch",
+			"btnSeach",
+			"getMapData",
+			"genMapShowContent",
+			"btnSearch",
+			"clearM",
+			"clearPoly",
+			"clearMapMarker",
+			"genMapShowContent",
+			"switchFooterFunction",
+			"convertToGMAPMarkers",
+			"changeToLP",
+			"switchFooterFunction",
+			"'route'",
+			"btnSearch",
+			"getGPRSData.",
+			"  \"queryType\": \"1\",",
+			"getGPRSData",
+			"  \"queryType\": \"3\",",
+			"changeToLP",
+			"btnSearch",
+			"Base",
+			"changeToIndex_03",
+			"index_03",
 			"yyyy/",
 			"LP_05_1",
 			"go\"",
@@ -901,53 +955,7 @@
 			"window.open",
 			"lang",
 			"mobiScroll_LBS_classify",
-			"getLifeService",
-			"mobi",
-			"optgroup",
-			"管理局",
-			"mobi",
-			"helpline",
-			"open",
-			"setAppSetting_Data",
-			"consol",
-			"doDefaultAppSetting",
-			"genTopList",
-			"#sub-menu",
-			");\nsub-menu",
-			");\n",
-			"genTopList",
-			"sub",
-			"flurry",
-			"showClassifyWithTarget",
-			"park",
-			"showClassifyWithTarget",
-			".lat",
-			"showClassify",
-			"changeToLP",
-			"getClassifyArray",
-			"changeToLP",
-			"btnSearch",
-			"btnAroundStop",
-			"index_04",
-			"divQP",
-			"index_04",
-			"LP_jsonObjectArray",
-			"showClassifyWithTarget",
-			"btnAroundStop",
-			"index_04",
-			"console",
-			"mobiScroll_index_05_LineList",
-			"divQP",
-			"btnChangeToIndex",
-			"evt",
-			"btnRoute",
-			"index_03",
-			"WorkTypeList",
-			"clear",
-			"setAll",
-			"不限定",
-			"全部",
-			"全選"
+			"getLifeService"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -955,6 +963,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"getGPRSData().",
 			"\"yyyy/MM/dd\"",
 			"Instructions",
 			"text-transform: capitalize;",
@@ -1004,7 +1013,7 @@
 			"http://nscallinone2.hyweb.com.tw:8080/AppService/",
 			"class=\"popupCloseBtn\" data-rel=\"back\" data-role=\"button\" data-theme=\"a\" data-icon=\"delete\""
 		],
-		"reverse": true,
+		"reverse": false,
 		"show_context": false,
 		"use_buffer2": true,
 		"whole_word": false,
@@ -1013,7 +1022,7 @@
 	"groups":
 	[
 		{
-			"selected": 9,
+			"selected": 7,
 			"sheets":
 			[
 				{
@@ -1201,8 +1210,8 @@
 						"selection":
 						[
 							[
-								1217,
-								1217
+								204,
+								273
 							]
 						],
 						"settings":
@@ -1358,7 +1367,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 464.0,
+						"translation.y": 471.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1892,15 +1901,15 @@
 					"file": "www/Page_LifeService.html",
 					"settings":
 					{
-						"buffer_size": 57503,
+						"buffer_size": 57823,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								49728,
-								49728
+								49696,
+								49696
 							]
 						],
 						"settings":
@@ -2057,7 +2066,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 18582.0,
+						"translation.y": 18493.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2067,15 +2076,15 @@
 					"file": "www/Page_TranspotInfo.html",
 					"settings":
 					{
-						"buffer_size": 238129,
+						"buffer_size": 238286,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								125422,
-								125422
+								3503,
+								3503
 							]
 						],
 						"settings":
@@ -2232,7 +2241,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 209.0,
+						"translation.y": 877.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2417,15 +2426,15 @@
 					"file": "www/Page_AreaIntro.html",
 					"settings":
 					{
-						"buffer_size": 57218,
+						"buffer_size": 57277,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								49069,
-								49069
+								685,
+								685
 							]
 						],
 						"settings":
@@ -2582,7 +2591,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 17352.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2599,8 +2608,8 @@
 						"selection":
 						[
 							[
-								24232,
-								24232
+								77063,
+								77068
 							]
 						],
 						"settings":
@@ -2759,7 +2768,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 7425.0,
+						"translation.y": 24606.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -3023,8 +3032,8 @@
 						"selection":
 						[
 							[
-								467,
-								485
+								11298,
+								11298
 							]
 						],
 						"settings":
@@ -3077,8 +3086,183 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
+						"translation.x": 15.0,
+						"translation.y": 1934.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "www/js/map.js",
+					"settings":
+					{
+						"buffer_size": 26662,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2224,
+								2239
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2.0,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5.0,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10.0,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
 						"translation.x": 0.0,
-						"translation.y": 48.0,
+						"translation.y": 905.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -3146,6 +3330,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 269.0,
+	"side_bar_width": 119.0,
 	"status_bar_visible": true
 }
