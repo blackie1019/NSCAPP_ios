@@ -200,7 +200,7 @@
 		                	if(data.spotList.length>0){
 		                		for(var i=0;i<data.spotList.length;i++){
 		                			// LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":getXiconImg(data.spotList[i].classify2),"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
-		                			LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":Setting_classifyImgSrc+data.spotList[i].xicon,"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
+		                			LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":Setting_classifyImgSrc+data.spotList[i].xicon,"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name,"showMap":(data.spotList[i].showMap=='true'?true:false)});
 		                		
 			                	}
 		            		}else{
@@ -601,9 +601,8 @@
 			                if(data.statusCode=="200"){
 			                	if(data.spotList.length>0){
 			                		for(var i=0;i<data.spotList.length;i++){
-			                			LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":Setting_classifyImgSrc+data.spotList[i].xicon,"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
+			                			LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":Setting_classifyImgSrc+data.spotList[i].xicon,"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name,"showMap":(data.spotList[i].showMap=='true'?true:false)});
 			                			// LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":getXiconImg(data.spotList[i].classify2),"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
-		
 				                	}
 			            		}else{
 			            			var alertMessage="查無資料";
@@ -877,17 +876,19 @@
 				str_cancel="Cancel";
 			}
 			for(var i=0;i<LP_jsonObjectArray.length;i++){
-				//gmap marker
-				var title=LP_jsonObjectArray[i].chtName;
-				var address=LP_jsonObjectArray[i].chtAddress;
-				var latitude=LP_jsonObjectArray[i].latitude;
-				var longitude=LP_jsonObjectArray[i].longitude;
-				var spotNo=LP_jsonObjectArray[i].spotNo;
-				var ximage=LP_jsonObjectArray[i].ximage;//待續
-				var xicon=LP_jsonObjectArray[i].xicon;//待續
-				map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
-				//nearAlertSpotList
-			    nearAlertSpotListHtmlResult+='<input type="radio" id="radio_nearAlertSpot_'+i+'" name="radio_nearAlertSpotList" data-spotno="'+spotNo+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-title="'+title+'" data-address="'+address+'" data-theme="c">'+'<label for="radio_nearAlertSpot_'+i+'">'+title+'</label>';
+				if(LP_jsonObjectArray[i].showMap){
+					//gmap marker
+					var title=LP_jsonObjectArray[i].chtName;
+					var address=LP_jsonObjectArray[i].chtAddress;
+					var latitude=LP_jsonObjectArray[i].latitude;
+					var longitude=LP_jsonObjectArray[i].longitude;
+					var spotNo=LP_jsonObjectArray[i].spotNo;
+					var ximage=LP_jsonObjectArray[i].ximage;//待續
+					var xicon=LP_jsonObjectArray[i].xicon;//待續
+					map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
+					//nearAlertSpotList
+				    nearAlertSpotListHtmlResult+='<input type="radio" id="radio_nearAlertSpot_'+i+'" name="radio_nearAlertSpotList" data-spotno="'+spotNo+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-title="'+title+'" data-address="'+address+'" data-theme="c">'+'<label for="radio_nearAlertSpot_'+i+'">'+title+'</label>';
+				}
 			}
 			if(nearAlertSpotListHtmlResult!=""){
 				nearAlertSpotListHtmlResult+='<div data-role="controlgroup" data-type="horizontal"><a data-theme="c" data-role="button" data-rel="back">'+str_cancel+'</a><a data-theme="f" href="javascript:setNearAlertByList();" data-role="button">'+str_ok+'</a></div>';
@@ -1102,6 +1103,11 @@
 			});
 		});
 		$(document).on('pageinit','#Map_CP',function(){	
+			//每一個大圖與小圖按鈕
+			$(this).on('click','.photo img',function(){
+				var href=$(this).attr('src');
+				openBrowser(href);
+			});
  			//地圖按鈕
  			$(this).on('click','#btnMap',function(){
  				var title=$(this).data('title');

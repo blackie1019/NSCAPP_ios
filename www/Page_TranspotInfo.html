@@ -29,6 +29,7 @@
 				window.plugins.flurry.logEvent("[plugin]Page_TranspotInfo.html");
 			}
 		</script>
+
 		<script>
 		$(function () 
 		{
@@ -2712,6 +2713,7 @@
  			if(typeof(selectBase)!=="undefined"||selectBase==null){
  				selectBase=base;
  			}
+ 			changeToIndex_04(Park,selectBase,"");
  			//版本判別
  			switch(AppType){
  				case "N":
@@ -5630,8 +5632,8 @@
 				<div class="int">
 	            	<div id="title"></div>
 					<div id="adv_function">
-						<a id="btnPrev"><div class="prev">更早時刻</div></a>
-						<a id="btnNext"><div class="next">更晚時刻</div></a>
+						<a id="btnPrev"><div class="prev">上一頁</div></a>
+						<a id="btnNext"><div class="next">下一頁</div></a>
 					</div>
 	            	<table width="100%" summary="時刻表" class="lpTb2" id="dataList">
 					</table>

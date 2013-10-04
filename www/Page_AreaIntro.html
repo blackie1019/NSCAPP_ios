@@ -419,8 +419,9 @@
 			          		$('#selectBase').css('display', '').parent('div').parent('.ui-select').css('display', '');
 		          			break;
 		          	}
+		          	// console.log(options);
 		          	for(var i=0;i<options.length;i++){
-		          		if(i==0&&$(this).data('href')!="subDiv_introInfo"){
+		          		if($(options[i]).val()=='00'&&$(this).data('href')!="subDiv_introInfo"){
 
 		          		}else{
 			          		$('#selectBase').append($(options[i]).clone());
