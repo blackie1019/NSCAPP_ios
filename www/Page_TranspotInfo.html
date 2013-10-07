@@ -29,7 +29,6 @@
 				window.plugins.flurry.logEvent("[plugin]Page_TranspotInfo.html");
 			}
 		</script>
-
 		<script>
 		$(function () 
 		{
@@ -296,6 +295,7 @@
 		    });
 		}
 		function changeToLP_01(fromStation,destStation,day,beginHour,beginMin){
+			console.log(day+","+beginHour+","+beginMin);
 			LoadingObject.show();
 			var jsonObject={"fromStation":fromStation,"destStation":destStation,"queryDate":day,"beginHour":beginHour,"beginMin":beginMin};
 			var jsonObjectStr = JSON.stringify(jsonObject);
@@ -2486,8 +2486,13 @@
 			// });
  		});
 		$(document).on('pageinit','#page_aroundStop',function(){
-			var nowDate = new Date();
- 			var targetPark=Park,targetBase=Base;
+			var nowDate = new Date(),
+				targetPark=Park,
+				targetBase=Base,
+				rootElement=this;
+			//設定文字
+			$(rootElement).find('#btnPrev div').html('最早時刻');
+			$(rootElement).find('#btnNext div').html('最晚時刻');
 	 		//切換至路線圖(巡巴或客運)
  			$(this).find('#dataList').on('click','tr',function(){
  				var park=$(this).data("park");
@@ -2526,10 +2531,14 @@
 			$(this).on('click','#btnOrderByTime',function(){
 	 			//取得鄰近站點資料
 				getAroundStop(targetPark,targetBase,getGPRSData().lat,getGPRSData().lng,nowDate.getHours(),nowDate.getMinutes(),"time");
+				$(rootElement).find('#btnPrev div').html('更早時刻');
+				$(rootElement).find('#btnNext div').html('更晚時刻');
 			});
 			$(this).on('click','#btnOrderByCar',function(){
 	 			//取得鄰近站點資料
 				getAroundStop(targetPark,targetBase,getGPRSData().lat,getGPRSData().lng,nowDate.getHours(),nowDate.getMinutes(),"car");
+				$(rootElement).find('#btnPrev div').html('上一頁');
+				$(rootElement).find('#btnNext div').html('下一頁');
 			});
 			$(this).on('click','#btnNext',function(){
 				var allTr=$('#page_aroundStop tr:gt(0)');
@@ -2575,7 +2584,12 @@
 						$('#page_aroundStop #btnPrev').hide();
 					}
 				}
-				if($('#page_aroundStop tr:gt(0):visible:first').data('no')<=5)
+				// if($('#page_aroundStop tr:gt(0):visible:first').data('no')<=5)
+				// {
+				// 	$('#page_aroundStop #btnPrev').hide();
+				// 	$('#page_aroundStop #btnNext').show();
+				// }
+				if($('#page_aroundStop tr:gt(0)').length>$('#page_aroundStop tr:visible:last').data('no')+5)
 				{
 					$('#page_aroundStop #btnPrev').hide();
 					$('#page_aroundStop #btnNext').show();
@@ -4275,10 +4289,23 @@
 			BusMap_map.refresh();
  		});
  		$(document).on('pageshow','#page_setPosition',function(){
-			//重整地圖尺寸跟地圖調整中心
-			if(typeof(setPosition_map)!=="undefined"){	
-				setPosition_map.refresh();
+			smoke.confirm("是否重新定位",function(e){
+			if (e){
+				//取得地圖上坐標
+				var latlng=getGPRSData();
+				//儲存目前GPRS位置
+				setGPRSData({"lat":latlng.lat,"lng":latlng.lng});
+				//重整地圖尺寸跟地圖調整中心
+				if(typeof(setPosition_map)!=="undefined"){	
+					setPosition_map.refresh();
+				}
+			}else{
+				//重整地圖尺寸跟地圖調整中心
+				if(typeof(setPosition_map)!=="undefined"){	
+					setPosition_map.refresh();
+				}
 			}
+			},{ok:"確定", cancel:"取消"});
  		});
 
  		$(document).on('pageinit','#test',function(){	
@@ -4343,8 +4370,8 @@
 				  "langType": langType,
 				  "park": getIdentifyParkBase().Park,
 				  "inner": getIsInArea(),
-				  "currentLat": getGPRSData.lat,
-				  "currentLng":getGPRSData.lng,
+				  "currentLat": getGPRSData().lat,
+				  "currentLng":getGPRSData().lng,
 				  "LBSSpotClassifyArray":classifyArray
 				};
 				//如果有LBSCenterLatLng的值(lat,lng)，則改為目的點為querylat,querylng
@@ -4353,8 +4380,8 @@
 					  "queryType": "1",
 					  "langType": langType,
 					  "park": getIdentifyParkBase().Park,
-					  "currentLat": getGPRSData.lat,
-					  "currentLng":getGPRSData.lng,
+					  "currentLat": getGPRSData().lat,
+					  "currentLng":getGPRSData().lng,
 					  "queryLat": map.LBSCenterLatLng.lat,
 					  "queryLng": map.LBSCenterLatLng.lng,
 	  				  "LBSSpotClassifyArray":classifyArray
@@ -4375,9 +4402,8 @@
 			                if(data.statusCode=="200"){
 			                	if(data.spotList.length>0){
 			                		for(var i=0;i<data.spotList.length;i++){
-			                			LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":Setting_classifyImgSrc+data.spotList[i].xicon,"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
+			                			LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":Setting_classifyImgSrc+data.spotList[i].xicon,"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name,"showMap":(data.spotList[i].showMap=='true'?true:false)});
 			                			// LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":getXiconImg(data.spotList[i].classify2),"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
-		
 				                	}
 			            		}else{
 			            			var alertMessage="查無資料";
@@ -4489,8 +4515,8 @@
 				"langType": langType,
 				"park": getIdentifyParkBase().Park,
 				"inner": getIsInArea(),
-				"currentLat": getGPRSData.lat,
-				"currentLng":getGPRSData.lng,
+				"currentLat": getGPRSData().lat,
+				"currentLng":getGPRSData().lng,
 				"spotNo":sn
 			}
 			var jsonObjectStr = JSON.stringify(jsonObject);
@@ -4546,7 +4572,14 @@
 											"<button data-role='none' id='btnRoute' data-xicon='"+Setting_classifyImgSrc+data.spotList[0].xicon+"' data-ximage='"+Setting_imgSrc+data.spotList[0].mainImage+"' data-title='"+data.spotList[0].name+"' data-latitude='"+data.spotList[0].latitude+"' data-longitude='"+data.spotList[0].longitude+"' data-spotno='"+data.spotList[0].spotNo+"' data-address='"+data.spotList[0].address+"'  class='route'>"+str_route+"</button>"+
 											"<button data-role='none' id='btnTel' data-tel='"+data.spotList[0].telNumber+"'  class='tel'>"+str_call+"</button>"+
 											"</li></ul></div>";
-		   					}
+		   					}else{
+		   						console.log("ok");
+		            			var alertMessage="查無資料";
+		            			if(langType=="eng"){
+		            				alertMessage="not find";
+		            			}
+		            			smoke.alert(alertMessage,{},function(){});
+		            		}
 	        				$('#Map_CP').find('#content').html(htmlResult); 
 	        				$.mobile.changePage('#Map_CP');
 		                }else{
@@ -4602,6 +4635,7 @@
 				$('#Map_LP').find('#dataList').html("<ul data-role='none'>"+htmlResult+"</ul><div style='height:100px;width:100%'></div>");
 				$('#Map_LP').find('#dataMap').hide();
 				$('#Map_LP').find('#dataList').show();
+				$('#map_canvas').hide();
 				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn03').addClass('listbtn01');
 				$('#Map_LP').find('#btnListShow').removeClass('listbtn04').addClass('listbtn02');
 			}else
@@ -4609,6 +4643,7 @@
 				$('#Map_LP').find('#dataList').hide();
 				$('#Map_LP #dataMap .subDiv').hide();
 				// $('#routeList').hide();
+				$('#map_canvas').show();
 				$('#Map_LP').find('#dataMap').show();
 				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');
 				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
@@ -4633,7 +4668,7 @@
 		function convertToGMAPMarkers(){
 			//地圖初始化
 			genMapShowContent();
-			switchLPShowType("map"); 
+			switchFooterFunction('default');
 			//呈現LBS中心點位置
 			map.showLBSCenterMarker();
 			var nearAlertSpotListHtmlResult="";
@@ -4644,17 +4679,19 @@
 				str_cancel="Cancel";
 			}
 			for(var i=0;i<LP_jsonObjectArray.length;i++){
-				//gmap marker
-				var title=LP_jsonObjectArray[i].chtName;
-				var address=LP_jsonObjectArray[i].chtAddress;
-				var latitude=LP_jsonObjectArray[i].latitude;
-				var longitude=LP_jsonObjectArray[i].longitude;
-				var spotNo=LP_jsonObjectArray[i].spotNo;
-				var ximage=LP_jsonObjectArray[i].ximage;//待續
-				var xicon=LP_jsonObjectArray[i].xicon;//待續
-				map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
-				//nearAlertSpotList
-			    nearAlertSpotListHtmlResult+='<input type="radio" id="radio_nearAlertSpot_'+i+'" name="radio_nearAlertSpotList" data-spotno="'+spotNo+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-title="'+title+'" data-address="'+address+'" data-theme="c">'+'<label for="radio_nearAlertSpot_'+i+'">'+title+'</label>';
+				if(LP_jsonObjectArray[i].showMap){
+					//gmap marker
+					var title=LP_jsonObjectArray[i].chtName;
+					var address=LP_jsonObjectArray[i].chtAddress;
+					var latitude=LP_jsonObjectArray[i].latitude;
+					var longitude=LP_jsonObjectArray[i].longitude;
+					var spotNo=LP_jsonObjectArray[i].spotNo;
+					var ximage=LP_jsonObjectArray[i].ximage;//待續
+					var xicon=LP_jsonObjectArray[i].xicon;//待續
+					map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
+					//nearAlertSpotList
+				    nearAlertSpotListHtmlResult+='<input type="radio" id="radio_nearAlertSpot_'+i+'" name="radio_nearAlertSpotList" data-spotno="'+spotNo+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-title="'+title+'" data-address="'+address+'" data-theme="c">'+'<label for="radio_nearAlertSpot_'+i+'">'+title+'</label>';
+				}
 			}
 			if(nearAlertSpotListHtmlResult!=""){
 				nearAlertSpotListHtmlResult+='<div data-role="controlgroup" data-type="horizontal"><a data-theme="c" data-role="button" data-rel="back">'+str_cancel+'</a><a data-theme="f" href="javascript:setNearAlertByList();" data-role="button">'+str_ok+'</a></div>';
@@ -4662,6 +4699,7 @@
 			$('#nearAlertSpotList').html(nearAlertSpotListHtmlResult).trigger('create');
 		}
 		function switchFooterFunction(type){
+			console.log(type);
 			if(type=='route'){
 				$('.defaultFootFunction').hide();
 				$('.RouteFootFunction').show();
@@ -4774,11 +4812,12 @@
  			});
  			//切換地圖顯示
 			$(this).on('click','#btnMAPShow',function(){	
-				convertToGMAPMarkers();
+				// convertToGMAPMarkers();
+				switchLPShowType("map");
 				$(this).removeClass('listbtn01').addClass('listbtn03');
 				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
 				//重設地圖中心
-		      	map.map.setCenter(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng));
+		      	// map.setCenter(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng));
 			});
  			//切換條列顯示
 			$(this).on('click','#btnListShow',function(){	
@@ -4868,6 +4907,11 @@
 			});
 		});
 		$(document).on('pageinit','#Map_CP',function(){	
+			//每一個大圖與小圖按鈕
+			$(this).on('click','.photo img',function(){
+				var href=$(this).attr('src');
+				openBrowser(href);
+			});
  			//地圖按鈕
  			$(this).on('click','#btnMap',function(){
  				var title=$(this).data('title');
@@ -5632,8 +5676,8 @@
 				<div class="int">
 	            	<div id="title"></div>
 					<div id="adv_function">
-						<a id="btnPrev"><div class="prev">上一頁</div></a>
-						<a id="btnNext"><div class="next">下一頁</div></a>
+						<a id="btnPrev"><div class="prev"></div></a>
+						<a id="btnNext"><div class="next"></div></a>
 					</div>
 	            	<table width="100%" summary="時刻表" class="lpTb2" id="dataList">
 					</table>
@@ -5719,17 +5763,16 @@
 				<a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
 		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
                 <h1 class="page_title">生活服務</h1>
-                <a class="btn_backIndex" href="#index" data-icon="home">回主頁</a>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div id='dataMap' class='acenter'>
 					<!-- keyWordSearch -->
-					<div id='divKeyWordSearch' class='subDiv'>
+					<div id='divKeyWordSearch' class='subDiv' style="display:none">
 						<input data-role='none' type='text' class='search' id='txtSearchKeyWord' placeholder='地址/地名/廠商名稱'>
 						<a id='btnKeyWordSearch'   data-mini="true" data-inline="true" data-role="button" data-theme="e">查詢</a>
 					</div>
 					<!-- RountePath -->
-					<div id='divRoutePath' class='subDiv aleft2'>
+					<div id='divRoutePath' class='subDiv aleft2' style="display:none">
 						<div data-role="fieldcotain">
 							<label id="labRoutePointStart" for='txtRoutePointStart'>起點：</label>
 							<input type='text'  id='txtRoutePointStart' placeholder='地址/地名/廠商名稱'>
@@ -5741,7 +5784,7 @@
 						<div class="acenter"><button data-icon="search"  data-mini="true" data-inline="true" data-theme="e" id='btnDoRoute'>路徑規劃</button></div>
 					</div>
 					<!-- map -->
-					<div id='map_canvas' style='width:100%;height:290px;'></div>
+					<div id='map_canvas' width="" style='width:100%;height:290px;'></div>
 					<div id="routeList" class="ui-listview ui-listview-inset ui-corner-all ui-shadow" style="display:none;">
 						<div id="divDirectionHeader" class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-top ui-btn-up-undefined">規劃路徑</div>
 						<div id="directions" class='acenter gmapDirections'></div>
@@ -5791,21 +5834,5 @@
 			<div data-role="content" style="padding:0" id="content">
 			</div>
 		</div>
-
-		<!--Test-->
-		<div data-role="page" id="test">
-			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f">
-				<a data-rel="back">返回</a>
-                <h1>測試</h1>
-            </div>
-			<div data-role="content" style="padding:0" id="content">
-				<div id="googleMap_container" style="height: 300px;width: auto;"> 
-				<div id="directions"></div>
-				<input type="text" id="txtAddress"></input>
-				<div id="map_canvas" style="width: 100%;height:100% "></div>
-				</div>
-			<div>
-		</div>
-
 	</body>
 </html>

@@ -523,8 +523,9 @@ function convertToDay(date,format){
     });        
 }
 function dayOfWeek(date){
+    console.log(date.getDate());
     if(!date) return;
-    switch(date.getDate()){
+    switch(date.getDate()%7){
         case 0:
             return "星期一";
             break;

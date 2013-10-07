@@ -834,6 +834,7 @@
 				$('#Map_LP').find('#dataList').html("<ul data-role='none'>"+htmlResult+"</ul><div style='height:100px;width:100%'></div>");
 				$('#Map_LP').find('#dataMap').hide();
 				$('#Map_LP').find('#dataList').show();
+				$('#map_canvas').hide();
 				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn03').addClass('listbtn01');
 				$('#Map_LP').find('#btnListShow').removeClass('listbtn04').addClass('listbtn02');
 			}else
@@ -841,6 +842,7 @@
 				$('#Map_LP').find('#dataList').hide();
 				$('#Map_LP #dataMap .subDiv').hide();
 				// $('#routeList').hide();
+				$('#map_canvas').show();
 				$('#Map_LP').find('#dataMap').show();
 				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');
 				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
@@ -867,7 +869,7 @@
 			genMapShowContent();
 			switchFooterFunction('default');
 			//呈現LBS中心點位置
-			//map.showLBSCenterMarker();
+			map.showLBSCenterMarker();
 			var nearAlertSpotListHtmlResult="";
 			var str_ok="確定";
 			var str_cancel="取消";
@@ -896,6 +898,7 @@
 			$('#nearAlertSpotList').html(nearAlertSpotListHtmlResult).trigger('create');
 		}
 		function switchFooterFunction(type){
+			console.log(type);
 			if(type=='route'){
 				$('.defaultFootFunction').hide();
 				$('.RouteFootFunction').show();
@@ -1008,12 +1011,12 @@
  			});
  			//切換地圖顯示
 			$(this).on('click','#btnMAPShow',function(){	
-				convertToGMAPMarkers();
-				
+				// convertToGMAPMarkers();
+				switchLPShowType("map");
 				$(this).removeClass('listbtn01').addClass('listbtn03');
 				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
 				//重設地圖中心
-		      	map.map.setCenter(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng));
+		      	// map.setCenter(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng));
 			});
  			//切換條列顯示
 			$(this).on('click','#btnListShow',function(){	
@@ -1219,12 +1222,12 @@
 			<div data-role="content" style="padding:0" id="content">
 				<div id='dataMap' class='acenter'>
 					<!-- keyWordSearch -->
-					<div id='divKeyWordSearch' class='subDiv'>
+					<div id='divKeyWordSearch' class='subDiv' style="display:none">
 						<input data-role='none' type='text' class='search' id='txtSearchKeyWord' placeholder='地址/地名/廠商名稱'>
 						<a id='btnKeyWordSearch'   data-mini="true" data-inline="true" data-role="button" data-theme="e">查詢</a>
 					</div>
 					<!-- RountePath -->
-					<div id='divRoutePath' class='subDiv aleft2'>
+					<div id='divRoutePath' class='subDiv aleft2' style="display:none">
 						<div data-role="fieldcotain">
 							<label id="labRoutePointStart" for='txtRoutePointStart'>起點：</label>
 							<input type='text'  id='txtRoutePointStart' placeholder='地址/地名/廠商名稱'>

@@ -495,7 +495,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ken Hsu (Z2BE8TK46V)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -511,7 +511,7 @@
 					"\"$(SRCROOT)/NSCAPP_ios/Classes\"",
 				);
 				PRODUCT_NAME = NSCAPP_ios;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "B99E1418-CBFE-4FC0-B59E-9EC24A763334";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -521,7 +521,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ken Hsu (Z2BE8TK46V)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NSCAPP_ios/NSCAPP_ios-Prefix.pch";
@@ -535,7 +535,7 @@
 					"\"$(SRCROOT)/NSCAPP_ios/Classes\"",
 				);
 				PRODUCT_NAME = NSCAPP_ios;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "B99E1418-CBFE-4FC0-B59E-9EC24A763334";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

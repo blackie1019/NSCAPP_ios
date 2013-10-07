@@ -496,8 +496,8 @@
 				  "langType": langType,
 				  "park": getIdentifyParkBase().Park,
 				  "inner": getIsInArea(),
-				  "currentLat": getGPRSData.lat,
-				  "currentLng":getGPRSData.lng,
+				  "currentLat": getGPRSData().lat,
+				  "currentLng":getGPRSData().lng,
 				  "LBSSpotClassifyArray":classifyArray
 				};
 				//如果有LBSCenterLatLng的值(lat,lng)，則改為目的點為querylat,querylng
@@ -506,8 +506,8 @@
 					  "queryType": "1",
 					  "langType": langType,
 					  "park": getIdentifyParkBase().Park,
-					  "currentLat": getGPRSData.lat,
-					  "currentLng":getGPRSData.lng,
+					  "currentLat": getGPRSData().lat,
+					  "currentLng":getGPRSData().lng,
 					  "queryLat": map.LBSCenterLatLng.lat,
 					  "queryLng": map.LBSCenterLatLng.lng,
 	  				  "LBSSpotClassifyArray":classifyArray
@@ -528,9 +528,8 @@
 			                if(data.statusCode=="200"){
 			                	if(data.spotList.length>0){
 			                		for(var i=0;i<data.spotList.length;i++){
-			                			LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":Setting_classifyImgSrc+data.spotList[i].xicon,"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
+			                			LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":Setting_classifyImgSrc+data.spotList[i].xicon,"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name,"showMap":(data.spotList[i].showMap=='true'?true:false)});
 			                			// LP_jsonObjectArray.push({"spotNo":data.spotList[i].spotNo,"chtName":data.spotList[i].name,"chtAddress":data.spotList[i].address,"xicon":getXiconImg(data.spotList[i].classify2),"ximage":Setting_imgSrc+data.spotList[i].mainImage,"latitude":data.spotList[i].latitude,"longitude":data.spotList[i].longitude,"classify1":data.spotList[i].classify1,"classify2":data.spotList[i].classify2,"classify2_name":data.spotList[i].classify2Name});
-		
 				                	}
 			            		}else{
 			            			var alertMessage="查無資料";
@@ -642,8 +641,8 @@
 				"langType": langType,
 				"park": getIdentifyParkBase().Park,
 				"inner": getIsInArea(),
-				"currentLat": getGPRSData.lat,
-				"currentLng":getGPRSData.lng,
+				"currentLat": getGPRSData().lat,
+				"currentLng":getGPRSData().lng,
 				"spotNo":sn
 			}
 			var jsonObjectStr = JSON.stringify(jsonObject);
@@ -700,6 +699,7 @@
 											"<button data-role='none' id='btnTel' data-tel='"+data.spotList[0].telNumber+"'  class='tel'>"+str_call+"</button>"+
 											"</li></ul></div>";
 		   					}else{
+		   						console.log("ok");
 		            			var alertMessage="查無資料";
 		            			if(langType=="eng"){
 		            				alertMessage="not find";
@@ -761,6 +761,7 @@
 				$('#Map_LP').find('#dataList').html("<ul data-role='none'>"+htmlResult+"</ul><div style='height:100px;width:100%'></div>");
 				$('#Map_LP').find('#dataMap').hide();
 				$('#Map_LP').find('#dataList').show();
+				$('#map_canvas').hide();
 				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn03').addClass('listbtn01');
 				$('#Map_LP').find('#btnListShow').removeClass('listbtn04').addClass('listbtn02');
 			}else
@@ -768,6 +769,7 @@
 				$('#Map_LP').find('#dataList').hide();
 				$('#Map_LP #dataMap .subDiv').hide();
 				// $('#routeList').hide();
+				$('#map_canvas').show();
 				$('#Map_LP').find('#dataMap').show();
 				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');
 				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
@@ -792,7 +794,7 @@
 		function convertToGMAPMarkers(){
 			//地圖初始化
 			genMapShowContent();
-			switchLPShowType("map"); 
+			switchFooterFunction('default');
 			//呈現LBS中心點位置
 			map.showLBSCenterMarker();
 			var nearAlertSpotListHtmlResult="";
@@ -803,17 +805,19 @@
 				str_cancel="Cancel";
 			}
 			for(var i=0;i<LP_jsonObjectArray.length;i++){
-				//gmap marker
-				var title=LP_jsonObjectArray[i].chtName;
-				var address=LP_jsonObjectArray[i].chtAddress;
-				var latitude=LP_jsonObjectArray[i].latitude;
-				var longitude=LP_jsonObjectArray[i].longitude;
-				var spotNo=LP_jsonObjectArray[i].spotNo;
-				var ximage=LP_jsonObjectArray[i].ximage;//待續
-				var xicon=LP_jsonObjectArray[i].xicon;//待續
-				map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
-				//nearAlertSpotList
-			    nearAlertSpotListHtmlResult+='<input type="radio" id="radio_nearAlertSpot_'+i+'" name="radio_nearAlertSpotList" data-spotno="'+spotNo+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-title="'+title+'" data-address="'+address+'" data-theme="c">'+'<label for="radio_nearAlertSpot_'+i+'">'+title+'</label>';
+				if(LP_jsonObjectArray[i].showMap){
+					//gmap marker
+					var title=LP_jsonObjectArray[i].chtName;
+					var address=LP_jsonObjectArray[i].chtAddress;
+					var latitude=LP_jsonObjectArray[i].latitude;
+					var longitude=LP_jsonObjectArray[i].longitude;
+					var spotNo=LP_jsonObjectArray[i].spotNo;
+					var ximage=LP_jsonObjectArray[i].ximage;//待續
+					var xicon=LP_jsonObjectArray[i].xicon;//待續
+					map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
+					//nearAlertSpotList
+				    nearAlertSpotListHtmlResult+='<input type="radio" id="radio_nearAlertSpot_'+i+'" name="radio_nearAlertSpotList" data-spotno="'+spotNo+'" data-latitude="'+latitude+'" data-longitude="'+longitude+'" data-title="'+title+'" data-address="'+address+'" data-theme="c">'+'<label for="radio_nearAlertSpot_'+i+'">'+title+'</label>';
+				}
 			}
 			if(nearAlertSpotListHtmlResult!=""){
 				nearAlertSpotListHtmlResult+='<div data-role="controlgroup" data-type="horizontal"><a data-theme="c" data-role="button" data-rel="back">'+str_cancel+'</a><a data-theme="f" href="javascript:setNearAlertByList();" data-role="button">'+str_ok+'</a></div>';
@@ -821,6 +825,7 @@
 			$('#nearAlertSpotList').html(nearAlertSpotListHtmlResult).trigger('create');
 		}
 		function switchFooterFunction(type){
+			console.log(type);
 			if(type=='route'){
 				$('.defaultFootFunction').hide();
 				$('.RouteFootFunction').show();
@@ -933,11 +938,12 @@
  			});
  			//切換地圖顯示
 			$(this).on('click','#btnMAPShow',function(){	
-				convertToGMAPMarkers();
+				// convertToGMAPMarkers();
+				switchLPShowType("map");
 				$(this).removeClass('listbtn01').addClass('listbtn03');
 				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');
 				//重設地圖中心
-		      	map.map.setCenter(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng));
+		      	// map.setCenter(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng));
 			});
  			//切換條列顯示
 			$(this).on('click','#btnListShow',function(){	
@@ -1027,6 +1033,11 @@
 			});
 		});
 		$(document).on('pageinit','#Map_CP',function(){	
+			//每一個大圖與小圖按鈕
+			$(this).on('click','.photo img',function(){
+				var href=$(this).attr('src');
+				openBrowser(href);
+			});
  			//地圖按鈕
  			$(this).on('click','#btnMap',function(){
  				var title=$(this).data('title');
@@ -1075,6 +1086,7 @@
 		$(document).on('pageshow','#Map_LP',function(){
 			//switchFooterFunction('default');
 			var mapData=getMapData();
+			console.log(mapData);
 			if(typeof(mapData)!=="undefined"&&mapData!=null){
 				//關閉幕前顯示div
 				$('#Map_LP #dataMap .subDiv').hide();
@@ -1105,7 +1117,7 @@
 				}
 			});
 		});
-			</script>
+		</script>
 			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f">
 		        <a href="#menu" data-role="none" class="btnMenu"></a>
                 <h1 id="page_title">科學園區簡介</h1>
@@ -1151,17 +1163,17 @@
 			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f">
 				<a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
 		     	<!-- <a href="#index" data-icon="arrow-l">返回</a> -->
-                <h1 class="page_title">科學園區簡介</h1>
+                <h1 class="page_title">生活服務</h1>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 				<div id='dataMap' class='acenter'>
 					<!-- keyWordSearch -->
-					<div id='divKeyWordSearch' class='subDiv'>
+					<div id='divKeyWordSearch' class='subDiv' style="display:none">
 						<input data-role='none' type='text' class='search' id='txtSearchKeyWord' placeholder='地址/地名/廠商名稱'>
 						<a id='btnKeyWordSearch'   data-mini="true" data-inline="true" data-role="button" data-theme="e">查詢</a>
 					</div>
 					<!-- RountePath -->
-					<div id='divRoutePath' class='subDiv aleft2'>
+					<div id='divRoutePath' class='subDiv aleft2' style="display:none">
 						<div data-role="fieldcotain">
 							<label id="labRoutePointStart" for='txtRoutePointStart'>起點：</label>
 							<input type='text'  id='txtRoutePointStart' placeholder='地址/地名/廠商名稱'>
@@ -1173,7 +1185,7 @@
 						<div class="acenter"><button data-icon="search"  data-mini="true" data-inline="true" data-theme="e" id='btnDoRoute'>路徑規劃</button></div>
 					</div>
 					<!-- map -->
-					<div id='map_canvas' style='width:100%;height:290px;'></div>
+					<div id='map_canvas' width="" style='width:100%;height:290px;'></div>
 					<div id="routeList" class="ui-listview ui-listview-inset ui-corner-all ui-shadow" style="display:none;">
 						<div id="divDirectionHeader" class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-top ui-btn-up-undefined">規劃路徑</div>
 						<div id="directions" class='acenter gmapDirections'></div>
@@ -1218,6 +1230,7 @@
 			<div data-role="header" data-position="fixed" data-fullscreen="false" data-theme="f">
 				<a data-rel="back" class="btn_back" data-icon="arrow-l">返回</a>
                 <h1 class="page_title">生活服務</h1>
+                <a class="btn_backIndex" href="#index" data-icon="home">回主頁</a>
             </div>
 			<div data-role="content" style="padding:0" id="content">
 			</div>

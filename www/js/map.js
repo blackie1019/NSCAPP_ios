@@ -45,7 +45,7 @@ function HyMap(draggable){
 HyMap.prototype.ini=function(mapDiv,center,zoomsize){
 	var oThis=this;
 	//清除LocalStorage MapData資料
-	clearMapData();
+	//clearMapData();
 	//清除目前畫面內容
 	oThis.clearMapMarker();
 	oThis.clearPolyLine();
@@ -67,7 +67,8 @@ HyMap.prototype.ini=function(mapDiv,center,zoomsize){
 //[setLBSCenterLatLng]設定LBS的X公尺中心點
 HyMap.prototype.setLBSCenterLatLng=function(LBSCenterLatLng,isSameToCenter){
 	var oThis=this;
-	this.LBSCenterLatLng=LBSCenterLatLng;
+	oThis.LBSCenterLatLng=LBSCenterLatLng;
+		console.log(oThis.LBSCenterLatLng);
 	if(isSameToCenter==true){
 		oThis.center=new google.maps.LatLng(LBSCenterLatLng.lat,LBSCenterLatLng.lng);
 		oThis.refresh();
@@ -76,6 +77,7 @@ HyMap.prototype.setLBSCenterLatLng=function(LBSCenterLatLng,isSameToCenter){
 //[showLBSCenterMarker]呈現目前LBS中心點
 HyMap.prototype.showLBSCenterMarker=function(){
 	var oThis=this;
+	console.log(oThis.LBSCenterLatLng);
 	if(typeof(oThis.LBSCenterLatLng)!="undefined"){
 		oThis.addMarker(new google.maps.LatLng(oThis.LBSCenterLatLng.lat,oThis.LBSCenterLatLng.lng),oThis.map_icons.position.icon,false);
 	}

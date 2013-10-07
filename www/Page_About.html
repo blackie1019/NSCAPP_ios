@@ -180,6 +180,7 @@
                 			for(var i=0;i<data.jsonOutput.length;i++){
 		                		htmlResult+="<li data-typecode='"+data.jsonOutput[i].faqClassify+"' data-sn='"+data.jsonOutput[i].SN+"'><h2>"+data.jsonOutput[i].chtTitle+"</h2><input type='hidden' name='answer' id='answer' value='"+data.jsonOutput[i].chtDesc+"'><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></div></li>";
 	            			}	
+	                		htmlResult+="<li data-typecode='"+data.jsonOutput[0].faqClassify+"' data-sn='"+data.jsonOutput[0].SN+"'><h2>test</h2><input type='hidden' name='answer' id='answer' value='"+'<a href=&#39;tel:035770737&#39;>035770737</a>'+"'><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></div></li>";
 		              //   	for(var i=0;i<data.jsonOutput.items.length;i++){
 		              //   		htmlResult+="<li data-typecode='"+data.jsonOutput.typeCode+"' data-sn='"+data.jsonOutput.items[i].sn+"'><h2>"+data.jsonOutput.items[i].question+"</h2><input type='hidden' name='answer' id='answer' value='"+data.jsonOutput.items[i].answer+"'><div class='arrow'><img src='img/NSC/arrow.png' alt='arrow'></div></li>";
 	            			// }	
