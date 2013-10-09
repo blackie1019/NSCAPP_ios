@@ -245,8 +245,10 @@
 				for(var option_index=0;option_index<jsonObject.options.length;option_index++){
 					result+='<input onclick="javascirpt:changeToTrafficContent(&apos;'+Park+'&apos;,&apos;'+Base+'&apos;,&apos;'+jsonObject.options[option_index].code+'&apos;,false);" data-role="none" type="submit" name="button" id="button" data-code="'+jsonObject.options[option_index].code+'" value="'+jsonObject.options[option_index].value+'" class="traffic'+jsonObject.options[option_index].code+'"></input>';	
 				}
-				result='<div class="aleft2 springboard2">'+result+'</div>'+
-						'<div class="helpline">'+helpTel+'</div>';
+				result='<div class="springboard2"><div class="aleft2 subdiv">'+result+'</div></div>';
+
+				// result='<div style="width:100%" class="springboard2"><div class="aleft2 subdiv">'+result+'</div></div>'+
+						// '<div class="helpline">'+helpTel+'</div>';
 				return result;
 			}
 

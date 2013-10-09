@@ -969,6 +969,10 @@
 				}
 			}	
 		}
+		function resetListView(spotNo){
+			console.log('#Map_LP #dataList li[data-role!=list-divider][data-spotno!='+spotNo+']');
+			$('#Map_LP #dataList li[data-role!=list-divider][data-spotno!='+spotNo+']').attr("display","none");
+		}
 		//pageinit
 		$(document).on('pageinit','#Map_LP',function(){	
 			//調整map高度
@@ -1124,6 +1128,8 @@
  				map.showTargetMarker(title,address,latitude,longitude,spotNo,ximage,xicon);
  				$.mobile.changePage('#Map_LP');
  				switchLPShowType("map");
+ 				switchFooterFunction("map");
+ 				resetListView(spotNo);
  				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;
  				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;
  			});

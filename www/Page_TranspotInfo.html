@@ -266,12 +266,15 @@
 									;
 			                		htmlResult+="</td></tr>";
 		                		}
+
 		                		if(htmlResult!=""){
 		                			htmlResult="<tbody><tr><th scope='col'>交通工具</th><th scope='col'>發車時刻</th></tr>"+htmlResult+"</tbody>";
 		                			$('#page_aroundStop').find('#footerFunction').show();
 		               				$('#page_aroundStop').find('#btnPrev').hide();
 		               				if(!isNextShow){
 		               					$('#page_aroundStop').find('#btnNext').hide();
+		               				}else{
+		               					$('#page_aroundStop').find('#btnNext').show();
 		               				}
 		                		}else{
 		                			htmlResult="<tbody><tr><td>查無相關交通資料</td></tr></tbody>";
@@ -1093,7 +1096,7 @@
 								  transportList_htmlResult+='</div></li>';
                 			}
                 			if(typeof(data.stationInfo.chtStationName)!="undefined"){
-								nearestSpotInfo_htmlResult+='我的位置距離最近巡巴站牌 <span class="red"><strong>'+data.stationInfo.chtStationName+'</strong></span> 約 <span class="green"><strong>'+convetDistance(data.stationInfo.distance)+'</strong></span><br><input data-role="none" type="submit" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnRoute" value="規劃路線" class="btn11"></input><input data-role="none" type="submit" name="button" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnAroundStop" value="鄰近站點" class="btn10"></input>';
+								nearestSpotInfo_htmlResult+='我的位置距離最近的站牌 <span class="red"><strong>'+data.stationInfo.chtStationName+'</strong></span> 約 <span class="green"><strong>'+convetDistance(data.stationInfo.distance)+'</strong></span><br><input data-role="none" type="submit" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnRoute" value="規劃路線" class="btn11"></input><input data-role="none" type="submit" name="button" data-title="'+data.stationInfo.chtStationName+'" data-address="'+data.stationInfo.chtAddress+'" data-latitude="'+data.stationInfo.latitude+'" data-longitude="'+data.stationInfo.longitude+'" data-spotno="'+data.stationInfo.spotNo+'" id="btnAroundStop" value="鄰近站點" class="btn10"></input>';
 							}
 	            			if(transportList_htmlResult!=""){
 	            				transportList_htmlResult='<ul data-role="none">'+transportList_htmlResult+'</ul>';
@@ -2491,8 +2494,8 @@
 				targetBase=Base,
 				rootElement=this;
 			//設定文字
-			$(rootElement).find('#btnPrev div').html('最早時刻');
-			$(rootElement).find('#btnNext div').html('最晚時刻');
+			$(rootElement).find('#btnPrev div').html('更早時刻');
+			$(rootElement).find('#btnNext div').html('更晚時刻');
 	 		//切換至路線圖(巡巴或客運)
  			$(this).find('#dataList').on('click','tr',function(){
  				var park=$(this).data("park");
@@ -2584,15 +2587,12 @@
 						$('#page_aroundStop #btnPrev').hide();
 					}
 				}
-				// if($('#page_aroundStop tr:gt(0):visible:first').data('no')<=5)
-				// {
-				// 	$('#page_aroundStop #btnPrev').hide();
-				// 	$('#page_aroundStop #btnNext').show();
-				// }
-				if($('#page_aroundStop tr:gt(0)').length>$('#page_aroundStop tr:visible:last').data('no')+5)
+				if($('#page_aroundStop tr:gt(0)').length>$('#page_aroundStop tr:gt(0):visible:first').data('no'))
 				{
-					$('#page_aroundStop #btnPrev').hide();
 					$('#page_aroundStop #btnNext').show();
+				}
+				if($('#page_aroundStop tr:gt(0):visible:first').data('no')==1){
+					$('#page_aroundStop #btnPrev').hide();
 				}
 			});
 		});

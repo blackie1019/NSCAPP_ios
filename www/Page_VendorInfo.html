@@ -224,14 +224,15 @@
 						        groupLabel: vendor_str
 							}); 
 				 			//園區基地別下拉判別
-				 			if(isInArea=="true"){
-							var selectData=getDefaultParkBaseSelectData(false,langType);
-					 		var mobiScroll_Jobs_ParkBase=$('#QP').find('#mobiScroll_VendorInfo_ParkBase');
-					        $(mobiScroll_Jobs_ParkBase).val(selectData.defaultParkBase).mobiscroll('setValue',[selectData.defaultParkBase]);
-					        $('#QP').find('#mobiScroll_VendorInfo_ParkBase_dummy').val(selectData.defaultParkBaseStr);
-					        temp=null;selectData=null;
-					        delete temp;delete selectData;
-							}
+
+				 			if(AppType=="N"&&isInArea=="true"){
+								var selectData=getDefaultParkBaseSelectData(false,langType);
+						 		var mobiScroll_VendorInfo_ParkBase=$('#QP').find('#mobiScroll_VendorInfo_ParkBase');
+						        $(mobiScroll_VendorInfo_ParkBase).val(selectData.defaultParkBase).mobiscroll('setValue',[selectData.defaultParkBase]);
+						        $('#QP').find('#mobiScroll_VendorInfo_ParkBase_dummy').val(selectData.defaultParkBaseStr);
+						        temp=null;selectData=null;
+						        delete temp;delete selectData;
+							}	
 							$('#QP').trigger('create');
 		                }else{
 		                    smoke.alert(ServiceCodeErrorString,{},function(){});

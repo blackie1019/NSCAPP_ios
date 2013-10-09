@@ -241,7 +241,7 @@ h1 {
 /*toplist*/
 .toplist {
 	/*overflow:scroll;*/
-	width: 200%;
+	width:200%;
 	height: 34px;
 	background-color: #cecfcf;
 	border: solid 1px #0b3376;
@@ -1521,6 +1521,9 @@ h1
 .springboard2 {
 	margin-top: 1em;
 	margin-bottom: 1em;
+}
+.springboard2 .subdiv {
+	width: 270px;
 }
 .springboard2 ul {
 	margin: 0px auto;
