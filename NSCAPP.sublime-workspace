@@ -523,7 +523,7 @@
 			"file": "www/Page_TranspotInfo.html",
 			"settings":
 			{
-				"buffer_size": 239276,
+				"buffer_size": 241007,
 				"line_ending": "Unix"
 			}
 		},
@@ -621,16 +621,16 @@
 		"selected_items":
 		[
 			[
-				"pack",
-				"Package Control: List Packages"
-			],
-			[
 				"pac",
-				"Package Control: Install Package"
+				"Package Control: Upgrade Package"
 			],
 			[
 				"pa",
-				"Package Control: Install Package"
+				"Package Control: List Packages"
+			],
+			[
+				"pack",
+				"Package Control: List Packages"
 			],
 			[
 				"remov",
@@ -800,7 +800,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 95.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"",
@@ -812,6 +812,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"ChangeToCP_02",
 			"btnPre",
 			"getAroundStop",
 			"page_aroundStop",
@@ -938,8 +939,7 @@
 			"btnSearch",
 			"getGPRSData.",
 			"  \"queryType\": \"1\",",
-			"getGPRSData",
-			"  \"queryType\": \"3\","
+			"getGPRSData"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1014,15 +1014,15 @@
 					"file": "www/Page_TranspotInfo.html",
 					"settings":
 					{
-						"buffer_size": 239276,
+						"buffer_size": 241007,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								118095,
-								118095
+								74714,
+								74714
 							]
 						],
 						"settings":
@@ -1180,7 +1180,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 47797.0,
+						"translation.y": 28626.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2423,7 +2423,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 15.0,
-						"translation.y": 11300.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
