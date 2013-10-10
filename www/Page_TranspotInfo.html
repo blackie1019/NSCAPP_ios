@@ -1443,7 +1443,7 @@
 			LoadingObject.show();
 			var jsonObject={"parkArea":park,"currentLat":lat,"currentLng":lng,"beginHour":"00","beginMin":"00","fromStation":from,"destStation":dest};
 			var jsonObjectStr = JSON.stringify(jsonObject);
-			var htmlResult="",trainHtmlResult="",selectedTimeRange=getTimeRangeValue(hh+":"+mm),trTimeRangeValue="0",showTRCount=0;
+			var htmlResult="",trafficHtmlResult="",trainHtmlResult="",selectedTimeRange=getTimeRangeValue(hh+":"+mm),trTimeRangeValue="0",showTRCount=0;
 		    $.ajax({
 		        url:DataURL_TranspoltInfo_CP_02,
 		        data:  {"jsonInput":jsonObjectStr},
@@ -1468,6 +1468,35 @@
 			       						'</li>';
 		                	htmlResult+='<li>搭乘  <span class="org"><strong>'+data.chtDescription+'</strong></span></li>';
 	            			htmlResult+='<li>建議轉乘時間：</li>';
+			            	if(data.trafficList.length>0){
+								trafficHtmlResult+='<table id="trafficTable" width="100%" summary="建議轉乘時間表" class="lpTb2"><tbody>'+
+												   '<tr><th scope="col">交通工具</th><th scope="col">行車方向</th><th scope="col">起站發車時間</th></tr>';
+								showTRCount=0;
+								for(var i=0;i<data.trafficList.length;i++){
+									trTimeRangeValue=getTimeRangeValue(data.trafficList[i].arriveHour+":"+(data.trafficList[i].arriveMin!="0"?data.trafficList[i].arriveMin:"00"));
+									trafficHtmlResult+='<tr data-no="'+(i+1)+'"" data-timerange="'+trTimeRangeValue+'"  ';
+									if(checkTimeIsAfter(hh+":"+mm,data.trafficList[i].arriveHour+":"+data.trafficList[i].arriveMin)){
+										if(selectedTimeRange!="0"&&trTimeRangeValue!=selectedTimeRange){
+											trafficHtmlResult+='style="display:none;" data-targetrange="1"';	
+										}else{
+											if(showTRCount>1){
+												trafficHtmlResult+='style="display:none;" data-targetrange="1"';
+											}else{
+												trafficHtmlResult+=' data-targetrange="1" ';
+												showTRCount++;
+											}
+										}
+									}else{
+										trafficHtmlResult+='style="display:none;"';	
+									}
+									trafficHtmlResult+='>';
+									trafficHtmlResult+='<td>'+data.trafficList[i].chtLineTitle+'</td>'+
+													'<td>'+data.trafficList[i].toDir+'</td>'+
+													'<td>'+data.trafficList[i].arriveHour+":"+(data.trafficList[i].arriveMin!="0"?data.trafficList[i].arriveMin:"00")+'</td>'+
+													'</tr>';
+								}
+								trafficHtmlResult+='</tbody></table>'
+							}
 							if(data.trainList.length>0){
 								trainHtmlResult+='<table id="trainTable" width="100%" summary="建議轉乘時間表" class="lpTb2"><tbody>'+
 												 '<tr><th scope="col">交通工具</th><th scope="col">行車方向</th><th scope="col">發車時間</th><th scope="col">抵達時間</th></tr>';
@@ -1498,13 +1527,17 @@
 								}
 								trainHtmlResult+='</tbody></table>'
 							}
-							if((trainHtmlResult)==""){
+							if((trafficHtmlResult+trainHtmlResult)==""){
 								htmlResult+="<br/>尚未提供相關資料";
 							}else{
 								htmlResult+='<div id="adv_function"><a id="btnPrev"><div class="prev">更早時刻</div></a><a id="btnNext"><div class="next">更晚時刻</div></a></div>';
-								htmlResult+=trainHtmlResult;
+								if(AppType!="S"){
+									htmlResult+=trafficHtmlResult+trainHtmlResult;
+								}else{
+									htmlResult+=trainHtmlResult+trafficHtmlResult;
+								}
 							}
-							adv_function
+							//adv_function
 							$('#CP_02').find('select_timeRange').selectmenu('refresh');
 							$('#CP_02').find('#intlist').html(htmlResult);
 			        		$('#CP_02').find('#note').html("<span>註：</span>"+data.chtAlertMessage);

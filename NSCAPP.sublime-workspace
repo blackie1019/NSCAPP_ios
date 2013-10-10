@@ -4,8 +4,32 @@
 		"selected_items":
 		[
 			[
+				"pars",
+				"parseInt	jsGlobal"
+			],
+			[
 				"disp",
-				"display:none"
+				"display"
+			],
+			[
+				"las",
+				"last_no"
+			],
+			[
+				"first",
+				"first_no"
+			],
+			[
+				"allt",
+				"allTr"
+			],
+			[
+				"DataUR",
+				"DataURL_LBSQueryService"
+			],
+			[
+				"max",
+				"max-width"
 			],
 			[
 				"be",
@@ -128,10 +152,6 @@
 				"LINK	Tag"
 			],
 			[
-				"allt",
-				"allTr_4"
-			],
-			[
 				"alltr",
 				"allTr_2"
 			],
@@ -150,10 +170,6 @@
 			[
 				"selectval",
 				"selectValueBeforeTr"
-			],
-			[
-				"first",
-				"first_no-1"
 			],
 			[
 				"selectV",
@@ -488,10 +504,6 @@
 				"LP_05_1"
 			],
 			[
-				"max",
-				"max-height"
-			],
-			[
 				"transportList_",
 				"transportList_htmlResult"
 			],
@@ -502,18 +514,6 @@
 			[
 				"font",
 				"font-size"
-			],
-			[
-				"appTyp",
-				"AppType"
-			],
-			[
-				"slid",
-				"slideUp()	jQuery"
-			],
-			[
-				"prel",
-				"preloadDiv"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "www/Page_TranspotInfo.html",
 			"settings":
 			{
-				"buffer_size": 239282,
+				"buffer_size": 239276,
 				"line_ending": "Unix"
 			}
 		},
@@ -531,15 +531,18 @@
 			"file": "www/Page_AreaIntro.html",
 			"settings":
 			{
-				"buffer_size": 57826,
+				"buffer_size": 57968,
 				"line_ending": "Unix"
 			}
 		},
 		{
+			"contents": "<!DOCTYPE html>\n<html><!-- manifest=\"cache.appcache\" 開啟Cache 功能-->\n    <head>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></meta>\n        <!--ios-->\n        <script type=\"text/javascript\" src=\"js/ios/cordova-2.5.0.js\"></script>\n                <script type=\"text/javascript\" src=\"js/ios/flurryPlugin.js\"></script>\n        <!--android-->\n        <!--\n         <script type=\"text/javascript\" src=\"js/android/cordova-2.4.0.js\"></script>\n        -->\n        <!--jQuery-->\n        <script type=\"text/javascript\" src=\"js/jquery-1.8.2.min.js\"></script>\n		<!--json2-->\n		<script type=\"text/javascript\" src=\"js/js.min/json2.min.js\"></script>\n		<!--Google Map API v3-->\n		<!--<script type=\"text/javascript\"	src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyDE9qxWxKreYH34oRyk2RCtM5-VqrauTPc&sensor=false\"></script>-->\n		<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>\n		<!--mobiScroll-->\n		<script src=\"js/mobiscroll.core.js\" type=\"text/javascript\"></script>\n		<script type=\"text/javascript\" src=\"js/mobiscroll.select.js\"></script>\n		<link href=\"css/mobiscroll.custom-2.4.3.min.css\" rel=\"stylesheet\" type=\"text/css\"></link>\n		<script src=\"js/mobiscroll.custom.js\" type=\"text/javascript\"></script>\n		<script>\n		$(document).bind('mobileinit', function(){\n\n		});\n		</script>\n		<!--<script src=\"http://debug.phonegap.com/target/target-script-min.js#blackie1019\"></script>-->\n		<!--jQuery mobile-->\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"css/jquery.mobile-NSC-1.3.0.css\"></link>\n        <script type=\"text/javascript\" src=\"js/jquery.mobile-1.3.0.min.js\"></script>\n        <!--Plug in-->\n        <script src=\"js/jquery.hammer.min.js\"></script>\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"css/smoke.min.css\">\n        <!-- <link rel=\"stylesheet\" type=\"text/css\" href=\"css/smoke.theme.100s.css\"> -->\n        <script src=\"js/smoke.js\"></script>\n		<script type=\"text/javascript\" src=\"js/jquery.ui.map.js\"></script>\n		<script type=\"text/javascript\" src=\"js/jquery.ui.map.services.js\"></script>\n		<script type=\"text/javascript\" src=\"js/jquery.ui.map.extensions.js\"></script>\n		<!--Hyweb CSS-->\n		<link rel=\"stylesheet\" type=\"text/css\" href=\"css/index.css\"></link>\n		<!--HYAPP-->\n		<!--<script type=\"text/javascript\" src=\"hyapp/map.js\"></script>-->\n		<!--NSCAPP Javascript-->	\n		<script src=\"js/setting.js\"></script>\n		<script src=\"js/loading.js\"></script> \n		<script src=\"js/pnpolygon.js\"></script>\n		<script src=\"js/photo.js\"></script>	\n		<script src=\"js/location.js\"></script>	\n		<script src=\"js/data.js\"></script>\n		<script src=\"js/map.js\"></script>\n		<script  type=\"text/javascript\">\n			document.addEventListener(\"deviceready\",onDeviceReady,false);\n			function onDeviceReady(){\n				window.plugins.flurry.logEvent(\"[plugin]Page_LifeService.html\");\n			}\n		</script>\n		<script  type=\"text/javascript\">\n		/*global variables*/\n		var langType=getAppSetting_Data().language,park=getIdentifyParkBase().Park,dataArray=[],LP_jsonObjectArray=[],nearAlertSpot=null,Target_Collapsible_Classify1_ID=\"\",map;\n		var checkedClassify=[];\n		//語言變數\n		var btnSelect_all_str,btnSelect_none_str;\n		//function\n		//更換相關顯示語言\n		function loadDisplayLanguage(){\n			var title,btnBack_str,btnSearch_str,btnSelect_all_none_str;\n			switch(langType){\n				case \"ch\":\n					title=\"生活服務\";\n					btnBack_str=\"返回\";\n					btnSelect_all_str=\"全選\";\n					btnSelect_none_str=\"清除\";\n					btnSelect_all_none_str=\"全部清除\";\n					btnSearch_str=\"查詢\";\n					break;\n				case \"eng\":\n					title=\"Life Information\";\n					btnBack_str=\"Back\";\n					btnSelect_all_str=\"All\";\n					btnSelect_none_str=\"Clear\";\n					btnSelect_all_none_str=\"All Clear\";\n					btnSearch_str=\"Search\";\n					break;\n			}\n			$('h1.page_title').text(title);\n			$('a.btn_back').text(btnBack_str);\n			$('#index #btnSelect').val(btnSelect_all_str);\n			$('#index #btnClear').val(btnSelect_none_str);\n			$('#index #btnAllClear').val(btnSelect_all_none_str);\n			$('#index #btnSearch').val(btnSearch_str);\n\n			//地圖模組\n			var map_btnSearch_str,map_btnRoute_str,map_btnClassify1Filter_str,map_btnSetAlert_str,map_btnMAPShow_str,map_btnListShow_str,map_btnRoute_MAPShow_str,map_btnRoute_PathShow_str,map_labRoutePointStart_str,map_labRoutePointEnd_str,map_btnKeyWordSearch_str,map_txtSearchKeyWord_str,btnBackIndex_str,btn_Back_str;\n			switch(langType){\n				case \"ch\":\n					title=\"生活服務\";\n					map_btnSearch_str=\"搜尋地圖\";\n					map_btnRoute_str=\"規劃路徑\";\n					map_btnClassify1Filter_str=\"週邊生活服務\";\n					map_btnSetAlert_str=\"接近提醒\";\n					map_btnMAPShow_str=\"地圖呈現\";\n					map_btnListShow_str=\"圖文呈現\";\n					map_btnRoute_MAPShow_str=\"地圖導引\";\n					map_btnRoute_PathShow_str=\"文字導引\";\n					map_btnKeyWordSearch_str=\"查詢\";\n					map_txtSearchKeyWord_str=\"地址/地名/廠商名稱\";\n					map_labRoutePointStart_str=\"起點\";\n					map_labRoutePointEnd_str=\"終點\";\n					btnBackIndex_str=\"回主頁\";\n					btn_Back_str=\"返回\";\n					break;\n				case \"eng\":\n					title=\"Life Information\";\n					map_btnSearch_str=\"Search Map\";\n					map_btnRoute_str=\"Directions\";\n					map_btnClassify1Filter_str=\"Nearby\";	\n					map_btnSetAlert_str=\"Notification\";\n					map_btnMAPShow_str=\"Map View\";\n					map_btnListShow_str=\"List View\";\n					map_btnRoute_MAPShow_str=\"Map\";\n					map_btnRoute_PathShow_str=\"Instructions\";\n					map_btnKeyWordSearch_str=\"Search\";\n					map_txtSearchKeyWord_str=\"Address、Companies\";\n					map_labRoutePointStart_str=\"Start\";\n					map_labRoutePointEnd_str=\"End\";\n					btnBackIndex_str=\"Home\";\n					btn_Back_str=\"Back\";\n					break;\n			}\n			$('h1.page_title').text(title);\n			$('#Map_LP #footer').find('#btnSearch').text(map_btnSearch_str);\n			$('#Map_LP #footer').find('#btnRoute').text(map_btnRoute_str);\n			$('#Map_LP #footer').find('#btnClassify1Filter').text(map_btnClassify1Filter_str);\n			$('#Map_LP #footer').find('#btnSetAlert').text(map_btnSetAlert_str);\n			$('#Map_LP #footer').find('#btnMAPShow').text(map_btnMAPShow_str);\n			$('#Map_LP #footer').find('#btnListShow').text(map_btnListShow_str);\n			$('#Map_LP #footer').find('#btnRoute_MAPShow').text(map_btnRoute_MAPShow_str);\n			$('#Map_LP #footer').find('#btnRoute_PathShow').text(map_btnRoute_PathShow_str);\n\n\n			$('#Map_LP #divKeyWordSearch').find(\"#btnKeyWordSearch\").text(map_btnKeyWordSearch_str);\n			$('#Map_LP #divKeyWordSearch').find(\"#txtSearchKeyWord\").attr(\"placeholder\",map_txtSearchKeyWord_str);\n\n			$('#Map_LP #divRoutePath').find(\"#labRoutePointStart\").text(map_labRoutePointStart_str);\n			$('#Map_LP #divRoutePath').find(\"#labRoutePointEnd\").text(map_labRoutePointEnd_str);\n			$('#Map_LP #divRoutePath').find(\"#txtRoutePointStart\").attr(\"placeholder\",map_txtSearchKeyWord_str);\n			$('#Map_LP #divRoutePath').find(\"#txtRoutePointEnd\").attr(\"placeholder\",map_txtSearchKeyWord_str);\n			$('#Map_LP #divRoutePath').find(\"#btnDoRoute\").text(map_btnRoute_str);\n			$('#Map_LP #routeList').find(\"#divRouteHeader\").text(map_btnRoute_str);\n			$('#Map_LP #routeList').find(\"#divDirectionHeader\").text(map_btnRoute_str);\n			$('.btn_backIndex').text(btnBackIndex_str);\n			$('#Map_LP .btn_back').text(btn_Back_str);\n			$('#Map_CP .btn_back').text(btn_Back_str);\n		}\n		function changeToLP(park,classifyArray,base,targetCenter){	\n			LoadingObject.show();\n			var isAppend=false;\n			var jsonObject;\n			if(typeof(base)==\"undefined\"){\n				jsonObject={\n				  \"queryType\": \"3\",\n				  \"langType\": langType,\n				  \"park\": park,\n				  \"inner\": getIsInArea(),\n				  \"currentLat\": getGPRSData().lat,\n				  \"currentLng\": getGPRSData().lng,\n				  \"queryLat\": targetCenter.lat,\n				  \"queryLng\": targetCenter.lng,\n				  \"LBSSpotClassifyArray\":classifyArray\n				}\n			}else{\n				jsonObject={\n				  \"queryType\": \"3\",\n				  \"langType\": langType,\n				  \"park\": park,\n				  \"parkLocation\":base,\n				  \"inner\": false,\n  				  \"currentLat\": getGPRSData().lat,\n				  \"currentLng\": getGPRSData().lng,\n				  \"queryLat\": targetCenter.lat,\n				  \"queryLng\": targetCenter.lng,\n				  \"LBSSpotClassifyArray\":classifyArray\n				}\n			}\n			var jsonObjectStr = JSON.stringify(jsonObject);\n		    $.ajax({\n		        url:DataURL_LBSQueryService,\n		        data:  {\"jsonInput\":jsonObjectStr},\n		        type:\"POST\",\n		        dataType :\"json\",\n		        async:false,\n		        success:function(data){\n		            if(data==null){\n		                 smoke.alert(ServiceCodeErrorString,{},function(){});\n		            }else{\n		            	LP_jsonObjectArray=[];\n		                if(data.statusCode==\"200\"){\n		                	if(data.spotList.length>0){\n		                		for(var i=0;i<data.spotList.length;i++){\n		                			// LP_jsonObjectArray.push({\"spotNo\":data.spotList[i].spotNo,\"chtName\":data.spotList[i].name,\"chtAddress\":data.spotList[i].address,\"xicon\":getXiconImg(data.spotList[i].classify2),\"ximage\":Setting_imgSrc+data.spotList[i].mainImage,\"latitude\":data.spotList[i].latitude,\"longitude\":data.spotList[i].longitude,\"classify1\":data.spotList[i].classify1,\"classify2\":data.spotList[i].classify2,\"classify2_name\":data.spotList[i].classify2Name});\n		                			LP_jsonObjectArray.push({\"spotNo\":data.spotList[i].spotNo,\"chtName\":data.spotList[i].name,\"chtAddress\":data.spotList[i].address,\"xicon\":Setting_classifyImgSrc+data.spotList[i].xicon,\"ximage\":Setting_imgSrc+data.spotList[i].mainImage,\"latitude\":data.spotList[i].latitude,\"longitude\":data.spotList[i].longitude,\"classify1\":data.spotList[i].classify1,\"classify2\":data.spotList[i].classify2,\"classify2_name\":data.spotList[i].classify2Name,\"showMap\":(data.spotList[i].showMap=='true'?true:false)});\n		                		\n			                	}\n		            		}else{\n		            			var alertMessage=\"查無資料\";\n		            			if(langType==\"eng\"){\n		            				alertMessage=\"not find\";\n		            			}\n		            			smoke.alert(alertMessage,{},function(){});\n		            		}\n            				$.mobile.changePage(\"#Map_LP\");\n            				convertToGMAPMarkers();\n							//重設地圖中心\n							map.center=new google.maps.LatLng(targetCenter.lat,targetCenter.lng);\n            				//設定defaultLBSCenter\n            				//map.setLBSCenterLatLng({\"lat\":targetCenter.lat,\"lng\":targetCenter.lng},true);\n		                }else{\n		                    smoke.alert(ServiceCodeErrorString,{},function(){});\n		                }\n		            }\n		        },\n		        error: function(data){\n		            LoadingObject.hide(); \n		            smoke.alert(ServiceErrorString,{},function(){});\n		        },\n		        complete: function() {\n		            LoadingObject.hide();\n		        }\n		    });\n		}\n		function getLifeServiceData(){\n		    LoadingObject.show();\n			var jsonObject={\"langType\":langType};\n			var jsonObjectStr = JSON.stringify(jsonObject);\n			var sortResult=\"\",nowCode1='',sub_dataArray=[];\n		    $.ajax({\n		        url:DataURL_Classify,\n		        data:  {\"jsonInput\":jsonObjectStr},\n		        type:\"POST\",\n		        dataType :\"jsonp\",\n		        async:false,\n		        success:function(data){\n		            if(data==null){\n		                 smoke.alert(ServiceCodeErrorString,{},function(){});\n		            }else{\n		                if(data.status==\"success\"){\n		                	sortResult+=\"<ul>\";\n		                	for(var i=0;i<data.jsonOutput.length;i++){\n		                		//sort\n		                		// if(data.jsonOutput.length>5){\n		                		// 	sortResult+=\"<div class='pre' id='btnPrevious'><img src='img/NSC/sort_spac.png'></div>\";\n		                		// }\n		                		if(nowCode1!=data.jsonOutput[i].code1){\n		                			sortResult+=\"<li\";\n		                			if(i==0){\n		                				sortResult+=\" class='here'\" ;\n		                			}\n		                			sortResult+=\" data-code='\"+data.jsonOutput[i].code1+\"'><img src='\"+(typeof(data.jsonOutput[i].image1)!='undefined'?Setting_classifyImgSrc+data.jsonOutput[i].image1:notfindPic)+\"'></img><p>\"+data.jsonOutput[i].name1+\"</p></li>\";\n		                			if(nowCode1!=\"\"){\n				                		dataArray.push({\"code\":nowCode1,\"data\":sub_dataArray});\n				                	}\n			                		nowCode1=data.jsonOutput[i].code1;\n			                		sub_dataArray=[];\n			                	}\n			                	sub_dataArray.push({\"code\":data.jsonOutput[i].code2,\"name\":data.jsonOutput[i].name2,\"img\":(typeof(data.jsonOutput[i].image2)!='undefined'?Setting_classifyImgSrc+data.jsonOutput[i].image2:\"img/NSC/noImg.png\")});\n		                		// if(data.jsonOutput.length>5){\n		                		// 	sortResult+=\"<div class='next' id='btnNext'><img src='img/NSC/sort_spac.png'></div>\";\n		                		// }\n	            			}\n	            			if(sub_dataArray.length>0){\n	            				dataArray.push({\"code\":nowCode1,\"data\":sub_dataArray});\n	            			}\n	            			sortResult+=\"</ul>\"\n	        				$('#index').find('#sort').html(sortResult).trigger('create');\n	        				loadDataToList(data.jsonOutput[0].code1);\n		                }else{\n		                    smoke.alert(ServiceCodeErrorString,{},function(){});\n		                }\n		            }\n		        },\n		        error: function(data){\n		            LoadingObject.hide(); \n		            smoke.alert(ServiceErrorString,{},function(){});\n		        },\n		        complete: function() {\n		            LoadingObject.hide();\n		        }\n		    });\n		}\n		function loadDataToList(code){\n			var htmlResult=\"\"\n			for(var i=0;i<dataArray.length;i++){\n				if(dataArray[i].code==code){\n					for(var index=0;index<dataArray[i].data.length;index++){\n					htmlResult+=\"<li><input \";\n					for(var checkedClassify_index=0;checkedClassify_index<checkedClassify.length;checkedClassify_index++){\n						if(checkedClassify[checkedClassify_index].code1==dataArray[i].code&&checkedClassify[checkedClassify_index].code2==dataArray[i].data[index].code){\n							htmlResult+=\"checked='checked'\";\n							break;\n						}\n					}\n					htmlResult+=\" data-role='none' type='checkbox' name='checkbox' data-code1='\"+dataArray[i].code+\"' data-code2='\"+dataArray[i].data[index].code+\"'>\"+\"<img class='icon_classify2' src='\"+dataArray[i].data[index].img+\"' />\"+dataArray[i].data[index].name+\"<span class='arrow'><img data-code1='\"+dataArray[i].code+\"' data-code2='\"+dataArray[i].data[index].code+\"' src='img/NSC/arrow.png'></<span></li>\";\n					}\n					break;\n				}\n			}\n			$('#index').find('#btnSelect').val(btnSelect_all_str);\n			$('#index').find('#list').html(htmlResult!=\"\"?\"<ul data-role='none'>\"+htmlResult+\"</ul>\":\"\").trigger('create');\n		}\n		function getSelectBase(){\n				 LoadingObject.show();\n				 var jsonObjectStr='{\"langType\":\"'+langType+'\",\"Park\":\"'+park+'\"}';\n				 var selectBaseResult=\"\";\n			    $.ajax({\n			        url:DataURL_ParkIntro,\n			        data:  {\"jsonInput\":jsonObjectStr},\n			        type:\"POST\",\n			        dataType :\"json\",\n			        async:false,\n			        success:function(data){\n			            if(data==null){\n			                 smoke.alert(ServiceCodeErrorString,{},function(){});\n			            }else{\n			            	//園區下拉\n			            	for(var i=0;i<data.jsonOutput.Page_ParkIntro_Index.length;i++){\n			            		if(data.jsonOutput.Page_ParkIntro_Index[i].Base!=\"00\"){\n				            		selectBaseResult+='<option data-latitude=\"'+data.jsonOutput.Page_ParkIntro_Index[i].defaultCenter.lat+'\" data-longitude=\"'+data.jsonOutput.Page_ParkIntro_Index[i].defaultCenter.lng+'\" data-title=\"'+data.jsonOutput.Page_ParkIntro_Index[i].BaseName+'\" value=\"'+data.jsonOutput.Page_ParkIntro_Index[i].Base+'\"';\n				            		if(getIdentifyParkBase().Base==data.jsonOutput.Page_ParkIntro_Index[i].Base){\n				            			selectBaseResult+=\" selected \";\n				            		}\n				            		selectBaseResult+='>'+data.jsonOutput.Page_ParkIntro_Index[i].BaseName+'</option>';\n				            	}\n			            	}\n			            	$(\"#index #selectBase\").html(selectBaseResult).selectmenu().selectmenu('refresh',true);\n			            }\n			        },\n			        error: function(data){\n			            LoadingObject.hide();\n			            smoke.alert(ServiceErrorString,{},function(){});\n			        },\n			        complete: function() {\n			            LoadingObject.hide();\n			        }\n			    });\n		}\n		// pageinit\n		$(document).on('pageinit','#index',function(){	\n			var rootElement=this;\n			//將子選項清除\n			checkedClassify=[];\n			//產生跑馬燈\n			var jsonObject=getAppInstantMessage();\n			if(jsonObject!=null){\n				var title=jsonObject.title;\n				genAppInstantMessage($('#content'),title);\n			}\n			//產生menu\n			genMenu(this);\n			//menu登入確認\n			menuDisplayMemberSection(checkLogin(),this);	\n			//更換相關顯示語言\n			loadDisplayLanguage();\n			//首頁資料\n			getLifeServiceData();\n			//取得下拉選單資料\n			getSelectBase();\n			// //手勢動作\n			// $(this).on('swiperight',function(){\n			// 	$( \"#menu\" ).panel( \"toggle\" );\n			// });\n			//取消該部分選擇\n			$(this).on('click','#btnClear',function(){\n				var checkboxs=$('input[type=checkbox]');\n				var isSelect=false;\n				$(rootElement).find('#list input[type=checkbox]').attr('checked',false);\n				for(var checkboxsIndex=0;checkboxsIndex<checkboxs.length;checkboxsIndex++){\n					var inArray=false;\n					var index;\n					var classifyItem={'code1':$(checkboxs[checkboxsIndex]).data('code1'),'code2':$(checkboxs[checkboxsIndex]).data('code2')};\n					for(var i=0;i<checkedClassify.length;i++){\n						if(checkedClassify[i].code1==classifyItem.code1&&checkedClassify[i].code2==classifyItem.code2){\n							inArray=true;\n							index=i;\n							break;\n						}\n					}\n					if(isSelect){\n	 					if(!inArray){\n	 						checkedClassify.push(classifyItem);\n	 					}\n	 				}else{\n	 					if(inArray){\n	 						if(index!=null){\n	 							checkedClassify.splice(index,1);\n	 						}\n	 					}\n	 				}\n	 				classifyItem=null;\n	 				delete classifyItem;\n				}\n			});\n			//取消全部部分的選擇\n			$(this).on('click','#btnAllClear',function(){\n				checkedClassify=[];\n				$(rootElement).find('#list input[type=checkbox]').attr('checked',false);\n			});\n			//全選\n			$(this).on('click','#btnSelect',function(){\n				var checkboxs=$('input[type=checkbox]');\n				var isSelect=true;\n				$(rootElement).find('#list input[type=checkbox]').attr('checked',true);\n				for(var checkboxsIndex=0;checkboxsIndex<checkboxs.length;checkboxsIndex++){\n					var inArray=false;\n					var index;\n					var classifyItem={'code1':$(checkboxs[checkboxsIndex]).data('code1'),'code2':$(checkboxs[checkboxsIndex]).data('code2')};\n					for(var i=0;i<checkedClassify.length;i++){\n						if(checkedClassify[i].code1==classifyItem.code1&&checkedClassify[i].code2==classifyItem.code2){\n							inArray=true;\n							index=i;\n							break;\n						}\n					}\n					if(isSelect){\n	 					if(!inArray){\n	 						checkedClassify.push(classifyItem);\n	 					}\n	 				}else{\n	 					if(inArray){\n	 						if(index!=null){\n	 							checkedClassify.splice(index,1);\n	 						}\n	 					}\n	 				}\n	 				classifyItem=null;\n	 				delete classifyItem;\n				}\n			});\n			//查詢\n			$(this).on('click','#btnSearch',function(){\n				if(checkedClassify.length>0){\n					var selectOption=$(rootElement).find(\"#selectBase option:selected\");\n					var base=$(rootElement).find(\"#selectBase\").val();\n					var targetCenter={\"title\":$(selectOption).data(\"title\"),\"lat\":$(selectOption).data(\"latitude\"),\"lng\":$(selectOption).data(\"longitude\")};\n					changeToLP(park,getClassifyArray(checkedClassify),base,targetCenter);\n				}else{\n					if(langType!=\"eng\"){\n						smoke.alert(classify2RequirementString,{ok:\"確認\"},function(){});\n					}else{\n						smoke.alert(classify2RequirementString_eng,{ok:\"ok\"},function(){});\n					}\n				}\n			});\n			//各項目\n			$(this).find('#sort').on('click','li',function(){\n				$('#sort li').removeClass('here');\n				$(this).addClass('here');	\n 				var code=$(this).data(\"code\");\n 				loadDataToList(code); 	\n\n 				//增加該類別子選項\n 				code=null;delete code;\n 			});\n 			//各單選類別\n 			$(this).find('#list').on('click','img',function(){	\n 				if(!$(this).hasClass(\"icon_classify2\")){\n					var checkedList=[];\n					checkedList.push({\"code1\":$(this).data('code1'),\"code2\":$(this).data('code2')});\n					var base=$(rootElement).find(\"#selectBase\").val();\n					var targetCenter={\"title\":$(selectOption).data(\"title\"),\"lat\":$(selectOption).data(\"latitude\"),\"lng\":$(selectOption).data(\"longitude\")};\n					changeToLP(park,getClassifyArray(checkedList),base,targetCenter);\n				}\n 			});\n 			//各類別點選\n 			$(this).find('#list').on('click','li',function(){	\n 				var inArray=false;\n 				var index;\n				var classifyItem={'code1':$(this).find('input[type=checkbox]').data('code1'),'code2':$(this).find('input[type=checkbox]').data('code2')};\n				for(var i=0;i<checkedClassify.length;i++){\n					if(checkedClassify[i].code1==classifyItem.code1&&checkedClassify[i].code2==classifyItem.code2){\n						inArray=true;\n						index=i;\n						break;\n					}\n				}\n 				if($(this).find('input[type=checkbox]').attr('checked')!=\"checked\"){\n 					if(!inArray){\n 						checkedClassify.push(classifyItem);\n 					}\n 					$(this).find('input[type=checkbox]').attr('checked',true);\n 				}else{\n 					if(inArray){\n 						if(index!=null){\n 							checkedClassify.splice(index,1);\n 						}\n 					}\n 					$(this).find('input[type=checkbox]').attr('checked',false);\n 				}\n 				classifyItem=null;\n 				delete classifyItem;\n 			});\n			//各checkbox\n			$(this).on('click','input[type=checkbox]',function(){\n 				var inArray=false;\n 				var index;\n				var classifyItem={'code1':$(this).data('code1'),'code2':$(this).data('code2')};\n				for(var i=0;i<checkedClassify.length;i++){\n					if(checkedClassify[i].code1==classifyItem.code1&&checkedClassify[i].code2==classifyItem.code2){\n						inArray=true;\n						index=i;\n						break;\n					}\n				}\n 				if($(this).attr('checked')!=\"checked\"){\n 					if(!inArray){\n 						checkedClassify.push(classifyItem);\n 					}\n 					$(this).attr('checked',true);\n 				}else{\n 					if(inArray){\n 						if(index!=null){\n 							checkedClassify.splice(index,1);\n 						}\n 					}\n 					$(this).attr('checked',false);\n 				}\n 				classifyItem=null;\n 				delete classifyItem;\n 			});\n 		});\n		/*地圖模組*/\n		/*Map function*/\n		function doClassify1Filter(Collapsible_Classify1_ID,classify1,isAll){\n			var classifyArray=[];\n			if(typeof(isAll)!=\"undefined\"&&isAll){\n				var checkedList=$('#classify1List input[type=checkbox]');\n				//取得classifyArray\n				for(var i=0;i<checkedList.length;i++){\n					$(checkedList[i]).attr('checked',true).checkboxradio(\"refresh\");\n					classifyArray.push({ \"classify1\":$(checkedList[i]).data('classify1'),\"classify2\":$(checkedList[i]).data('classify2')});\n				}\n			}else{\n				if(Collapsible_Classify1_ID!=\"\"){\n					// var checkedList=$('#'+Collapsible_Classify1_ID+' input[type=checkbox]:checked');\n					var checkedList=$('#classify1List input[type=checkbox]:checked');\n					//取得classifyArray\n					for(var i=0;i<checkedList.length;i++){\n						classifyArray.push({ \"classify1\":$(checkedList[i]).data('classify1'),\"classify2\":$(checkedList[i]).data('classify2')});\n					}\n				}\n			}\n			if(classifyArray.length==0){\n				$('#popupDialog_classify1Filter').popup('close');\n				if(langType!=\"eng\"){\n					smoke.alert(classify2RequirementString,{ok:\"確認\"},function(){\n						$('#popupDialog_classify1Filter').popup('open');\n					});\n				}else{\n					smoke.alert(classify2RequirementString_eng,{ok:\"ok\"},function(){\n						$('#popupDialog_classify1Filter').popup('open');\n					});\n				}\n			}else{\n				switchFooterFunction('default');\n				LoadingObject.show();\n				var jsonObject={\n				  \"queryType\": \"3\",\n				  \"langType\": langType,\n				  \"park\": getIdentifyParkBase().Park,\n				  \"inner\": getIsInArea(),\n				  \"currentLat\": getGPRSData().lat,\n				  \"currentLng\":getGPRSData().lng,\n				  \"LBSSpotClassifyArray\":classifyArray\n				};\n				//如果有LBSCenterLatLng的值(lat,lng)，則改為目的點為querylat,querylng\n				if(typeof(map.LBSCenterLatLng)!==\"undefined\"&&map.LBSCenterLatLng!=null){\n					 jsonObject={\n					  \"queryType\": \"1\",\n					  \"langType\": langType,\n					  \"park\": getIdentifyParkBase().Park,\n					  \"currentLat\": getGPRSData().lat,\n					  \"currentLng\":getGPRSData().lng,\n					  \"queryLat\": map.LBSCenterLatLng.lat,\n					  \"queryLng\": map.LBSCenterLatLng.lng,\n	  				  \"LBSSpotClassifyArray\":classifyArray\n					}\n				}\n				var jsonObjectStr = JSON.stringify(jsonObject);\n			    $.ajax({\n			        url:DataURL_LBSQueryService,\n			        data:  {\"jsonInput\":jsonObjectStr},\n			        type:\"POST\",\n			        dataType :\"json\",\n			        async:false,\n			        success:function(data){\n			            if(data==null){\n			                 smoke.alert(ServiceCodeErrorString,{},function(){});\n			            }else{\n			            	LP_jsonObjectArray=[];\n			                if(data.statusCode==\"200\"){\n			                	if(data.spotList.length>0){\n			                		for(var i=0;i<data.spotList.length;i++){\n			                			LP_jsonObjectArray.push({\"spotNo\":data.spotList[i].spotNo,\"chtName\":data.spotList[i].name,\"chtAddress\":data.spotList[i].address,\"xicon\":Setting_classifyImgSrc+data.spotList[i].xicon,\"ximage\":Setting_imgSrc+data.spotList[i].mainImage,\"latitude\":data.spotList[i].latitude,\"longitude\":data.spotList[i].longitude,\"classify1\":data.spotList[i].classify1,\"classify2\":data.spotList[i].classify2,\"classify2_name\":data.spotList[i].classify2Name,\"showMap\":(data.spotList[i].showMap=='true'?true:false)});\n			                			// LP_jsonObjectArray.push({\"spotNo\":data.spotList[i].spotNo,\"chtName\":data.spotList[i].name,\"chtAddress\":data.spotList[i].address,\"xicon\":getXiconImg(data.spotList[i].classify2),\"ximage\":Setting_imgSrc+data.spotList[i].mainImage,\"latitude\":data.spotList[i].latitude,\"longitude\":data.spotList[i].longitude,\"classify1\":data.spotList[i].classify1,\"classify2\":data.spotList[i].classify2,\"classify2_name\":data.spotList[i].classify2Name});\n				                	}\n			            		}else{\n			            			var alertMessage=\"查無資料\";\n			            			if(langType==\"eng\"){\n			            				alertMessage=\"not find\";\n			            			}\n			            			smoke.alert(alertMessage,{},function(){});\n			            		}\n	            				convertToGMAPMarkers();\n	        					$('#popupDialog_classify1Filter').popup('close');\n			                }else{\n			                    smoke.alert(ServiceCodeErrorString,{},function(){});\n			                }\n			            }\n			        },         \n			        error: function(data){\n			            LoadingObject.hide(); \n			            smoke.alert(ServiceErrorString,{},function(){});\n			        },\n			        complete: function() {\n			            LoadingObject.hide();\n			        }\n			    });\n			}\n		}\n		function doClassifyClear(){\n			var checkedList=$('#classify1List input[type=checkbox]:checked');\n			for(var i=0;i<checkedList.length;i++){\n				$(checkedList[i]).attr('checked',false).checkboxradio(\"refresh\");\n			}\n		}\n		function genClassify1List(){\n			 LoadingObject.show();\n			var jsonObject={\"langType\":langType};\n			var jsonObjectStr = JSON.stringify(jsonObject);\n			var str_search=\"查詢\",str_close=\"關閉\",str_clear=\"清除\",str_all=\"全部\";\n			if(langType!=\"ch\"){\n				str_search=\"Search\";\n				str_close=\"Close\";\n				str_clear=\"Clear\";\n				str_all=\"ALL\";\n			}\n			var nowCode1=\"\";\n			//var classify1ListResult='<a data-theme=\"c\" data-code=\"\" href=\"javascript:doClassify1Filter(&#39;&#39;);\" data-role=\"button\">全部</a>';\n			var classify1ListResult='<div style=\"text-align:right\"><a class=\"popupCloseBtn\" data-rel=\"back\" data-role=\"button\" data-theme=\"a\" data-icon=\"delete\" data-iconpos=\"notext\" style=\"position:absolute;top: -5px;left:-10px;\">'+str_close+'</a></div><div data-role=\"collapsible-set\" data-theme=\"c\" data-content-theme=\"c\" data-collapsed-icon=\"arrow-r\" data-expanded-icon=\"arrow-d\"><div data-role=\"controlgroup\" id=\"topFunc\" data-type=\"horizontal\"><a data-theme=\"c\" data-code=\"\" href=\"javascript:doClassify1Filter(&#39;&#39;,&#39;&#39;,true);\" data-role=\"button\">'+str_all+'</a><a data-theme=\"c\" data-code=\"\" href=\"javascript:doClassifyClear();\" data-role=\"button\">'+str_clear+'</a></div>'\n		    $.ajax({\n		        url:DataURL_Classify,\n		        data:  {\"jsonInput\":jsonObjectStr},\n		        type:\"POST\",\n		        dataType :\"jsonp\",\n		        async:false,\n		        success:function(data){\n		            if(data==null){\n		                 smoke.alert(ServiceCodeErrorString,{},function(){});\n		            }else{\n		                if(data.status==\"success\"){\n							for(var i=0;i<data.jsonOutput.length;i++){\n								if(nowCode1!=data.jsonOutput[i].code1){\n									if(nowCode1!=\"\"){\n										classify1ListResult+='</ul><button data-theme=\"e\" onclick=\"doClassify1Filter(&#39;Collapsible_Classify1_'+nowCode1+'&#39;,&#39;'+nowCode1+'&#39;);\"'+'>'+str_search+'</button>';\n										classify1ListResult+='</div>';\n									}\n									classify1ListResult+='<div data-role=\"collapsible\" id=\"Collapsible_Classify1_'+data.jsonOutput[i].code1+'\" class=\"Collapsible_Classify1\" data-inset=\"false\">';\n									classify1ListResult+='<h2>'+data.jsonOutput[i].name1+'</h2>';\n									// classify1ListResult+='<ul data-role=\"listview\">';\n									nowCode1=data.jsonOutput[i].code1;\n								}\n								// classify1ListResult+='<li data-classify1=\"'+data.jsonOutput[i].code2+'\" data-classify2=\"'+data.jsonOutput[i].code2+'\">'+data.jsonOutput[i].name2+'</li>';\n								classify1ListResult+='<input data-theme=\"f\" data-classify1=\"'+data.jsonOutput[i].code1+'\" data-classify2=\"'+data.jsonOutput[i].code2+'\" type=\"checkbox\" name=\"checkbox_classifyList\" id=\"checkbox_classifyList_'+data.jsonOutput[i].code2+'\"><label for=\"checkbox_classifyList_'+data.jsonOutput[i].code2+'\">'+data.jsonOutput[i].name2+'</label>';\n							}\n							if(data.jsonOutput.length>0){\n								classify1ListResult+='</ul><button data-theme=\"e\" onclick=\"doClassify1Filter(&#39;Collapsible_Classify1_'+nowCode1+'&#39;,&#39;'+nowCode1+'&#39;);\"'+'>'+str_search+'</button>';\n								classify1ListResult+='</div>';\n							}\n							$('#Map_LP').find('#classify1List').html(classify1ListResult).trigger('create');\n						}\n						else{\n		                    smoke.alert(ServiceCodeErrorString,{},function(){});\n		                }\n		            }\n		        },\n		        error: function(data){\n		            LoadingObject.hide(); \n		            smoke.alert(ServiceErrorString,{},function(){});\n		        },\n		        complete: function() {\n		            LoadingObject.hide();\n		        }\n		    });\n		}\n		function getClassifyArray(checkedList){\n			var classifyArray=[];\n			for(var i=0;i<checkedList.length;i++){\n				classifyArray.push({ \"classify1\":checkedList[i].code1,\"classify2\":checkedList[i].code2});\n			}\n			return classifyArray;\n		}\n		function changeToMap_CP(sn){\n		    LoadingObject.show();\n		    var str_route=\"規劃路線\",str_call=\"撥打電話\",str_map=\"地圖\";\n		    if(langType==\"eng\"){\n		    	str_route=\"Route\";\n		    	str_call=\"Call\";\n		    	str_map=\"Map\";\n		    }\n			// var jsonObject={\"command\":\"select xLBSSpot.spotNo,xLBSSpot.chtName,xLBSSpot.chtAddress,xLBSSpot.engName,xLBSSpot.engAddress,xLBSSpot.latitude,xLBSSpot.longitude,xLBSSpot.parkArea,xLBSSpot.parkLocation,(case xLBSSpotPic.ximage when '' then '' else ('\"+Setting_imgSrc+\"'+xLBSSpotPic .ximage)   end) as ximage,xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSClassify2.chtName as xLBSClassify2_name, xLBSClassify2.engName as xLBSClassify2_ename,xLBSSpot.telTitle,xLBSSpot.telNumber,xLBSSpot.telEngTitle,xLBSSpot.urlTitle,xLBSSpot.urlAddress,xLBSSpot.urlEngTitle,xLBSSpot.chtDesc,xLBSSpot.engDesc from xLBSSpot inner join xLBSSpotClassify on xLBSSpot.spotNo=xLBSSpotClassify.spotNo inner join xLBSClassify2 on xLBSSpotClassify.xLBSClassify2=xLBSClassify2.code left join xLBSSpotPic on xLBSSpot.spotNo=xLBSSpotPic.spotNo where xLBSSpotPic.entranceCode is NULL and xLBSSpot.spotNo=\"+sn+\" order by xLBSSpotClassify.xLBSClassify1,xLBSSpotClassify.xLBSClassify2,xLBSSpot.spotNo\"};\n			var jsonObject={\n				\"queryType\": \"2\",\n				\"langType\": langType,\n				\"park\": getIdentifyParkBase().Park,\n				\"inner\": getIsInArea(),\n				\"currentLat\": getGPRSData().lat,\n				\"currentLng\":getGPRSData().lng,\n				\"spotNo\":sn\n			}\n			var jsonObjectStr = JSON.stringify(jsonObject);\n			var htmlResult=\"\",otherImagesArray=[];\n			var str_addr=\"地址\",str_desc=\"地點描述\";\n			if(langType==\"eng\"){\n				str_addr=\"Address\";\n				str_desc=\"Description\";\n			}\n		    $.ajax({\n		        url:DataURL_LBSQueryService,\n		        data:  {\"jsonInput\":jsonObjectStr},\n		        type:\"POST\",\n		        dataType :\"json\",\n		        async:false,\n		        success:function(data){\n		            if(data==null){\n		                 smoke.alert(ServiceCodeErrorString,{},function(){});\n		            }else{\n		                if(data.statusCode==\"200\"||data.statusCode==\"201\"){\n		                	if(data.spotList.length>0){\n								//生活服務內容\n		                		htmlResult+=\"<div class='ServiceCt'><div class='title'>\"+data.spotList[0].name+\"</div><ul class='photo'>\";\n		                		if(data.spotList[0].mainImage!=\"\"){\n		                			htmlResult+=\"<li class='here' ><img src='\"+Setting_imgSrc+data.spotList[0].mainImage+\"'></li>\";\n		                		}\n		                		if(data.spotList[0].otherImages!=\"\"){\n			                		otherImagesArray=data.spotList[0].otherImages.split(',');\n			                	}\n		                		//等ken處理\n		                		for(var i=0;i<otherImagesArray.length;i++){\n\n		                			htmlResult+=\"<li\";\n		                			htmlResult+=\"><img src='\"+Setting_imgSrc+otherImagesArray+\"'></li>\";\n		                		}\n		                		htmlResult+=\"</ul><ul class='info'>\";\n		                		if(typeof(data.spotList[0].address)!=\"undefined\"&&data.spotList[0].address!=\"\"){\n	            					htmlResult+=\"<li>\"+str_addr+\":\"+(typeof(data.spotList[0].address)==\"undefined\"?\"\":data.spotList[0].address)+\"</li>\";\n	            				}\n	            				if(typeof(data.spotList[0].telNumber)!=\"undefined\"&&data.spotList[0].telNumber!=\"\"){\n		        					htmlResult+=\"<li>\"+(typeof(data.spotList[0].telTitle)==\"undefined\"?\"電話：\":data.spotList[0].telTitle+\"：\")+(typeof(data.spotList[0].telNumber)==\"undefined\"?\"\":data.spotList[0].telNumber)+\"</li>\";\n		        				}\n		        				if(typeof(data.spotList[0].urlAddress)!=\"undefined\"&&data.spotList[0].urlAddress!=\"\"){\n		        					htmlResult+=\"<li>\"+((typeof(data.spotList[0].urlTitle)==\"undefined\"||data.spotList[0].urlTitle==\"\")?\"網址：\":data.spotList[0].urlTitle+\"：\")+\"<a href='javascript:openBrowser(&#39;\"+data.spotList[0].urlAddress+\"&#39;);' >\"+((typeof(data.spotList[0].urlAddress)==\"undefined\"||data.spotList[0].urlAddress==\"http://\")?\"\":data.spotList[0].urlAddress)+\"</a></li>\";\n		        				}\n		        				if(typeof(data.spotList[0].description)!=\"undefined\"&&data.spotList[0].description!=\"\"){\n		        					htmlResult+=\"<li>\"+str_desc+\":\"+data.spotList[0].description+\"</li>\";\n		        				}\n		                		htmlResult+=\"</ul></div>\";\n								//功能列\n								htmlResult+=\"<div class='springboard2'><ul><li>\"+\n											\"<button data-role='none' id='btnMap' data-xicon='\"+Setting_classifyImgSrc+data.spotList[0].xicon+\"' data-ximage='\"+Setting_imgSrc+data.spotList[0].mainImage+\"' data-title='\"+data.spotList[0].name+\"' data-latitude='\"+data.spotList[0].latitude+\"' data-longitude='\"+data.spotList[0].longitude+\"' data-spotno='\"+data.spotList[0].spotNo+\"' data-address='\"+data.spotList[0].address+\"' class='map'>\"+str_map+\"</button>\"+\n											\"<button data-role='none' id='btnRoute' data-xicon='\"+Setting_classifyImgSrc+data.spotList[0].xicon+\"' data-ximage='\"+Setting_imgSrc+data.spotList[0].mainImage+\"' data-title='\"+data.spotList[0].name+\"' data-latitude='\"+data.spotList[0].latitude+\"' data-longitude='\"+data.spotList[0].longitude+\"' data-spotno='\"+data.spotList[0].spotNo+\"' data-address='\"+data.spotList[0].address+\"'  class='route'>\"+str_route+\"</button>\"+\n											\"<button data-role='none' id='btnTel' data-tel='\"+data.spotList[0].telNumber+\"'  class='tel'>\"+str_call+\"</button>\"+\n											\"</li></ul></div>\";\n		   					}else{\n		   						console.log(\"ok\");\n		            			var alertMessage=\"查無資料\";\n		            			if(langType==\"eng\"){\n		            				alertMessage=\"not find\";\n		            			}\n		            			smoke.alert(alertMessage,{},function(){});\n		            		}\n	        				$('#Map_CP').find('#content').html(htmlResult); \n	        				$.mobile.changePage('#Map_CP');\n		                }else{\n		                    smoke.alert(ServiceCodeErrorString,{},function(){});\n		                }\n		            }\n		        },\n		        error: function(data){\n		            LoadingObject.hide(); \n		            smoke.alert(ServiceErrorString,{},function(){});\n		        },\n		        complete: function() {\n		            LoadingObject.hide();\n		        }\n		    });\n		}\n		function switchRouteShowType(type){\n			if(type=='path'){\n				$('#routeList').show();\n				$('#map_canvas').hide();\n				$('#Map_LP').find('#btnRoute_MAPShow').removeClass('listbtn03').addClass('listbtn01');\n				$('#Map_LP').find('#btnRoute_PathShow').removeClass('listbtn04').addClass('listbtn02');\n			}else{\n				$('#routeList').hide();\n				$('#map_canvas').show();\n				$('#Map_LP').find('#btnRoute_MAPShow').removeClass('listbtn01').addClass('listbtn03');\n				$('#Map_LP').find('#btnRoute_PathShow').removeClass('listbtn02').addClass('listbtn04');\n				//重整地圖尺寸跟地圖調整中心	\n				map.refresh();\n			}\n		}\n		function switchLPShowType(type){\n			$('#routeList').hide();\n			var htmlResult=\"\";\n			var nowClassify2=\"\";\n			var str_route=\"規劃路線\";\n			if(langType==\"eng\"){\n				str_route=\"Route\";\n			}\n			if(type=='list'){\n				for(var i=0;i<LP_jsonObjectArray.length;i++){\n				if(nowClassify2==\"\"||(nowClassify2!=\"\"&&nowClassify2!=LP_jsonObjectArray[i].classify2)){\n					nowClassify2=LP_jsonObjectArray[i].classify2;\n					htmlResult+='<li data-role=\"list-divider\"><span>'+LP_jsonObjectArray[i].classify2_name+'</span></li>';\n				}\n				htmlResult+=\"<li data-latitude='\"+LP_jsonObjectArray[i].latitude+\"' data-longitude='\"+LP_jsonObjectArray[i].longitude+\"' data-spotno='\"+LP_jsonObjectArray[i].spotNo+\"'>\"+\n				\"<div class='image'><img src='\"+LP_jsonObjectArray[i].ximage+\"'></div>\"+\n				\"<h2>\"+LP_jsonObjectArray[i].chtName+\"</h2>\"+\n				\"<p>\"+LP_jsonObjectArray[i].chtAddress+\"</p>\"+\n			    \"<div class='btnbox'><input type='submit' data-role='none' data-xicon='\"+LP_jsonObjectArray[i].xicon+\"' data-ximage='\"+LP_jsonObjectArray[i].ximage+\"' data-title='\"+LP_jsonObjectArray[i].chtName+\"' data-address='\"+LP_jsonObjectArray[i].chtAddress+\"'  data-latitude='\"+LP_jsonObjectArray[i].latitude+\"' data-longitude='\"+LP_jsonObjectArray[i].longitude+\"' data-spotno='\"+LP_jsonObjectArray[i].spotNo+\"' value='\"+str_route+\"' class='btnDoRoute_dataList btn06'></div>\"+\n				\"</li>\";\n				}\n				$('#Map_LP').find('#dataList').html(\"<ul data-role='none'>\"+htmlResult+\"</ul><div style='height:100px;width:100%'></div>\");\n				$('#Map_LP').find('#dataMap').hide();\n				$('#Map_LP').find('#dataList').show();\n				$('#map_canvas').hide();\n				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn03').addClass('listbtn01');\n				$('#Map_LP').find('#btnListShow').removeClass('listbtn04').addClass('listbtn02');\n			}else\n			{\n				$('#Map_LP').find('#dataList').hide();\n				$('#Map_LP #dataMap .subDiv').hide();\n				// $('#routeList').hide();\n				$('#map_canvas').show();\n				$('#Map_LP').find('#dataMap').show();\n				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');\n				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');\n				//重整地圖尺寸跟地圖調整中心	\n				map.refresh();\n			}\n		    return htmlResult;\n		}\n		function genMapShowContent(){\n			var LBSCenterLatLng=null;\n 			if(typeof(map)!=\"undefined\"&&typeof(map.LBSCenterLatLng)!==\"undefined\"&&map.LBSCenterLatLng!=null){\n 				LBSCenterLatLng=map.LBSCenterLatLng;\n 			}\n			map=new HyMap();\n 			map.ini(document.getElementById('map_canvas'),new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),14);\n 			//設定目的地與地圖顯示中心\n 			if(LBSCenterLatLng!=null){\n 				map.setLBSCenterLatLng(LBSCenterLatLng,true);\n 			}\n 			map.setDivDirectionDetail($('#Map_LP #directions'));\n		}\n		function convertToGMAPMarkers(){\n			//地圖初始化\n			genMapShowContent();\n			switchFooterFunction('default');\n			//呈現LBS中心點位置\n			map.showLBSCenterMarker();\n			var nearAlertSpotListHtmlResult=\"\";\n			var str_ok=\"確定\";\n			var str_cancel=\"取消\";\n			if(langType!=\"ch\"){\n				str_ok=\"OK\";\n				str_cancel=\"Cancel\";\n			}\n			for(var i=0;i<LP_jsonObjectArray.length;i++){\n				if(LP_jsonObjectArray[i].showMap){\n					//gmap marker\n					var title=LP_jsonObjectArray[i].chtName;\n					var address=LP_jsonObjectArray[i].chtAddress;\n					var latitude=LP_jsonObjectArray[i].latitude;\n					var longitude=LP_jsonObjectArray[i].longitude;\n					var spotNo=LP_jsonObjectArray[i].spotNo;\n					var ximage=LP_jsonObjectArray[i].ximage;//待續\n					var xicon=LP_jsonObjectArray[i].xicon;//待續\n					map.addAdvMarker(title,address,latitude,longitude,spotNo,ximage,xicon);\n					//nearAlertSpotList\n				    nearAlertSpotListHtmlResult+='<input type=\"radio\" id=\"radio_nearAlertSpot_'+i+'\" name=\"radio_nearAlertSpotList\" data-spotno=\"'+spotNo+'\" data-latitude=\"'+latitude+'\" data-longitude=\"'+longitude+'\" data-title=\"'+title+'\" data-address=\"'+address+'\" data-theme=\"c\">'+'<label for=\"radio_nearAlertSpot_'+i+'\">'+title+'</label>';\n				}\n			}\n			if(nearAlertSpotListHtmlResult!=\"\"){\n				nearAlertSpotListHtmlResult+='<div data-role=\"controlgroup\" data-type=\"horizontal\"><a data-theme=\"c\" data-role=\"button\" data-rel=\"back\">'+str_cancel+'</a><a data-theme=\"f\" href=\"javascript:setNearAlertByList();\" data-role=\"button\">'+str_ok+'</a></div>';\n			}\n			$('#nearAlertSpotList').html(nearAlertSpotListHtmlResult).trigger('create');\n		}\n		function switchFooterFunction(type){\n			console.log(type);\n			if(type=='route'){\n				$('.defaultFootFunction').hide();\n				$('.RouteFootFunction').show();\n				switchRouteShowType('map');\n			}else{\n				$('.defaultFootFunction').show();\n				$('.RouteFootFunction').hide();\n				switchLPShowType('map');\n			}\n		}\n		function showMapSubDiv(subDiv){\n			var isShow=$(subDiv).is(\":visible\");\n			switchLPShowType('map');\n			isShow==true?$(subDiv).hide():$(subDiv).show();\n		}\n		function setNearAlertByList(){\n			var obj=$(\"#nearAlertSpotList input[type=radio]:checked\");\n			$('#popupDialog_setAlert').popup('close');\n			if(typeof(obj)!=\"undefined\"){\n				doSetNearAlertSpot($(obj).data('spotNo'),$(obj).data('title'),$(obj).data('address'),$(obj).data('latitude'),$(obj).data('longitude'));\n			}else{\n				if(langType!=\"eng\"){\n					smoke.alert(nearAlertString_notCheckedBeforeSendFromList,{},function(){});\n				}else{\n					smoke.alert(nearAlertString_notCheckedBeforeSendFromList_eng,{},function(){});\n				}\n			}\n		}\n		function doSetNearAlertSpot(spotNo,title,address,latitude,longitude){\n			var content=\"\";\n			if(map.nearAlertSpot!=null){\n				if(latitude==map.nearAlertSpot.latitude$$longitude==map.nearAlertSpot.longitude){\n					if(langType!=\"eng\"){\n						smoke.alert(nearAlertString_already,{},function(){});\n					}else{\n						smoke.alert(nearAlertString_already_eng,{},function(){});\n					}\n				}else{\n					if(langType!=\"eng\"){\n						content+=\"已經有設定接近提醒:\"+map.nearAlertSpot.title+\"<br/>\"+\n							 	 \"地址:\"+(typeof(map.nearAlertSpot.address)!=='undefined'?map.nearAlertSpot.address+\"(\"+map.nearAlertSpot.latitude+\",\"+map.nearAlertSpot.longitude+\")\":map.nearAlertSpot.latitude+\",\"+map.nearAlertSpot.longitude)+\",是否替換設定?\";\n						smoke.confirm(content,function(e){\n							if (e){\n								//設定接近提醒點\n								map.setNearAlertSpot({\"spotNo\":spotNo,\"title\":title,\"address\":address,\"latitude\":latitude,\"longitude\":longitude});\n								smoke.alert(SettingOKString);\n							}\n						},{ok:\"確定\", cancel:\"取消\"});\n					}else{\n						content+=\"The notification has been set:\"+map.nearAlertSpot.title+\"<br/>\"+\n							 	 \"ADD:\"+(typeof(map.nearAlertSpot.address)!=='undefined'?map.nearAlertSpot.address+\"(\"+map.nearAlertSpot.latitude+\",\"+map.nearAlertSpot.longitude+\")\":map.nearAlertSpot.latitude+\",\"+map.nearAlertSpot.longitude)+\",Would you like to change the setting of notification?\";\n						smoke.confirm(content,function(e){\n							if (e){\n								//設定接近提醒點\n								map.setNearAlertSpot({\"spotNo\":spotNo,\"title\":title,\"address\":address,\"latitude\":latitude,\"longitude\":longitude});\n								smoke.alert(SettingOKString_eng);\n							}\n						},{ok:\"OK\", cancel:\"Cancel\"});\n					}\n				}\n			}else{\n				//設定接近提醒點\n				map.setNearAlertSpot({\"spotNo\":spotNo,\"title\":title,\"address\":address,\"latitude\":latitude,\"longitude\":longitude});\n				if(langType!=\"eng\"){\n					smoke.alert(SettingOKString);\n				}else{\n					smoke.alert(SettingOKString_eng);\n				}\n			}	\n		}\n		function resetListView(spotNo){\n			console.log('#Map_LP #dataList li[data-role!=list-divider][data-spotno!='+spotNo+']');\n			$('#Map_LP #dataList li[data-role!=list-divider][data-spotno!='+spotNo+']').attr(\"display\",\"none\");\n		}\n		//pageinit\n		$(document).on('pageinit','#Map_LP',function(){	\n			//調整map高度\n			var mheight=(window.innerHeight-80)*0.9;\n			$('#map_canvas').css('height',mheight);\n			//產生gmap\n			genMapShowContent();\n			//Filter\n			genClassify1List();\n			//各分類\n			$(this).on('collapse',\"div[data-role=collapsible]\",function(){\n				var divList=$('div[data-role=collapsible]');\n				var itemCount=0;\n				for(var i=0;i<divList.length;i++){\n					if($(divList[i]).css(\"display\")==\"block\"){\n						itemCount++;\n					}\n				}\n				if(itemCount==1){\n					if($(this).css(\"display\")==\"none\"){\n						$(\"#topFunc\").css(\"display\",\"none\");\n					}else{\n						$(\"#topFunc\").css(\"display\",\"block\");\n					}\n				}else if(itemCount>1){\n					//目前這段有重復的問題未來應該可以改善\n					if($(this).css(\"display\")==\"block\"){\n						$(\"#topFunc\").css(\"display\",\"block\");\n					}else{\n						$(\"#topFunc\").css(\"display\",\"none\");\n					}\n				}\n			});\n			//各項目\n			$(this).find('#dataList').on('click','li[data-role!=\"list-divider\"]',function(evt){\n				if ($(evt.target).is(\"li\")) {\n	 				var spotNo=$(this).data(\"spotno\");\n	 				changeToMap_CP(spotNo);\n	 			}\n 			});\n 			//切換地圖顯示\n			$(this).on('click','#btnMAPShow',function(){	\n				// convertToGMAPMarkers();\n				switchLPShowType(\"map\");\n				$(this).removeClass('listbtn01').addClass('listbtn03');\n				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');\n				//重設地圖中心\n		      	// map.setCenter(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng));\n			});\n 			//切換條列顯示\n			$(this).on('click','#btnListShow',function(){	\n				switchLPShowType(\"list\");\n				$(this).removeClass('listbtn04').addClass('listbtn02');\n				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn03').addClass('listbtn01');\n			});\n			//切換地圖導引\n			$(this).on('click','#btnRoute_MAPShow',function(){	\n				switchRouteShowType('map');\n			});\n			//切換條列導引\n			$(this).on('click','#btnRoute_PathShow',function(){	\n				switchRouteShowType('path');\n			});\n 			//查詢關鍵字查地圖\n			$(this).on('click','#btnSearch',function(){\n				showMapSubDiv($('#Map_LP #divKeyWordSearch'));\n			});\n			//路線規劃地圖\n			$(this).on('click','#btnRoute',function(){\n				//地址反查\n				map.getAddressByLatLng(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),$('#Map_LP').find('#txtRoutePointStart'));\n				//切換FooterFunction\n				showMapSubDiv($('#Map_LP #divRoutePath'));\n			});\n			$(this).on('click','#btnKeyWordSearch',function(){\n				switchFooterFunction('default');\n				map.doSearchByAddress($('#txtSearchKeyWord').val());\n			});\n			$(this).on('click','#btnDoRoute',function(){\n				//關閉幕前顯示div\n				$('#Map_LP #dataMap .subDiv').hide();\n				switchFooterFunction('route');\n				map.doRoutePath($('#txtRoutePointStart').val(), $('#txtRoutePointEnd').val());\n			});\n			$(this).on('click','#btnDoRoute_InfoWindow',function(){\n				var rootElement=$(this);\n				//關閉幕前顯示div\n				$('#Map_LP #dataMap .subDiv').hide();\n				switchFooterFunction('route');\n				var title=$(this).data('title');\n 				var latitude=$(this).data('latitude');\n 				var longitude=$(this).data('longitude');\n 				var spotNo=$(this).data('spotno');\n 				var address=$(this).data('address');\n 				var ximage=$(this).data('ximage');\n 				var xicon=$(this).data('xicon');\n 				var jsonObject={\"title\":title,\"address\":address,\"latitude\":latitude,\"longitude\":longitude,\"spotNo\":spotNo,\"ximage\":ximage,\"xicon\":xicon};\n				map.doRoutePath(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),new google.maps.LatLng($(rootElement).data('latitude'),$(rootElement).data('longitude')),null,jsonObject);\n 				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;jsonObject=null;\n 				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;delete jsonObject;\n			});\n			$(this).on('click','input.btnDoRoute_dataList',function(){\n				var rootElement=$(this);\n				switchLPShowType(\"map\");\n				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');\n				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');\n				//關閉幕前顯示div\n				$('#Map_LP #dataMap .subDiv').hide();\n				switchFooterFunction('route');\n				var title=$(this).data('title');\n 				var latitude=$(this).data('latitude');\n 				var longitude=$(this).data('longitude');\n 				var spotNo=$(this).data('spotno');\n 				var address=$(this).data('address');\n 				var ximage=$(this).data('ximage');\n 				var xicon=$(this).data('xicon');\n 				var jsonObject={\"title\":title,\"address\":address,\"latitude\":latitude,\"longitude\":longitude,\"spotNo\":spotNo,\"ximage\":ximage,\"xicon\":xicon};\n				map.doRoutePath(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),new google.maps.LatLng($(rootElement).data('latitude'),$(rootElement).data('longitude')),null,jsonObject);\n 				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;jsonObject=null;\n 				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;delete jsonObject;\n			});\n			$(this).on('click','#btnLBSCP',function(){\n				var spotNo=$(this).data('spotno');\n				if(spotNo!=\"\"){\n					changeToMap_CP(spotNo);\n				}\n			});\n			$(this).on('click','#btnSetNearAlert',function(){\n				var spotNo=$(this).data('spotNo');\n				var title=$(this).data('title');\n				var address=$(this).data('address');\n				var latitude=$(this).data('latitude');\n				var longitude=$(this).data('longitude');\n				doSetNearAlertSpot(spotNo,title,address,latitude,longitude);\n			});\n		});\n		$(document).on('pageinit','#Map_CP',function(){	\n			//每一個大圖與小圖按鈕\n			$(this).on('click','.photo img',function(){\n				var href=$(this).attr('src');\n				openBrowser(href);\n			});\n 			//地圖按鈕\n 			$(this).on('click','#btnMap',function(){\n 				var title=$(this).data('title');\n 				var latitude=$(this).data('latitude');\n 				var longitude=$(this).data('longitude');\n 				var spotNo=$(this).data('spotno');\n 				var address=$(this).data('address');\n 				var ximage=$(this).data('ximage');\n 				var xicon=$(this).data('xicon');\n 				//呈現當前坐標內容\n 				map.showTargetMarker(title,address,latitude,longitude,spotNo,ximage,xicon);\n 				$.mobile.changePage('#Map_LP');\n 				switchLPShowType(\"map\");\n 				switchFooterFunction(\"map\");\n 				resetListView(spotNo);\n 				title=null;latitude=null;longitude=null;lbs=null;address=null;ximage=null;xicon=null;\n 				delete title;delete latitude;delete longitude;delete lbs;delete address;delete ximage;delete xicon;\n 			});\n 			//導航按鈕\n			$(this).on('click','#btnRoute',function(){\n				var rootElement=$(this);\n				switchLPShowType(\"map\");\n				$('#Map_LP').find('#btnMAPShow').removeClass('listbtn01').addClass('listbtn03');\n				$('#Map_LP').find('#btnListShow').removeClass('listbtn02').addClass('listbtn04');\n				//關閉幕前顯示div\n				$('#Map_LP #dataMap .subDiv').hide();\n				switchFooterFunction('route');\n				map.doRoutePath(new google.maps.LatLng(getGPRSData().lat,getGPRSData().lng),new google.maps.LatLng($(rootElement).data('latitude'),$(rootElement).data('longitude')));			\n				$.mobile.changePage('#Map_LP');\n			});\n 			//電話按扭\n 			$(this).on('click','#btnTel',function(){\n 				var tel=$(this).data('tel');\n 				if(typeof(tel)!=\"undefined\"&&tel!=\"\"){\n	 				window.location.href=\"tel:\"+numberFilter(tel);\n	 			}else{\n	 				if(langType!='eng'){\n	 					smoke.alert(\"無電話資訊\",{},function(){});\n	 				}else{\n		 				smoke.alert(\"No Service Number\",{},function(){});\n		 			}\n	 			}\n	 			tel=null;\n	 			delete tel;\n 			});\n		});\n		//pageshow\n		$(document).on('pageshow','#Map_LP',function(){\n			//switchFooterFunction('default');\n			var mapData=getMapData();\n			if(typeof(mapData)!==\"undefined\"&&mapData!=null){\n				//關閉幕前顯示div\n				$('#Map_LP #dataMap .subDiv').hide();\n				switch(mapData.method){\n					case \"route\":\n						switchFooterFunction('route');\n					break;\n				}\n				//HyMap載入mapData資料\n				map.loadMapData();\n			}\n			//重整地圖尺寸跟地圖調整中心	\n			map.refresh();\n			//取消事件\n			$(\"#Map_LP .Collapsible_Classify1\").off( \"expand\", function(){});\n			$(\"#Map_LP .Collapsible_Classify1\").off( \"collapse\", function(){});\n			//註冊事件\n			$(\"#Map_LP .Collapsible_Classify1\").on( \"expand\", function() {\n				Target_Collapsible_Classify1_ID=$(this).attr('id');\n				$('#Map_LP .Collapsible_Classify1').hide();\n				$(this).show();\n			});\n			$(\"#Map_LP .Collapsible_Classify1\").on( \"collapse\", function() {\n				if($(this).attr('id')==Target_Collapsible_Classify1_ID){\n					$('#Map_LP .Collapsible_Classify1').show();\n					$('#classify1List input[type=checkbox]:checked').attr('checked','checked');\n					$('#classify1List').trigger('create');\n				}\n			});\n		});\n		</script>\n	</head>\n	<body>	\n		 <div data-role=\"page\" id=\"index\">\n			<div data-role=\"header\" data-position=\"fixed\" data-fullscreen=\"false\" data-theme=\"f\">\n		     	<a href=\"#menu\" data-role=\"none\" class=\"btnMenu\"></a>\n                <h1 class=\"page_title\">生活服務</h1>\n            </div>\n			<div data-role=\"content\" style=\"padding:0\" id=\"content\">\n			    <!--path Start-->\n				<!-- <div class=\"path\"><span class=\"before\">您的現在位置：</span>新竹市新安路2號</div><!--friendly Start  -->\n			    <!--path end-->\n			    <select data-role=\"none\" name=\"select\" id=\"selectBase\">	\n			    </select>\n			    <div class=\"sort\" id=\"sort\"></div>\n			    <div class=\"aleft\">\n			    	<input data-role='none' type=\"submit\" id=\"btnSelect\" value=\"全選\" class=\"btn01\">\n					<input data-role='none' type=\"submit\" id=\"btnClear\" value=\"清除\" class=\"btn01\">\n					<input data-role='none' type=\"submit\" id=\"btnAllClear\" value=\"全部清除\" class=\"btn03\">\n			    </div>\n			    <div class=\"list\" id='list'></div>\n			    <div class=\"acenter\"><input data-role='none' type=\"submit\"  id=\"btnSearch\" value=\"查詢\" class=\"btn04\"></div>\n			</div>\n		</div>\n		<div data-role=\"page\" id=\"Map_LP\">\n			<div data-role=\"header\" data-position=\"fixed\" data-fullscreen=\"false\" data-theme=\"f\">\n				<a data-rel=\"back\" class=\"btn_back\" data-icon=\"arrow-l\">返回</a>\n		     	<!-- <a href=\"#index\" data-icon=\"arrow-l\">返回</a> -->\n                <h1 class=\"page_title\">生活服務</h1>\n            </div>\n			<div data-role=\"content\" style=\"padding:0\" id=\"content\">\n				<div id='dataMap' class='acenter'>\n					<!-- keyWordSearch -->\n					<div id='divKeyWordSearch' class='subDiv' style=\"display:none\">\n						<input data-role='none' type='text' class='search' id='txtSearchKeyWord' placeholder='地址/地名/廠商名稱'>\n						<a id='btnKeyWordSearch'   data-mini=\"true\" data-inline=\"true\" data-role=\"button\" data-theme=\"e\">查詢</a>\n					</div>\n					<!-- RountePath -->\n					<div id='divRoutePath' class='subDiv aleft2' style=\"display:none\">\n						<div data-role=\"fieldcotain\">\n							<label id=\"labRoutePointStart\" for='txtRoutePointStart'>起點：</label>\n							<input type='text'  id='txtRoutePointStart' placeholder='地址/地名/廠商名稱'>\n						</div>\n						<div data-role=\"fieldcotain\">\n							<label id=\"labRoutePointEnd\" for='txtRoutePointEnd'>終點：</label>\n							<input type='text' id='txtRoutePointEnd' placeholder='地址/地名/廠商名稱'>\n						</div>\n						<div class=\"acenter\"><button data-icon=\"search\"  data-mini=\"true\" data-inline=\"true\" data-theme=\"e\" id='btnDoRoute'>路徑規劃</button></div>\n					</div>\n					<!-- map -->\n					<div id='map_canvas' width=\"\" style='width:100%;height:290px;'></div>\n					<div id=\"routeList\" class=\"ui-listview ui-listview-inset ui-corner-all ui-shadow\" style=\"display:none;\">\n						<div id=\"divDirectionHeader\" class=\"ui-li ui-li-divider ui-btn ui-bar-b ui-corner-top ui-btn-up-undefined\">規劃路徑</div>\n						<div id=\"directions\" class='acenter gmapDirections'></div>\n						<div class=\"ui-li ui-li-divider ui-btn ui-bar-b ui-corner-bottom ui-btn-up-undefined\"></div>\n						<!-- 撐高用的 -->	\n						<div style=\"height:80px;\"></div>\n					</div>\n				</div>\n				<div class='list' id='dataList'></div>\n			</div>\n			<div data-theme=\"f\" data-role=\"footer\" data-position=\"fixed\" data-fullscreen=\"false\">	\n				<div id=\"footer\">\n					<div class=\"footbtn\">\n						<ul data-role=\"none\">\n							<li><a data-role=\"none\" id=\"btnMAPShow\" class=\"defaultFootFunction listbtn03\">地圖呈現</a></li>\n							<li><a data-role=\"none\" id=\"btnListShow\" class=\"defaultFootFunction listbtn04\">圖文並列</a></li>\n							<li><a data-role=\"none\" style=\"display:none;\" id=\"btnRoute_MAPShow\" class=\"RouteFootFunction listbtn03\">地圖導引</a></li>\n							<li><a data-role=\"none\" style=\"display:none;\" id=\"btnRoute_PathShow\" class=\"RouteFootFunction listbtn04\">文字導引</a></li>\n						</ul>\n					</div>\n					<div class=\"function\">\n						<ul data-role=\"none\">\n							<li><a data-role=\"none\" id=\"btnSearch\" class=\"f1\">搜尋地圖</a></li>\n							<li><a data-role=\"none\" id=\"btnRoute\" class=\"f2\">規劃路線</a></li>\n							<li><a data-role=\"none\" data-rel=\"popup\" data-position-to=\"window\" href=\"#popupDialog_classify1Filter\" data-transition=\"pop\" id=\"btnClassify1Filter\" class=\"f3\">週邊生活服務</a></li>\n							<li><a data-rel=\"popup\" data-position-to=\"window\" href=\"#popupDialog_setAlert\" data-transition=\"pop\" data-role=\"none\" id=\"btnSetAlert\" class=\"f4\">接近提醒</a></li>\n						</ul>\n					</div>\n				</div>\n			</div>\n			<!--popup-->\n			<div data-role=\"popup\" id=\"popupDialog_classify1Filter\" data-overlay-theme=\"a\" data-theme=\"a\" data-dismissible=\"false\" style=\"max-width:400px;\" class=\"ui-corner-all\">\n    			<div style=\"text-align:center;padding:25px\" id=\"classify1List\" class=\"ui-content\">	\n		    	</div>\n			</div>\n			<div data-role=\"popup\" id=\"popupDialog_setAlert\" data-overlay-theme=\"a\" data-theme=\"a\" data-dismissible=\"false\" style=\"max-width:400px;\" class=\"ui-corner-all\">\n    			<div style=\"text-align:center;\" id=\"nearAlertSpotList\">	\n		    	</div>\n			</div>\n		</div>\n		<div data-role=\"page\" id=\"Map_CP\">\n			<div data-role=\"header\" data-position=\"fixed\" data-fullscreen=\"false\" data-theme=\"f\">\n				<a data-rel=\"back\" class=\"btn_back\" data-icon=\"arrow-l\">返回</a>\n                <h1 class=\"page_title\">生活服務</h1>\n                <a class=\"btn_backIndex\" href=\"#index\" data-icon=\"home\">回主頁</a>\n            </div>\n			<div data-role=\"content\" style=\"padding:0\" id=\"content\">\n			</div>\n		</div>\n	</body>\n</html>",
 			"file": "www/Page_LifeService.html",
+			"file_size": 59600,
+			"file_write_time": 1381149821000000,
 			"settings":
 			{
-				"buffer_size": 57969,
+				"buffer_size": 58262,
 				"line_ending": "Unix"
 			}
 		},
@@ -547,7 +550,7 @@
 			"file": "www/Page_Jobs.html",
 			"settings":
 			{
-				"buffer_size": 58309,
+				"buffer_size": 58345,
 				"line_ending": "Unix"
 			}
 		},
@@ -563,7 +566,7 @@
 			"file": "www/Page_VendorInfo.html",
 			"settings":
 			{
-				"buffer_size": 65071,
+				"buffer_size": 65105,
 				"line_ending": "Unix"
 			}
 		},
@@ -691,6 +694,7 @@
 	},
 	"file_history":
 	[
+		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/css/index.css",
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/js/setting_nsc_production.js",
 		"/Users/blackie/Desktop/test.html",
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/js/data.js",
@@ -704,7 +708,6 @@
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/package.json",
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/js/setting.js",
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/Gruntfile.js",
-		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/css/index.css",
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/Page_LifeService.html",
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/Page_BizFileSharing_android.html",
 		"/Users/blackie/Desktop/Dev/0_Hyweb Project/NSCAPP_ios/www/Page_TranspotInfo.html",
@@ -797,7 +800,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 95.0,
 		"where_history":
 		[
 			"",
@@ -809,6 +812,35 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"btnPre",
+			"getAroundStop",
+			"page_aroundStop",
+			"btnSetPosition",
+			"changeTosetPosition",
+			"btnSetPosition",
+			"btnPrev",
+			"btnMap",
+			"我的位置距離最近巡巴",
+			"最",
+			"toplist",
+			"map.js",
+			"openMap",
+			"getAreaIntroData",
+			"genTopList",
+			"loadDisplayLanguage",
+			"data-role=\"page\"",
+			"role",
+			"data-role",
+			"btnMap",
+			"aleft2",
+			"genTrafficHTML",
+			".springboard2",
+			"storyboard2",
+			"genTrafficHTML",
+			"getAreaIntroData",
+			"subDiv_traffic",
+			".springboard2 ",
+			"genSearchControl",
 			"find",
 			"hymap",
 			"genMenu",
@@ -907,39 +939,10 @@
 			"getGPRSData.",
 			"  \"queryType\": \"1\",",
 			"getGPRSData",
-			"  \"queryType\": \"3\",",
-			"changeToLP",
-			"btnSearch",
-			"Base",
-			"changeToIndex_03",
-			"index_03",
-			"yyyy/",
-			"LP_05_1",
-			"go\"",
-			"go",
-			"console",
-			"changeToIndex_04",
-			"changeToIndex_03",
-			"changeToLP_03",
-			"yyyy/",
-			"day",
-			"date",
-			"changeToLP_04",
-			"changeToLP_02",
-			"changeToLP_01",
-			"\"yyyy-MM-dd\"",
-			"changeToLP_04",
-			"changeToLP_03",
-			"changeToLP_01",
-			"LP_02",
-			"LP_01",
-			"LP_04",
-			"LP_03",
-			"LP_04",
-			"line"
+			"  \"queryType\": \"3\","
 		],
 		"highlight": false,
-		"in_selection": true,
+		"in_selection": false,
 		"preserve_case": false,
 		"regex": false,
 		"replace_history":
@@ -1003,7 +1006,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1011,15 +1014,15 @@
 					"file": "www/Page_TranspotInfo.html",
 					"settings":
 					{
-						"buffer_size": 239282,
+						"buffer_size": 239276,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								213522,
-								213356
+								118095,
+								118095
 							]
 						],
 						"settings":
@@ -1177,7 +1180,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 94882.0,
+						"translation.y": 47797.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1187,15 +1190,28 @@
 					"file": "www/Page_AreaIntro.html",
 					"settings":
 					{
-						"buffer_size": 57826,
+						"buffer_size": 57968,
 						"regions":
 						{
+							"bookmarks":
+							{
+								"flags": 144,
+								"icon": "bookmark",
+								"regions":
+								[
+									[
+										18283,
+										18293
+									]
+								],
+								"scope": "bookmarks"
+							}
 						},
 						"selection":
 						[
 							[
-								17970,
-								17950
+								13372,
+								13372
 							]
 						],
 						"settings":
@@ -1353,7 +1369,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 6286.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1363,255 +1379,15 @@
 					"file": "www/Page_LifeService.html",
 					"settings":
 					{
-						"buffer_size": 57969,
+						"buffer_size": 58262,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5509,
-								5513
-							],
-							[
-								5577,
-								5581
-							],
-							[
-								5643,
-								5647
-							],
-							[
-								5729,
-								5733
-							],
-							[
-								5801,
-								5805
-							],
-							[
-								5871,
-								5875
-							],
-							[
-								5943,
-								5947
-							],
-							[
-								6025,
-								6029
-							],
-							[
-								6121,
-								6125
-							],
-							[
-								6213,
-								6217
-							],
-							[
-								6316,
-								6320
-							],
-							[
-								6408,
-								6412
-							],
-							[
-								6496,
-								6500
-							],
-							[
-								6600,
-								6604
-							],
-							[
-								6702,
-								6706
-							],
-							[
-								6773,
-								6777
-							],
-							[
-								6848,
-								6852
-							],
-							[
-								9605,
-								9609
-							],
-							[
-								11701,
-								11705
-							],
-							[
-								12652,
-								12656
-							],
-							[
-								14144,
-								14148
-							],
-							[
-								14202,
-								14206
-							],
-							[
-								16729,
-								16733
-							],
-							[
-								17642,
-								17646
-							],
-							[
-								17849,
-								17853
-							],
-							[
-								18780,
-								18784
-							],
-							[
-								18846,
-								18850
-							],
-							[
-								19323,
-								19327
-							],
-							[
-								19577,
-								19581
-							],
-							[
-								19807,
-								19811
-							],
-							[
-								20085,
-								20089
-							],
-							[
-								20206,
-								20210
-							],
-							[
-								20265,
-								20269
-							],
-							[
-								20535,
-								20539
-							],
-							[
-								20678,
-								20682
-							],
-							[
-								20856,
-								20860
-							],
-							[
-								25614,
-								25618
-							],
-							[
-								29540,
-								29544
-							],
-							[
-								35712,
-								35716
-							],
-							[
-								35842,
-								35846
-							],
-							[
-								36446,
-								36450
-							],
-							[
-								36537,
-								36541
-							],
-							[
-								36696,
-								36700
-							],
-							[
-								36787,
-								36791
-							],
-							[
-								38288,
-								38292
-							],
-							[
-								38416,
-								38420
-							],
-							[
-								38458,
-								38462
-							],
-							[
-								38530,
-								38534
-							],
-							[
-								38615,
-								38619
-							],
-							[
-								38715,
-								38719
-							],
-							[
-								38860,
-								38864
-							],
-							[
-								38902,
-								38906
-							],
-							[
-								38987,
-								38991
-							],
-							[
-								45062,
-								45066
-							],
-							[
-								45457,
-								45461
-							],
-							[
-								45804,
-								45808
-							],
-							[
-								46382,
-								46386
-							],
-							[
-								48047,
-								48051
-							],
-							[
-								48132,
-								48136
-							],
-							[
-								50653,
-								50657
-							],
-							[
-								50738,
-								50742
+								50929,
+								50929
 							]
 						],
 						"settings":
@@ -1769,7 +1545,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 18465.0,
+						"translation.y": 20582.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1779,15 +1555,15 @@
 					"file": "www/Page_Jobs.html",
 					"settings":
 					{
-						"buffer_size": 58309,
+						"buffer_size": 58345,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								58292,
-								58292
+								2245,
+								2245
 							]
 						],
 						"settings":
@@ -1944,7 +1720,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 15153.0,
+						"translation.y": 266.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2119,7 +1895,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 22499.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2129,15 +1905,15 @@
 					"file": "www/Page_VendorInfo.html",
 					"settings":
 					{
-						"buffer_size": 65071,
+						"buffer_size": 65105,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								65054,
-								65054
+								10155,
+								10155
 							]
 						],
 						"settings":
@@ -2291,10 +2067,11 @@
 							"codeintel_tooltips": "popup",
 							"sublime_auto_complete": true,
 							"syntax": "Packages/AngularJS/AngularJS.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"translate_tabs_to_spaces": false,
+							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 24990.0,
+						"translation.y": 3511.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2311,8 +2088,8 @@
 						"selection":
 						[
 							[
-								55045,
-								55059
+								69385,
+								69392
 							]
 						],
 						"settings":
@@ -2470,7 +2247,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 19968.0,
+						"translation.y": 24628.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2487,8 +2264,8 @@
 						"selection":
 						[
 							[
-								662,
-								407
+								25172,
+								25179
 							]
 						],
 						"settings":
@@ -2646,7 +2423,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 15.0,
-						"translation.y": 0.0,
+						"translation.y": 11300.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -2822,7 +2599,7 @@
 							"word_separators": "./\\\\()\\\"\\'-:,.;<>~!@#%^&*|+=[]{}`~?"
 						},
 						"translation.x": 0.0,
-						"translation.y": 632.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -3014,8 +2791,8 @@
 						"selection":
 						[
 							[
-								3031,
-								2983
+								1639,
+								1639
 							]
 						],
 						"settings":
